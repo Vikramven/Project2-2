@@ -29,8 +29,20 @@ public class Vector {
         return new Vector(scale*this.getX(),scale*this.getX() );
     }
 
+    /**
+     * TODO:create cross and dot product methods
+     * a^2-b^2 methods, distance between 2 points euclidean?
+     */
+
+
+
+
     //copy method for A Star
     public Vector copy(){
         return new Vector(x,y);
+    }
+
+    public Vector turn(double degree) {
+
     }
 }
