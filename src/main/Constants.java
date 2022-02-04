@@ -1,3 +1,5 @@
+package main;
+
 public class Constants {
     public static int height=80;
     public static int width=120;

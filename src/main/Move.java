@@ -1,3 +1,5 @@
+package main;
+
 public class Move {
     /**
      * the co-ordinate to move to
