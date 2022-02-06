@@ -22,6 +22,14 @@ public class Matrix {
     }
 
     /**
+     * rotated matrix method here
+     * @param degree
+     */
+    public Matrix(double degree){
+
+    }
+
+    /**
      * define rotated method, first need to create product to call
      * @parameter vector object, x and y
      * @param u
