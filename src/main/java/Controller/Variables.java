@@ -1,5 +1,12 @@
 package Controller;
 
+import com.sun.javafx.geom.Rectangle;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.effect.Light;
+
+import java.util.ArrayList;
+
 public class Variables {
     private boolean unlock=true;
     private int mode;
@@ -14,8 +21,19 @@ public class Variables {
     private double timeIncrement;
     private double scaling;
     /**
-     * TODO:walls;shade,texture,portals,teleport,towers
+     * TODO:how to define target and spawn area?, texture type?
      */
+    private ArrayList<Rectangle2D> walls;
+    private ArrayList<Rectangle2D> towers;
+    private ArrayList<Rectangle2D> portals;
+    private ArrayList<Rectangle2D> shade;
+    private ArrayList<Rectangle2D> textures;
+    private ArrayList<Point2D> locationTeleport;
+    private Rectangle2D targetArea;
+    private Rectangle2D spawnIntruder;
+    private Rectangle2D spawnGuards;
+
+
 
     public Variables(){
         /**
@@ -115,5 +133,19 @@ public class Variables {
     public double getTimeIncrement() {
         return timeIncrement;
     }
+
+    public void createWall(Rectangle2D wall){
+        if(unlock){
+            this.walls.add(wall);
+        }
+    }
+
+    public void createShade(Rectangle2D shade){
+        if(unlock){
+            this.shade.add(shade);
+        }
+    }
+
+
 
 }
