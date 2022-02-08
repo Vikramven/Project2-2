@@ -146,6 +146,12 @@ public class Variables {
         }
     }
 
+    public void create(Rectangle2D tower){
+        if(unlock){
+            this.shade.add(tower);
+        }
+    }
+
 
 
 }
