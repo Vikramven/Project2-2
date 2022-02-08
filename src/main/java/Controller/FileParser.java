@@ -38,10 +38,32 @@ public class FileParser {
                     case "height":
                         map.setHeight(Integer.parseInt(value));
                         break;
+                    case "width":
+                        map.setWidth(Integer.parseInt(value));
+                        break;
+                    case "scaling":
+                        map.setScaling(Double.parseDouble(value));
+                        break;
+                    case "numGuards":
+                        map.setNumberOfGuards(Integer.parseInt(value));
+                        break;
+                    case "numIntruders":
+                        map.setNumberOfIntruders(Integer.parseInt(value));
+                        break;
+                    case "baseSpeedIntruder":
+                        map.setWalkingSpeedIntruder(Double.parseDouble(value));
+                        break;
+                    case "sprintSpeedIntruder":
+                        map.setSprintingSpeedIntruder(Double.parseDouble(value));
+                        break;
+                    case "baseSpeedGuard":
+                        map.setWalkingSpeedGuard(Double.parseDouble(value));
+                        break;
+                    case "gameMode":
+                        map.setMode(Integer.parseInt(value));
                 }
 
             }
         }
     }
 }
-

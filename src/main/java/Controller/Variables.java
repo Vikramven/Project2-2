@@ -15,7 +15,7 @@ public class Variables {
     private int numberOfGuards;
     private int numberOfIntruders;
     private double walkingSpeedGuard;
-    private double sprintingSpeedGuards;
+    private double sprintingSpeedGuards; //do we need this? I think only intruders sprint (to discuss) @zofia 
     private double walkingSpeedIntruder;
     private double sprintingSpeedIntruder;
     private double timeIncrement;
