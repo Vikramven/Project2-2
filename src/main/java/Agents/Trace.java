@@ -5,19 +5,23 @@ public class Trace {
     It allows us to track the progress of the exploration of each Agent.
 */
 
-    //    int visitCounter; //for phase 2
+    // int visitCounter; for phase 2
+    int mapWidth;
+    int mapHeight;
+    int[][] trace;
+    Agent agentTrace;
 
-    public Trace(Agent agent, Map map) {
-
-        /* Initialize the Trace
-            Trace surperposes to the map: has the same starting dimensions
-         */
-        double[][] Trace = [map.getWidth()][map.getWidth()];
-
-        // The agent starts with No trace: so the matrix of visited place only contains zero
-        for (int i = 0; i < map.getWidth(); i++) {
-            for (int j = 0; j < map.getHeight(); j++) {
-                map[i][j] = 0;
+    public void Trace(Agent agent, Map map){
+        /* Initialize the Trace: it superposes to the map: has the same starting dimensions
+                The agent starts with No trace: so the matrix of visited place only contains zero
+        */
+        agentTrace = agent;
+        mapWidth = map.getMapWidth();
+        mapHeight = map.getMapHeight();
+        trace = new int[mapWidth][mapHeight];
+        for (int i = 0; i < mapWidth; i++) {
+            for (int j = 0; j < mapHeight; j++) {
+                trace [i][j] = 0;
             }
         }
 

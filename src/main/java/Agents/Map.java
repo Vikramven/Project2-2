@@ -4,8 +4,9 @@ import Controller.Variables;
 public class Map{
 //We represent the map as a double Array
 
-//   public int height = Variables.getHeight(); //TO DO: PUT int value inside
-//   public int width = Variables.getWidth();
+   private int height;
+   private int width;
+   private Variables variables = new Variables();
 
    public Map(){
       double[][] map = [height][width]; //dimension of the map

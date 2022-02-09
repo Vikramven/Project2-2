@@ -14,6 +14,7 @@ public class Variables {
     private int width;
     private int numberOfGuards;
     private int numberOfIntruders;
+    private int spawnAreaGuards;
     private double walkingSpeedGuard;
     private double sprintingSpeedGuards; //do we need this? I think only intruders sprint (to discuss) @zofia 
     private double walkingSpeedIntruder;
@@ -62,6 +63,8 @@ public class Variables {
         this.numberOfIntruders = numberOfIntruders;
     }
 
+    public void setSpawnAreaGuards(int spawnAreaGuards){this.spawnAreaGuards = spawnAreaGuards;}
+
     public void setWalkingSpeedGuard(double walkingSpeedGuard) {
         this.walkingSpeedGuard = walkingSpeedGuard;
     }
@@ -109,6 +112,8 @@ public class Variables {
     public int getNumberOfIntruders() {
         return numberOfIntruders;
     }
+
+    public int getSpawnAreaGuards(){return spawnAreaGuards;}
 
     public double getWalkingSpeedGuard() {
         return walkingSpeedGuard;
