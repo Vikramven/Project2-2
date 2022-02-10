@@ -7,6 +7,8 @@ import javafx.scene.effect.Light;
 
 import java.util.ArrayList;
 
+
+
 public class Variables {
     private boolean unlock=true;
     private int mode;
@@ -21,6 +23,8 @@ public class Variables {
     private double sprintingSpeedIntruder;
     private double timeIncrement;
     private double scaling;
+    private ArrayList<int[]> walls;  //to be PARSED
+
     /**
      * TODO:how to define target and spawn area?, texture type?
      */
@@ -93,6 +97,7 @@ public class Variables {
     /**
      * TODO:methods for first todo
      */
+    public ArrayList <int[]> getWalls() {return walls;}; //to be PARSED
 
     public int getMode() {
         return mode;
@@ -114,7 +119,7 @@ public class Variables {
         return numberOfIntruders;
     }
 
-    public int getSpawnAreaGuards(){return spawnAreaGuards;}
+    public int getSpawnAreaGuards(){return spawnAreaGuards;}//wrong type int Array of size 4
 
     public double getWalkingSpeedGuard() {
         return walkingSpeedGuard;

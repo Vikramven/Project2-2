@@ -20,10 +20,11 @@ public class Map{
    private Variables variables = new Variables();
 
    public Map(){
-
-      height = variables.getHeight();
-      width = variables.getWidth();
-      int[][] map = new int[height][width]; //dimension of the map
+      mapHeight = variables.getHeight();
+      mapWidth = variables.getWidth();
+      matrix = new int[mapWidth][mapHeight]; //dimension of the map
+       walls = variables.getWalls(); //placing walls on the map
+      buildingWalls(matrix);//update the map with the walls
 
    }
 
@@ -57,6 +58,8 @@ public class Map{
 
       }
    }
+
+
    public void TeamTrace(){
 
    }
