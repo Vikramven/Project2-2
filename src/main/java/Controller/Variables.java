@@ -89,6 +89,7 @@ public class Variables {
         this.scaling = scaling;
     }
 
+
     /**
      * TODO:methods for first todo
      */

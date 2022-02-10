@@ -1,4 +1,7 @@
-package Agents;
+package Path;
+
+import Agents.Agent;
+import Agents.Map;
 
 public class Move {
     // 8 possible moves: that is each 45° angles
@@ -40,8 +43,9 @@ public class Move {
         Need to sort the distance from AgentPosition to all know Map Limits
         Need to sort the distance from AgentPosition to all know Traces
      Outputs the Minimum of both
-
      */
+
+
     }
 
     public int manhattanHeuristic(int x, int y, int goalX, int goalY){
@@ -50,7 +54,7 @@ public class Move {
 
 
 
-   /*  A_Star : Path Finding Algorithm
+   /* A_Star : Path Finding Algorithm
    * OUTPUT: an integer that describes how costy(beneficial) the potencialMove is to the Agent
    * */
    public int aStar(Agent agent, Map map, int initialCost){
@@ -64,12 +68,15 @@ public class Move {
         */
 
        int goalDistance =  manhattanHeuristic(x, y, newGoal[0], newGoal[1]);
+
+       return 0;
     }
 
-public int
-       while(/* Goal not reached, equivalent to Position of Agent != Goal Position */){
-        aStar(agent, map, initalCost);
-    }
+//public int
+//       while(/* Goal not reached, equivalent to Position of Agent != Goal Position */){
+//        aStar(agent, map, initalCost);
+//    }
+
 
    //D*
 }
