@@ -139,6 +139,10 @@ public class Variables {
             this.walls.add(wall);
         }
     }
+    public ArrayList<Rectangle2D> getWalls()
+    {
+        return (ArrayList<Rectangle2D>) this.walls.clone();
+    }
 
     public void createShade(Rectangle2D shade){
         if(unlock){
