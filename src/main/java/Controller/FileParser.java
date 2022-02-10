@@ -5,6 +5,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+//NEEDC TO PARSE FOR WALLS
+//NEED TO PARSE FOR SPAWING ZONE
+
 public class FileParser {
     private static Variables map;
 

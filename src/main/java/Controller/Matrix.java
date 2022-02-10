@@ -17,7 +17,7 @@ public class Matrix {
     private double b;
     private double c;
     private double d;
-    public Matrix(int a,int b, int c, int d){
+    public Matrix(int a /*left */,int b/*right*/, int c/*up*/, int d/*down*/){
         this.a=a;
         this.b=b;
         this.c=c;

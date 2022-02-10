@@ -10,7 +10,7 @@ import static javafx.application.Application.launch;
 public class App {
     private Stage stage;
 
-    @Override
+   // @Override
     public void start(Stage stage) throws IOException{
         this.stage = stage;
         Frame frame = new Frame(800, 500);
