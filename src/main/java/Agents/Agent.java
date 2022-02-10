@@ -16,5 +16,13 @@ public class Agent  {
     double getHearing;
     double[][] agentPosition;//current position on the Map
     Trace agentTrace;
+    int Team;
+    int agentXPosition;
+    int agentYPosition;
+    int direction; // we try to split the 360 in a smart way
 
+
+    // getters&setters
+    int getAgentXPosition(){return agentXPosition; }
+    int getAgentYPosition(){return agentYPosition; }
 }

@@ -1,9 +1,12 @@
 package Controller;
 
 public class Matrix {
+    //REMARKS : the human controling might be choosing an angle
+    // its important to convert it into a Move Object;
+    // that means to create a move object with the desired properties
+
     /**
-     * @author vikram
-     * 2 by 2 matrix for swapped positions when turning, usse trigo formulae
+     * 2 by 2 matrix for swapped positions when turning, use trigo formulae
      * [a b]
      * [c d]
      */

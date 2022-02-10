@@ -24,12 +24,12 @@ public class Trace {
                 trace [i][j] = 0;
             }
         }
-
     }//end of Trace constructor
 
-    //trace update
-    public void traceUpdate(Agent agent, Map map){
-       Agent get
+
+    public void traceUpdate(/*Agent agent, Map map*/){
+       trace[agentTrace.getAgentXPosition()][agentTrace.getAgentYPosition()] = 1; //or visit counter
     }
+
 
 }
