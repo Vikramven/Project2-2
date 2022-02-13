@@ -1,6 +1,7 @@
 package Controller;
+import javafx.geometry.Rectangle2D;
+
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -10,12 +11,12 @@ public class FileParser {
 
     public static Variables readFile(String path) {
         Path file = Paths.get(path);
-        map = new Variables();
+        map = new Variables();//parse and set all values into variables class
         try (Scanner scan = new Scanner(file)) {
-            int countLines = 1;
+            int countNumberLines = 1;//we need to handle an exception for this case
             while (scan.hasNextLine()) {
-                parseNextLine(scan.nextLine(), countLines);
-                countLines++;
+                parseNextLine(scan.nextLine(), countNumberLines);
+                countNumberLines++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,12 +30,15 @@ public class FileParser {
         try (Scanner scan = new Scanner(nextLine)) {
 
             if (scan.hasNext()) {
-                String id = scan.next();
+                String check = scan.next();
                 String value = scan.next();
-                id = id.trim();
+                /**
+                 * trim all lead and tail spaces if any
+                 */
+                check = check.trim();
                 value = value.trim();
-                String[] coords = value.split(" ");
-                switch (id) {
+                String[] locations = value.split(" ");//for variables with array values
+                switch (check) {
                     case "height":
                         map.setHeight(Integer.parseInt(value));
                         break;
@@ -61,6 +65,17 @@ public class FileParser {
                         break;
                     case "gameMode":
                         map.setMode(Integer.parseInt(value));
+                        /**
+                         * didn't really get coordinate system, but the dimensions is 4 entries
+                         * create wall of dimensions
+                         * how to get the height and width, check 3rd and 4th dimensions.
+                         */
+                    case "wall":
+                        map.createWall(new Rectangle2D(Double.parseDouble(locations[0]),
+                                Double.parseDouble(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3])));
+                        break;
                 }
 
             }
