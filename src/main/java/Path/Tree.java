@@ -38,7 +38,7 @@ public class Tree {
 
         }
     }
-/* METHOD: Priority List
+/* METHOD: Sorting
     We rank the above Travel cost from min to max
      We use a sorting sort algorithm : #bubble sort?
  */

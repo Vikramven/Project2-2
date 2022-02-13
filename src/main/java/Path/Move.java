@@ -10,21 +10,36 @@ public class Move {
 
 
     //Left: -90 ° = -45 x 2
-
+public int[] leftMove(){}
     //Right: +90° = +45 x 2
 
+public int[] rightMove(){}
     //Up: +0°
-
+public int[] upMove(){}
     //Down: -180° = -45 x 4
-
+public int[]downMove(){}
     //Diagonal left-Up: +45°
-
+public int[] diagonalLeftUpMove(){}
     //Diagonal Right-Up: -45°
-
+public int[] diagonalRightUpMove(){}
     //Diagonal left-Down: +225 = -45 x 5
-
+public int[] diagonalLeftDownMove(){}
     //Diagonal Right-Down: +135° = +45 x 3
+public int[] diagonalRightDownMove(){}
 
+
+    public  ArrayList <int[]> legalMoveGenerator(Agent agent, Map map){
+
+    //call all the above methods
+
+    //check for validity;
+    // if output coordonates == MAX_VALUE
+    //if another agent is currently on this position
+
+    //return the list of possible tile coordonates to visit
+
+
+    }
 
        /* HELPER METHOD FOR A_STAR:
         if we make 1 move in direction of Goal

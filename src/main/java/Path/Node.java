@@ -7,10 +7,15 @@ public class Node {
     private ArrayList<Node> children;
     private int X;
     private int Y;
+    private int [] positionMap = new int [2];
 
     public Node(Node parent, Node children){
         this.parent = parent;
         this.children = new ArrayList<>();
+    }
+    public void setPosition(int[] positionMap){
+        positionMap [0] = positionMap [0] ;
+        positionMap [1] = positionMap [1] ;
     }
 
     public Node getParent(){return parent;}

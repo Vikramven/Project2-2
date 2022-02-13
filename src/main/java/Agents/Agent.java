@@ -26,4 +26,7 @@ public class Agent  {
     }
     int [] getAgentSpawning(){return  spawning ; }
 
+    public int[][] getAgentPosition(){return this.agentPosition;}
+    public int[][] getAgentGoal(){return this.agentGoal;}
+
 }
