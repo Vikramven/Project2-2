@@ -3,11 +3,14 @@ package Controller;
 import com.sun.javafx.geom.Rectangle;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.effect.Light;
 
 import java.util.ArrayList;
 
 public class Variables {
+    /*
+    general comment: variables class is supposed to have publicly available data,
+    so it should have public attributes,
+     */
     private boolean unlock=true;
     private int mode;
     private int height;
@@ -23,10 +26,10 @@ public class Variables {
     /**
      * TODO:how to define target and spawn area?, texture type?
      */
-    private ArrayList<Rectangle2D> walls;
+    private ArrayList<Wall> walls;
     private ArrayList<Rectangle2D> towers;
-    private ArrayList<Rectangle2D> portals;
-    private ArrayList<Rectangle2D> shade;
+    private ArrayList<Teleport> portals;
+    private ArrayList<Shade> shades;
     private ArrayList<Rectangle2D> textures;
     private ArrayList<Point2D> locationTeleport;
     private Rectangle2D targetArea;
@@ -134,9 +137,15 @@ public class Variables {
         return timeIncrement;
     }
 
-    public void createWall(Rectangle2D wall){
+    public void createWall(int x1, int y1, int x2, int y2){
         if(unlock){
-            this.walls.add(wall);
+            this.walls.add(new Wall(x1,y1,x2,y2));
+        }
+    }
+
+    public void createTeleport(int x1, int y1, int x2, int y2, int x3, int y3, double degree){
+        if(unlock){
+            this.portals.add(new Teleport(x1,y1,x2,y2,x3,y3,degree));
         }
     }
     public ArrayList<Rectangle2D> getWalls()
@@ -144,17 +153,14 @@ public class Variables {
         return (ArrayList<Rectangle2D>) this.walls.clone();
     }
 
-    public void createShade(Rectangle2D shade){
+
+
+    public void createShade(int x1, int y1, int x2, int y2){
         if(unlock){
-            this.shade.add(shade);
+            this.shades.add(new Shade(x1,y1,x2,y2));
         }
     }
 
-    public void create(Rectangle2D tower){
-        if(unlock){
-            this.shade.add(tower);
-        }
-    }
 
 
 

@@ -71,11 +71,24 @@ public class FileParser {
                          * how to get the height and width, check 3rd and 4th dimensions.
                          */
                     case "wall":
-                        map.createWall(new Rectangle2D(Double.parseDouble(locations[0]),
-                                Double.parseDouble(locations[1]),
+                        map.createWall(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
                                 Integer.parseInt(locations[2]),
-                                Integer.parseInt(locations[3])));
+                                Integer.parseInt(locations[3]));
                         break;
+                    case "teleport":
+                        map.createTeleport(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]),
+                                Integer.parseInt(locations[4]),
+                                Integer.parseInt(locations[5]),
+                                Double.parseDouble(locations[6]));
+                    case "shaded":
+                        map.createShade(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]));
                 }
 
             }
