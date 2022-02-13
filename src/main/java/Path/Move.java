@@ -2,9 +2,12 @@ package Path;
 
 import Agents.Agent;
 import Agents.Map;
+import java.util.*;
 
 public class Move {
-    // 8 possible moves: that is each 45° angles
+    // 8 possible moves: each is 45° angles
+    //convertor: angle to director based on a range
+
 
     //Left: -90 ° = -45 x 2
 

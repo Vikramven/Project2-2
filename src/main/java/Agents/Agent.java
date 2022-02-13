@@ -12,15 +12,16 @@ public class Agent  {
     Move agentMove; // update for agent itself and the Map
     Vector getDirection;
     double getHearing;
-    double[][] agentPosition;//current position on the Map
-    Trace agentTrace; //1 if Intruider, 0 if Guard
+    int[][] agentPosition;//current position on the Map
+    int[][] agentGoal;
+    Trace agentTrace; //1 if Intruder, 0 if Guard
     int Team;
     int[] spawning = new int [4];
 
     int direction; // we try to split the 360 in a smart way
 
     public Agent(/*int Team,*/ ){
-        spawning = variable.getSpawnAreaGuards();
+        spawning = variables.getSpawnAreaGuards();
         // Team = Team;
     }
     int [] getAgentSpawning(){return  spawning ; }
