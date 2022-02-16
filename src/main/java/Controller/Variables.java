@@ -17,12 +17,15 @@ public class Variables {
     private int width;
     private int numberOfGuards;
     private int numberOfIntruders;
+    private int[] spawnAreaGuards;
     private double walkingSpeedGuard;
     private double sprintingSpeedGuards; //do we need this? I think only intruders sprint (to discuss) @zofia 
     private double walkingSpeedIntruder;
     private double sprintingSpeedIntruder;
     private double timeIncrement;
     private double scaling;
+    private ArrayList<int[]> walls;  //to be PARSED
+
     /**
      * TODO:how to define target and spawn area?, texture type?
      */
@@ -62,6 +65,8 @@ public class Variables {
         this.numberOfIntruders = numberOfIntruders;
     }
 
+    public void setSpawnAreaGuards(int[]spawnAreaGuards){this.spawnAreaGuards = spawnAreaGuards;}
+
     public void setWalkingSpeedGuard(double walkingSpeedGuard) {
         this.walkingSpeedGuard = walkingSpeedGuard;
     }
@@ -86,9 +91,11 @@ public class Variables {
         this.scaling = scaling;
     }
 
+
     /**
      * TODO:methods for first todo
      */
+    public ArrayList <int[]> getWalls() {return walls;}; //to be PARSED
 
     public int getMode() {
         return mode;
@@ -109,6 +116,8 @@ public class Variables {
     public int getNumberOfIntruders() {
         return numberOfIntruders;
     }
+
+    public int[] getSpawnAreaGuards(){return spawnAreaGuards;}//wrong type int Array of size 4
 
     public double getWalkingSpeedGuard() {
         return walkingSpeedGuard;

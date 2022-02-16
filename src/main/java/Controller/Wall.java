@@ -1,20 +1,18 @@
 package Controller;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-
-
-public class Wall extends Rectangle {
-//    private Rectangle rectangle;
+import javafx.scene.shape.Rectangle;
 
 
+public class Wall {
+    private Rectangle rectangle;
+    private Color color;
 
-    public Wall(int x1, int y1,int x3,int y3){
-        super(x1,y1,x3,y3);
+    public Wall(Rectangle rectangle){
+        this.rectangle=rectangle;
     }
-
-
-
-
+    public void draw(GraphicsContext g){
+       //SET COLOR TO BLACK  g.setFill(rectangle.BLACK);
+        g.fillRect(rectangle.getX(),rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+    }
 }
