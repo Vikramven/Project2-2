@@ -1,0 +1,45 @@
+Index: src/main/java/Controller/Vector.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\n\npublic class Vector {\n    private double x;\n    private double y;\n\n    public Vector(double x, double y){\n        this.x=x;\n        this.y=y;\n    }\n\n    public double getX() {\n        return x;\n    }\n\n    public double getY() {\n        return y;\n    }\n\n    public Vector add(Vector number){\n        return new Vector(this.x+number.getX(), this.y+number.getY());\n    }\n\n    public Vector subtract(Vector number){\n        return new Vector(this.x-number.getX(), this.y-number.getY());\n    }\n\n    public Vector scale(double scale){\n        return new Vector(scale*this.getX(),scale*this.getX() );\n    }\n\n    /**\n     * TODO:create cross and dot product methods\n     * a^2-b^2 methods, distance between 2 points euclidean?\n     */\n\n\n\n\n    //copy method for A Star\n    public Vector copy(){\n        return new Vector(x,y);\n    }\n\n    public Vector turn(double degree) {\n        Matrix turned=new Matrix(degree);\n\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Controller/Vector.java b/src/main/java/Controller/Vector.java
+--- a/src/main/java/Controller/Vector.java	(revision 9e68d1075ed42a7efaf89094be9de0b123e31f02)
++++ b/src/main/java/Controller/Vector.java	(date 1644767500311)
+@@ -42,8 +42,8 @@
+         return new Vector(x,y);
+     }
+ 
+-    public Vector turn(double degree) {
+-        Matrix turned=new Matrix(degree);
+-
+-    }
++//    public Vector turn(double degree) {
++//        Matrix turned=new Matrix(degree);
++//
++//    }
+ }
+Index: src/main/java/GUI/Frame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI;\n\nimport javafx.scene.layout.BorderPane;\n\n\npublic class Frame extends BorderPane{\n    /**\n     * construtor that will create the object, with basic parameters\n     */\n    public Frame(int width, int height){\n        Render renderer= new Render(width,height)\n        this.setCenter(renderer)\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/GUI/Frame.java b/src/main/java/GUI/Frame.java
+--- a/src/main/java/GUI/Frame.java	(revision 9e68d1075ed42a7efaf89094be9de0b123e31f02)
++++ b/src/main/java/GUI/Frame.java	(date 1644767491205)
+@@ -8,8 +8,8 @@
+      * construtor that will create the object, with basic parameters
+      */
+     public Frame(int width, int height){
+-        Render renderer= new Render(width,height)
+-        this.setCenter(renderer)
++        Render renderer= new Render(width,height);
++        this.setCenter(renderer);
+ 
+     }
+ }
+\ No newline at end of file
