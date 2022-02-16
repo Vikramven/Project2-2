@@ -47,7 +47,8 @@ public class Tree {
 
     public void priorityList(Agent agent, Map map) {
         //get the starting position
-        int[][] agentPosition = agent.getAgentPosition();
+        int agentPositionX = agent.getAgentPositionX();
+        int agentPositionY = agent.getAgentPositionY();
         Node parent = new Node(null, null );
 
         int legalMovesSize = move.legalMoveGenerator(agent, map).size();
@@ -59,20 +60,20 @@ public class Tree {
         //Create the exploration structure
         ArrayList<ArrayList<Node>> visitedNodes = new ArrayList<ArrayList<Node>>();
         int[][] exploration = new int[1][1];
-        exploration[0] = agentPosition [0];
-        exploration[1] = agentPosition [1];
+//        exploration[0] = agentPosition [0];
+//        exploration[1] = agentPosition [1];
 
 
         while (exploration != agentGoal) {
 
-            //create the inial branches from start position
+            //create the initial branches from start position
             for(int i = 0; i < legalMovesSize ; i++){
                 //create the Nodes that extend the starting Position
                 Node newNode = new Node(parent, null);
 
                 for(int j = 0; j < 2 ; j++){ //dimension of the move.array storing the coordinates
                    //set the correct coordinates of the above created Node
-                    newNode.setPosition(move.legalMoveGenerator(agent, map).get(i).[j]);
+                    newNode.setPosition(move.legalMoveGenerator(agent, map).get(i)[j]);
                 }
                 //adding the created Node to the visitedArray
                 visitedNodes.get(0).get(i).addChild(newNode);

@@ -8,25 +8,56 @@ public class Move {
     // 8 possible moves: each is 45° angles
     //convertor: angle to director based on a range
 
-
     //Left: -90 ° = -45 x 2
-public int[] leftMove(){}
+public void leftMove(Agent agent){
+    agent.setAgentPositionX(agent.getAgentPositionX()-1);
+}
     //Right: +90° = +45 x 2
-
-public int[] rightMove(){}
+public void rightMove(Agent agent){
+    agent.setAgentPositionX(agent.getAgentPositionX()+1);
+}
     //Up: +0°
-public int[] upMove(){}
+public void upMove(Agent agent){
+    agent.setAgentPositionY(agent.getAgentPositionY()+1);
+}
     //Down: -180° = -45 x 4
-public int[]downMove(){}
+public void downMove(Agent agent){
+    agent.setAgentPositionY(agent.getAgentPositionY()-1);
+}
     //Diagonal left-Up: +45°
-public int[] diagonalLeftUpMove(){}
+public void diagonalLeftUpMove(Agent agent){
+    agent.setAgentPositionX(agent.getAgentPositionX()-1);
+    agent.setAgentPositionY(agent.getAgentPositionY()+1);
+}
     //Diagonal Right-Up: -45°
-public int[] diagonalRightUpMove(){}
+public void diagonalRightUpMove(Agent agent){
+    agent.setAgentPositionX(agent.getAgentPositionX()+1);
+    agent.setAgentPositionY(agent.getAgentPositionY()+1);
+}
     //Diagonal left-Down: +225 = -45 x 5
-public int[] diagonalLeftDownMove(){}
+public void diagonalLeftDownMove(Agent agent){
+    agent.setAgentPositionX(agent.getAgentPositionX()-1);
+    agent.setAgentPositionY(agent.getAgentPositionY()-1);
+}
     //Diagonal Right-Down: +135° = +45 x 3
-public int[] diagonalRightDownMove(){}
+public void diagonalRightDownMove(Agent agent){
+    agent.setAgentPositionX(agent.getAgentPositionX()+1);
+    agent.setAgentPositionY(agent.getAgentPositionY()-1);
+}
 
+public boolean canMoveThere(Map map, int x, int y){
+    /**
+     * returns true if an agent can move to the (x,y) field
+     * on the map that is passed to this method
+     */
+
+    if(map.getFieldCost(x,y)==Integer.MAX_VALUE){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
 
     public  ArrayList <int[]> legalMoveGenerator(Agent agent, Map map){
 
@@ -66,6 +97,7 @@ public int[] diagonalRightDownMove(){}
 
     }
 
+    // Calculates the Manhattan distance
     public int manhattanHeuristic(int x, int y, int goalX, int goalY){
         return (x - goalX) + (y - goalY);
     }

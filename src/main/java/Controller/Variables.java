@@ -7,8 +7,6 @@ import javafx.scene.effect.Light;
 
 import java.util.ArrayList;
 
-
-
 public class Variables {
     private boolean unlock=true;
     private int mode;

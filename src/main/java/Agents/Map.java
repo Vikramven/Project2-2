@@ -50,7 +50,8 @@ public class Map{
 
    public void teamCreation(){
       for(int i = 0; i < variables.getNumberOfGuards(); i++){
-          Agent newAgent = new Agent(); //create the Agent
+          Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
+
 
         /*     Place them on the Map
                same principle as the wall
