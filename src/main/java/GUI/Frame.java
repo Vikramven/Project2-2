@@ -8,7 +8,7 @@ public class Frame extends BorderPane{
      * construtor that will create the object, with basic parameters
      */
     public Frame(int width, int height){
-        Render renderer= new Render(width,height);
+        Render renderer= new Render();
         this.setCenter(renderer);
 
     }

@@ -89,6 +89,13 @@ public class FileParser {
                                 Integer.parseInt(locations[1]),
                                 Integer.parseInt(locations[2]),
                                 Integer.parseInt(locations[3]));
+                    case "texture":
+                       map.createTexture(Integer.parseInt(locations[0]),
+                               Integer.parseInt(locations[1]),
+                               Integer.parseInt(locations[2]),
+                               Integer.parseInt(locations[3]),
+                               Integer.parseInt(locations[4]),
+                               Integer.parseInt(locations[5]));
                 }
 
             }

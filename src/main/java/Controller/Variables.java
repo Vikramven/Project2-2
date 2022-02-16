@@ -27,14 +27,9 @@ public class Variables {
      * TODO:how to define target and spawn area?, texture type?
      */
     private ArrayList<Wall> walls;
-    private ArrayList<Rectangle2D> towers;
     private ArrayList<Teleport> portals;
     private ArrayList<Shade> shades;
-    private ArrayList<Rectangle2D> textures;
-    private ArrayList<Point2D> locationTeleport;
-    private Rectangle2D targetArea;
-    private Rectangle2D spawnIntruder;
-    private Rectangle2D spawnGuards;
+    private ArrayList<Texture> textures;
 
 
 
@@ -48,6 +43,8 @@ public class Variables {
             this.mode=mode;
         }
     }
+
+
 
     public void setHeight(int height) {
         this.height = height;
@@ -162,6 +159,6 @@ public class Variables {
     }
 
 
-
-
+    public void createTexture(int x1, int x2, int x3, int x4, int x5, int x6) {
+    }
 }

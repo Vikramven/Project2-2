@@ -26,4 +26,8 @@ x4 = x1, y4 = y3
         coords.add(x1); coords.add(y3); //point D
     }
 
+    public ArrayList<Integer> getCoords(){
+        return coords;
+    }
+
 }

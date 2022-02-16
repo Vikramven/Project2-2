@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/FileParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/FileParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Shade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Shade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Vector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/GUI/Frame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GUI/Frame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -32,6 +39,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -39,7 +49,36 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectId" id="256KGD7WaqHSuu6w26u96APtVh7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="" />
+      <created>1644842061035</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1644842061035</updated>
+    </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
