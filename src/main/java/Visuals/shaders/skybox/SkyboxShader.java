@@ -10,8 +10,8 @@ import Visuals.shaders.ShaderProgram3D;
 
 public class SkyboxShader extends ShaderProgram3D{
 
-    private static final String VERTEX_FILE = "src/main/java/Visuals/shaders/skybox/skyboxVertexShader";
-    private static final String FRAGMENT_FILE = "src/main/java/Visuals/shaders/skybox/skyboxFragmentShader";
+    private static final String VERTEX_FILE = "src/main/java/Visuals/shaders/skybox/skyboxVertexShader.vert";
+    private static final String FRAGMENT_FILE = "src/main/java/Visuals/shaders/skybox/skyboxFragmentShader.frag";
 
     private static final float ROTATE_SPEED = 1f;
 

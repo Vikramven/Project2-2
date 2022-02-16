@@ -13,8 +13,8 @@ import java.util.List;
 public class StaticShader extends ShaderProgram3D {
 
     private static final int MAX_LIGHTS = 4;
-    private static final String VERTEX_FILE = "src/main/java/Visuals/shaders/vertexShader";
-    private static final String FRAGMENT_FILE = "src/main/java/Visuals/shaders/fragmentShader";
+    private static final String VERTEX_FILE = "src/main/java/Visuals/shaders/vertexShader.vert";
+    private static final String FRAGMENT_FILE = "src/main/java/Visuals/shaders/fragmentShader.frag";
     private int location_transformationMatrix;
     private int location_projectionMatrix;
     private int location_viewMatrix;
