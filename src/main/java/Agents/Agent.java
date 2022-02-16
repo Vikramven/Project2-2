@@ -12,7 +12,11 @@ public class Agent  {
     Move agentMove; // update for agent itself and the Map
     Vector getDirection;
     double getHearing;
-    int[][] agentPosition;//current position on the Map
+    /*It is interesting for each agent to contain a copy of the map,
+    but  when updating the map this also means updating each of the agents memory*/
+    int agentPositionX;//current position on a copy of the Map
+    int agentPositionY;
+
     int[][] agentGoal;
     Trace agentTrace; //-11 if Intruder, 0 if Guard
     int team; //1 if Intruder, 0 if Guard
@@ -20,9 +24,13 @@ public class Agent  {
 
     int direction; // we try to split the 360 in a smart way
 
-    public Agent(/*int Team,*/ ){
-        spawning = variables.getSpawnAreaGuards();
-        // Team = Team;
+    public Agent(int team /* zero for phase 1*/ ){
+        this.team = team;
+        for(int i = 0; i < 4 ; i++) {
+           spawning[i] = variables.getSpawnAreaGuards()[i];
+        }
+        convertPosition();
+
     }
 
     public void convertPosition(){
