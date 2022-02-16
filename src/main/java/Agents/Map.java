@@ -2,6 +2,7 @@ package Agents;
 import Controller.Variables;
 import java.lang.Integer;
 import java.util.ArrayList;
+import Controller.Wall;
 
 public class Map{
 /*
@@ -23,27 +24,28 @@ public class Map{
       mapHeight = variables.getHeight();
       mapWidth = variables.getWidth();
       matrix = new int[mapWidth][mapHeight]; //dimension of the map
-       walls = variables.getWalls(); //placing walls on the map
+      walls = variables.getWalls(); //placing walls on the map
       buildingWalls(matrix);//update the map with the walls
 
    }
 
    public void buildingWalls(int[][] matrix){
       for(int i = 0; i < walls.size(); i++){
-            int coords = walls.get(i).getCoords();
-            int x1 = coords.get(1);
-            int x2 = walls.get(i)[2];
-            int y1 = walls.get(i)[3];
-            int y2 = walls.get(i)[4];
-            //For each of the walls : use two nested for loops to place the rectangle on the map
-          for(int i = y1 /*LEFT UP*/; i < y2+1 /*RIGHT UP*/; i++){
-              matrix[x1][i] = Integer.MAX_VALUE;
-              matrix[x2][i] = Integer.MAX_VALUE; //this sets the cost to infinity for the vertical walls
+            ArrayList<Integer> coords = walls.get(i).getCoords();
+            int x1 = coords.get(0);
+            int x2 = coords.get(1);
+            int y1 = coords.get(2);
+            int y2 = coords.get(3);
+            //@zofia For each of the walls : two separate loops, first we build the vertical walls, then the horizontal walls
+          for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){
+              matrix[x1][j] = Integer.MAX_VALUE;
+              matrix[x2][j] = Integer.MAX_VALUE; //this sets the cost to infinity for the vertical walls
               }
-          for(int i = x1; i<x2+1; i++){
-              matrix[i][y1] = Integer.MAX_VALUE;
-              matrix[i][y2] = Integer.MAX_VALUE;
+          for(int j = x1/*left border*/; j<x2+1/*right border*/; j++){
+              matrix[j][y1] = Integer.MAX_VALUE;
+              matrix[j][y2] = Integer.MAX_VALUE;
           }
+          //this only sets the borders of the walls to infinity
       }
    }
 

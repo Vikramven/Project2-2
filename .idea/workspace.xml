@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="" />
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/Spawn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/Target.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_22__16_52__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_22__16_52__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Entrance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Entrance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/FileParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/FileParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Ray.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/ScatterRays.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Shade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Shade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/VisualEngine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

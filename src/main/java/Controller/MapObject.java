@@ -1,10 +1,33 @@
 package Controller;
 
-public interface MapObject {
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public abstract class MapObject {
     /**
-    I'm assuming shade works exactly like wall. Could be different I guess?
-    interfaces:
-    mapObj(I)
+     * Interface for each object on the map.
+     * Creates a unique id for each object and establishes a getCoordinates method.
+     */
+    private static AtomicInteger uniqueId=new AtomicInteger();
+    private int id;
+
+    ArrayList<Integer> coords = new ArrayList<Integer>();
+
+    public MapObject(){
+        id = uniqueId.getAndIncrement();
+    }
+
+    public ArrayList<Integer> getCoords(){
+        return coords;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    /*
+    This structure will enable polymorphism later:
+    mapObj(AC)
     -> rect (AC)
         +wall C
         +shade C
@@ -12,5 +35,9 @@ public interface MapObject {
         +door C (like a portal)
         +portal C
     -> texture C
+
+    I- interface, AC - abstract class, C - class
      */
+
+    //static int ID;
 }

@@ -1,6 +1,5 @@
 package Controller;
-import java.awt.Point;
-import java.awt.geom.Rectangle2D;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -10,12 +9,12 @@ public class FileParser {
 
     public static Variables readFile(String path) {
         Path file = Paths.get(path);
-        map = new Variables();
+        map = new Variables();//parse and set all values into variables class
         try (Scanner scan = new Scanner(file)) {
-            int countLines = 1;
+            int countNumberLines = 1;//we need to handle an exception for this case
             while (scan.hasNextLine()) {
-                parseNextLine(scan.nextLine(), countLines);
-                countLines++;
+                parseNextLine(scan.nextLine(), countNumberLines);
+                countNumberLines++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,12 +28,17 @@ public class FileParser {
         try (Scanner scan = new Scanner(nextLine)) {
 
             if (scan.hasNext()) {
-                String id = scan.next();
+                String check = scan.next();
                 String value = scan.next();
-                id = id.trim();
+                /**
+                 * trim all lead and tail spaces if any
+                 */
+                check = check.trim();
                 value = value.trim();
-                String[] coords = value.split(" ");
-                switch (id) {
+                String[] locations = value.split(" ");//for variables with array values
+                switch (check) {
+                    case "gameMode":
+                        map.setMode(Integer.parseInt(value));
                     case "height":
                         map.setHeight(Integer.parseInt(value));
                         break;
@@ -59,8 +63,56 @@ public class FileParser {
                     case "baseSpeedGuard":
                         map.setWalkingSpeedGuard(Double.parseDouble(value));
                         break;
-                    case "gameMode":
-                        map.setMode(Integer.parseInt(value));
+                    case "timeStep":
+                        map.setTimeStep(Double.parseDouble(value));
+                        break;
+                    case "targetArea":
+                        map.setTargetArea(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]));
+                        break;
+                    case "spawnAreaIntruders":
+                        map.setSpawnAreaIntruders(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]));
+                        break;
+                    case "spawnAreaGuards":
+                        map.setSpawnAreaGuards(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]));
+                        break;
+                    case "wall":
+                        map.createWall(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]));
+                        break;
+                    case "teleport":
+                        map.createTeleport(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]),
+                                Integer.parseInt(locations[4]),
+                                Integer.parseInt(locations[5]),
+                                Double.parseDouble(locations[6]));
+                        break;
+                    case "shaded":
+                        map.createShade(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]));
+                        break;
+                    case "texture":
+                        map.createTexture(Integer.parseInt(locations[0]),
+                                Integer.parseInt(locations[1]),
+                                Integer.parseInt(locations[2]),
+                                Integer.parseInt(locations[3]),
+                                Integer.parseInt(locations[4]),
+                                Integer.parseInt(locations[5]));
+                        break;
                 }
 
             }

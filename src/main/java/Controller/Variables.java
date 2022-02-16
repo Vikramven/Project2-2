@@ -1,38 +1,37 @@
 package Controller;
 
-import com.sun.javafx.geom.Rectangle;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
-
+import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 
 public class Variables {
-    /*
-    general comment: variables class is supposed to have publicly available data,
-    so it should have public attributes,
-     */
+
+    //simple type variables
     private boolean unlock=true;
     private int mode;
     private int height;
     private int width;
+    private double scaling;
     private int numberOfGuards;
     private int numberOfIntruders;
-    private int[] spawnAreaGuards;
     private double walkingSpeedGuard;
     private double sprintingSpeedGuards; //do we need this? I think only intruders sprint (to discuss) @zofia 
     private double walkingSpeedIntruder;
     private double sprintingSpeedIntruder;
-    private double timeIncrement;
-    private double scaling;
-    private ArrayList<int[]> walls;  //to be PARSED
+    private double timeStep;
+
 
     /**
-     * TODO:how to define target and spawn area?, texture type?
+     * TODO:how to define texture type?
      */
+
+    //complex type variables
     private ArrayList<Wall> walls;
     private ArrayList<Teleport> portals;
     private ArrayList<Shade> shades;
     private ArrayList<Texture> textures;
+    private Target target;
+    private Spawn spawnAreaGuards;
+    private Spawn spawnAreaIntruders;
 
 
 
@@ -47,14 +46,16 @@ public class Variables {
         }
     }
 
-
-
     public void setHeight(int height) {
         this.height = height;
     }
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public void setScaling(double scaling) {
+        this.scaling = scaling;
     }
 
     public void setNumberOfGuards(int numberOfGuards) {
@@ -65,7 +66,10 @@ public class Variables {
         this.numberOfIntruders = numberOfIntruders;
     }
 
-    public void setSpawnAreaGuards(int[]spawnAreaGuards){this.spawnAreaGuards = spawnAreaGuards;}
+    public void setSpawnAreaGuards(int x1, int y1, int x2, int y2){this.spawnAreaGuards = new Spawn(x1,y1,x2,y2);}
+
+    public void setSpawnAreaIntruders(int x1, int y1, int x2, int y2){this.spawnAreaIntruders = new Spawn(x1,y1,x2,y2);}
+
 
     public void setWalkingSpeedGuard(double walkingSpeedGuard) {
         this.walkingSpeedGuard = walkingSpeedGuard;
@@ -83,19 +87,21 @@ public class Variables {
         this.sprintingSpeedIntruder = sprintingSpeedIntruder;
     }
 
-    public void setTimeIncrement(double timeIncrement) {
-        this.timeIncrement = timeIncrement;
+    public void setTimeStep(double timeIncrement) {
+        this.timeStep = timeIncrement;
     }
 
-    public void setScaling(double scaling) {
-        this.scaling = scaling;
+    public void setTargetArea(int x1, int y1, int x2, int y2){
+        this.target = new Target(x1,y1,x2,y2);
     }
+
+
 
 
     /**
      * TODO:methods for first todo
      */
-    public ArrayList <int[]> getWalls() {return walls;}; //to be PARSED
+    public ArrayList <Wall> getWalls() {return walls;}; //to be PARSED
 
     public int getMode() {
         return mode;
@@ -117,7 +123,10 @@ public class Variables {
         return numberOfIntruders;
     }
 
-    public int[] getSpawnAreaGuards(){return spawnAreaGuards;}//wrong type int Array of size 4
+    public Spawn getSpawnAreaGuards(){return spawnAreaGuards;}
+    //we'll have to edit methods in Agent later, spawn is a rectangle like a wall
+
+    public Spawn getSpawnAreaIntruders(){return  spawnAreaIntruders;}
 
     public double getWalkingSpeedGuard() {
         return walkingSpeedGuard;
@@ -139,9 +148,10 @@ public class Variables {
         return scaling;
     }
 
-    public double getTimeIncrement() {
-        return timeIncrement;
+    public double getTimeStep() {
+        return timeStep;
     }
+
 
     public void createWall(int x1, int y1, int x2, int y2){
         if(unlock){
@@ -154,12 +164,6 @@ public class Variables {
             this.portals.add(new Teleport(x1,y1,x2,y2,x3,y3,degree));
         }
     }
-    public ArrayList<Rectangle2D> getWalls()
-    {
-        return (ArrayList<Rectangle2D>) this.walls.clone();
-    }
-
-
 
     public void createShade(int x1, int y1, int x2, int y2){
         if(unlock){
@@ -167,7 +171,9 @@ public class Variables {
         }
     }
 
-
     public void createTexture(int x1, int x2, int x3, int x4, int x5, int x6) {
+        if(unlock){
+            this.textures.add(new Texture(x1,x2,x3,x4,x5,x6));
+        }
     }
 }
