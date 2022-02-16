@@ -2,7 +2,6 @@ package Agents;
 import Controller.Variables;
 import java.lang.Integer;
 import java.util.ArrayList;
-import Controller.Wall;
 
 public class Map{
 /*

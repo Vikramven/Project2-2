@@ -2,7 +2,6 @@
 package Agents;
 
 import Controller.Variables;
-import Controller.Vector;
 import Path.Move;
 
 public class Agent  {
