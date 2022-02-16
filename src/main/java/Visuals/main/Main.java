@@ -1,7 +1,5 @@
 package Visuals.main;
 
-import Visuals.GUI.GUIRenderer;
-import Visuals.GUI.GUITexture;
 import Visuals.engine.graphics.Loader;
 import Visuals.engine.graphics.MasterRenderer;
 import Visuals.engine.graphics.models.RawModel;
@@ -68,11 +66,6 @@ public class Main implements Runnable {
 	public TerrainTexture bTexture;
 	public TerrainTexturePack texturePack;
 	public TerrainTexture blendMap;
-
-	public GUITexture whiteWin;
-	public GUITexture blackWin;
-	public GUITexture draw;
-	public GUIRenderer guiRenderer;
 
 	private static final float RED = 0.5f;
 	private static final float GREEN = 0.5f;
@@ -159,9 +152,6 @@ public class Main implements Runnable {
 			if (Input.isKeyDown(GLFW.GLFW_KEY_M) /*&& !isOpenMoveBox*/ ) {
 				// Action after 'M' key press.
 			}
-		}
-		if (guiRenderer != null){
-			guiRenderer.cleanUp();
 		}
 
 		renderer.cleanUp();

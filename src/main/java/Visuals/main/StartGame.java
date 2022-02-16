@@ -1,6 +1,6 @@
 package Visuals.main;
 
-public class runnerr {
+public class StartGame {
 
     public static void main(String[] args){
 
