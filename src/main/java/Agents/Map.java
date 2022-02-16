@@ -2,6 +2,7 @@ package Agents;
 import Controller.Variables;
 import java.lang.Integer;
 import java.util.ArrayList;
+import Controller.Wall;
 
 public class Map{
 /*
@@ -16,7 +17,7 @@ public class Map{
    private int mapHeight;
    private int mapWidth;
    private int[][] matrix;
-   private ArrayList <int[]> walls; //check every 2 integers
+   private ArrayList <Wall> walls; //check every 2 integers
    private Variables variables = new Variables();
 
    public Map(){
@@ -30,15 +31,19 @@ public class Map{
 
    public void buildingWalls(int[][] matrix){
       for(int i = 0; i < walls.size(); i++){
-            int x1 = walls.get(i)[1];
+            int coords = walls.get(i).getCoords();
+            int x1 = coords.get(1);
             int x2 = walls.get(i)[2];
             int y1 = walls.get(i)[3];
             int y2 = walls.get(i)[4];
             //For each of the walls : use two nested for loops to place the rectangle on the map
-          for(int a = /*LEFT UP*/; a < /*RIGHT UP*/; a++){
-              for(int b = /*LEFT UP*/; b < /*RIGHT DOWN*/; b++){
-                  matrix[a][b] = Integer.MAX_VALUE;// infinite cost for walls is set
+          for(int i = y1 /*LEFT UP*/; i < y2+1 /*RIGHT UP*/; i++){
+              matrix[x1][i] = Integer.MAX_VALUE;
+              matrix[x2][i] = Integer.MAX_VALUE; //this sets the cost to infinity for the vertical walls
               }
+          for(int i = x1; i<x2+1; i++){
+              matrix[i][y1] = Integer.MAX_VALUE;
+              matrix[i][y2] = Integer.MAX_VALUE;
           }
       }
    }
@@ -46,6 +51,9 @@ public class Map{
    public int[][] getMatrix(){return matrix;};
    public int getMapHeight(){return mapHeight;};
    public int getMapWidth(){return mapWidth;};
+   public int getFieldCost(int x, int y){
+       return matrix[x][y];
+   }
 
 
    public void teamCreation(){
