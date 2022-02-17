@@ -63,6 +63,24 @@ public class FileParser {
                     case "baseSpeedGuard":
                         map.setWalkingSpeedGuard(Double.parseDouble(value));
                         break;
+                    case "sprintSpeedGuard":
+                        map.setSprintingSpeedGuard(Double.parseDouble(value));
+                        break;
+                    case "distanceViewing":
+                        map.setDistanceViewing(Integer.parseInt(value));
+                        break;
+                    case "distanceSmelling":
+                        map.setDistanceSmelling(Integer.parseInt(value));
+                        break;
+                    case "distanceHearingWalking":
+                        map.setDistanceHearingWalking(Integer.parseInt(value));
+                        break;
+                    case "distanceHearingSprinting":
+                        map.setDistanceHearingSprinting(Integer.parseInt(value));
+                        break;
+                    case "numberMarkers":
+                        map.setNumberMarkers(Integer.parseInt(value));
+                        break;
                     case "timeStep":
                         map.setTimeStep(Double.parseDouble(value));
                         break;

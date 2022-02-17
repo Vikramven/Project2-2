@@ -14,10 +14,15 @@ public class Variables {
     private int numberOfGuards;
     private int numberOfIntruders;
     private double walkingSpeedGuard;
-    private double sprintingSpeedGuards; //do we need this? I think only intruders sprint (to discuss) @zofia 
+    private double sprintingSpeedGuard;
     private double walkingSpeedIntruder;
     private double sprintingSpeedIntruder;
     private double timeStep;
+    private int distanceViewing;
+    private int distanceSmelling;
+    private int distanceHearingWalking;
+    private int distanceHearingSprinting;
+    private int numberMarkers;
 
 
     /**
@@ -70,13 +75,28 @@ public class Variables {
 
     public void setSpawnAreaIntruders(int x1, int y1, int x2, int y2){this.spawnAreaIntruders = new Spawn(x1,y1,x2,y2);}
 
+    public void setDistanceSmelling(int distance){
+        this.distanceSmelling = distance;
+    }
+
+    public void setDistanceHearingWalking(int distance){
+        this.distanceHearingWalking = distance;
+    }
+
+    public void setDistanceHearingSprinting(int distance){
+        this.distanceHearingSprinting = distance;
+    }
+
+    public void setNumberMarkers(int nr){
+        this.numberMarkers = nr;
+    }
 
     public void setWalkingSpeedGuard(double walkingSpeedGuard) {
         this.walkingSpeedGuard = walkingSpeedGuard;
     }
 
-    public void setSprintingSpeedGuards(double sprintingSpeedGuards) {
-        this.sprintingSpeedGuards = sprintingSpeedGuards;
+    public void setSprintingSpeedGuard(double sprintingSpeedGuards) {
+        this.sprintingSpeedGuard = sprintingSpeedGuards;
     }
 
     public void setWalkingSpeedIntruder(double walkingSpeedIntruder) {
@@ -132,8 +152,8 @@ public class Variables {
         return walkingSpeedGuard;
     }
 
-    public double getSprintingSpeedGuards() {
-        return sprintingSpeedGuards;
+    public double getSprintingSpeedGuard() {
+        return sprintingSpeedGuard;
     }
 
     public double getWalkingSpeedIntruder() {
@@ -152,6 +172,13 @@ public class Variables {
         return timeStep;
     }
 
+    public int getDistanceSmelling(){return this.distanceSmelling;}
+
+    public int getDistanceHearingWalking(){return this.distanceHearingWalking;}
+
+    public int getDistanceHearingSprinting(){return this.distanceHearingSprinting;}
+
+    public int getNumberMakers(){return this.numberMarkers;}
 
     public void createWall(int x1, int y1, int x2, int y2){
         if(unlock){
@@ -175,5 +202,13 @@ public class Variables {
         if(unlock){
             this.textures.add(new Texture(x1,x2,x3,x4,x5,x6));
         }
+    }
+
+    public int getDistanceViewing() {
+        return distanceViewing;
+    }
+
+    public void setDistanceViewing(int distanceViewing) {
+        this.distanceViewing = distanceViewing;
     }
 }
