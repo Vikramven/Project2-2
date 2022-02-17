@@ -83,10 +83,13 @@ public class Main implements Runnable {
 		window.create();
 		renderer = new MasterRenderer(loader);
 
+		// Loading in an object:
+		// * step 1: get .obj file (from ../res/3D/)
 
-		modelDataGuard = OBJFileLoader.loadOBJ("city");
-		modelDataIntruder = OBJFileLoader.loadOBJ("guard");
+		modelDataGuard = OBJFileLoader.loadOBJ("wall");
+		modelDataIntruder = OBJFileLoader.loadOBJ("portal");
 
+		// * step 2: load the model data
 
 		guardModel = loader.loadToVAO(modelDataGuard.getVertices(),modelDataGuard.getTextureCoords(),modelDataGuard.getNormals(),modelDataGuard.getIndices());
 		intruderModel = loader.loadToVAO(modelDataIntruder.getVertices(),modelDataIntruder.getTextureCoords(),modelDataIntruder.getNormals(),modelDataIntruder.getIndices());
@@ -99,8 +102,10 @@ public class Main implements Runnable {
 		texturePack = new TerrainTexturePack(backgroundTexture, rTexture,gTexture,bTexture);
 		blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
-		texturedModelGuard = new TexturedModel(guardModel, new ModelTexture(loader.loadTexture("cityTest")));
-		texturedModelIntruder = new TexturedModel(intruderModel, new ModelTexture(loader.loadTexture("cityTest")));
+		// * step 3: Add textures and models together.
+
+		texturedModelGuard = new TexturedModel(guardModel, new ModelTexture(loader.loadTexture("wallTexture")));
+		texturedModelIntruder = new TexturedModel(intruderModel, new ModelTexture(loader.loadTexture("portalTexture")));
 
 		textureGuard = texturedModelGuard.getTexture();
 		textureGuard.setShineDamper(5);
@@ -112,7 +117,7 @@ public class Main implements Runnable {
 
 
 		// generate terrain
-		terrain = new Terrain(0,0,loader,texturePack, blendMap,"heightMap2");
+		terrain = new Terrain(0,0,loader,texturePack, blendMap,"heightMap");
 
 		// generate light
 		lights = new ArrayList<>();
@@ -121,9 +126,11 @@ public class Main implements Runnable {
 		// create GUI elements
 
 		// generate players
+		// * step 4: Generate entities or players.
 
-		guard = new Player(texturedModelGuard, new Vector3f(25,0,70),0,90,0,1,1);
-		intruder = new Player(texturedModelIntruder, new Vector3f(30,0,70),0,90,0,1,1);
+		guard = new Player(texturedModelGuard, new Vector3f(25,terrain.getHeightOfTerrain(25,70),70),0,90,0,1,1);
+		intruder = new Player(texturedModelIntruder, new Vector3f(25,terrain.getHeightOfTerrain(25,70),71),0,90,0,1,1);
+
 
 		// put the camera
 		camera = new Camera(guard);
@@ -171,6 +178,8 @@ public class Main implements Runnable {
 		for(Player pieces : players){
 			renderer.processEntity(pieces);
 		}
+
+		// * step 5: renderer.processEntity(nameOfEntity that you made at step 4.)
 
 		renderer.processTerrain(terrain);
 
