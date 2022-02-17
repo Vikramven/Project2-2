@@ -1,5 +1,3 @@
-import GUI.Frame;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,11 +11,6 @@ public class App {
     @Override
     public void start(Stage stage) throws IOException{
         this.stage = stage;
-        Frame frame = new Frame(800, 500);
-        Scene scene = new Scene(frame,800, 500);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
     }
 
     /**
@@ -26,7 +19,7 @@ public class App {
      */
     public static void main(String[] args)
     {
-        launch();
+        System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 }
 

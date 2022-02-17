@@ -2,6 +2,7 @@
 package Agents;
 
 import Controller.Variables;
+import Controller.Vector;
 import Path.Move;
 
 public class Agent  {
@@ -35,7 +36,7 @@ public class Agent  {
     public void convertPosition(){
         //CASE 0:  the spawning is horizontally or vertically parallel to the map coordinates
         if(getAgentSpawning()[0] == getAgentSpawning()[2] /*same x => vertically parallel*/ ) {
-            int spawnCorridorSize = Math.abs(getAgentSpawning()[1] - getAgentSpawning()[3]);/
+            int spawnCorridorSize = Math.abs(getAgentSpawning()[1] - getAgentSpawning()[3]);
             /* Compare the number of agents to the available size
                 only one thing could crah this code
                 if the test map has wall's coordonnates that conflict with spawning

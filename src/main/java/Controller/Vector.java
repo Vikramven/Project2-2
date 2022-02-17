@@ -43,6 +43,7 @@ public class Vector {
     }
 
     public Vector turn(double degree) {
-        Matrix turned=new Matrix(degree);
+        //Matrix turned=new Matrix(degree);
+        return new Vector(0,0);
     }
 }
