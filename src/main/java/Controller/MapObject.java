@@ -9,7 +9,7 @@ public abstract class MapObject {
      * Creates a unique id for each object and establishes a getCoordinates method.
      */
     private static AtomicInteger uniqueId=new AtomicInteger();
-    private int id;
+    private final int id;
 
     ArrayList<Integer> coords = new ArrayList<Integer>();
 

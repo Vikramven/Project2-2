@@ -25,5 +25,4 @@ x4 = x1, y4 = y3
         super.coords.add(x3); super.coords.add(y3); //point C
         super.coords.add(x1); super.coords.add(y3); //point D
     }
-
 }
