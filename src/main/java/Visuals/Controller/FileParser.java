@@ -80,10 +80,7 @@ public class FileParser{
                          * how to get the height and width, check 3rd and 4th dimensions.
                          */
                     case "wall":
-                        map.createWall(new Rectangle2D(Double.parseDouble(locations[0]),
-                                Double.parseDouble(locations[1]),
-                                Integer.parseInt(locations[2]),
-                                Integer.parseInt(locations[3])));
+
                         break;
                 }
 

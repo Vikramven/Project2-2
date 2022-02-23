@@ -30,7 +30,7 @@ public class Variables {
     /**
      * TODO:how to define target and spawn area?, texture type?
      */
-    private ArrayList<Rectangle2D> walls;
+    private ArrayList<Integer> walls;
     private ArrayList<Rectangle2D> towers;
     private ArrayList<Rectangle2D> portals;
     private ArrayList<Rectangle2D> shade;
@@ -44,7 +44,8 @@ public class Variables {
 
     public Variables(){
         /**
-         * constructor for TODO
+         * constructor for
+         * TODO:in general, may need to create methods for objects
          */
     }
     public void setMode(int mode){
@@ -141,14 +142,14 @@ public class Variables {
         return timeIncrement;
     }
 
-    public void createWall(Rectangle2D wall){
+    public void createWall(int wall){
         if(unlock){
             this.walls.add(wall);
         }
     }
-    public ArrayList<Rectangle2D> getWalls()
+    public ArrayList<Integer> getWalls()
     {
-        return (ArrayList<Rectangle2D>) this.walls.clone();
+        return (ArrayList<Integer>) this.walls.clone();
     }
 
     public void createShade(Rectangle2D shade){
