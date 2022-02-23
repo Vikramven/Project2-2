@@ -15,11 +15,15 @@ import Visuals.entities.Camera;
 import Visuals.entities.Entity;
 import Visuals.entities.Light;
 import Visuals.entities.Player;
+import javafx.beans.binding.DoubleExpression;
 import org.lwjgl.glfw.GLFW;
+import org.lwjglx.util.vector.Vector;
 import org.lwjglx.util.vector.Vector3f;
 import org.lwjglx.util.vector.Vector4f;
 import Visuals.terrain.Terrain;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +61,7 @@ public class Main implements Runnable {
 
 	public List<Light> lights;
 	public List<Entity> entities;
-	public List<Player> players;
+	public List<Player> players = new ArrayList<>();
 	public static Terrain terrain;
 
 	public TerrainTexture backgroundTexture;
@@ -128,18 +132,18 @@ public class Main implements Runnable {
 		// generate players
 		// * step 4: Generate entities or players.
 
-		guard = new Player(texturedModelGuard, new Vector3f(25,terrain.getHeightOfTerrain(25,70),70),0,90,0,1,1);
-		intruder = new Player(texturedModelIntruder, new Vector3f(25,terrain.getHeightOfTerrain(25,70),71),0,90,0,1,1);
-
+		ArrayList<ArrayList<Player>> walls = new ArrayList<>();
+		walls.add(createWallFromParams(50, 0, 51, 20));
+		walls.add(createWallFromParams(0, 0, 1, 80));
+		walls.add(createWallFromParams(0, 79, 120, 80));
+		walls.add(createWallFromParams(119, 0, 120, 80));
+		walls.add(createWallFromParams(0, 0, 120, 1));
+		intruder = new Player(texturedModelIntruder, new Vector3f(25,terrain.getHeightOfTerrain(25,70),71),0,90,0,1,1);  //portal
 
 		// put the camera
-		camera = new Camera(guard);
-
-		players = new ArrayList<>();
-
-		players.add(guard);
-		players.add(intruder);
-
+		for(ArrayList<Player> wall : walls)
+			players.addAll(wall);
+		camera = new Camera(players.get(0));
 	}
 
 
@@ -164,6 +168,31 @@ public class Main implements Runnable {
 		renderer.cleanUp();
 		loader.cleanUp();
 		window.destroy();
+	}
+
+	private ArrayList<Player> createWallFromParams(double x1, double y1, double x2, double y2){
+		if(isParallelToX(x1, x2)){
+			return createWallParallelToX(Math.abs(y2-y1), (int)Math.min(x1, x2));
+		}
+		return createWallParallelToY(Math.abs(x2-x1), (int)Math.min(y1, y2));
+	}
+
+	private boolean isParallelToX(double x1, double x2){
+		return Math.abs(x2 - x1) == 1;
+	}
+
+	private ArrayList<Player> createWallParallelToX(double wallLength, int startPoint){
+		ArrayList<Player> walls = new ArrayList<>();
+		for(int i = 0; i < wallLength; i++)
+			walls.add(new Player(texturedModelGuard, new Vector3f(startPoint + i,0,0),0,0,0,1,1));
+		return walls;
+	}
+
+	private ArrayList<Player> createWallParallelToY(double wallLength, int startPoint){
+		ArrayList<Player> walls = new ArrayList<>();
+		for(int i = 0; i < wallLength; i++)
+			walls.add(new Player(texturedModelGuard, new Vector3f(0,0,startPoint + i),0,90,0,1,1));
+		return walls;
 	}
 
 	private void update() {
