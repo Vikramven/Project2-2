@@ -1,39 +1,50 @@
-:package Agents;
+package Agents;
 
 import Controller.Variables;
 import Controller.Vector;
 import Path.Move;
 
+import java.util.ArrayList;
+
+/*
+goal: last tile in vision in the alpha direction is the goal
+when you reach goal
+ */
+
+
 public class Agent  {
-    //TODO:create transform matrix method, think we will need it
-
-    Variables variables = new Variables();
-    Move agentMove; // update for agent itself and the Map
-    Vector getDirection;
-    double getHearing;
-    /*It is interesting for each agent to contain a copy of the map,
-    but  when updating the map this also means updating each of the agents memory
-     */
-
-    int agentPositionX;//current position on a copy of the Map
-    int agentPositionY;
-    int[][] agentGoal;
-    Trace agentTrace; //-11 if Intruder, 0 if Guard
+    //INSTANCES of class Agent
+    //Agent Team information
     int teamCode; //1 if Intruder, 0 if Guard
     Agent[] team = new Agent[variables.getNumberOfGuards()];
-    int[] spawning = new int [4];
 
-    int direction; // we try to split the 360 in a smart way
+    //Agent Geographical Informations
+    Variables variables = new Variables();
+    int[] spawning = new int [4]; // starting zone of the team
+    int agentPositionX;
+    int agentPositionY;
+     /* It is interesting for each agent to contain a copy of the map
+     * but  when updating the map this also means updating each of the agents memory
+      */
+    int[][] agentGoal;//current Goal for its A*
+    ArrayList <int[]> AgentTrace = new ArrayList<>(int[variables.//Agent Actions&special features //Agent Actions&special features  ]);
 
+    //Agent Actions
+    Move agentMove; // update for agent itself and the Map
+     int direction; // we try to split the 360 in a smart way
+
+    //Agent Range features
+    double getHearing; // ? for PHASE 2
+
+
+    /* METHOD(1): Agent
+     *   constructor
+     *   create an agent belonging to a specific team
+     * */
     public Agent(int team ){
         this.team = team;
-        for(int i = 0; i < 4 ; i++) {
-            spawning[i] = variables.getSpawnAreaGuards()[i];
-        }
-        // convertPosition(this.getTeam());// setting agent inside the Map
-        updateMap();//update the map With the agent knwoledge
+        ArrayList<Integer> spawnCoords = variables.getSpawnAreaGuards().getCoords();
     }
-
 
     public int[] getAgentSpawning(){return spawning;}
     public void setAgentPositionX(int agentPositionX){this.agentPositionX = agentPositionX;}
@@ -42,4 +53,11 @@ public class Agent  {
     public int getAgentPositionY(){return this.agentPositionY;}
     public int[][] getAgentGoal(){return this.agentGoal;}
 
+    public ArrayList <int[]> getAgentTrace(){
+        return AgentTrace;
+    }
+
+    public int [] getLastVisited(){
+        return AgentTrace.get(AgentTrace.size()-1);
+    }
 }

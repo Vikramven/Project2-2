@@ -1,4 +1,4 @@
-package Agents;
+package agents;
 
 public class Trace {
 /*  Trace corresponds to the path, the sequence of location visited by an agent.

@@ -1,4 +1,4 @@
-package Agents;
+package agents;
 import javafx.scene.paint.Color;
 import Controller.Vector;
 

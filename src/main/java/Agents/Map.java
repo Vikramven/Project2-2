@@ -4,7 +4,6 @@ import java.lang.Integer;
 import java.util.ArrayList;
 import Controller.Wall;
 
-public class Map{
 /*
      The General Map is :
          1/ BASIC VERSION : accessible by all Agents: complete knowledge
@@ -14,22 +13,46 @@ public class Map{
    We represent the map as a double Array.
 */
 
-   private int mapHeight;
+public class Map{
+//INSTANCES of class Map
+   private int mapHeight; //map dimensions
    private int mapWidth;
-   private int[][] matrix;
+   private int[][] matrix;// SubMap storing the walls and the agents
+    private int[][] trace; // SubMap storing the map % exploration
    private ArrayList <Wall> walls; //check every 2 integers
-   private Variables variables = new Variables();
-   private Agent [] team = new Agent[variables.getNumberOfGuards()];
+   private Variables variables = new Variables(); // why ?
+   private Tile[][] tiles;
 
+    /* METHOD(1): Map
+     *   Map object constructor
+     *   create the matrix and trace instances
+     * */
    public Map(){
       mapHeight = variables.getHeight();
       mapWidth = variables.getWidth();
-      matrix = new int[mapWidth][mapHeight]; //dimension of the map
+      matrix = new int[mapWidth][mapHeight]; //dimension of
+      tiles = new Tile[mapWidth][mapHeight];
       walls = variables.getWalls(); //placing walls on the map
-      buildingWalls(matrix);//update the map with the walls
-
+      buildingWalls(matrix);//update the map with the wall
+      trace = new int[mapWidth][mapHeight]; //dimension of
+      createTrace();
    }
+   /* METHOD(2): mapInit
+   *   stores zero in every map position
+   *    initialize both the Matrix (Int containing wall and agent)
+   * */
+public void mapInit(){
+       for(int i =0; i < getMapHeight(); i++ ){
+           for(int j =0; i < getMapWidth(); j++ ){
+                setMatrix(i, j , 0);
+                this.tiles[i][j] = new Tile(i,j);
+           }
+       }
+}//mapInit
 
+    /* METHOD(3): buildingWalls
+     *   places the wall as infinit values on the map
+     * */
    public void buildingWalls(int[][] matrix){
       for(int i = 0; i < walls.size(); i++){
             ArrayList<Integer> coords = walls.get(i).getCoords();
@@ -50,16 +73,32 @@ public class Map{
       }
    }
 
+    /* METHOD(4): createTrace
+     *   create the Trace as a copy of initial Matrix with the walls
+     * */
+    public void createTrace(){
+        for(int i =0; i < getMapHeight(); i++ ){
+            for(int j =0; i < getMapWidth(); j++ ){
+                this.trace[i][j] = this.matrix[i][j];
+            }
+        }
+    }
 
-   public void teamCreation(/*pass an int to identify the group*/)){
+    /* METHOD(5): teamCreation
+     *   create the Agents and stores them in a fixed sized array
+     * */
+    public void teamCreation(/*pass an int to identify the group*/)){
       for(int i = 0; i < variables.getNumberOfGuards(); i++){
           Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
-          team.add(newAgent);
+          team[i]=newAgent;
       }
    }
-
+    /* METHOD(6): convertPosition
+     *   chooses optimal positions for each Agent along the spawning rectangle area
+     *  insures good perimeter coverage
+     * */
    public void convertPosition(Agent[] team){
-       int teamSize = team.size();
+       int teamSize = team.length();
        int x1 = team[0].getAgentSpawning()[0];
        int y1 = team[0].getAgentSpawning()[1];
        int x2 = team[0].getAgentSpawning()[2];
@@ -128,21 +167,37 @@ public class Map{
    }//END convertPosition
 
 
-   public void TeamTrace(){
-     for(int i= 0; i < team.size(); i++){
-      updateTrace(team[i].getLastVisited());
-     }
-   }
-
-   public void updateTrace(in){
-
-   }
-   public int[][] getMatrix(){return matrix;};
+/* METHOD (7): TeamTrace
+*   Keeps track of all the traces of every agent
+*   All position that have been visited so far
+* */
+    public void TeamTrace(){
+        for(int i = 0; i < team.length(); i++){
+            updateTrace(team[i].getLastVisited());
+        }
+    }
+    /* METHOD (8): updateTrace
+     *    Helper method of TeamTrace
+     * it should be called after each move
+     *  OR the principal should be called after each round
+     * */
+    public void updateTrace(int [] latestTrace){
+        setTrace(latestTrace[0],latestTrace[1], 1);
+    }
+    /* METHODS: GETTERS AND SETTER
+    *   to access private instances of the class
+     * */
+    public int[][] getMatrix(){return matrix;};
    public int getMapHeight(){return mapHeight;};
    public int getMapWidth(){return mapWidth;};
    public int getFieldCost(int x, int y){
        return matrix[x][y];
    }
-
+   public void setMatrix(int x, int y, int value){
+       matrix[x][y] = value;
+   }
+    public void setTrace(int x, int y, int value){
+        matrix[x][y] = value;
+    }
 
 }
