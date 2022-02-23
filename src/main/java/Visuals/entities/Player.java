@@ -5,15 +5,11 @@ import org.lwjglx.util.vector.Vector2f;
 import org.lwjglx.util.vector.Vector3f;
 import Visuals.terrain.Terrain;
 
-
 public class Player extends Entity {
-
 
     public Player(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale, int entityID) {
         super(model, position, rotX, rotY, rotZ, scale,entityID);
     }
-
-
 
     public void move(Terrain terrain, Vector2f newPos){
         Vector3f newPosition = new Vector3f();

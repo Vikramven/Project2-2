@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class Terrain {
 
-    public static final float SIZE = 100;
+    public static final float SIZE = 200;
     private static final float MAX_HEIGHT = 1;
     private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 
@@ -29,8 +29,8 @@ public class Terrain {
     public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap, String heightmap){
         this.texturePack = texturePack;
         this.blendMap = blendMap;
-        this.x = gridX*80;
-        this.z = gridZ*120;
+        this.x = gridX*SIZE;
+        this.z = gridZ*SIZE;
         this.model = generateTerrainMap(loader,heightmap);
     }
 
@@ -57,11 +57,11 @@ public class Terrain {
 
         for(int i=0;i<VERTEX_COUNT;i++){
             for(int j=0;j<VERTEX_COUNT;j++){
-                vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * 120;
+                vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
                 float height = getHeight(j,i,image);
                 heights[j][i] = height;
                 vertices[vertexPointer*3+1] = height;
-                vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * 80;
+                vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
                 Vector3f normal = calculateNormalMap(j,i,image);
                 normals[vertexPointer*3] = normal.x;
                 normals[vertexPointer*3+1] = normal.y;

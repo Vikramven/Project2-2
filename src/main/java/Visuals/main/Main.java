@@ -1,5 +1,7 @@
 package Visuals.main;
 
+import Visuals.Controller.DefaultVariables;
+import Visuals.Controller.ReadFiles;
 import Visuals.engine.graphics.Loader;
 import Visuals.engine.graphics.MasterRenderer;
 import Visuals.engine.graphics.models.RawModel;
@@ -15,15 +17,11 @@ import Visuals.entities.Camera;
 import Visuals.entities.Entity;
 import Visuals.entities.Light;
 import Visuals.entities.Player;
-import javafx.beans.binding.DoubleExpression;
 import org.lwjgl.glfw.GLFW;
-import org.lwjglx.util.vector.Vector;
 import org.lwjglx.util.vector.Vector3f;
 import org.lwjglx.util.vector.Vector4f;
 import Visuals.terrain.Terrain;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +58,7 @@ public class Main implements Runnable {
 	public Camera camera;
 
 	public List<Light> lights;
-	public List<Entity> entities;
+	public List<Entity> entities = new ArrayList<>();
 	public List<Player> players = new ArrayList<>();
 	public static Terrain terrain;
 
@@ -75,6 +73,9 @@ public class Main implements Runnable {
 	private static final float GREEN = 0.5f;
 	private static final float BLUE = 0.5f;
 
+	private DefaultVariables variables;
+	public static String testMapPath;
+
 
 	public void start() {
 		game = new Thread(this, "Simulation");
@@ -86,6 +87,12 @@ public class Main implements Runnable {
 		window.setBackgroundColor(RED,GREEN,BLUE);
 		window.create();
 		renderer = new MasterRenderer(loader);
+		testMapPath = "res/testmap.txt";
+
+
+		//parser.readFile(testMapPath);
+		variables = new DefaultVariables();
+		variables.setVariables(ReadFiles.readFileAsString(testMapPath));
 
 		// Loading in an object:
 		// * step 1: get .obj file (from ../res/3D/)
@@ -132,21 +139,20 @@ public class Main implements Runnable {
 		// generate players
 		// * step 4: Generate entities or players.
 
-		ArrayList<ArrayList<Player>> walls = new ArrayList<>();
-		walls.add(createWallFromParams(50, 0, 51, 20));
-		walls.add(createWallFromParams(0, 0, 1, 80));
-		walls.add(createWallFromParams(0, 79, 120, 80));
-		walls.add(createWallFromParams(119, 0, 120, 80));
-		walls.add(createWallFromParams(0, 0, 120, 1));
-		intruder = new Player(texturedModelIntruder, new Vector3f(25,terrain.getHeightOfTerrain(25,70),71),0,90,0,1,1);  //portal
+		ArrayList<ArrayList<Entity>> walls = createWallsFromFile();
+		intruder = new Player(texturedModelIntruder, new Vector3f(variables.getSpawnAreaIntruders().z,0,variables.getSpawnAreaIntruders().w),0,90,0,1,1);  //portal
+		guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnAreaGuards().z,0,variables.getSpawnAreaGuards().w),0,90,0,1,1);  //portal
+
+
+		for(ArrayList<Entity> wall : walls){
+			entities.addAll(wall);
+		}
+
+		players.add(intruder);
 
 		// put the camera
-		for(ArrayList<Player> wall : walls)
-			players.addAll(wall);
-		camera = new Camera(players.get(0));
+		camera = new Camera(intruder);
 	}
-
-
 
 	public void run() {
 		try {
@@ -170,30 +176,7 @@ public class Main implements Runnable {
 		window.destroy();
 	}
 
-	private ArrayList<Player> createWallFromParams(double x1, double y1, double x2, double y2){
-		if(isParallelToX(x1, x2)){
-			return createWallParallelToX(Math.abs(y2-y1), (int)Math.min(x1, x2));
-		}
-		return createWallParallelToY(Math.abs(x2-x1), (int)Math.min(y1, y2));
-	}
 
-	private boolean isParallelToX(double x1, double x2){
-		return Math.abs(x2 - x1) == 1;
-	}
-
-	private ArrayList<Player> createWallParallelToX(double wallLength, int startPoint){
-		ArrayList<Player> walls = new ArrayList<>();
-		for(int i = 0; i < wallLength; i++)
-			walls.add(new Player(texturedModelGuard, new Vector3f(startPoint + i,0,0),0,0,0,1,1));
-		return walls;
-	}
-
-	private ArrayList<Player> createWallParallelToY(double wallLength, int startPoint){
-		ArrayList<Player> walls = new ArrayList<>();
-		for(int i = 0; i < wallLength; i++)
-			walls.add(new Player(texturedModelGuard, new Vector3f(0,0,startPoint + i),0,90,0,1,1));
-		return walls;
-	}
 
 	private void update() {
 		window.update();
@@ -208,6 +191,9 @@ public class Main implements Runnable {
 			renderer.processEntity(pieces);
 		}
 
+		for(Entity entity : entities){
+			renderer.processEntity(entity);
+		}
 		// * step 5: renderer.processEntity(nameOfEntity that you made at step 4.)
 
 		renderer.processTerrain(terrain);
@@ -217,6 +203,49 @@ public class Main implements Runnable {
 		window.swapBuffers();
 
 	}
+
+	// Creation of walls
+
+	private ArrayList<Entity> createWallFromParams(double x1, double y1, double x2, double y2){
+		if(isParallelToX(y1, y2)){
+			return createWallParallelToX(Math.abs(x2-x1), (int)Math.min(x1, x2), (int)Math.min(y1, y2));
+		}
+		return createWallParallelToY(Math.abs(y2-y1), (int)Math.min(x1, x2), (int)Math.min(y1, y2));
+	}
+
+	private boolean isParallelToX(double y1, double y2){
+		return Math.abs(y2 - y1) == 1;
+	}
+
+	private ArrayList<Entity> createWallParallelToX(double wallLength, int startX, int startY){
+		ArrayList<Entity> walls = new ArrayList<>();
+		for(int i = 0; i < wallLength; i++)
+			walls.add(new Entity(texturedModelGuard, new Vector3f(startX + i,0,startY),0,0,0,1,1));
+		return walls;
+	}
+
+	private ArrayList<Entity> createWallParallelToY(double wallLength, int startX, int startY){
+		ArrayList<Entity> walls = new ArrayList<>();
+		for(int i = 0; i < wallLength; i++)
+			walls.add(new Entity(texturedModelGuard, new Vector3f(startX,0,startY + i),0,90,0,1,1));
+		return walls;
+	}
+
+	private ArrayList<ArrayList<Entity>> createWallsFromFile(){
+		ArrayList<ArrayList<Entity>> walls = new ArrayList<>();
+
+		// x,w,z,y this order.
+
+		walls.add(createWallFromParams(variables.getWall1().x, variables.getWall1().y, variables.getWall1().z, variables.getWall1().w));
+		walls.add(createWallFromParams(variables.getWall2().x, variables.getWall2().y, variables.getWall2().z, variables.getWall2().w));
+		walls.add(createWallFromParams(variables.getWall3().x, variables.getWall3().y, variables.getWall3().z, variables.getWall3().w));
+		walls.add(createWallFromParams(variables.getWall4().x, variables.getWall4().y, variables.getWall4().z, variables.getWall4().w));
+		walls.add(createWallFromParams(variables.getWall5().x, variables.getWall5().y, variables.getWall5().z, variables.getWall5().w));
+
+		System.out.println(variables.getWall5().w);
+		return walls;
+	}
+
 
 	public static int getWIDTH() {
 		return WIDTH;

@@ -41,6 +41,7 @@ public class Input {
 	}
 
 
+
 	public static boolean isButtonDown(int button) {
 		return buttons[button];
 	}
