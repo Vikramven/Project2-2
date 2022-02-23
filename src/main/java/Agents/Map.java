@@ -19,6 +19,7 @@ public class Map{
    private int[][] matrix;
    private ArrayList <Wall> walls; //check every 2 integers
    private Variables variables = new Variables();
+   private Agent [] team = new Agent[variables.getNumberOfGuards()];
 
    public Map(){
       mapHeight = variables.getHeight();
@@ -49,6 +50,93 @@ public class Map{
       }
    }
 
+
+   public void teamCreation(/*pass an int to identify the group*/)){
+      for(int i = 0; i < variables.getNumberOfGuards(); i++){
+          Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
+          team.add(newAgent);
+      }
+   }
+
+   public void convertPosition(Agent[] team){
+       int teamSize = team.size();
+       int x1 = team[0].getAgentSpawning()[0];
+       int y1 = team[0].getAgentSpawning()[1];
+       int x2 = team[0].getAgentSpawning()[2];
+       int y2 = team[0].getAgentSpawning()[3];
+
+       int width = x1- x2;
+       int height = y1 - y2;
+       int counter = 0;
+   //CASE 1:  available position inferior or equal to number of guards
+       if(teamSize => (width * height)){
+           while( counter  < teamSize ){
+               for(int i = x1; i < x2 + 1; i ++){
+                   for(int j = y1; j < y2; j ++){
+                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
+                       team[i].setAgentPositionX() = i;
+                       team[i].setAgentPositionY() = j;
+                       counter++;
+                   }
+               }
+           }
+       }//END CASE 1
+
+       //CASE 2: available position superior to number of guards
+       int decisionRatio= 30/100;
+
+       if(teamSize < decisionRatio * (width * height)){
+           while( counter  < teamSize ){
+               // top line
+               for(int i = x1; i < x2 + 1; i ++){
+                   if (counter  < teamSize){
+                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
+                       team[counter].setAgentPositionX() = i;
+                       team[counter].setAgentPositionY() = y2;
+                       counter++;
+                   }
+               }
+               // bottom line
+               for(int i = x1; i < x2 + 1; i ++){
+                   if (counter  < teamSize){
+                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
+                       team[counter].setAgentPositionX() = i;
+                       team[counter].setAgentPositionY() = y1;
+                       counter++;
+                   }
+               }
+               // start column
+               for(int j = y1; j < y2 + 1; j ++){
+                   if (counter  < teamSize){
+   //   map[getAgentSpawning()[0]][i] = 0 ; guards code
+                       team[counter].setAgentPositionX() = x1;
+                       team[counter].setAgentPositionY() = j;
+                       counter++;
+                   }
+               }
+               // end column
+               for(int j = y1; j < y2 + 1; j ++){
+                   if (counter  < teamSize){
+                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
+                       team[counter].setAgentPositionX() = x2;
+                       team[counter].setAgentPositionY() = j;
+                       counter++;
+                   }
+               }
+           }
+       }//END CASE 2
+   }//END convertPosition
+
+
+   public void TeamTrace(){
+     for(int i= 0; i < team.size(); i++){
+      updateTrace(team[i].getLastVisited());
+     }
+   }
+
+   public void updateTrace(in){
+
+   }
    public int[][] getMatrix(){return matrix;};
    public int getMapHeight(){return mapHeight;};
    public int getMapWidth(){return mapWidth;};
@@ -57,20 +145,4 @@ public class Map{
    }
 
 
-   public void teamCreation(){
-      for(int i = 0; i < variables.getNumberOfGuards(); i++){
-          Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
-
-
-        /*     Place them on the Map
-               same principle as the wall
-         */
-
-      }
-   }
-
-
-   public void TeamTrace(){
-
-   }
 }
