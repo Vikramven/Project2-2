@@ -1,6 +1,9 @@
 package Visuals.Controller;
 
+import org.lwjglx.util.vector.Vector2f;
 import org.lwjglx.util.vector.Vector4f;
+
+import java.util.Random;
 
 public class DefaultVariables {
 
@@ -24,6 +27,8 @@ public class DefaultVariables {
     private Vector4f wall3;
     private Vector4f wall4;
     private Vector4f wall5;
+    private Vector2f spawnIntruder;
+    private Vector2f spawnGuard;
 
     public String getName() {
         return name;
@@ -47,6 +52,14 @@ public class DefaultVariables {
 
     public float getScaling() {
         return scaling;
+    }
+
+    public Vector2f getSpawnIntruder() {
+        return spawnIntruder;
+    }
+
+    public Vector2f getSpawnGuard() {
+        return spawnGuard;
     }
 
     public int getNumGuards() {
@@ -143,6 +156,23 @@ public class DefaultVariables {
         this.wall3 = new Vector4f(Float.parseFloat(wall3[0]), Float.parseFloat(wall3[1]), Float.parseFloat(wall3[2]), Float.parseFloat(wall3[3]));
         this.wall4 = new Vector4f(Float.parseFloat(wall4[0]), Float.parseFloat(wall4[1]), Float.parseFloat(wall4[2]), Float.parseFloat(wall4[3]));
         this.wall5 = new Vector4f(Float.parseFloat(wall5[0]), Float.parseFloat(wall5[1]), Float.parseFloat(wall5[2]), Float.parseFloat(wall5[3]));
+
+        // Random SpawnPoints
+        // intruder
+        Random random = new Random();
+
+        float randomXIntruder = Float.parseFloat(spawnAreaIntruders[0]) + random.nextInt((int) Float.parseFloat(spawnAreaIntruders[2]));
+        float randomYIntruder = Float.parseFloat(spawnAreaIntruders[1]) + random.nextInt((int) Float.parseFloat(spawnAreaIntruders[3]));
+
+        this.spawnIntruder = new Vector2f(randomXIntruder,randomYIntruder);
+
+        //guard
+        float randomXGuard = Float.parseFloat(spawnAreaGuards[0]) + random.nextInt((int) Float.parseFloat(spawnAreaGuards[2]));
+        float randomYGuard = Float.parseFloat(spawnAreaGuards[1]) + random.nextInt((int) Float.parseFloat(spawnAreaGuards[3]));
+
+        this.spawnGuard = new Vector2f(randomXGuard,randomYGuard);
+
+
 
     }
 

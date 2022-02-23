@@ -36,24 +36,29 @@ public class Main implements Runnable {
 
 	public RawModel guardModel;
 	public RawModel intruderModel;
+	public RawModel wallModel;
+	public RawModel portalModel;
 
 	public ModelData modelDataGuard;
 	public ModelData modelDataIntruder;
-
+	public ModelData modelDataWall;
+	public ModelData modelDataPortal;
 
 	public ModelTexture textureGuard;
 	public ModelTexture textureIntruder;
-
+	public ModelTexture textureWall;
+	public ModelTexture texturePortal;
 
 	public TexturedModel texturedModelGuard;
 	public TexturedModel texturedModelIntruder;
+	public TexturedModel texturedModelWall;
+	public TexturedModel texturedModelPortal;
 
 
 	public MasterRenderer renderer;
 
 	public Player guard;
 	public Player intruder;
-
 
 	public Camera camera;
 
@@ -77,6 +82,7 @@ public class Main implements Runnable {
 	public static String testMapPath;
 
 
+
 	public void start() {
 		game = new Thread(this, "Simulation");
 		game.start();
@@ -97,13 +103,17 @@ public class Main implements Runnable {
 		// Loading in an object:
 		// * step 1: get .obj file (from ../res/3D/)
 
-		modelDataGuard = OBJFileLoader.loadOBJ("wall");
-		modelDataIntruder = OBJFileLoader.loadOBJ("portal");
+		modelDataGuard = OBJFileLoader.loadOBJ("guard");
+		modelDataIntruder = OBJFileLoader.loadOBJ("guard");
+		modelDataWall = OBJFileLoader.loadOBJ("wall");
+		modelDataPortal = OBJFileLoader.loadOBJ("portal");
 
 		// * step 2: load the model data
 
 		guardModel = loader.loadToVAO(modelDataGuard.getVertices(),modelDataGuard.getTextureCoords(),modelDataGuard.getNormals(),modelDataGuard.getIndices());
 		intruderModel = loader.loadToVAO(modelDataIntruder.getVertices(),modelDataIntruder.getTextureCoords(),modelDataIntruder.getNormals(),modelDataIntruder.getIndices());
+		wallModel = loader.loadToVAO(modelDataWall.getVertices(),modelDataWall.getTextureCoords(),modelDataWall.getNormals(),modelDataWall.getIndices());
+		portalModel = loader.loadToVAO(modelDataPortal.getVertices(),modelDataPortal.getTextureCoords(),modelDataPortal.getNormals(),modelDataPortal.getIndices());
 
 		// create texture for terrain
 		backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
@@ -117,6 +127,8 @@ public class Main implements Runnable {
 
 		texturedModelGuard = new TexturedModel(guardModel, new ModelTexture(loader.loadTexture("wallTexture")));
 		texturedModelIntruder = new TexturedModel(intruderModel, new ModelTexture(loader.loadTexture("portalTexture")));
+		texturedModelWall = new TexturedModel(wallModel, new ModelTexture(loader.loadTexture("wallTexture")));
+		texturedModelPortal = new TexturedModel(portalModel, new ModelTexture(loader.loadTexture("portalTexture")));
 
 		textureGuard = texturedModelGuard.getTexture();
 		textureGuard.setShineDamper(5);
@@ -134,14 +146,13 @@ public class Main implements Runnable {
 		lights = new ArrayList<>();
 		lights.add(new Light(new Vector3f(1000,1000,300), new Vector3f(1f,1f,1f)));
 
-		// create GUI elements
 
 		// generate players
 		// * step 4: Generate entities or players.
 
 		ArrayList<ArrayList<Entity>> walls = createWallsFromFile();
-		intruder = new Player(texturedModelIntruder, new Vector3f(variables.getSpawnAreaIntruders().z,0,variables.getSpawnAreaIntruders().w),0,90,0,1,1);  //portal
-		guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnAreaGuards().z,0,variables.getSpawnAreaGuards().w),0,90,0,1,1);  //portal
+		intruder = new Player(texturedModelIntruder, new Vector3f(variables.getSpawnIntruder().x,0,variables.getSpawnIntruder().y),0,90,0,1,1);  //portal
+		guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnGuard().x,0,variables.getSpawnGuard().y),0,90,0,1,1);  //portal
 
 
 		for(ArrayList<Entity> wall : walls){
@@ -149,6 +160,7 @@ public class Main implements Runnable {
 		}
 
 		players.add(intruder);
+		players.add(guard);
 
 		// put the camera
 		camera = new Camera(intruder);
@@ -220,14 +232,14 @@ public class Main implements Runnable {
 	private ArrayList<Entity> createWallParallelToX(double wallLength, int startX, int startY){
 		ArrayList<Entity> walls = new ArrayList<>();
 		for(int i = 0; i < wallLength; i++)
-			walls.add(new Entity(texturedModelGuard, new Vector3f(startX + i,0,startY),0,0,0,1,1));
+			walls.add(new Entity(texturedModelWall, new Vector3f(startX + i,0,startY),0,0,0,1,1));
 		return walls;
 	}
 
 	private ArrayList<Entity> createWallParallelToY(double wallLength, int startX, int startY){
 		ArrayList<Entity> walls = new ArrayList<>();
 		for(int i = 0; i < wallLength; i++)
-			walls.add(new Entity(texturedModelGuard, new Vector3f(startX,0,startY + i),0,90,0,1,1));
+			walls.add(new Entity(texturedModelWall, new Vector3f(startX,0,startY + i),0,90,0,1,1));
 		return walls;
 	}
 
