@@ -106,11 +106,11 @@ public boolean canMoveThere(Map map, int x, int y){
 
 
    /* A_Star : Path Finding Algorithm
-   * OUTPUT: an integer that describes how costy(beneficial) the potencialMove is to the Agent
+   * OUTPUT: an integer that describes how costy(beneficial) the potential Move is to the Agent
    * */
    public int aStar(Agent agent, Map map, int initialCost){
-        int x = agent.getAgentXPosition();
-        int y = agent.getAgentYPosition();
+        int x = agent.getAgentPositionX();
+        int y = agent.getAgentPositionY();
 
         int[] newGoal = goalUpdator(agent, map);
 
