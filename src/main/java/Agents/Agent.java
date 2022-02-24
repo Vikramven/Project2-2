@@ -45,7 +45,7 @@ public class Agent  {
         int height = y1 - y2;
         int counter = 0;
 //CASE 1:  available position inferior or equal to number of guards
-        if(teamSize == (width * height) || teamSize > (width * height)){
+        if(teamSize >= (width * height)){
             while(counter  < teamSize){
                 for(int i = x1; i < x2 + 1; i ++){
                     for(int j = y1; j < y2; j ++){

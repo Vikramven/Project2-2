@@ -39,9 +39,9 @@ public class Position {
 
         List<Position> delete = new ArrayList<>();
         for(Position pos : neighbours){
-            if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
+            if (pos.x < 0 || pos.y < 0 || pos.x >= map.getMapWidth() || pos.y >= map.getMapHeight()){
                 delete.add(pos);
-            }else if (pos.x > map.getMapWidth()+1 || pos.y > map.getMapHeight()+1){
+            }else if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
                 delete.add(pos);
             }
             // check if position has a wall or is outside the map.

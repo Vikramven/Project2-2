@@ -41,6 +41,7 @@ public class Variables {
 
 
     public Variables(){
+        walls = new ArrayList<>();
         /**
          * constructor for TODO
          */
