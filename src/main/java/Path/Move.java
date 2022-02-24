@@ -67,10 +67,10 @@ public boolean canMoveThere(Map map, int x, int y){
     //call all the above methods
 
     //check for validity;
-    // if output coordonates == MAX_VALUE
+    // if output coordinates == MAX_VALUE
     //if another agent is currently on this position
 
-    //return the list of possible tile coordonates to visit
+    //return the list of possible tile coordinates to visit
         return new ArrayList<>();
 
     }

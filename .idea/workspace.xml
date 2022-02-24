@@ -4,11 +4,64 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="A* algorithm">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/PNGDecoder.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/assimp_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/bgfx_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/blendish_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/build.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/dyncall_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/glfw_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx-swt.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.base.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.controls.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.fxml.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.graphics.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.media.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.swing.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/javafx.web.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/khronos_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-assimp-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-assimp.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-bgfx-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-bgfx.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-glfw-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-glfw.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-javadoc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-nanovg-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-nanovg.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-natives-linux-arm32.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-natives-linux-arm64.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-natives-linux.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-natives-macos.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-natives-windows-x86.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-nuklear-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-nuklear.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-openal-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-openal.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-opengl-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-opengl.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-par-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-par.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-release-getting-started-zip.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-sources.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-stb-natives-windows.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-stb.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl-vulkan.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/lwjgl.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/nanosvg_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/nanovg_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/openal_soft_license.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/recources/lib/slick-util3.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Project2-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project2-2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_16.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_16.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_16.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_16.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Path/Move.java" afterDir="false" />
-    </list>
-    <list id="28df9b80-3b48-4666-932e-bb6f4ca300e0" name="Changes by cmjus" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/CanPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/CanPlace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Path/Move.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,15 +96,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/Path/Move.java">
-      <ranges>
-        <range start1="108" end1="109" start2="108" end2="109" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="111" end1="113" start2="111" end2="113" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="124" end1="124" start2="124" end2="216" changelist="28df9b80-3b48-4666-932e-bb6f4ca300e0" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -63,15 +107,37 @@
     </option>
   </component>
   <component name="ProjectId" id="256KGD7WaqHSuu6w26u96APtVh7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="App" />
+      <module name="Project2-2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -81,7 +147,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1644842061035</updated>
-      <workItem from="1645613588695" duration="3326000" />
+      <workItem from="1645613588695" duration="4441000" />
+      <workItem from="1645701760031" duration="1105000" />
+      <workItem from="1645703087376" duration="118000" />
     </task>
     <task id="LOCAL-00001" summary="starting code is from Controller-For-Merge branch">
       <created>1645613707001</created>
@@ -90,7 +158,21 @@
       <option name="project" value="LOCAL" />
       <updated>1645613707001</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="A* algorithm">
+      <created>1645616987133</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645616987133</updated>
+    </task>
+    <task id="LOCAL-00003" summary="A* algorithm">
+      <created>1645617009022</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645617009022</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,7 +190,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="starting code is from Controller-For-Merge branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="starting code is from Controller-For-Merge branch" />
+    <MESSAGE value="A* algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="A* algorithm" />
   </component>
 </project>
