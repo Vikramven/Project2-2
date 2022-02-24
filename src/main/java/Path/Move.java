@@ -2,6 +2,8 @@ package Path;
 
 import Agents.Agent;
 import Agents.Map;
+import Controller.Variables;
+
 import java.lang.Integer;
 import java.util.*;
 
@@ -69,7 +71,7 @@ public boolean canMoveThere(Map map, int x, int y){
     //if another agent is currently on this position
 
     //return the list of possible tile coordonates to visit
-
+        return new ArrayList<>();
 
     }
 
@@ -94,7 +96,7 @@ public boolean canMoveThere(Map map, int x, int y){
         Need to sort the distance from AgentPosition to all know Traces
      Outputs the Minimum of both
      */
-
+        return new int[]{};
 
     }
 
@@ -124,14 +126,24 @@ public boolean canMoveThere(Map map, int x, int y){
     }
 
 
-    public Collection<Position> getPath(Agent agent, Map map, Position targetPos){
+    public static List<Position> getPath(Position startPos, Position targetPos){
+
+        Variables vars = new Variables();
+        vars.setHeight(10);
+        vars.setWidth(10);
+        vars.createWall(1,0, 1, 9);
+
+        Map map = new Map(vars);
+
+
+
 
         HashMap<Position, Boolean> vis = new HashMap<>();
         HashMap<Position, Position> prev = new HashMap<>();
 
         List<Position> directions = new LinkedList<>();
         Queue<Position> q = new LinkedList<>();
-        Position current = new Position(agent.getAgentPositionX(), agent.getAgentPositionY());
+        Position current = startPos;
         q.add(current);
         vis.put(current, true);
         while(!q.isEmpty()){
@@ -159,61 +171,6 @@ public boolean canMoveThere(Map map, int x, int y){
     }
 
 
-
-    class Position{
-
-       int x;
-       int y;
-
-       public Position(int x, int y){
-           this.x = x;
-           this.y = y;
-       }
-
-
-       public float getDistance(){
-            return 0;
-       }
-
-       public boolean samePos(Position pos){
-           return this.x == pos.x && this.y == pos.y;
-       }
-
-       public Collection<Position> getNeighbours(Map map){
-
-           List<Position> neighbours = new ArrayList<>();
-           neighbours.add(new Position(this.x+1, this.y));
-           neighbours.add(new Position(this.x+1, this.y-1));
-           neighbours.add(new Position(this.x+1, this.y+1));
-           neighbours.add(new Position(this.x, this.y-1));
-
-           neighbours.add(new Position(this.x, this.y+1));
-           neighbours.add(new Position(this.x-1, this.y+1));
-           neighbours.add(new Position(this.x-1, this.y-1));
-           neighbours.add(new Position(this.x-1, this.y));
-
-           List<Position> delete = new ArrayList<>();
-           for(Position pos : neighbours){
-               if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
-                   delete.add(pos);
-               }else if (pos.x > map.getMapWidth()+1 || pos.y > map.getMapHeight()+1){
-                   delete.add(pos);
-               }
-               // check if position has a wall or is outside the map.
-               // remove from neighboours if so
-           }
-
-           for (Position pos : delete){
-               neighbours.remove(pos);
-           }
-
-
-           return neighbours;
-       }
-
-
-
-    }
 
 //public int
 //       while(/* Goal not reached, equivalent to Position of Agent != Goal Position */){

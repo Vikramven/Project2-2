@@ -25,17 +25,17 @@ public class Agent  {
 
     int direction; // we try to split the 360 in a smart way
 
-    public Agent(int team ){
+    public Agent(Agent[] team){
         this.team = team;
-        for(int i = 0; i < 4 ; i++) {
-            spawning[i] = variables.getSpawnAreaGuards()[i];
-        }
+//        for(int i = 0; i < 4 ; i++) {
+//            spawning[i] = variables.getSpawnAreaGuards()[i];
+//        }
         convertPosition(this.getTeam());// setting agent inside the Map
-        updateMap();//update the map With the agent knwoledge
+       // updateMap();//update the map With the agent knowledge
     }
 
-    public void convertPosition([Agent] team){
-        int teamSize = team.size();
+    public void convertPosition(Agent[] team){
+        int teamSize = team.length;
         int x1 = team[0].getAgentSpawning()[0];
         int y1 = team[0].getAgentSpawning()[1];
         int x2 = team[0].getAgentSpawning()[2];
@@ -45,13 +45,13 @@ public class Agent  {
         int height = y1 - y2;
         int counter = 0;
 //CASE 1:  available position inferior or equal to number of guards
-        if(teamSize => (width * height)){
-            while( counter  < teamSize ){
+        if(teamSize == (width * height) || teamSize > (width * height)){
+            while(counter  < teamSize){
                 for(int i = x1; i < x2 + 1; i ++){
                     for(int j = y1; j < y2; j ++){
                         //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                        team[i].setAgentPositionX() = i;
-                        team[i].setAgentPositionY() = j;
+                        team[i].setAgentPositionX(i);
+                        team[i].setAgentPositionY(j);
                         counter++;
                     }
                 }
@@ -67,8 +67,8 @@ public class Agent  {
                 for(int i = x1; i < x2 + 1; i ++){
                     if (counter  < teamSize){
                         //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                        team[counter].setAgentPositionX() = i;
-                        team[counter].setAgentPositionY() = y2;
+                        team[counter].setAgentPositionX(i);
+                        team[counter].setAgentPositionY(y2);
                         counter++;
                     }
                 }
@@ -76,8 +76,8 @@ public class Agent  {
                 for(int i = x1; i < x2 + 1; i ++){
                     if (counter  < teamSize){
                         //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                        team[counter].setAgentPositionX() = i;
-                        team[counter].setAgentPositionY() = y1;
+                        team[counter].setAgentPositionX(i);
+                        team[counter].setAgentPositionY(y1);
                         counter++;
                     }
                 }
@@ -85,8 +85,8 @@ public class Agent  {
                 for(int j = y1; j < y2 + 1; j ++){
                     if (counter  < teamSize){
 //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                        team[counter].setAgentPositionX() = x1;
-                        team[counter].setAgentPositionY() = j;
+                        team[counter].setAgentPositionX(x1);
+                        team[counter].setAgentPositionY(j);
                         counter++;
                     }
                 }
@@ -94,8 +94,8 @@ public class Agent  {
                 for(int j = y1; j < y2 + 1; j ++){
                     if (counter  < teamSize){
                         //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                        team[counter].setAgentPositionX() = x2;
-                        team[counter].setAgentPositionY() = j;
+                        team[counter].setAgentPositionX(x2);
+                        team[counter].setAgentPositionY(j);
                         counter++;
                     }
                 }
@@ -103,6 +103,7 @@ public class Agent  {
         }//END CASE 2
     }//END convertPosition
 
+    public Agent[] getTeam(){return team;}
     public int[] getAgentSpawning(){return spawning;}
     public void setAgentPositionX(int agentPositionX){this.agentPositionX = agentPositionX;}
     public void setAgentPositionY(int agentPositionY){this.agentPositionY = agentPositionY;}

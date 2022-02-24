@@ -21,12 +21,20 @@ public class Map{
    private Variables variables = new Variables();
 
    public Map(){
-      mapHeight = variables.getHeight();
-      mapWidth = variables.getWidth();
-      matrix = new int[mapWidth][mapHeight]; //dimension of the map
-      walls = variables.getWalls(); //placing walls on the map
-      buildingWalls(matrix);//update the map with the walls
+      init();
+   }
 
+   public Map(Variables vars){
+       this.variables = vars;
+       init();
+   }
+
+   public void init(){
+       mapHeight = variables.getHeight();
+       mapWidth = variables.getWidth();
+       matrix = new int[mapWidth][mapHeight]; //dimension of the map
+       walls = variables.getWalls(); //placing walls on the map
+       buildingWalls(matrix);//update the map with the walls
    }
 
    public void buildingWalls(int[][] matrix){
@@ -59,7 +67,7 @@ public class Map{
 
    public void teamCreation(){
       for(int i = 0; i < variables.getNumberOfGuards(); i++){
-          Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
+          //Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
 
 
         /*     Place them on the Map
