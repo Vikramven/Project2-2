@@ -131,11 +131,9 @@ public boolean canMoveThere(Map map, int x, int y){
         Variables vars = new Variables();
         vars.setHeight(10);
         vars.setWidth(10);
-        vars.createWall(1,0, 1, 9);
+        vars.createWall(1,0, 1, 4);
 
         Map map = new Map(vars);
-
-
 
 
         HashMap<Position, Boolean> vis = new HashMap<>();
@@ -148,11 +146,18 @@ public boolean canMoveThere(Map map, int x, int y){
         vis.put(current, true);
         while(!q.isEmpty()){
             current = q.remove();
-            if (current.equals(targetPos)){
+            if (current.samePos(targetPos)){
                 break;
             }else{
                 for(Position node : current.getNeighbours(map)){
-                    if(!vis.containsKey(node)){
+                    boolean contains = false;
+                    for (Position oNode : vis.keySet()){
+                        if (oNode.samePos(node)){
+                            contains = true;
+                        }
+                    }
+
+                    if(!contains){
                         q.add(node);
                         vis.put(node, true);
                         prev.put(node, current);
@@ -161,11 +166,15 @@ public boolean canMoveThere(Map map, int x, int y){
             }
         }
         if (!current.samePos(targetPos)){
-            //Finished
+            System.out.println("Could not reach");
+            //Could not reach.
         }
-        for(Position pos = targetPos; pos != null; pos = prev.get(pos)) {
+
+
+        for(Position pos = current; pos != null; pos = prev.get(pos)) {
             directions.add(pos);
         }
+
         Collections.reverse(directions);
         return directions;
     }

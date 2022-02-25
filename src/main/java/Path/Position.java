@@ -39,11 +39,18 @@ public class Position {
 
         List<Position> delete = new ArrayList<>();
         for(Position pos : neighbours){
+
             if (pos.x < 0 || pos.y < 0 || pos.x >= map.getMapWidth() || pos.y >= map.getMapHeight()){
                 delete.add(pos);
-            }else if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
-                delete.add(pos);
+            }else{
+                if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
+                    delete.add(pos);
+                }
+
             }
+
+
+
             // check if position has a wall or is outside the map.
             // remove from neighboours if so
         }
@@ -54,5 +61,14 @@ public class Position {
 
 
         return neighbours;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

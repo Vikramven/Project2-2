@@ -26,7 +26,11 @@ public class App {
     public static void main(String[] args)
     {
         //System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        List<Position> pos = Move.getPath(new Position(0,0), new Position(10,10));
+        List<Position> pos = Move.getPath(new Position(0,0), new Position(9,9));
+
+        for (Position p : pos){
+            System.out.println(p);
+        }
     }
 }
 

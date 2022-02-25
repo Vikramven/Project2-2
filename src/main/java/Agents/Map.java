@@ -41,9 +41,9 @@ public class Map{
       for(int i = 0; i < walls.size(); i++){
             ArrayList<Integer> coords = walls.get(i).getCoords();
             int x1 = coords.get(0);
-            int x2 = coords.get(1);
-            int y1 = coords.get(2);
-            int y2 = coords.get(3);
+            int x2 = coords.get(2);
+            int y1 = coords.get(1);
+            int y2 = coords.get(5);
             //@zofia For each of the walls : two separate loops, first we build the vertical walls, then the horizontal walls
           for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){
               matrix[x1][j] = Integer.MAX_VALUE;
