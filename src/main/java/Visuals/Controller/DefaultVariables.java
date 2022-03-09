@@ -35,7 +35,6 @@ public class DefaultVariables {
 
     public void setVariables(String[] stringOfAllVariables){
 
-
         this.name = stringOfAllVariables[0];
         this.gameFile = stringOfAllVariables[1];
         this.gameMode = Integer.parseInt(stringOfAllVariables[2]);
@@ -81,6 +80,8 @@ public class DefaultVariables {
         float randomYGuard = Float.parseFloat(spawnAreaGuards[1]) + random.nextInt((int) Float.parseFloat(spawnAreaGuards[3]));
 
         this.spawnGuard = new Vector2f(randomXGuard,randomYGuard);
+
+
 
     }
 

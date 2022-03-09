@@ -49,10 +49,10 @@ public class Camera {
     }
 
     private void calculateZoom(){
-        if(Input.isKeyDown(GLFW_KEY_W)){
+        if(Input.isKeyDown(GLFW_KEY_W)&& distanceFromPlayer<=40){
             distanceFromPlayer += 1;
         }
-        else if (Input.isKeyDown(GLFW.GLFW_KEY_S)){
+        else if (Input.isKeyDown(GLFW.GLFW_KEY_S)&& distanceFromPlayer>2){
             distanceFromPlayer -= 1;
         }
     }

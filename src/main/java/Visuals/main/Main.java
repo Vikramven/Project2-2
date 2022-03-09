@@ -2,6 +2,7 @@ package Visuals.main;
 
 import Visuals.Controller.DefaultVariables;
 import Visuals.Controller.ReadFiles;
+import Visuals.MazeGenerator.MazeForSale;
 import Visuals.engine.graphics.Loader;
 import Visuals.engine.graphics.MasterRenderer;
 import Visuals.engine.graphics.models.RawModel;
@@ -22,8 +23,9 @@ import org.lwjglx.util.vector.Vector3f;
 import org.lwjglx.util.vector.Vector4f;
 import Visuals.terrain.Terrain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.*;
 
 public class Main implements Runnable {
 
@@ -59,6 +61,7 @@ public class Main implements Runnable {
 
 	public Player guard;
 	public Player intruder;
+	public Player camPlayer;
 
 	public Camera camera;
 
@@ -80,6 +83,8 @@ public class Main implements Runnable {
 
 	private DefaultVariables variables;
 	public static String testMapPath;
+	public MazeForSale maze;
+	public boolean generateMaze = true;
 
 
 
@@ -99,6 +104,7 @@ public class Main implements Runnable {
 		//parser.readFile(testMapPath);
 		variables = new DefaultVariables();
 		variables.setVariables(ReadFiles.readFileAsString(testMapPath));
+
 
 		// Loading in an object:
 		// * step 1: get .obj file (from ../res/3D/)
@@ -139,12 +145,60 @@ public class Main implements Runnable {
 		textureIntruder.setReflectivity((float)0.5);
 
 
+		// Maze Generation
+		if(generateMaze){
+
+		int mazeHeight = 100;
+		int mazeLength = 100;
+		int line = 0;
+		int[][] mazeMatrix = new int[mazeHeight*2+1][mazeLength*2+1];
+
+		maze = new MazeForSale(mazeLength,mazeHeight) ;
+		String a = maze.toString();
+		System.out.println(a);
+
+		// Create a stream to hold the output
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		PrintStream old = System.out;
+		System.setOut(ps);
+		System.out.println(maze.toString());
+		System.out.flush();
+		System.setOut(old);
+		Scanner scanner = new Scanner(baos.toString());
+		while (scanner.hasNextLine()) {
+			String s = scanner.nextLine();
+			for (int i = 0; i < s.length(); i++){
+				char c = s.charAt(i);
+				if(c == '1'){
+					entities.add(new Entity(texturedModelIntruder, new Vector3f(line,0,i), 0, 90F,  0, 1F,1));
+					mazeMatrix[line][i] = 1;
+				}
+				else if(c == '0'){
+					mazeMatrix[line][i] = 0;
+				}
+
+			}
+			line++;
+
+		}
+		scanner.close();
+			for (int j = 0; j < mazeHeight*2+1; j++) {
+				for (int k = 0; k < mazeLength*2+1; k++) {
+					System.out.print(mazeMatrix[j][k]);
+				}
+				System.out.println("");
+			}
+		}
+
+
+
 		// generate terrain
 		terrain = new Terrain(0,0,loader,texturePack, blendMap,"heightMap");
 
 		// generate light
 		lights = new ArrayList<>();
-		lights.add(new Light(new Vector3f(1000,1000,300), new Vector3f(1f,1f,1f)));
+		//lights.add(new Light(new Vector3f(1000,1000,300), new Vector3f(1f,1f,1f)));
 
 
 		// generate players
@@ -154,6 +208,7 @@ public class Main implements Runnable {
 		intruder = new Player(texturedModelIntruder, new Vector3f(variables.getSpawnIntruder().x,0,variables.getSpawnIntruder().y),0,90,0,1,1);  //portal
 		guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnGuard().x,0,variables.getSpawnGuard().y),0,90,0,1,1);  //portal
 
+		camPlayer = new Player(texturedModelIntruder, new Vector3f(100,0,100),0,90,0,1,1);
 
 		for(ArrayList<Entity> wall : walls){
 			entities.addAll(wall);
@@ -162,8 +217,10 @@ public class Main implements Runnable {
 		players.add(intruder);
 		players.add(guard);
 
+
+
 		// put the camera
-		camera = new Camera(intruder);
+		camera = new Camera(camPlayer);
 	}
 
 	public void run() {
@@ -246,7 +303,7 @@ public class Main implements Runnable {
 	private ArrayList<ArrayList<Entity>> createWallsFromFile(){
 		ArrayList<ArrayList<Entity>> walls = new ArrayList<>();
 
-		// x,w,z,y this order.
+		// x,y,z,w: this order.
 
 		walls.add(createWallFromParams(variables.getWall1().x, variables.getWall1().y, variables.getWall1().z, variables.getWall1().w));
 		walls.add(createWallFromParams(variables.getWall2().x, variables.getWall2().y, variables.getWall2().z, variables.getWall2().w));
