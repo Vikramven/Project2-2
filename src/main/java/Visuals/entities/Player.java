@@ -3,7 +3,6 @@ package Visuals.entities;
 import Visuals.engine.graphics.models.TexturedModel;
 import org.lwjglx.util.vector.Vector2f;
 import org.lwjglx.util.vector.Vector3f;
-import Visuals.terrain.Terrain;
 
 public class Player extends Entity {
 
@@ -11,11 +10,11 @@ public class Player extends Entity {
         super(model, position, rotX, rotY, rotZ, scale,entityID);
     }
 
-    public void move(Terrain terrain, Vector2f newPos){
+    public void move(Vector2f newPos){
         Vector3f newPosition = new Vector3f();
         newPosition.x = newPos.x;
         newPosition.z = newPos.y;
-        newPosition.y = (float)1.75;
+        newPosition.y = 0;
 
         super.setPosition(newPosition);
     }

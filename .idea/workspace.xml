@@ -4,11 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="library for javafx">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="maze">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Project2-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project2-2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_16.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_16.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_16.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_16.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_17_02_22__14_41__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_17_02_22__14_41__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_02_22__11_54__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_02_22__11_54__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_22__13_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_22__13_47__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_22__12_36__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_22__12_36__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Path/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/CanPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/CanPlace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Entrance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Entrance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/FileParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/FileParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/MapObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Shade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Shade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Spawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Spawn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Target.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Target.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Teleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Teleport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Texture.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Texture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Variables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Vector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Node.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Tree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/CanPlace.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Trace.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Entrance.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/FileParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MapObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Shade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Spawn.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Target.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Teleport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Texture.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Variables.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Vector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Wall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Path/Move.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Path/Node.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Path/Position.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Path/Tree.class" beforeDir="false" />
     </list>
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +121,20 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.StartGame">
+    <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Visuals.App" />
+      <module name="Project2-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Visuals.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="App" />
       <module name="Project2-2" />
@@ -80,8 +142,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StartGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Visuals.main.StartGame" />
+      <module name="Project2-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Visuals.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.StartGame" />
+        <item itemvalue="Application.App (1)" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>

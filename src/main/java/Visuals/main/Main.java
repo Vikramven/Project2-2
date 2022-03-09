@@ -3,6 +3,8 @@ package Visuals.main;
 import Visuals.Controller.DefaultVariables;
 import Visuals.Controller.ReadFiles;
 import Visuals.MazeGenerator.MazeForSale;
+import Visuals.Path.Move;
+import Visuals.Path.Position;
 import Visuals.engine.graphics.Loader;
 import Visuals.engine.graphics.MasterRenderer;
 import Visuals.engine.graphics.models.RawModel;
@@ -19,6 +21,7 @@ import Visuals.entities.Entity;
 import Visuals.entities.Light;
 import Visuals.entities.Player;
 import org.lwjgl.glfw.GLFW;
+import org.lwjglx.util.vector.Vector2f;
 import org.lwjglx.util.vector.Vector3f;
 import org.lwjglx.util.vector.Vector4f;
 import Visuals.terrain.Terrain;
@@ -85,6 +88,13 @@ public class Main implements Runnable {
 	public static String testMapPath;
 	public MazeForSale maze;
 	public boolean generateMaze = true;
+	public Position start;
+	public Position end;
+	public int[][] mazeMatrix;
+	public int pathIndex = 0;
+	public List<Position> path;
+	public Input input;
+	public long lastClick;
 
 
 
@@ -144,16 +154,18 @@ public class Main implements Runnable {
 		textureIntruder.setShineDamper(5);
 		textureIntruder.setReflectivity((float)0.5);
 
+		input = new Input();
+
 
 		// Maze Generation
 		if(generateMaze){
 
-		int mazeHeight = 100;
-		int mazeLength = 100;
+		int mazeHeight = 10;
+		int mazeLength = 10;
 		int line = 0;
-		int[][] mazeMatrix = new int[mazeHeight*2+1][mazeLength*2+1];
+		mazeMatrix = new int[mazeHeight*2+1][mazeLength*2+1];
 
-		maze = new MazeForSale(mazeLength,mazeHeight) ;
+		maze = new MazeForSale(mazeLength,mazeHeight);
 		String a = maze.toString();
 		System.out.println(a);
 
@@ -171,26 +183,40 @@ public class Main implements Runnable {
 			for (int i = 0; i < s.length(); i++){
 				char c = s.charAt(i);
 				if(c == '1'){
-					entities.add(new Entity(texturedModelIntruder, new Vector3f(line,0,i), 0, 90F,  0, 1F,1));
+					entities.add(new Entity(texturedModelIntruder, new Vector3f(line,0,i), 0, 270,  0, 1F,1));
 					mazeMatrix[line][i] = 1;
 				}
 				else if(c == '0'){
 					mazeMatrix[line][i] = 0;
 				}
-
+				else if(c == 'S'){
+					start = new Position(line,i);
+					mazeMatrix[line][i] = 0;
+				}
+				else if(c == 'E'){
+					end = new Position(line,i);
+					mazeMatrix[line][i] = 0;
+				}
 			}
 			line++;
-
 		}
 		scanner.close();
-			for (int j = 0; j < mazeHeight*2+1; j++) {
-				for (int k = 0; k < mazeLength*2+1; k++) {
-					System.out.print(mazeMatrix[j][k]);
-				}
-				System.out.println("");
-			}
 		}
 
+
+		path = Move.getPath(start, end, mazeMatrix);
+
+		for (Position p : path){
+			mazeMatrix[p.getX()][p.getY()] = 3;
+			//System.out.println(p);
+		}
+
+		for (int j = 0; j < mazeMatrix.length; j++) {
+			for (int k = 0; k < mazeMatrix[0].length; k++) {
+				System.out.print(mazeMatrix[j][k]);
+			}
+			System.out.println("");
+		}
 
 
 		// generate terrain
@@ -198,17 +224,16 @@ public class Main implements Runnable {
 
 		// generate light
 		lights = new ArrayList<>();
-		//lights.add(new Light(new Vector3f(1000,1000,300), new Vector3f(1f,1f,1f)));
+		lights.add(new Light(new Vector3f(1000,1000,300), new Vector3f(1f,1f,1f)));
 
 
 		// generate players
 		// * step 4: Generate entities or players.
 
 		ArrayList<ArrayList<Entity>> walls = createWallsFromFile();
-		intruder = new Player(texturedModelIntruder, new Vector3f(variables.getSpawnIntruder().x,0,variables.getSpawnIntruder().y),0,90,0,1,1);  //portal
+		intruder = new Player(texturedModelGuard, new Vector3f(start.getX(),0,start.getY()),0,90,0,1,1);  //portal
 		guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnGuard().x,0,variables.getSpawnGuard().y),0,90,0,1,1);  //portal
-
-		camPlayer = new Player(texturedModelIntruder, new Vector3f(100,0,100),0,90,0,1,1);
+		camPlayer = new Player(texturedModelIntruder, new Vector3f(10,0,10),0,90,0,1,1);
 
 		for(ArrayList<Entity> wall : walls){
 			entities.addAll(wall);
@@ -217,10 +242,10 @@ public class Main implements Runnable {
 		players.add(intruder);
 		players.add(guard);
 
-
-
 		// put the camera
-		camera = new Camera(camPlayer);
+		camera = new Camera(intruder);
+
+		lastClick = System.currentTimeMillis();
 	}
 
 	public void run() {
@@ -234,9 +259,17 @@ public class Main implements Runnable {
 			render();
 			if (Input.isKeyDown(GLFW.GLFW_KEY_F11)) window.setFullscreen(!window.isFullscreen());
 
+			if (Input.isKeyDown(GLFW.GLFW_KEY_M) && pathIndex < path.size()) {
 
-			if (Input.isKeyDown(GLFW.GLFW_KEY_M) /*&& !isOpenMoveBox*/ ) {
-				// Action after 'M' key press.
+				long currTime = System.currentTimeMillis();
+				if(currTime-lastClick > 200){
+					Position pos = path.get(pathIndex);
+					intruder.move(new Vector2f(pos.getX(),pos.getY()));
+					pathIndex++;
+					lastClick = currTime;
+				}
+
+
 			}
 		}
 
