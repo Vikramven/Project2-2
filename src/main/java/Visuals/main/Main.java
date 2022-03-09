@@ -232,7 +232,7 @@ public class Main implements Runnable {
 
 		ArrayList<ArrayList<Entity>> walls = createWallsFromFile();
 		intruder = new Player(texturedModelGuard, new Vector3f(start.getX(),0,start.getY()),0,90,0,1,1);  //portal
-		guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnGuard().x,0,variables.getSpawnGuard().y),0,90,0,1,1);  //portal
+		//guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnGuard().x,0,variables.getSpawnGuard().y),0,90,0,1,1);  //portal
 		camPlayer = new Player(texturedModelIntruder, new Vector3f(10,0,10),0,90,0,1,1);
 
 		for(ArrayList<Entity> wall : walls){
@@ -240,7 +240,7 @@ public class Main implements Runnable {
 		}
 
 		players.add(intruder);
-		players.add(guard);
+		//players.add(guard);
 
 		// put the camera
 		camera = new Camera(intruder);
@@ -262,14 +262,23 @@ public class Main implements Runnable {
 			if (Input.isKeyDown(GLFW.GLFW_KEY_M) && pathIndex < path.size()) {
 
 				long currTime = System.currentTimeMillis();
-				if(currTime-lastClick > 200){
+				if(currTime-lastClick > 100){
 					Position pos = path.get(pathIndex);
 					intruder.move(new Vector2f(pos.getX(),pos.getY()));
 					pathIndex++;
 					lastClick = currTime;
 				}
+			}
 
+			if (Input.isKeyDown(GLFW.GLFW_KEY_N) && pathIndex < path.size() && pathIndex>0) {
 
+				long currTime = System.currentTimeMillis();
+				if(currTime-lastClick > 100){
+					Position pos = path.get(pathIndex-1);
+					intruder.move(new Vector2f(pos.getX(),pos.getY()));
+					pathIndex--;
+					lastClick = currTime;
+				}
 			}
 		}
 
