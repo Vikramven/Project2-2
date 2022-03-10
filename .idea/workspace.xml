@@ -5,17 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_22__16_52__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_22__16_52__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_22,_16_52_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_02_22__16_52__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/CanPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/CanPlace.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Trace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" afterDir="false" />
+    </list>
+    <list id="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" name="Changes by nathaliebent" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Variables.java" afterDir="false" />
     </list>
     <list id="2decb1df-71d8-4db5-962f-e258efbc61cc" name="Changes by tiphanie" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Path/Move.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,39 +50,39 @@
     </file-type-list>
   </component>
   <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/Controller/Variables.java">
+      <ranges>
+        <range start1="5" end1="5" start2="5" end2="9" changelist="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" />
+        <range start1="117" end1="117" start2="121" end2="124" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="173" end1="173" start2="180" end2="182" changelist="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" />
+        <range start1="181" end1="181" start2="190" end2="192" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="206" end1="209" start2="217" end2="217" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="210" end1="213" start2="218" end2="219" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+      </ranges>
+    </file>
     <file path="$PROJECT_DIR$/src/main/java/Agents/Map.java">
       <ranges>
-        <range start1="5" end1="5" start2="5" end2="14" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="7" end1="17" start2="16" end2="18" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="18" end1="19" start2="19" end2="21" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="20" end1="22" start2="22" end2="24" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="23" end1="23" start2="25" end2="29" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="26" end1="27" start2="32" end2="34" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="28" end1="30" start2="35" end2="38" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="31" end1="31" start2="39" end2="51" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="32" end1="32" start2="52" end2="55" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="52" end1="52" start2="75" end2="85" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="53" end1="54" start2="86" end2="90" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="56" end1="57" start2="92" end2="93" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="59" end1="60" start2="95" end2="99" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="61" end1="62" start2="100" end2="101" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="130" end1="140" start2="169" end2="190" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="145" end1="146" start2="195" end2="201" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
+        <range start1="24" end1="24" start2="24" end2="27" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="34" end1="34" start2="37" end2="38" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="66" end1="66" start2="70" end2="72" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="70" end1="70" start2="76" end2="78" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="90" end1="90" start2="98" end2="100" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="92" end1="93" start2="102" end2="105" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="99" end1="99" start2="111" end2="112" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="109" end1="109" start2="122" end2="123" changelist="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" />
+        <range start1="199" end1="200" start2="213" end2="215" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
       </ranges>
     </file>
     <file path="$PROJECT_DIR$/src/main/java/Agents/Agent.java">
       <ranges>
-        <range start1="0" end1="1" start2="0" end2="1" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="6" end1="6" start2="6" end2="14" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="7" end1="8" start2="15" end2="19" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="9" end1="9" start2="20" end2="21" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="10" end1="18" start2="22" end2="24" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="19" end1="24" start2="25" end2="30" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="25" end1="26" start2="31" end2="34" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="27" end1="27" start2="35" end2="43" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="29" end1="34" start2="45" end2="46" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="36" end1="37" start2="48" end2="48" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
-        <range start1="44" end1="44" start2="55" end2="62" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
+        <range start1="3" end1="3" start2="3" end2="5" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="18" end1="19" start2="20" end2="32" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="21" end1="22" start2="34" end2="35" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="23" end1="25" start2="36" end2="39" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="43" end1="45" start2="57" end2="61" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="46" end1="46" start2="62" end2="68" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="55" end1="55" start2="77" end2="79" changelist="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" />
+        <range start1="62" end1="62" start2="86" end2="203" changelist="2decb1df-71d8-4db5-962f-e258efbc61cc" />
       </ranges>
     </file>
   </component>
@@ -100,6 +105,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

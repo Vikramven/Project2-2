@@ -3,6 +3,10 @@ package Controller;
 import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 
+/**
+ * TO DO: add a getter and a setter for @distanceViewing and adapt the parser accordingly
+ */
+
 public class Variables {
 
     //simple type variables
@@ -115,6 +119,9 @@ public class Variables {
         this.target = new Target(x1,y1,x2,y2);
     }
 
+    public void setDistanceViewing(int distanceViewing) {
+        this.distanceViewing = distanceViewing;
+    }
 
 
 
@@ -172,6 +179,8 @@ public class Variables {
         return timeStep;
     }
 
+
+
     public int getDistanceSmelling(){return this.distanceSmelling;}
 
     public int getDistanceHearingWalking(){return this.distanceHearingWalking;}
@@ -179,6 +188,8 @@ public class Variables {
     public int getDistanceHearingSprinting(){return this.distanceHearingSprinting;}
 
     public int getNumberMakers(){return this.numberMarkers;}
+
+    public int getDistanceViewing(){return this.distanceViewing}
 
     public void createWall(int x1, int y1, int x2, int y2){
         if(unlock){
@@ -204,11 +215,6 @@ public class Variables {
         }
     }
 
-    public int getDistanceViewing() {
-        return distanceViewing;
-    }
 
-    public void setDistanceViewing(int distanceViewing) {
-        this.distanceViewing = distanceViewing;
-    }
+
 }

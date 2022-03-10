@@ -22,6 +22,9 @@ public class Map{
    private ArrayList <Wall> walls; //check every 2 integers
    private Variables variables = new Variables(); // why ?
    private Tile[][] tiles;
+   private ArrayList<Agent[]>;
+   private Agent[] teamGuards;
+   private Agent[] teamIntruders;
 
     /* METHOD(1): Map
      *   Map object constructor
@@ -32,6 +35,7 @@ public class Map{
       mapWidth = variables.getWidth();
       matrix = new int[mapWidth][mapHeight]; //dimension of
       tiles = new Tile[mapWidth][mapHeight];
+      teamGuards = new Agent[variables.getNumberOfGuards()];
       walls = variables.getWalls(); //placing walls on the map
       buildingWalls(matrix);//update the map with the wall
       trace = new int[mapWidth][mapHeight]; //dimension of
@@ -64,10 +68,14 @@ public void mapInit(){
           for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){
               matrix[x1][j] = Integer.MAX_VALUE;
               matrix[x2][j] = Integer.MAX_VALUE; //this sets the cost to infinity for the vertical walls
+              tiles[x1][i].placeWall();
+              tiles[x2][i].placeWall();
               }
           for(int j = x1/*left border*/; j<x2+1/*right border*/; j++){
               matrix[j][y1] = Integer.MAX_VALUE;
               matrix[j][y2] = Integer.MAX_VALUE;
+              tiles[j][y1].placeWall();
+              tiles[j][y2].placeWall();
           }
           //this only sets the borders of the walls to infinity
       }
@@ -88,15 +96,20 @@ public void mapInit(){
      *   create the Agents and stores them in a fixed sized array
      * */
     public void teamCreation(/*pass an int to identify the group*/)){
+        double initialAngle =  java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
+
       for(int i = 0; i < variables.getNumberOfGuards(); i++){
           Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
-          team[i]=newAgent;
+          newAgent.setInitialAngle(initialAngle);
+          teamGuards[i] = newAgent;
+          initialAngle =+ initialAngle; // increase by one basic unit
       }
    }
     /* METHOD(6): convertPosition
      *   chooses optimal positions for each Agent along the spawning rectangle area
      *  insures good perimeter coverage
      * */
+
    public void convertPosition(Agent[] team){
        int teamSize = team.length();
        int x1 = team[0].getAgentSpawning()[0];
@@ -107,6 +120,7 @@ public void mapInit(){
        int width = x1- x2;
        int height = y1 - y2;
        int counter = 0;
+
    //CASE 1:  available position inferior or equal to number of guards
        if(teamSize => (width * height)){
            while( counter  < teamSize ){
@@ -197,7 +211,8 @@ public void mapInit(){
        matrix[x][y] = value;
    }
     public void setTrace(int x, int y, int value){
-        matrix[x][y] = value;
+       matrix[x][y] = value;
+       tiles[x][y].placeTrace();
     }
 
 }

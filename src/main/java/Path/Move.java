@@ -88,15 +88,7 @@ public boolean canMoveThere(Map map, int x, int y){
 
 
 
-    public int[] goalUpdator(Agent agent, Map map) {
-    /* Sort the option from most to less costly
-        Need to sort the distance from AgentPosition to all know Map Limits
-        Need to sort the distance from AgentPosition to all know Traces
-     Outputs the Minimum of both
-     */
 
-
-    }
 
     // Calculates the Manhattan distance
     public int manhattanHeuristic(int x, int y, int goalX, int goalY){

@@ -4,6 +4,9 @@ public class Tile {
     private int[] dataset; //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace
     private int x;
     private int y;
+    private int value;
+    private int TRACE_VALUE = 2; // or any other val
+    private int WALL_VALUE = Integer.MAX_VALUE;
     private final int size =5;
 
     public Tile(int x, int y){
@@ -24,7 +27,9 @@ public class Tile {
     public void placeWall(){
         if(this.dataset[2] == 0 && this.dataset[3]==0){
             this.dataset[1] = 1;
-        }    }
+            this.value = this.WALL_VALUE;
+        }
+    }
 
     public void placeShade(){
         if(this.dataset[1] == 0 && this.dataset[3]==0){
@@ -40,6 +45,7 @@ public class Tile {
 
     public void placeTrace(){
         this.dataset[4]=1;
+        this.value += this.TRACE_VALUE;
     }
 
     public void removeAgent(){
@@ -64,6 +70,10 @@ public class Tile {
 
     public boolean hasTrace(){
         return this.dataset[4]==1;
+    }
+
+    public int getValue(){
+        return value;
     }
 
     public boolean isEmpty(){
