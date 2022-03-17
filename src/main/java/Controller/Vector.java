@@ -72,6 +72,8 @@ public class Vector {
         coords[1] = y1;
         return coords;
     }
+
+    public Vector unitCopy(){return new Vector(this.x1,this.y1,this.angle,1);}
     public Vector add(Vector number){
         return new Vector(this.x+number.getX(), this.y+number.getY());
     }

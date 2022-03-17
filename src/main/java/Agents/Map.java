@@ -92,6 +92,14 @@ public void mapInit(){
         }
     }
 
+    public Tile[][] getTiles(){
+        return this.tiles;
+    }
+
+    public Tile getTile(int x, int y){
+        return tiles[x][y];
+    }
+
     /* METHOD(5): teamCreation
      *   create the Agents and stores them in a fixed sized array
      * */
@@ -109,6 +117,21 @@ public void mapInit(){
      *  insures good perimeter coverage
      * */
 
+
+    public void placeAgentsOnSpawn(Agent[] team){
+        ArrayList<Integer> spawnCoords = new ArrayList<>();
+        if(team[0].teamCode == 0){
+            spawnCoords = this.variables.getSpawnAreaGuards().getCoords();
+        }
+        else{
+            spawnCoords = this.variables.getSpawnAreaIntruders().getCoords();
+        }
+
+        int x1 = spawnCoords.get(0); int y1 = spawnCoords.get(1);
+        int x2 = spawnCoords.get(2); int y2 = spawnCoords.get(3);
+
+    }
+
    public void convertPosition(Agent[] team){
        int teamSize = team.length();
        int x1 = team[0].getAgentSpawning()[0];
@@ -122,16 +145,16 @@ public void mapInit(){
 
    //CASE 1:  available position inferior or equal to number of guards
        if(teamSize => (width * height)){
-           while( counter  < teamSize ){
-               for(int i = x1; i < x2 + 1; i ++){
-                   for(int j = y1; j < y2; j ++){
-                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                       team[i].setAgentPositionX() = i;
-                       team[i].setAgentPositionY() = j;
-                       counter++;
+           int i = x1;
+           int j = y1;
+           while( counter  < teamSize && i < x2 + 1 && j < y2 ){
+           team[counter].setAgentPositionX(i);
+           team[counter].setAgentPositionY(j);
+            i++;
+            j++;
+           counter++;
                    }
-               }
-           }
+
        }//END CASE 1
 
        //CASE 2: available position superior to number of guards
@@ -212,6 +235,15 @@ public void mapInit(){
     public void setTrace(int x, int y, int value){
        matrix[x][y] = value;
        tiles[x][y].placeTrace();
+    }
+
+    public void updateExplored(Agent[] agents){
+        for (Agent agent : agents) {
+            ArrayList<int[]> exploredTiles = agent.getExplored();
+            for (int[] coords : exploredTiles) {
+                tiles[coords[0]][coords[1]].isExplored();
+            }
+        }
     }
 
     private boolean explored(){
