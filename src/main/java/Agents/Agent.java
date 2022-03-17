@@ -89,9 +89,9 @@ public class Agent  {
         this.mapMaxY = variables.getHeight();
     }
 
-    public void setSpawnCoords(int x, int y){
-        this.spawnX=x;
-        this.spawnY=y;
+    public void setSpawnCoords(int[] coords){
+        this.spawnX=coords[0];
+        this.spawnY=coords[1];
     }
 
 
@@ -187,6 +187,9 @@ public class Agent  {
 
 
     private int[] convertToMap(int x, int y){
+        /**
+         * takes relative x,y from agent's POV
+         * */
         int[] coords = new int[2];
         coords[0]=this.agentPositionX + this.spawnX;
         coords[1]=this.agentPositionY + this.spawnY;
@@ -194,6 +197,9 @@ public class Agent  {
     }
 
     private int[] convertToAgent(int xMap, int yMap){
+        /**
+         * takes map's x,y and converts to relative agent coords
+         * */
         int[] coords = new int[2];
         coords[0]=xMap - this.spawnX;
         coords[1]=yMap - this.spawnY;

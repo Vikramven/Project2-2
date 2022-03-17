@@ -8,14 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Vector.java" afterDir="false" />
     </list>
     <list id="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" name="Changes by nathaliebent" comment="" />
-    <list id="5dfe30e5-581f-4166-b1ab-9f15b324981e" name="Changes by tiphanie" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
-    </list>
+    <list id="5dfe30e5-581f-4166-b1ab-9f15b324981e" name="Changes by tiphanie" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,44 +37,6 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/Agents/Map.java">
-      <ranges>
-        <range start1="94" end1="94" start2="94" end2="102" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="110" end1="110" start2="118" end2="133" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="124" end1="131" start2="147" end2="155" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="132" end1="134" start2="156" end2="157" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="215" end1="215" start2="238" end2="247" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/Agents/Agent.java">
-      <ranges>
-        <range start1="21" end1="23" start2="21" end2="25" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="25" end1="26" start2="27" end2="34" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="33" end1="33" start2="41" end2="42" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="34" end1="34" start2="43" end2="46" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="75" end1="76" start2="87" end2="89" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="78" end1="79" start2="91" end2="113" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="80" end1="94" start2="114" end2="114" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="95" end1="95" start2="115" end2="120" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="96" end1="97" start2="121" end2="185" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="99" end1="99" start2="187" end2="204" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="100" end1="104" start2="205" end2="209" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="156" end1="156" start2="261" end2="276" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="157" end1="161" start2="277" end2="450" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="176" end1="177" start2="465" end2="466" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="226" end1="226" start2="515" end2="516" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="227" end1="228" start2="517" end2="518" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="230" end1="231" start2="520" end2="521" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="233" end1="234" start2="523" end2="524" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="235" end1="236" start2="525" end2="532" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="238" end1="238" start2="534" end2="566" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="250" end1="250" start2="578" end2="580" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="274" end1="276" start2="604" end2="606" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="278" end1="282" start2="608" end2="608" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -137,7 +94,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/Agents/Map.java</url>
-          <line>139</line>
+          <line>201</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

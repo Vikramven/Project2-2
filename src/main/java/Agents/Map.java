@@ -130,6 +130,68 @@ public void mapInit(){
         int x1 = spawnCoords.get(0); int y1 = spawnCoords.get(1);
         int x2 = spawnCoords.get(2); int y2 = spawnCoords.get(3);
 
+        int width = Math.abs(x1-x2);
+        int height = Math.abs(y1-y2);
+        int outline = 2*(height+width);
+        int spacing = 1;
+        ArrayList<int[]> spawnLine = new ArrayList<>();
+        if (team.length<=outline){
+            spawnLine = outlineOfMatrix(x1,y1,x2,y2);
+            spacing = (int) (spawnLine.size()/team.length);
+        }
+        else {
+            int a = x1;
+            int b = y1;
+            int c = x2;
+            int d = y2;
+            int[] coords = new int[2];
+
+            do{
+                coords[0] = a+1;
+                coords[1] = b+1;
+                spawnLine.addAll(outlineOfMatrix(a,b,c,d));
+                a++;
+                b++;
+            }while(!spawnLine.contains(coords));
+        }
+
+        for(int i=0; i<team.length; i++){
+            int[] coords = spawnLine.get(spacing*i);
+            team[i].setSpawnCoords(coords);
+        }
+
+    }
+
+    private ArrayList<int[]> outlineOfMatrix(int x1, int y1, int x2, int y2){
+        int width = Math.abs(x1-x2);
+        int height = Math.abs(y1-y2);
+        int outlineLength = 2*(height+width);
+        ArrayList<int[]> outline = new ArrayList<>();
+        for(int i = y1; i < y2+1; i++){
+            int[] coords = new int[2];
+            coords[0] = x1;
+            coords[1] = i;
+            outline.add(coords);
+        }
+        for(int i = x1+1; i<x2+1; i++){
+            int[] coords = new int[2];
+            coords[0] = i;
+            coords[1] = y2;
+            outline.add(coords);
+        }
+        for(int i = y2; i>=y1; i--){
+            int[] coords = new int[2];
+            coords[0] = x2;
+            coords[1] = i;
+            outline.add(coords);
+        }
+        for(int i=x2; i>x1; i--){
+            int[] coords = new int[2];
+            coords[0] = i;
+            coords[1] = y1;
+            outline.add(coords);
+        }
+        return outline;
     }
 
    public void convertPosition(Agent[] team){
