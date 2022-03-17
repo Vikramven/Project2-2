@@ -96,8 +96,7 @@ public void mapInit(){
      *   create the Agents and stores them in a fixed sized array
      * */
     public void teamCreation(/*pass an int to identify the group*/)){
-        double initialAngle =  java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
-
+        double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
       for(int i = 0; i < variables.getNumberOfGuards(); i++){
           Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
           newAgent.setInitialAngle(initialAngle);
@@ -213,6 +212,10 @@ public void mapInit(){
     public void setTrace(int x, int y, int value){
        matrix[x][y] = value;
        tiles[x][y].placeTrace();
+    }
+
+    private boolean explored(){
+
     }
 
 }

@@ -1,13 +1,13 @@
 package Agents;
 
 public class Tile {
-    private int[] dataset; //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace
+    private int[] dataset; //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored
     private int x;
     private int y;
     private int value;
     private int TRACE_VALUE = 2; // or any other val
     private int WALL_VALUE = Integer.MAX_VALUE;
-    private final int size =5;
+    private final int size = 6;
 
     public Tile(int x, int y){
         this.dataset = new int[size];
@@ -48,6 +48,10 @@ public class Tile {
         this.value += this.TRACE_VALUE;
     }
 
+    public void setAsExplored(){
+        this.dataset[5]=1;
+    }
+
     public void removeAgent(){
         this.dataset[0]=0;
     }
@@ -71,6 +75,8 @@ public class Tile {
     public boolean hasTrace(){
         return this.dataset[4]==1;
     }
+
+    public boolean isExplored(){return  this.dataset[5]==1;}
 
     public int getValue(){
         return value;

@@ -11,6 +11,7 @@ public class Move {
 
     //Left: -90 ° = -45 x 2
 public void leftMove(Agent agent){
+
     agent.setAgentPositionX(agent.getAgentPositionX()-1);
 }
     //Right: +90° = +45 x 2

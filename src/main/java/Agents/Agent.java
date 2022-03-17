@@ -2,9 +2,8 @@ package Agents;
 
 import Controller.Variables;
 import Controller.FileParser;
-import java.lang.Math;
 import Controller.Vector;
-import Path.Move;
+import java.lang.Math;
 
 import java.util.ArrayList;
 
@@ -19,17 +18,20 @@ public class Agent  {
     //Agent Team information
     int teamCode; //1 if Intruder, 0 if Guard
 
-    int relativePosX; //relative position to the start which is (0,0) the moment before you start avoiding the wall
-    int relativePosY;
-    double initialAngle;
-    int strategy;
-    int avoidance;
-    int agentSize;
-    int teamSize;
-    int visionRange = variables.getDistanceViewing();
-
     Variables variables = new Variables();
-    Agent[] team;
+    private int relativePosX; //relative position to the start which is (0,0) the moment before you start avoiding the wall
+    private int relativePosY;
+    private double initialAngle;
+    private double currentAngle;
+    private int strategy;
+    private int avoidance;
+    private int agentSize;
+    private int teamSize;
+    private int visionRange = variables.getDistanceViewing();
+    private double visionWidth;
+    private Agent[] team;
+    private ArrayList<int[]> exploredFields = new ArrayList<int[]>();
+    private Vector orientation;
 
     //Agent Geographical Informations
 
@@ -56,6 +58,7 @@ public class Agent  {
      *   create an agent belonging to a specific team
      * */
     public Agent(int team){
+        this.visionWidth = java.lang.Math.toRadians(15);
         this.teamCode = team;
         variables =  FileParser.readFile("./resources/testmap.txt");
         //team = new Agent[variables.getNumberOfGuards()];
@@ -66,6 +69,32 @@ public class Agent  {
         else if (team == 1){
             this.teamSize = variables.getNumberOfIntruders();
         }
+        this.agentPositionX = 0; //whenever agent moves, we have to update this
+        this.agentPositionY = 0;
+        this.visionRange = variables.getDistanceViewing();
+        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,this.initialAngle,this.visionRange);
+
+    }
+
+    private ArrayList<int[]> visibleFields(){
+        ArrayList<int[]> fields = new ArrayList<int[]>();
+        for(int i =0; i<=this.visionRange; i++){
+            double ratio = this.orientation.getY2()/this.orientation.getX2();
+            int x = i;
+            int y = (int) (ratio*x);
+            int[] coords = new int[2];
+            coords[0] = x;
+            coords[1] = y;
+            fields.add(coords);
+            if(!exploredFields.contains(coords)){
+                exploredFields.add(coords);
+            }
+        }
+        double conditionAngle = this.orientation.getAngle() - Math.toRadians(22.5)
+        if(conditionAngle>0.0 && conditionAngle<Math.toRadians(45)){
+
+        }
+        return fields;
     }
 
     public int[] getAgentSpawning(){return spawning;}
@@ -74,10 +103,12 @@ public class Agent  {
     public int getAgentPositionX(){return this.agentPositionX;}
     public int getAgentPositionY(){return this.agentPositionY;}
     public int[][] getAgentGoal(){return this.agentGoal;}
+    public double getInitialAngle(){
+        return initialAngle;
+    }
+    public void setInitialAngle(double angle ){this.initialAngle = angle; }
 
-    public void setInitialAngle( int angle ){this initialAngle = angle; }
-
-    public ArrayList <int[]> getAgentTrace(){
+    public ArrayList<int[]> getAgentTrace(){
         return AgentTrace;
     }
 
@@ -112,13 +143,13 @@ public class Agent  {
     public boolean isEnd(){
         int limitY = variables.getHeight();
         int limitX = variables.getWidth();
-        int GoalA = new int [2];
+        int[] GoalA = new int[2];
         GoalA = CoordsCreator(initialAngle, visionRange );
 
         if( GoalA[0] >= limitX  || GoalA[1] >= limitY ){
-            return 1; //Agent is in vision range of the mapLimit
+            return true; //Agent is in vision range of the mapLimit
         }
-            return 0; //Agent is not in vision range of the mapLimit
+            return false; //Agent is not in vision range of the mapLimit
     }
     /*METHOD (2) : IS_WALL
      * check if the agent has reached a wall
@@ -140,6 +171,13 @@ public class Agent  {
     *       On the way it is possible to encounter obstacles such as walls, other agents trace or téléportation doors
     *          We created subroutines for each of these eventualities
     * */
+
+    public void setStrategy(){
+        if(shouldGoToSpawnAngle()){
+            this.strategy = 3;
+        }
+    }
+
     public int[] AgentStrategy(){
         // STEP 0 : set initial route
         int visionRange = variables.getDistanceViewing();
@@ -158,6 +196,7 @@ public class Agent  {
                 */
         }// The Map Limit has been reached successfully
 
+
     /* STAGE 2: FROM MAP LIMIT TO TRACE LIMIT
      * 2 OPTION exist here:
      *  OPTION A/ the agent progress in a similar manner :
@@ -171,8 +210,45 @@ public class Agent  {
 
 
     // STAGE 3: BACK TO SPAWNING
+        /*
+        *
+        *
+        * */
 
         }
+
+        //WALL AVOIDANCE METHOD
+    // until front position contains wall, avoid by the right
+    //until side
+
+
+
+    public int[] goal(){
+        switch(this.strategy){
+            case 1:
+                return goToEndOfMapCoords();
+                break;
+            case 2:
+                return  exploreEdgeCoords();
+                break;
+            case 3:
+                return goToSpawnCoords();
+            break;
+        }
+    }
+
+    private int[] goToEndOfMapCoords(){
+        return this.orientation.getEndCoords(); //unless wall evasion, to correct!
+    }
+
+    private int[] exploreEdgeCoords(){
+
+    }
+
+    private int[] goToSpawnCoords(){
+        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,0,0);
+        this.orientation.setLength(this.visionRange);
+    }
 
     private boolean shouldGoToSpawnAngle(){
         int k = (int) this.initialAngle/this.teamSize;
@@ -193,6 +269,10 @@ public class Agent  {
     }
 
     private boolean shouldGoToSpawnTrace(){
+
+    }
+
+    private int[] getExplored(){
 
     }
 
