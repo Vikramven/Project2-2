@@ -288,173 +288,129 @@ public class Agent  {
             return 0;
     }
 
-    public boolean wall_North(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean wall_South(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getAgentPositionX()][getAgentPositionY()-1].hasWall() == true){
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean wall_East(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean wall_West(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
-            return true;
-        }
-        else
-            return false;
-    }
 
-    //MOVE HELPER METHODS
-    //Left: -90 ° = -45 x 2
-    public void leftMove(){
-        setAgentPositionX(getAgentPositionX()-1);
-    }
-    //Right: +90° = +45 x 2
-    public void rightMove(){
-        setAgentPositionX(getAgentPositionX()+1);
-    }
-    //Up: +0°
-    public void upMove(){
-        setAgentPositionY(getAgentPositionY()+1);
-    }
-    //Down: -180° = -45 x 4
-    public void downMove(){
-        setAgentPositionY(getAgentPositionY()-1);
-    }
-
-    /* METHOD (3):WALL AVOIDANCE METHOD
+    /* METHOD (3) ():WALL AVOIDANCE METHOD
      * avoid by the right until :
      *     the position is free
      *   you are back on your route
      */
-    public void wallAvoidance(){
-        int stepsCounter = 0;
+    public int[] wallAvoidance(){
+    int [] miniGoal = new int [2];// contains x, y positions of next move
         /*
          * Identify which wall case it is:
          * Horizontal: strictly N or S of Agent position
          * Vertical: strictly E or W of Agent position
          * TO DO: CORRIDOR CASE
          */
-
-        //NORTH CASE : EAST, NORTH, WEST
-        if(isWall() == 1){
-            while(wall_North() == true && isMapLimit() == false){
-                rightMove();//avoid by the East
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                upMove();
-                if(isWall() == 4){
-                    while(wall_West() == true && isMapLimit() == false){
-                        upMove();
-                    }
-                    if(isWall == 2){//wall_South
-                        for(int i = 0; i < stepsCounter(); i++){
-                            /*
-                             * Risk that it fails in case there is another obstacle
-                             * in case start another avoidance procedure
-                             * as long as goal isnt reached yet
-                             * but, transfer the info to rejoin the route
-                             */
-                            leftMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }//end of WEST routine
-            }//not map limit: if it is then either launch back to spawn or the following
-        }//end of NORTH CASE
-
-        //SOUTH CASE: WEST, SOUTH, EAST
-        if(isWall() == 2){
-            while(wall_South() == true && isMapLimit() == false){
-                leftMove();//avoid by the West
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                downMove();
-                if(isWall() = 3){
-                    while(wall_East() == true && isMapLimit() == false){
-                        downMove();
-                    }
-                    if(isWall == 1){//wall_North
-                        for(int i = 0; i < stepsCounter(); i++){
-                            rightMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }
-            }//not map limit: if it is then either launch back to spawn or the following
-        }//end of SOUTH CASE
-
-        //EAST CASE: SOUTH, EAST, NORTH
-        if(isWall() == 3){
-            while(wall_East() == true && isMapLimit() == false){
-                downMove();//avoid by the South
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                rightMove();
-                if(isWall() = 1){
-                    while(wall_North() == true && isMapLimit() == false){
-                        rightMove();
-                    }
-                    if(isWall() == 4){//wall_West
-                        for(int i = 0; i < stepsCounter(); i++){
-                            upMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }
-            }//not map limit: if it is then either launch back to spawn or the following
-        }//end of EAST CASE
-
-        // WEST CASE: NORTH, WEST, SOUTH
-        if(isWall() == 4){
-            while(wall_West() == true && isMapLimit() == false){
-                upMove();//avoid by the West
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                leftMove();
-                if(isWall() = 2){
-                    while(wall_South() == true && isMapLimit() == false){
-                        leftMove();
-                    }
-                    if(isWall == 2){//wall_South
-                        for(int i = 0; i < stepsCounter(); i++){
-                            downMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }
-            }//not map limit: if it is then either launch back to spawn or the following
-        }
+      //  if(isWall() == 1){
+            if(isMapLimit() == false){
+              if(cases() == 1){// go left
+                miniGoal[0] = getAgentPositionX()+1;
+                miniGoal[1] = getAgentPositionY();
+                return miniGoal;
+              }
+              if(cases() == 2){// go right
+                miniGoal[0] = getAgentPositionX()-1;
+                miniGoal[1] = getAgentPositionY();
+                return miniGoal;
+              }
+              if(cases() == 3){//go down
+                miniGoal[0] = getAgentPositionX();
+                miniGoal[1] = getAgentPositionY()-1;
+                return miniGoal;
+              }
+              if(cases() == 4){//go up
+                miniGoal[0] = getAgentPositionX();
+                miniGoal[1] = getAgentPositionY()+1;
+                return miniGoal;
+              }
+              if(cases() == 5){//same position
+                //go turn to the LEFT (always)
+                //call an angle update
+                miniGoal[0] = getAgentPositionX();
+                miniGoal[1] = getAgentPositionY();
+                return miniGoal;
+              }
     }//end of WALL AVOIDANCE METHOD
 
 
+    public int cases(){
+      int case = 0;
+      //CASE A: go right , increase abscisse by one whenever
+      if(wall_North() == true && flagcounter == 0){
+        case = 1;
+      }
+      else if (wall_South()== true && flagcounter == 2){
+        case = 1;
+      }
+      else if(wall_West()== true && flagcounter == 1){
+        case = 1;
+      }
+      //CASE B: go left
+      else if(wall_North() == true && flagcounter == 2){
+        case = 2;
+      }
+      else if (wall_South() == true && flagcounter == 0){
+        case = 2;
+      }
+      else if(wall_East() == true && flagcounter == 1){
+        case = 2;
+      }
+      //CASE C: go down
+      else if(wall_East() == true && flagcounter == 0){
+        case = 3;
+      }
+      else if (wall_West() == true && flagcounter == 2){
+        case = 3;
+      }
+      else if(wall_South() == true && flagcounter == 1){
+        case = 3;
+      }
+      //CASE D: go up
+      else if(wall_West() == true && flagcounter == 0){
+        case = 3;
+      }
+      else if (wall_East() == true && flagcounter == 2){
+        case = 3;
+      }
+      else if(wall_North() == true && flagcounter == 1){
+        case = 3;
+      }
+    }
 
 
+        public boolean wall_North(){
+            Tile[][] Copy = getAgentMap().getTiles();
+            if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
+                return true;
+            }
+            else
+                return false;
+        }
+        public boolean wall_South(){
+            Tile[][] Copy = getAgentMap().getTiles();
+            if(Copy[getAgentPositionX()][getAgentPositionY()-1].hasWall() == true){
+                return true;
+            }
+            else
+                return false;
+        }
+        public boolean wall_East(){
+            Tile[][] Copy = getAgentMap().getTiles();
+            if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){
+                return true;
+            }
+            else
+                return false;
+        }
+        public boolean wall_West(){
+            Tile[][] Copy = getAgentMap().getTiles();
+            if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
+                return true;
+            }
+            else
+                return false;
+        }
 
     /*METHOD (4) AGENT STRATEGY
     * CONTENT: each agent gets a specific exploration strategy to cover the map heavenly
@@ -490,32 +446,6 @@ public class Agent  {
               * needs to be tested
                 */
         }// The Map Limit has been reached successfully
-
-
-    /* STAGE 2: FROM MAP LIMIT TO TRACE LIMIT
-     * 2 OPTION exist here:
-     *  OPTION A/ the agent progress in a similar manner :
-     *              so the Agent turns right
-     *               then the Agent follows the map limit until he reaches a trace!
-     *
-     * OPTION B/ some Agents are much slower or much faster (because they encounter more troubles)
-     *              in this case we ensure consistency and prevent the problems
-     *              by early returning towards the spawn area
-     */
-
-
-    // STAGE 3: BACK TO SPAWNING
-        /*
-        *
-        *
-        * */
-
-        }
-
-        //WALL AVOIDANCE METHOD
-    // until front position contains wall, avoid by the right
-    //until side
-
 
 
     public int[] goal(){
