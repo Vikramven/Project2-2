@@ -82,7 +82,7 @@ public class Vector {
     }
 
     public Vector unitCopy(){return new Vector(this.x1,this.y1,this.angle,1);}
-    public Vector add(Vector number){
+    /*public Vector add(Vector number){
         return new Vector(this.x+number.getX(), this.y+number.getY());
     }
 
@@ -93,6 +93,9 @@ public class Vector {
     public Vector scale(double scale){
         return new Vector(scale*this.getX(),scale*this.getX() );
     }
+
+
+     */
 
     /**
      * TODO:create cross and dot product methods

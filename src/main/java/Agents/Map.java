@@ -34,6 +34,8 @@ public class Map{
      *   Map object constructor
      *   create the matrix and trace instances
      * */
+
+
    public Map(){
       variables =  FileParser.readFile("./resources/testmap.txt");
       mapHeight = variables.getHeight();
@@ -76,9 +78,13 @@ public class Map{
          * 1. move agents
          * 2. update agent location
          * 3. update exploration %
+         * 4. update trace, flags etc
+         * 5. update seen fields
          * */
         updateAgentLocation();
         updateExplorationPercentage();
+        updateSeenTiles();
+        mapUpdate();
     }
 
     private void updateAgentLocation(){
@@ -97,6 +103,8 @@ public class Map{
             //for phase 2
         }
     }
+
+
 
     private void updateExplorationPercentage(){
         int exploredSum = 0;
@@ -330,19 +338,11 @@ public class Map{
 *   Keeps track of all the traces of every agent
 *   All position that have been visited so far
 * */
-    public void TeamTrace(){
-        for(int i = 0; i < team.length(); i++){
-            updateTrace(team[i].getLastVisited());
-        }
-    }
     /* METHOD (8): updateTrace
      *    Helper method of TeamTrace
      * it should be called after each move
      *  OR the principal should be called after each round
      * */
-    public void updateTrace(int [] latestTrace){
-        setTrace(latestTrace[0],latestTrace[1], 1);
-    }
     /* METHODS: GETTERS AND SETTER
     *   to access private instances of the class
      * */
@@ -370,6 +370,31 @@ public class Map{
             for (int[] coords : exploredTiles) {
                 tiles[coords[0]][coords[1]].isExplored();
             }
+        }
+    }
+
+    private void updateFlags(){
+        for (Agent agent : teamGuards) {
+            ArrayList<int[]> flags = agent.getFlags();
+            for (int[] coords : flags) {
+                tiles[coords[0]][coords[1]].placeFlag();
+            }
+        }
+    }
+
+    private void updateSeenTiles(){
+        for (Agent agent : teamGuards) {
+            ArrayList<int[]> visibleFields = agent.getVisibleFields();
+            for (int[] coords : visibleFields) {
+                tiles[coords[0]][coords[1]].setAsVisible();
+            }
+        }
+    }
+
+    public void updateTiles(){
+        for(Agent agent : teamGuards){
+            int[] coords = agent.getLastVisited();
+            tiles[coords[0]][coords[1]].overlay(agent.getTiles()[coords[0]][coords[1]]);
         }
     }
 

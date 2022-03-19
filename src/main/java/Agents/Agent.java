@@ -37,13 +37,15 @@ public class Agent  {
     private int visionRange = variables.getDistanceViewing();
     private double visionWidth;
     private Agent[] team;
-    private ArrayList<int[]> exploredFields = new ArrayList<int[]>();
-    private ArrayList<int[]> visibleFields = new ArrayList<int[]>();
+    private ArrayList<int[]> exploredFields = new ArrayList<>();
+    private ArrayList<int[]> visibleFields = new ArrayList<>(); //what the agent sees
+    /**/
     private Vector orientation;
-    private Map map;
+    private Map map; //whole map
     private int mapMaxX;
     private int mapMaxY;
     private int[] endOfVisionRange;
+    private int[] lastVisited;
 
     //Agent Geographical Informations
 
@@ -55,10 +57,10 @@ public class Agent  {
      * but  when updating the map this also means updating each of the agents memory
       */
     int[][] agentGoal;//current Goal for its A*
-    ArrayList <int[]> AgentTrace = new ArrayList<>(int[variables.//Agent Actions&special features //Agent Actions&special features  ]);
-
+    ArrayList<int[]> agentTrace = new ArrayList<>();
+    ArrayList<int[]> flags = new ArrayList<>();
     //Agent Actions
-    Move agentMove; // update for agent itself and the Map
+    //Move agentMove; // update for agent itself and the Map
      //int direction; // we try to split the 360 in a smart way
 
     //Agent Range features
@@ -96,6 +98,7 @@ public class Agent  {
         int[] coords = new int[2];
         coords[0] = this.agentPositionX;
         coords[1] = this.agentPositionY;
+        setLastVisited(coords);
         int[] agentGoal = goal();
         ArrayList<Integer> path = getPathFromAstar();
         nextMove = path(0);
@@ -116,7 +119,7 @@ public class Agent  {
     }
 
     public void turn(double alpha){
-        /** angle expressed in radians*/
+        /** angle expressed in radians counter clockwise*/
         this.orientation.turn(alpha);
         setVision();
     }
@@ -125,6 +128,16 @@ public class Agent  {
         this.orientation.setAngle(alpha);
         setVision();
     }
+
+    private void dropFlag(){
+        this.map.getTile(this.mapPosX,this.mapPosY).placeFlag();
+        int[] coords = new int[2];
+        coords[0] = this.mapPosX;
+        coords[1] = this.mapPosY;
+        this.flags.add(coords);
+    }
+
+
 
 
     private boolean isInMap(int x, int y){
@@ -211,7 +224,6 @@ public class Agent  {
             double ratio = Math.abs(this.orientation.getY2()/this.orientation.getX2());
             int x = i;
             int y = (int) (ratio*x);
-            int[] coords = new int[2];
             coords = convertToMap(x,y);
             fields.add(coords);
             if(!exploredFields.contains(coords)){
@@ -249,255 +261,56 @@ public class Agent  {
     }
 
 
+    /** GETTERS **/
+
     public Map getAgentMap(){return map;}
     public int[] getAgentSpawning(){return spawning;}
-    public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
-    public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
     public int getAgentPositionX(){return this.mapPosX;}
     public int getAgentPositionY(){return this.mapPosY;}
     public int[][] getAgentGoal(){return this.agentGoal;}
     public double getInitialAngle(){
         return initialAngle;
     }
-    public void setInitialAngle(double angle ){this.initialAngle = angle; }
+    public Tile[][] getTiles(){
+        return this.map.getTiles();
+    }
 
+    public ArrayList<int[]> getExplored(){
+        return this.exploredFields;
+    }
+    public int[] getLastVisited(){
+        return this.lastVisited;
+    }
     public ArrayList<int[]> getAgentTrace(){
-        return AgentTrace;
+        return agentTrace;
+    }
+    public ArrayList<int[]> getFlags(){
+        return this.flags;
     }
 
-    public int [] getLastVisited(){
-        return AgentTrace.get(AgentTrace.size()-1);
+    public ArrayList<int[]> getVisibleFields(){
+        return  this.visibleFields;
     }
+
+    /** SETTERS **/
+
+    public void setInitialAngle(double angle ){this.initialAngle = angle; }
+    public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
+    public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
+    private void setLastVisited(int[] coords){this.lastVisited = coords;}
+
+
+
 
     /*
     * HELPER METHOD to create a VECTOR END POINT
     *  INPUT: an angle and a distance
     * OUTPUT: the end coordonate of the Route vector
     * */
-    public int[] CoordsCreator(double angle , int distance ){
-        int[]coords = new int[2];
-        coords[0] = (int) (Math.cos(angle) * distance);
-        coords[1]  = (int) Math.sin(angle) * distance;
-        return coords;
-    }
-// TO DO DEFINE CONE VISION
-/*
-    int visionRange = agentPositionX + variable.getDistanceViewing();
-    int visionAngle ; // to experiment on between 1° to 90°
-*/
 
-    /*METHOD (1) : IS_END
-    * check if the agent has reached the end of the map
-    * BE CAREFUL two distinct reference;
-    * the map size is euclidian from 0,0
-    * whereas, the Agentb position is centered on spawning zone
-    * prepair for 4 CASES
-     **/
-    public boolean isEnd(){
-        int limitY = variables.getHeight();
-        int limitX = variables.getWidth();
-        int[] GoalA = new int[2];
-        GoalA = CoordsCreator(initialAngle, visionRange );
 
-        if( GoalA[0] >= limitX  || GoalA[1] >= limitY ){
-            return true; //Agent is in vision range of the mapLimit
-        }
-            return false; //Agent is not in vision range of the mapLimit
-    }
-    /*METHOD (2) : IS_WALL
-     * check if the agent has reached a wall
-     **/
-    public int isWall(){
 
-        //somewhere in the surrounding
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
-            return 1;  //NORTH CASE
-        }
 
-        else if(Copy[agentPositionX][agentPositionY-1].hasWall() == true){
-            return 2;   //SOUTH CASE
-        }
-
-        else if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){
-            return 3;   //EAST CASE
-        }
-
-        else if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
-            return 4;   //WEST CASE
-        }
-        else
-            return 0;
-    }
-
-    public boolean wall_North(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean wall_South(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getAgentPositionX()][getAgentPositionY()-1].hasWall() == true){
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean wall_East(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){
-            return true;
-        }
-        else
-            return false;
-    }
-    public boolean wall_West(){
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
-            return true;
-        }
-        else
-            return false;
-    }
-
-    //MOVE HELPER METHODS
-    //Left: -90 ° = -45 x 2
-    public void leftMove(){
-        setAgentPositionX(getAgentPositionX()-1);
-    }
-    //Right: +90° = +45 x 2
-    public void rightMove(){
-        setAgentPositionX(getAgentPositionX()+1);
-    }
-    //Up: +0°
-    public void upMove(){
-        setAgentPositionY(getAgentPositionY()+1);
-    }
-    //Down: -180° = -45 x 4
-    public void downMove(){
-        setAgentPositionY(getAgentPositionY()-1);
-    }
-
-    /* METHOD (3):WALL AVOIDANCE METHOD
-     * avoid by the right until :
-     *     the position is free
-     *   you are back on your route
-     */
-
-    public boolean isMapLimit(){
-        int[] coords = nextCoord();
-        return !isInMap(coords[0],coords[1]);
-    }
-    public void wallAvoidance(){
-        int stepsCounter = 0;
-        /*
-         * Identify which wall case it is:
-         * Horizontal: strictly N or S of Agent position
-         * Vertical: strictly E or W of Agent position
-         * TO DO: CORRIDOR CASE
-         */
-
-        //NORTH CASE : EAST, NORTH, WEST
-        if(isWall() == 1){
-            while(wall_North() == true && isMapLimit() == false){
-                rightMove();//avoid by the East
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                upMove();
-                if(isWall() == 4){
-                    while(wall_West() == true && isMapLimit() == false){
-                        upMove();
-                    }
-                    if(isWall == 2){//wall_South
-                        for(int i = 0; i < stepsCounter(); i++){
-                            /*
-                             * Risk that it fails in case there is another obstacle
-                             * in case start another avoidance procedure
-                             * as long as goal isnt reached yet
-                             * but, transfer the info to rejoin the route
-                             */
-                            leftMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }//end of WEST routine
-            }//not map limit: if it is then either launch back to spawn or the following
-        }//end of NORTH CASE
-
-        //SOUTH CASE: WEST, SOUTH, EAST
-        if(isWall() == 2){
-            while(wall_South() == true && isMapLimit() == false){
-                leftMove();//avoid by the West
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                downMove();
-                if(isWall() = 3){
-                    while(wall_East() == true && isMapLimit() == false){
-                        downMove();
-                    }
-                    if(isWall == 1){//wall_North
-                        for(int i = 0; i < stepsCounter(); i++){
-                            rightMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }
-            }//not map limit: if it is then either launch back to spawn or the following
-        }//end of SOUTH CASE
-
-        //EAST CASE: SOUTH, EAST, NORTH
-        if(isWall() == 3){
-            while(wall_East() == true && isMapLimit() == false){
-                downMove();//avoid by the South
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                rightMove();
-                if(isWall() = 1){
-                    while(wall_North() == true && isMapLimit() == false){
-                        rightMove();
-                    }
-                    if(isWall() == 4){//wall_West
-                        for(int i = 0; i < stepsCounter(); i++){
-                            upMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }
-            }//not map limit: if it is then either launch back to spawn or the following
-        }//end of EAST CASE
-
-        // WEST CASE: NORTH, WEST, SOUTH
-        if(isWall() == 4){
-            while(wall_West() == true && isMapLimit() == false){
-                upMove();//avoid by the West
-                stepsCounter++;
-            }
-            if(isMapLimit() == false ){
-                leftMove();
-                if(isWall() = 2){
-                    while(wall_South() == true && isMapLimit() == false){
-                        leftMove();
-                    }
-                    if(isWall == 2){//wall_South
-                        for(int i = 0; i < stepsCounter(); i++){
-                            downMove();
-                        }
-                        //now we should be back at route
-                        return 1;
-                    }
-                }
-            }//not map limit: if it is then either launch back to spawn or the following
-        }
-    }//end of WALL AVOIDANCE METHOD
 
 
 
@@ -544,6 +357,7 @@ public class Agent  {
                 break;
         }
     }
+
 
 
 
@@ -624,10 +438,11 @@ public class Agent  {
     }
 
 
+    /** STRATEGY IMPLEMENTATION METHODS*/
+
     private int[] goToEndOfMapCoords(){
         return this.endOfVisionRange; //unless wall evasion, to correct!
     }
-
 
     /*
     * for exploreEdgeCoords(): I divide the map into 4 parts relative to spawn point.
@@ -684,11 +499,6 @@ public class Agent  {
         }
     }
 
-
-    private double angleAlignedWithEnd(){
-
-    }
-
     private int[] goToSpawnCoords(){
         this.orientation = new Vector(this.agentPositionX,this.agentPositionY,0,0);
         this.orientation.setLength(this.visionRange);
@@ -700,9 +510,7 @@ public class Agent  {
         return new int[2];
     }
 
-    public ArrayList<int[]> getExplored(){
-        return this.exploredFields;
-    }
+
 
 
 }

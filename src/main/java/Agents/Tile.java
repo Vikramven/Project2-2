@@ -101,4 +101,27 @@ public class Tile {
 
         return isEmpty;
     }
+
+    public void overlay(Tile tile){
+        if(!tile.hasWall() && !this.hasWall()){
+            if(tile.hasTrace()){
+                this.placeTrace();
+            }
+            if(tile.hasAgent()){
+                this.placeAgent();
+            }
+            if(tile.hasTrace()){
+                this.placeTrace();
+            }
+            if(tile.hasFlag()){
+                this.placeFlag();
+            }
+            if(tile.hasShade()){
+                this.placeShade();
+            }
+            if(tile.hasTeleport()){
+                this.placeTeleport();
+            }
+        }
+    }
 }
