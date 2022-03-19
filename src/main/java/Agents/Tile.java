@@ -56,6 +56,8 @@ public class Tile {
         this.dataset[6]=1;
     }
 
+
+
     public void removeAgent(){
         this.dataset[0]=0;
     }

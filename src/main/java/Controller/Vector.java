@@ -31,12 +31,20 @@ public class Vector {
 
 
 
-    public Vector turn(double angle){
+    public void turn(double angle){
         /**
          * always counter-clockwise
          * */
         double newAngle = (this.angle + angle);
-        return new Vector(this.x1,this.x2,newAngle,this.distance);
+        if(newAngle>Math.toRadians(360)){
+            int iter = (int) (newAngle/Math.toRadians(360));
+            newAngle = newAngle - iter*Math.toRadians(360);
+        }
+        this.angle = newAngle;
+    }
+
+    public void setAngle(double newAngle){
+        this.angle = newAngle;
     }
 
     public int getX1() {

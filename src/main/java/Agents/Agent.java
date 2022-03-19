@@ -1,7 +1,6 @@
 package Agents;
 
 import Controller.Variables;
-import Controller.FileParser;
 import Controller.Vector;
 import java.lang.Math;
 
@@ -44,6 +43,7 @@ public class Agent  {
     private Map map;
     private int mapMaxX;
     private int mapMaxY;
+    private int[] endOfVisionRange;
 
     //Agent Geographical Informations
 
@@ -59,20 +59,22 @@ public class Agent  {
 
     //Agent Actions
     Move agentMove; // update for agent itself and the Map
-     int direction; // we try to split the 360 in a smart way
+     //int direction; // we try to split the 360 in a smart way
 
     //Agent Range features
     double getHearing; // ? for PHASE 2
+    private int[] visionLeft;
+    private int[] visionRight;
 
 
     /* METHOD(1): Agent
      *   constructor
      *   create an agent belonging to a specific team
      * */
-    public Agent(int team){
+    public Agent(int team, Variables vars){
         this.visionWidth = java.lang.Math.toRadians(15);
         this.teamCode = team;
-        variables =  FileParser.readFile("./resources/testmap.txt");
+        this.variables = vars;// FileParser.readFile("./resources/testmap.txt");
         //team = new Agent[variables.getNumberOfGuards()];
         ArrayList<Integer> spawnCoords = variables.getSpawnAreaGuards().getCoords();
         if(team == 0){
@@ -83,20 +85,54 @@ public class Agent  {
         }
         this.agentPositionX = 0; //whenever agent moves, we have to update this
         this.agentPositionY = 0;
+
         this.visionRange = variables.getDistanceViewing();
         this.orientation = new Vector(this.agentPositionX,this.agentPositionY,this.initialAngle,this.visionRange);
         this.mapMaxX = variables.getWidth();
         this.mapMaxY = variables.getHeight();
     }
 
-    public void setSpawnCoords(int[] coords){
+    public void move(){
+        int[] coords = new int[2];
+        coords[0] = this.agentPositionX;
+        coords[1] = this.agentPositionY;
+        int[] agentGoal = goal();
+        ArrayList<Integer> path = getPathFromAstar();
+        nextMove = path(0);
+        path(0).delete;
+        /*
+        * Some methods that change the agent position, to do in the connection
+        * */
+        int[] mapCoords = convertToMap(this.agentPositionX,this.agentPositionY);
+        this.mapPosX = mapCoords[0];
+        this.mapPosY = mapCoords[1];
+    }
+
+    public void setInitialCoords(int[] coords){
         this.spawnX=coords[0];
         this.spawnY=coords[1];
+        this.mapPosX = spawnX;
+        this.mapPosY = spawnY;
+    }
+
+    public void turn(double alpha){
+        /** angle expressed in radians*/
+        this.orientation.turn(alpha);
+        setVision();
+    }
+
+    public void setCurrentAngle(double alpha){
+        this.orientation.setAngle(alpha);
+        setVision();
     }
 
 
-    private boolean inMap(int x, int y){
+    private boolean isInMap(int x, int y){
         return x>=0 && x<this.mapMaxX && y>=0 && y<this.mapMaxY;
+    }
+
+    private boolean isInMap(int[] c){
+        return c[0]>=0 && c[0]<this.mapMaxX && c[1]>=0 && c[1]<this.mapMaxY;
     }
 
     private ArrayList<int[]> currentlyVisibleFields() {
@@ -109,6 +145,10 @@ public class Agent  {
 
 
 
+    /*
+    * vision is set to be a line of tiles, in the direction of the orientation vector and the length of vision range
+    * this method sets the visibleFields parameter. (used for exploration updating)
+    * */
 
     private void setVision(){
         ArrayList<int[]> fields = new ArrayList<int[]>();
@@ -150,7 +190,8 @@ public class Agent  {
         int[] coords = new int[2];
         coords[0] = this.mapPosX+a1;
         coords[1] = this.mapPosY+b1;
-        if(inMap(coords[0],coords[1])) {
+        this.visionLeft = coords;
+        if(isInMap(coords[0],coords[1])) {
             fields.add(coords);
             if (!exploredFields.contains(coords)) {
                 exploredFields.add(coords);
@@ -158,9 +199,9 @@ public class Agent  {
         }
         coords[0]=this.mapPosX+a2;
         coords[1]=this.mapPosY+b2;
-        if(inMap(coords[0],coords[1])) {
+        this.visionRight = coords;
+        if(isInMap(coords[0],coords[1])) {
             fields.add(coords);
-
             if (!exploredFields.contains(coords)) {
                 exploredFields.add(coords);
             }
@@ -176,12 +217,13 @@ public class Agent  {
             if(!exploredFields.contains(coords)){
                 exploredFields.add(coords);
             }
-            if(map.getTile(x,y).hasWall() || !inMap(x,y)){
+            if(map.getTile(x,y).hasWall() || !isInMap(x,y)){
                 //this.orientation.setLength(i);
                 break;
             }
         }
 
+        this.endOfVisionRange = fields.get(fields.size()-1);
         this.visibleFields = fields;
     }
 
@@ -344,6 +386,11 @@ public class Agent  {
      *     the position is free
      *   you are back on your route
      */
+
+    public boolean isMapLimit(){
+        int[] coords = nextCoord();
+        return !isInMap(coords[0],coords[1]);
+    }
     public void wallAvoidance(){
         int stepsCounter = 0;
         /*
@@ -454,8 +501,6 @@ public class Agent  {
 
 
 
-
-
     /*METHOD (4) AGENT STRATEGY
     * CONTENT: each agent gets a specific exploration strategy to cover the map heavenly
     *  this exploration can be subdivised into 3 main routes:
@@ -467,50 +512,8 @@ public class Agent  {
     *          We created subroutines for each of these eventualities
     * */
 
-    public void setStrategy(){
-        if(shouldGoToSpawnAngle()){
-            this.strategy = GO_TO_SPAWN;
-        }
-    }
-
-    public int[] AgentStrategy(){
-        // STEP 0 : set initial route
-        int visionRange = variables.getDistanceViewing();
-        int GoalA = new int [2];
-        GoalA = CoordsCreator(initialAngle, visionRange);
 
 
-    // STAGE 1: FROM SPAWNING RELATIVELY TOWARDS MAP LIMIT
-        while(isEnd() == 0){
-            if(isWall() == 1){
-                //CAll wall avoidance routine
-
-            }
-              /*CALL  AStar with INPUT @GoalA
-              * needs to be tested
-                */
-        }// The Map Limit has been reached successfully
-
-
-    /* STAGE 2: FROM MAP LIMIT TO TRACE LIMIT
-     * 2 OPTION exist here:
-     *  OPTION A/ the agent progress in a similar manner :
-     *              so the Agent turns right
-     *               then the Agent follows the map limit until he reaches a trace!
-     *
-     * OPTION B/ some Agents are much slower or much faster (because they encounter more troubles)
-     *              in this case we ensure consistency and prevent the problems
-     *              by early returning towards the spawn area
-     */
-
-
-    // STAGE 3: BACK TO SPAWNING
-        /*
-        *
-        *
-        * */
-
-        }
 
         //WALL AVOIDANCE METHOD
     // until front position contains wall, avoid by the right
@@ -519,6 +522,9 @@ public class Agent  {
 
 
     public int[] goal(){
+        /**
+         * returns an array of 2 coordinates that define the goal based ont the current strategy
+         * */
         updateStrategy();
         switch(this.strategy){
             case "end":
@@ -530,63 +536,44 @@ public class Agent  {
             case "spawn":
                 return goToSpawnCoords();
                 break;
-            case "along_wall":
-                break;
             case "avoid_wall":
+                //wall avoidance method that returns int[] coordinates
                 break;
             case "explore":
+                explore();
                 break;
         }
     }
 
-    public void updateStrategy(){
-        if(strategy==GO_TO_END && reachedEnd()){
+
+
+    private void updateStrategy(){
+        /**
+         * updates the strategy of the agent
+         * */
+        if(strategy.equals(GO_TO_END) && reachedEnd()){
             this.strategy = GO_ALONG_END;
         }
-        else if(strategy==GO_TO_END && reachedWallFlag()){
-            this.strategy = GO_ALONG_WALL;
-        }
-        if(strategy==GO_ALONG_END && shouldGoToSpawnAngle()){
+        else if(strategy.equals(AVOID_WALL) && reachedWallFlag()){
             this.strategy = GO_TO_SPAWN;
         }
-    }
-
-
-    private boolean reachedWallFlag(){
-        int[] coords = nextCoord();
-        if(inMap(coords[0],coords[1])){
-            return map.getTile(coords[0],coords[1]).hasFlag();
+        if(strategy.equals(GO_ALONG_END) && shouldGoToSpawnAngle()){
+            this.strategy = GO_TO_SPAWN;
         }
-        return false;
+        if(strategy.equals(GO_TO_SPAWN) && isAtSpawn()){
+            this.strategy = EXPLORE;
+        }
     }
 
-    private int[] nextCoord(){
-        Vector unitVec = this.orientation.unitCopy();
-        int[] coords = unitVec.getEndCoords();
-        return convertToMap(coords[0],coords[1]);
-    }
-
-    private boolean reachedEnd(){
-        int[] coords = nextCoord();
-        return !inMap(coords[0],coords[1]);
-    }
-
-    private int[] goToEndOfMapCoords(){
-        return this.orientation.getEndCoords(); //unless wall evasion, to correct!
-    }
-
-    private int[] exploreEdgeCoords(){
-
-    }
-
-    private int[] goToSpawnCoords(){
-        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,0,0);
-        this.orientation.setLength(this.visionRange);
-        setVision();
-        return this.visibleFields.get(this.visibleFields.size() - 1);
-    }
+    /*
+    * shouldGoToSpawnAngle uses trig functions to determine
+    * whether the agent has covered their designated angle
+    * */
 
     private boolean shouldGoToSpawnAngle(){
+        /**
+         * returns true if agent should go back to spawn (ANGLE STRATEGY)
+         * */
         int k = (int) this.initialAngle/this.teamSize;
         double alpha = initialAngle;
         double k_alpha = (k-1)*alpha;
@@ -605,7 +592,112 @@ public class Agent  {
     }
 
     private boolean shouldGoToSpawnTrace(){
+        int[] coords = nextCoord();
+        boolean b = map.getTile(coords[0], coords[1]).hasTrace();
+        return b;
+    }
 
+    private boolean reachedWallFlag(){
+        int[] coords = nextCoord();
+        if(isInMap(coords[0],coords[1])){
+            return map.getTile(coords[0],coords[1]).hasFlag();
+        }
+        return false;
+    }
+
+    private boolean isAtSpawn(){
+        return agentPositionX == 0 && agentPositionY == 0;
+    }
+
+    private boolean reachedEnd(){
+        int[] coords = nextCoord();
+        return !isInMap(coords[0],coords[1]);
+    }
+
+    private int[] nextCoord(){
+        /**
+         * returns the coordinates of the first tile
+         * */
+        Vector unitVec = this.orientation.unitCopy();
+        int[] coords = unitVec.getEndCoords();
+        return convertToMap(coords[0],coords[1]);
+    }
+
+
+    private int[] goToEndOfMapCoords(){
+        return this.endOfVisionRange; //unless wall evasion, to correct!
+    }
+
+
+    /*
+    * for exploreEdgeCoords(): I divide the map into 4 parts relative to spawn point.
+    * If agent is in the top right:
+    * check if he can move (if next field is on map)
+    * turn him so that he is oriented to 0 degrees (East)
+    * If can move then -> just go along the wall
+    * If cant move still -> orient agent to 270 degrees (South)
+    * */
+
+    private int[] exploreEdgeCoords(){
+        /**returns the next set of coordinates for the go along end of map strategy*/
+        double alpha = 0.0;
+        int[] coords = new int[2];
+        if(reachedEnd()){
+            if(this.agentPositionX>=0 && this.agentPositionY>=0){
+                if(this.currentAngle == Math.toRadians(0)){
+                    setCurrentAngle(Math.toRadians(270));
+                }
+                else {
+                    this.currentAngle = Math.toRadians(0);
+                }
+            }
+            else if(this.agentPositionX<0 && this.agentPositionY>0){
+                if(this.currentAngle == Math.toRadians(90)){
+                    setCurrentAngle(Math.toRadians(0));
+                }
+                else{
+                    setCurrentAngle(Math.toRadians(90));
+                }
+            }
+            else if(this.agentPositionX<0 && this.agentPositionY<0){
+                if(this.currentAngle == Math.toRadians(180)){
+                    setCurrentAngle(Math.toRadians(90));
+                }
+                else{
+                    setCurrentAngle(Math.toRadians(180));
+                }
+            }
+            else if(this.agentPositionX > 0 && this.agentPositionY < 0){
+                if(this.currentAngle == Math.toRadians(0)){
+                    setCurrentAngle(Math.toRadians(90));
+                }
+                else{
+                    setCurrentAngle(Math.toRadians(0));
+                }
+            }
+            coords[0] = this.mapPosX;
+            coords[1] = this.mapPosY;
+            return coords;
+        }
+        else{
+            return nextCoord();
+        }
+    }
+
+
+    private double angleAlignedWithEnd(){
+
+    }
+
+    private int[] goToSpawnCoords(){
+        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,0,0);
+        this.orientation.setLength(this.visionRange);
+        setVision();
+        return this.visibleFields.get(this.visibleFields.size() - 1);
+    }
+
+    private int[] explore(){
+        return new int[2];
     }
 
     public ArrayList<int[]> getExplored(){

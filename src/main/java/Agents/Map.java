@@ -1,4 +1,5 @@
 package Agents;
+import Controller.FileParser;
 import Controller.Variables;
 import java.lang.Integer;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class Map{
 //INSTANCES of class Map
    private int mapHeight; //map dimensions
    private int mapWidth;
-   private int[][] matrix;// SubMap storing the walls and the agents
+   //private int[][] matrix;// SubMap storing the walls and the agents
     private int[][] trace; // SubMap storing the map % exploration
    private ArrayList <Wall> walls; //check every 2 integers
    private Variables variables = new Variables(); // why ?
@@ -25,39 +26,95 @@ public class Map{
    private ArrayList<Agent[]>;
    private Agent[] teamGuards;
    private Agent[] teamIntruders;
+   private double exploredPercentage;
+   private ArrayList<int[]> exploredTiles = new ArrayList<>();
+   private int numberOfTiles;
 
     /* METHOD(1): Map
      *   Map object constructor
      *   create the matrix and trace instances
      * */
    public Map(){
+      variables =  FileParser.readFile("./resources/testmap.txt");
       mapHeight = variables.getHeight();
       mapWidth = variables.getWidth();
-      matrix = new int[mapWidth][mapHeight]; //dimension of
+      numberOfTiles = mapHeight*mapWidth;
+      //matrix = new int[mapWidth][mapHeight]; //dimension of
       tiles = new Tile[mapWidth][mapHeight];
-      teamGuards = new Agent[variables.getNumberOfGuards()];
+      mapInit();
+      teamCreation();
       walls = variables.getWalls(); //placing walls on the map
-      buildingWalls(matrix);//update the map with the wall
-      trace = new int[mapWidth][mapHeight]; //dimension of
-      createTrace();
+      buildingWalls();//update the map with the wall
    }
    /* METHOD(2): mapInit
    *   stores zero in every map position
    *    initialize both the Matrix (Int containing wall and agent)
    * */
-public void mapInit(){
-       for(int i =0; i < getMapHeight(); i++ ){
-           for(int j =0; i < getMapWidth(); j++ ){
-                setMatrix(i, j , 0);
-                this.tiles[i][j] = new Tile(i,j);
+    public void mapInit(){
+           for(int i =0; i < mapWidth; i++){
+               for(int j =0; j < mapHeight; j++){
+                    //setMatrix(i, j , 0);
+                    this.tiles[i][j] = new Tile(i,j);
+               }
            }
-       }
-}//mapInit
+    }//mapInit
+
+    public void teamCreation(/*pass an int to identify the group*/)){
+    /* creates a team of agents, places them on spawn and gives them initial info */
+        double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
+        for(int i = 0; i < variables.getNumberOfGuards(); i++){
+            Agent newAgent = new Agent(0,this.variables); //create the Agent; 0 for Guard
+            newAgent.setInitialAngle(initialAngle);
+            teamGuards[i] = newAgent;
+            initialAngle =+ initialAngle; // increase by one basic unit
+        }
+        placeAgentsOnSpawn(0);
+    }
+
+    public void mapUpdate(){
+        /*
+         * 1. move agents
+         * 2. update agent location
+         * 3. update exploration %
+         * */
+        updateAgentLocation();
+        updateExplorationPercentage();
+    }
+
+    private void updateAgentLocation(){
+        for(Agent agent:teamGuards){
+            int x = agent.getAgentPositionX();
+            int y = agent.getAgentPositionY();
+            tiles[x][y].removeAgent();
+            agent.move(); //method to implement, should be connected to A*
+            x = agent.getAgentPositionX();
+            y = agent.getAgentPositionY();
+            tiles[x][y].placeAgent();
+        }
+
+        for(Agent agent:teamIntruders){
+            break;
+            //for phase 2
+        }
+    }
+
+    private void updateExplorationPercentage(){
+        int exploredSum = 0;
+        updateExplored();
+        for(Tile[] tileRow:tiles){
+            for(Tile tile:tileRow){
+                if(tile.isExplored()){
+                    exploredSum++;
+                }
+            }
+        }
+        this.exploredPercentage = (double) exploredSum/ (double) tiles.length;
+    }
 
     /* METHOD(3): buildingWalls
      *   places the wall as infinit values on the map
      * */
-   public void buildingWalls(int[][] matrix){
+   public void buildingWalls(){
       for(int i = 0; i < walls.size(); i++){
             ArrayList<Integer> coords = walls.get(i).getCoords();
             int x1 = coords.get(0);
@@ -66,14 +123,10 @@ public void mapInit(){
             int y2 = coords.get(3);
             //@zofia For each of the walls : two separate loops, first we build the vertical walls, then the horizontal walls
           for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){
-              matrix[x1][j] = Integer.MAX_VALUE;
-              matrix[x2][j] = Integer.MAX_VALUE; //this sets the cost to infinity for the vertical walls
               tiles[x1][i].placeWall();
               tiles[x2][i].placeWall();
               }
           for(int j = x1/*left border*/; j<x2+1/*right border*/; j++){
-              matrix[j][y1] = Integer.MAX_VALUE;
-              matrix[j][y2] = Integer.MAX_VALUE;
               tiles[j][y1].placeWall();
               tiles[j][y2].placeWall();
           }
@@ -83,14 +136,14 @@ public void mapInit(){
 
     /* METHOD(4): createTrace
      *   create the Trace as a copy of initial Matrix with the walls
-     * */
+     *
     public void createTrace(){
         for(int i =0; i < getMapHeight(); i++ ){
             for(int j =0; i < getMapWidth(); j++ ){
                 this.trace[i][j] = this.matrix[i][j];
             }
         }
-    }
+    }*/
 
     public Tile[][] getTiles(){
         return this.tiles;
@@ -102,23 +155,22 @@ public void mapInit(){
 
     /* METHOD(5): teamCreation
      *   create the Agents and stores them in a fixed sized array
-     * */
-    public void teamCreation(/*pass an int to identify the group*/)){
-        double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
-      for(int i = 0; i < variables.getNumberOfGuards(); i++){
-          Agent newAgent = new Agent(0); //create the Agent; 0 for Guard
-          newAgent.setInitialAngle(initialAngle);
-          teamGuards[i] = newAgent;
-          initialAngle =+ initialAngle; // increase by one basic unit
-      }
-   }
-    /* METHOD(6): convertPosition
+     *
+
+    METHOD(6): convertPosition
      *   chooses optimal positions for each Agent along the spawning rectangle area
      *  insures good perimeter coverage
      * */
 
+    public void placeAgentsOnSpawn(int teamNumber){
+        Agent[] team;
 
-    public void placeAgentsOnSpawn(Agent[] team){
+        if(teamNumber==0){
+            team = teamGuards;
+        }
+        else{
+            team = teamIntruders;
+        }
         ArrayList<Integer> spawnCoords = new ArrayList<>();
         if(team[0].teamCode == 0){
             spawnCoords = this.variables.getSpawnAreaGuards().getCoords();
@@ -152,12 +204,21 @@ public void mapInit(){
                 spawnLine.addAll(outlineOfMatrix(a,b,c,d));
                 a++;
                 b++;
+                c--;
+                d--;
             }while(!spawnLine.contains(coords));
         }
 
         for(int i=0; i<team.length; i++){
             int[] coords = spawnLine.get(spacing*i);
-            team[i].setSpawnCoords(coords);
+            team[i].setInitialCoords(coords);
+        }
+
+        if(teamNumber==0){
+            teamGuards = team;
+        }
+        else {
+            teamIntruders = team;
         }
 
     }
@@ -194,7 +255,7 @@ public void mapInit(){
         return outline;
     }
 
-   public void convertPosition(Agent[] team){
+ /*  public void convertPosition(Agent[] team){
        int teamSize = team.length();
        int x1 = team[0].getAgentSpawning()[0];
        int y1 = team[0].getAgentSpawning()[1];
@@ -263,7 +324,7 @@ public void mapInit(){
            }
        }//END CASE 2
    }//END convertPosition
-
+*/
 
 /* METHOD (7): TeamTrace
 *   Keeps track of all the traces of every agent
@@ -285,22 +346,26 @@ public void mapInit(){
     /* METHODS: GETTERS AND SETTER
     *   to access private instances of the class
      * */
-    public int[][] getMatrix(){return matrix;};
+    //public int[][] getMatrix(){return matrix;};
    public int getMapHeight(){return mapHeight;};
    public int getMapWidth(){return mapWidth;};
    public int getFieldCost(int x, int y){
-       return matrix[x][y];
+       return tiles[x][y].getValue();
    }
-   public void setMatrix(int x, int y, int value){
+   public double getExploredPercentage(){return this.exploredPercentage;}
+
+
+
+  /* public void setMatrix(int x, int y, int value){
        matrix[x][y] = value;
    }
+   */
     public void setTrace(int x, int y, int value){
-       matrix[x][y] = value;
        tiles[x][y].placeTrace();
     }
 
-    public void updateExplored(Agent[] agents){
-        for (Agent agent : agents) {
+    private void updateExplored(){
+        for (Agent agent : teamGuards) {
             ArrayList<int[]> exploredTiles = agent.getExplored();
             for (int[] coords : exploredTiles) {
                 tiles[coords[0]][coords[1]].isExplored();
@@ -308,8 +373,15 @@ public void mapInit(){
         }
     }
 
-    private boolean explored(){
-
+    public boolean explored(){
+        for(Tile[] tileRow:tiles){
+            for(Tile tile:tileRow){
+                if(!tile.isExplored()){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }
