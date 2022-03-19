@@ -7,11 +7,6 @@ import java.lang.Math;
 
 import java.util.ArrayList;
 
-/*
-goal: last tile in vision in the alpha direction is the goal
-when you reach goal
- */
-
 
 public class Agent  {
     //INSTANCES of class Agent
@@ -45,8 +40,12 @@ public class Agent  {
     private int mapMaxX;
     private int mapMaxY;
 
-    //Agent Geographical Informations
+    // wall avoidance material
+    private int WalltoAvoid;
+    private int flagCounter;
+    private int stepCounter;
 
+    //Agent Geographical Informations
     int[] spawning = new int [4]; // starting zone of the team
     int agentPositionX; //relative to spawn
     int agentPositionY; //as above
@@ -64,8 +63,38 @@ public class Agent  {
     //Agent Range features
     double getHearing; // ? for PHASE 2
 
+    //GETTER AND SETTERS ASSOCIATED TO THE ABOVE INSTANCE
 
-    /* METHOD(1): Agent
+        public Map getAgentMap(){return map;}
+        public int[] getAgentSpawning(){return spawning;}
+        public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
+        public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
+        public int getAgentPositionX(){return this.mapPosX;}
+        public int getAgentPositionY(){return this.mapPosY;}
+        public int[][] getAgentGoal(){return this.agentGoal;}
+        public double getInitialAngle(){
+            return initialAngle;
+        }
+        public void setInitialAngle(double angle ){this.initialAngle = angle; }
+        //Storing the agent past locations on the map
+        public ArrayList<int[]> getAgentTrace(){return AgentTrace;}
+        public int [] getLastVisited(){
+            return AgentTrace.get(AgentTrace.size()-1);
+        }
+        // Wall to Avoid memorize by Agent to assess its success
+        public void setWalltoAvoid(int wall){this.WalltoAvoid = wall;}
+        public int getWalltoAvoid(){return this.WalltoAvoid;}
+        public void resetWalltoAvoid(){ this.WalltoAvoid = 0;}
+        // the Agent tracks the number of flags left behind
+        public void resetFlagCounter(){this.flagCounter =0;}
+        public void increaseFlagCounter(){ this.flagCounter++;}
+        public int getFlagCounter(){return this.flagCounter;}
+        //the Agent tracks the number of steps(move&turns) performed
+        public void resetStepsCounter(){this.stepCounter =0;}
+        public void increaseStepsCounter(){this.stepCounter++;}
+        public int getStepsCounter(){return this.stepCounter;}
+
+    /* METHOD(1): Agent Object CONSTRUCTOR
      *   constructor
      *   create an agent belonging to a specific team
      * */
@@ -206,27 +235,6 @@ public class Agent  {
         return coords;
     }
 
-
-    public Map getAgentMap(){return map;}
-    public int[] getAgentSpawning(){return spawning;}
-    public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
-    public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
-    public int getAgentPositionX(){return this.mapPosX;}
-    public int getAgentPositionY(){return this.mapPosY;}
-    public int[][] getAgentGoal(){return this.agentGoal;}
-    public double getInitialAngle(){
-        return initialAngle;
-    }
-    public void setInitialAngle(double angle ){this.initialAngle = angle; }
-
-    public ArrayList<int[]> getAgentTrace(){
-        return AgentTrace;
-    }
-
-    public int [] getLastVisited(){
-        return AgentTrace.get(AgentTrace.size()-1);
-    }
-
     /*
     * HELPER METHOD to create a VECTOR END POINT
     *  INPUT: an angle and a distance
@@ -251,6 +259,7 @@ public class Agent  {
     * whereas, the Agentb position is centered on spawning zone
     * prepair for 4 CASES
      **/
+     /*
     public boolean isEnd(){
         int limitY = variables.getHeight();
         int limitX = variables.getWidth();
@@ -262,8 +271,24 @@ public class Agent  {
         }
             return false; //Agent is not in vision range of the mapLimit
     }
+    */
+
+    public int[] wall(){ // to be called from Goal
+        if(End_Avoidance() == false)
+          return wallAvoidance();
+
+        else {
+          resetAvoidance();
+          int[] finalPos = new int[2];
+          finalPos[0] = getAgentPositionX();
+          finalPos[1] = getAgentPositionY();
+          return finalPos;
+        }
+    }
+
+
     /*METHOD (2) : IS_WALL
-     * check if the agent has reached a wall
+     * if the agent has reached a goal this identifies which type
      **/
     public int isWall(){
 
@@ -288,21 +313,70 @@ public class Agent  {
             return 0;
     }
 
+    /* METHOD():  END AVOIDANCE METHOD
+     * Detects when the agent has successfully crossed the wall
+     * Thats when he transition from having the wall to the North of his position
+     *    to having the !!same wall!! at his South
+     *    the current way might fail in narrow corridors...
+     */
+    public boolean End_Avoidance(){
+      if(getFlagCounter() == 2){
+        if(getWalltoAvoid() == 1 && wall_South() == true){
+          return true;
 
-    /* METHOD (3) ():WALL AVOIDANCE METHOD
+        else if(getWalltoAvoid() == 2 && wall_North() == true)
+        return true;
+
+      else if(getWalltoAvoid() == 3 && wall_East() == true)
+        return true;
+      else if(getWalltoAvoid() == 4 && wall_West() == true)
+        return true;
+      }
+      else if(getStepsCounter() > 200){// in case the Agent got stuck
+        System.out.println("security exit " + getStepsCounter());
+        return true;
+      }
+      return false; //otherwise keep avoidig the wall
+    }// end of End_Avoidance
+
+    /*HELPER METHOD: start Avoidance
+    *  set the parameters for the wall avoidance
+    */
+    public void startAvoidance(){
+        //memorize the type of challenge
+        int wallType = isWall();
+        if(wallType =! 0){
+          /*
+          * TO DO: put a flag at getAgentPositionX();
+          */
+          setWalltoAvoid(wallType);
+          increaseFlagCounter();
+          System.out.println("flagcounter at " + getFlagCounter());
+        }
+      System.out.println("No need to set start: already or no wall");
+    }//end startAvoidance
+
+    /*HELPER METHOD: reset Avoidance
+    *  Make sure to initialize on null or zero at Agent Creation
+    * Reset every parameters used by wall avoidance
+    */
+    public void resetAvoidance(){
+      resetFlagCounter();
+      resetStepsCounter();
+      resetWalltoAvoid();
+    }
+
+    /* METHOD (3): WALL AVOIDANCE METHOD
      * avoid by the right until :
      *     the position is free
      *   you are back on your route
      */
     public int[] wallAvoidance(){
+      if(getFlagCounter() == 0){
+        startAvoidance();//initialize the parameters
+      }
     int [] miniGoal = new int [2];// contains x, y positions of next move
-        /*
-         * Identify which wall case it is:
-         * Horizontal: strictly N or S of Agent position
-         * Vertical: strictly E or W of Agent position
-         * TO DO: CORRIDOR CASE
-         */
-      //  if(isWall() == 1){
+
             if(isMapLimit() == false){
               if(cases() == 1){// go left
                 miniGoal[0] = getAgentPositionX()+1;
@@ -331,54 +405,59 @@ public class Agent  {
                 miniGoal[1] = getAgentPositionY();
                 return miniGoal;
               }
+        }//end of isMapLimit
     }//end of WALL AVOIDANCE METHOD
 
 
     public int cases(){
       int case = 0;
-      //CASE A: go right , increase abscisse by one whenever
-      if(wall_North() == true && flagcounter == 0){
+      //CASE (1): go right , increase abscisse by one whenever
+      if(wall_North() == true && getFlagCounter() == 0){
         case = 1;
       }
-      else if (wall_South()== true && flagcounter == 2){
+      else if (wall_South()== true && getFlagCounter() == 2){
         case = 1;
       }
-      else if(wall_West()== true && flagcounter == 1){
+      else if(wall_West()== true && getFlagCounter() == 1){
         case = 1;
       }
-      //CASE B: go left
-      else if(wall_North() == true && flagcounter == 2){
+      //CASE (2): go left
+      else if(wall_North() == true && getFlagCounter() == 2){
         case = 2;
       }
-      else if (wall_South() == true && flagcounter == 0){
+      else if (wall_South() == true && getFlagCounter() == 0){
         case = 2;
       }
-      else if(wall_East() == true && flagcounter == 1){
+      else if(wall_East() == true && getFlagCounter() == 1){
         case = 2;
       }
-      //CASE C: go down
-      else if(wall_East() == true && flagcounter == 0){
+      //CASE (3): go down
+      else if(wall_East() == true && getFlagCounter() == 0){
         case = 3;
       }
-      else if (wall_West() == true && flagcounter == 2){
+      else if (wall_West() == true && getFlagCounter() == 2){
         case = 3;
       }
-      else if(wall_South() == true && flagcounter == 1){
+      else if(wall_South() == true && getFlagCounter() == 1){
         case = 3;
       }
-      //CASE D: go up
-      else if(wall_West() == true && flagcounter == 0){
-        case = 3;
+      //CASE (4): go up
+      else if(wall_West() == true && getFlagCounter() == 0){
+        case = 4;
       }
-      else if (wall_East() == true && flagcounter == 2){
-        case = 3;
+      else if (wall_East() == true && getFlagCounter() == 2){
+        case = 4;
       }
-      else if(wall_North() == true && flagcounter == 1){
-        case = 3;
+      else if(wall_North() == true && getFlagCounter() == 1){
+        case = 4;
       }
+      return case;
     }
 
-
+  /*
+  * A group of 4 method that identify the wall's position
+  * TO DO: !Check if using the stick would be more consistent
+  */
         public boolean wall_North(){
             Tile[][] Copy = getAgentMap().getTiles();
             if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
