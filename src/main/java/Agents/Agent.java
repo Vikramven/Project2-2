@@ -42,6 +42,7 @@ public class Agent  {
 
     // wall avoidance material
     private int WalltoAvoid;
+    private int sideWall;
     private int flagCounter;
     private int stepCounter;
 
@@ -85,6 +86,11 @@ public class Agent  {
         public void setWalltoAvoid(int wall){this.WalltoAvoid = wall;}
         public int getWalltoAvoid(){return this.WalltoAvoid;}
         public void resetWalltoAvoid(){ this.WalltoAvoid = 0;}
+
+        public void setSideWall(int wall){this.sideWall = wall;}
+        public int getSideWall(){return this.sideWall;}
+        public void resetSideWall(){ this.sideWall = 0;}
+
         // the Agent tracks the number of flags left behind
         public void resetFlagCounter(){this.flagCounter =0;}
         public void increaseFlagCounter(){ this.flagCounter++;}
@@ -246,39 +252,16 @@ public class Agent  {
         coords[1]  = (int) Math.sin(angle) * distance;
         return coords;
     }
-// TO DO DEFINE CONE VISION
 /*
-    int visionRange = agentPositionX + variable.getDistanceViewing();
-    int visionAngle ; // to experiment on between 1° to 90°
+* Wall avoidance control baord
 */
-
-    /*METHOD (1) : IS_END
-    * check if the agent has reached the end of the map
-    * BE CAREFUL two distinct reference;
-    * the map size is euclidian from 0,0
-    * whereas, the Agentb position is centered on spawning zone
-    * prepair for 4 CASES
-     **/
-     /*
-    public boolean isEnd(){
-        int limitY = variables.getHeight();
-        int limitX = variables.getWidth();
-        int[] GoalA = new int[2];
-        GoalA = CoordsCreator(initialAngle, visionRange );
-
-        if( GoalA[0] >= limitX  || GoalA[1] >= limitY ){
-            return true; //Agent is in vision range of the mapLimit
-        }
-            return false; //Agent is not in vision range of the mapLimit
-    }
-    */
-
     public int[] wall(){ // to be called from Goal
         if(End_Avoidance() == false)
           return wallAvoidance();
 
         else {
           resetAvoidance();
+          dropFlag();//LAST FLAG
           int[] finalPos = new int[2];
           finalPos[0] = getAgentPositionX();
           finalPos[1] = getAgentPositionY();
@@ -291,7 +274,6 @@ public class Agent  {
      * if the agent has reached a goal this identifies which type
      **/
     public int isWall(){
-
         //somewhere in the surrounding
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
@@ -364,8 +346,15 @@ public class Agent  {
       resetFlagCounter();
       resetStepsCounter();
       resetWalltoAvoid();
+      resetSideWall();
     }
 
+public void mesureSteps(){
+  //only increase step counter in first branch
+  if(isWall(lastPosition) == getWalltoAvoid()){
+    increaseStepsCounter();
+  }
+}
     /* METHOD (3): WALL AVOIDANCE METHOD
      * avoid by the right until :
      *     the position is free
@@ -375,40 +364,50 @@ public class Agent  {
       if(getFlagCounter() == 0){
         startAvoidance();//initialize the parameters
       }
+
+public int [] moveCase(){
+
     int [] miniGoal = new int [2];// contains x, y positions of next move
 
             if(isMapLimit() == false){
-              if(cases() == 1){// go left
+              if(cases() == 1  || getSideWall() == 1 ){// go left
                 miniGoal[0] = getAgentPositionX()+1;
                 miniGoal[1] = getAgentPositionY();
-                return miniGoal;
               }
-              if(cases() == 2){// go right
+            else if(cases() == 2  || getSideWall() == 2){// go right
                 miniGoal[0] = getAgentPositionX()-1;
                 miniGoal[1] = getAgentPositionY();
-                return miniGoal;
               }
-              if(cases() == 3){//go down
+            else if(cases() == 3 || getSideWall() == 3){//go down
                 miniGoal[0] = getAgentPositionX();
                 miniGoal[1] = getAgentPositionY()-1;
-                return miniGoal;
               }
-              if(cases() == 4){//go up
+          else if(cases() == 4 || getSideWall() == 4){//go up
                 miniGoal[0] = getAgentPositionX();
                 miniGoal[1] = getAgentPositionY()+1;
+              }
+            else if(cases() == 5){//same position
+                if(flagcounter == 0){
+                  setSideWall(switchWall());
+                    //go turn to the LEFT (always)
+                    turn(Math.toRadians(90));// internaly updates the position of the agent
+                    dropFlag();// make sure that the flag is visible for all agents
+                    increaseFlagCounter();
+                    miniGoal[0] = getAgentPositionX();
+                    miniGoal[1] = getAgentPositionY();
+                }
+                mesureSteps();
                 return miniGoal;
               }
-              if(cases() == 5){//same position
-                //go turn to the LEFT (always)
-                //call an angle update
-                miniGoal[0] = getAgentPositionX();
-                miniGoal[1] = getAgentPositionY();
-                return miniGoal;
+
+
               }
         }//end of isMapLimit
     }//end of WALL AVOIDANCE METHOD
 
-
+/*
+* METHOD cases: identify the wall
+*/
     public int cases(){
       int case = 0;
       //CASE (1): go right , increase abscisse by one whenever
@@ -451,9 +450,31 @@ public class Agent  {
       else if(wall_North() == true && getFlagCounter() == 1){
         case = 4;
       }
+      else if(isWall(lastPosition) == getWalltoAvoid() && isWall() == false){
+        /*
+        * turn is required whenever we go out of the wall area
+        * stick vision concept: the tile on the right of the agent is free
+        * tif vision, call the latest stored wall avoidance
+        */
+        case = 5;
+      }
       return case;
     }
 
+public int switchWall(){
+  if(isWall(lastPosition) == 1){//north left turn is west
+    return 4;
+  }
+  else if(isWall(lastPosition) == 2){//south  left turn is east
+    return 3;
+  }
+  else if(isWall(lastPosition) == 3){//west  left turn is south
+    return 2;
+  }
+  else if(isWall(lastPosition) == 4){//east  left turn is north
+    return 1;
+  }
+}
   /*
   * A group of 4 method that identify the wall's position
   * TO DO: !Check if using the stick would be more consistent
