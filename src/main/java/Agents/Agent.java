@@ -65,7 +65,6 @@ public class Agent  {
     double getHearing; // ? for PHASE 2
 
     //GETTER AND SETTERS ASSOCIATED TO THE ABOVE INSTANCE
-
         public Map getAgentMap(){return map;}
         public int[] getAgentSpawning(){return spawning;}
         public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
@@ -82,11 +81,12 @@ public class Agent  {
         public int [] getLastVisited(){
             return AgentTrace.get(AgentTrace.size()-1);
         }
-        // Wall to Avoid memorize by Agent to assess its success
+        // initial orientation of the Wall to Avoid
         public void setWalltoAvoid(int wall){this.WalltoAvoid = wall;}
         public int getWalltoAvoid(){return this.WalltoAvoid;}
         public void resetWalltoAvoid(){ this.WalltoAvoid = 0;}
 
+        //side orientation of the wall to Avoid
         public void setSideWall(int wall){this.sideWall = wall;}
         public int getSideWall(){return this.sideWall;}
         public void resetSideWall(){ this.sideWall = 0;}
@@ -95,10 +95,13 @@ public class Agent  {
         public void resetFlagCounter(){this.flagCounter =0;}
         public void increaseFlagCounter(){ this.flagCounter++;}
         public int getFlagCounter(){return this.flagCounter;}
+
         //the Agent tracks the number of steps(move&turns) performed
         public void resetStepsCounter(){this.stepCounter =0;}
         public void increaseStepsCounter(){this.stepCounter++;}
+        public void decreaseStepsCounter(){this.stepCounter--;}
         public int getStepsCounter(){return this.stepCounter;}
+
 
     /* METHOD(1): Agent Object CONSTRUCTOR
      *   constructor
@@ -261,7 +264,7 @@ public class Agent  {
 
         else {
           resetAvoidance();
-          dropFlag();//LAST FLAG
+  //        dropFlag();//LAST FLAG
           int[] finalPos = new int[2];
           finalPos[0] = getAgentPositionX();
           finalPos[1] = getAgentPositionY();
@@ -314,11 +317,13 @@ public class Agent  {
       else if(getWalltoAvoid() == 4 && wall_West() == true)
         return true;
       }
+    }
       else if(getStepsCounter() > 200){// in case the Agent got stuck
         System.out.println("security exit " + getStepsCounter());
         return true;
       }
       return false; //otherwise keep avoidig the wall
+
     }// end of End_Avoidance
 
     /*HELPER METHOD: start Avoidance
@@ -387,21 +392,24 @@ public int [] moveCase(){
                 miniGoal[1] = getAgentPositionY()+1;
               }
             else if(cases() == 5){//same position
-                if(flagcounter == 0){
+                if(flagcounter == 0 /*first FLAG*/ || flagcounter == 1 /*second FLAG*/  ){
                   setSideWall(switchWall());
+                }
                     //go turn to the LEFT (always)
                     turn(Math.toRadians(90));// internaly updates the position of the agent
-                    dropFlag();// make sure that the flag is visible for all agents
+  //                  dropFlag();// FIRST FLAG
                     increaseFlagCounter();
                     miniGoal[0] = getAgentPositionX();
                     miniGoal[1] = getAgentPositionY();
                 }
-                mesureSteps();
+                if(getflagCounter() == 0){
+                  mesureSteps();
+                }
+                else if(getFlagCounter() == 2){
+                  decreaseStepsCounter();
+                  System.out.print("remaining steps" + getStepsCounter());
+                }
                 return miniGoal;
-              }
-
-
-              }
         }//end of isMapLimit
     }//end of WALL AVOIDANCE METHOD
 
@@ -452,9 +460,9 @@ public int [] moveCase(){
       }
       else if(isWall(lastPosition) == getWalltoAvoid() && isWall() == false){
         /*
-        * turn is required whenever we go out of the wall area
-        * stick vision concept: the tile on the right of the agent is free
-        * tif vision, call the latest stored wall avoidance
+        * Turn is required whenever we go out of the wall area
+        * Stick vision concept: the tile on the right of the agent is free
+        * Tif vision, call the latest stored wall avoidance
         */
         case = 5;
       }
