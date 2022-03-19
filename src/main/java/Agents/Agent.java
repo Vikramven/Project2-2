@@ -305,25 +305,24 @@ public class Agent  {
      *    the current way might fail in narrow corridors...
      */
     public boolean End_Avoidance(){
-      if(getFlagCounter() == 2){
-        if(getWalltoAvoid() == 1 && wall_South() == true){
+      /*  ENDING CONDITIONS
+      *terminate back to original vertical/horizontal coordonates
+      */
+        if(getFlagCounter() > 0 && getStepsCounter() == 0 ){
+          if(getWalltoAvoid() == 1 && wall_South() == true)
+            return true;
+          else if(getWalltoAvoid() == 2 && wall_North() == true)
           return true;
-
-        else if(getWalltoAvoid() == 2 && wall_North() == true)
-        return true;
-
-      else if(getWalltoAvoid() == 3 && wall_East() == true)
-        return true;
-      else if(getWalltoAvoid() == 4 && wall_West() == true)
-        return true;
-      }
-    }
-      else if(getStepsCounter() > 200){// in case the Agent got stuck
-        System.out.println("security exit " + getStepsCounter());
-        return true;
+        else if(getWalltoAvoid() == 3 && wall_East() == true)
+          return true;
+        else if(getWalltoAvoid() == 4 && wall_West() == true)
+          return true;
+        else if(getStepsCounter() > 200){// in case the Agent got stuck
+          System.out.println("security exit " + getStepsCounter());
+          return true;
+        }
       }
       return false; //otherwise keep avoidig the wall
-
     }// end of End_Avoidance
 
     /*HELPER METHOD: start Avoidance
@@ -337,6 +336,7 @@ public class Agent  {
           * TO DO: put a flag at getAgentPositionX();
           */
           setWalltoAvoid(wallType);
+          dropFlag(); //oNLY UNIVERSAL FLAG
           increaseFlagCounter();
           System.out.println("flagcounter at " + getFlagCounter());
         }
