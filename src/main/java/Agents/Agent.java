@@ -3,6 +3,7 @@ package Agents;
 import Controller.Variables;
 import Controller.Vector;
 import Path.Move;
+import Path.Position;
 
 import java.lang.Math;
 
@@ -80,7 +81,7 @@ public class Agent  {
     private int flagCounter;
     private int stepCounter;
     private int turnCounter;
-    private int [] lastposition = new int [2];
+    private int[] lastPosition = new int [2];
 
 
 
@@ -110,6 +111,7 @@ public class Agent  {
 
         exploAlgoMachine = new NeoExploAlgoPerAgent();
         path = new ArrayList<>();
+        iterator = 0;
     }
 
     public void move(){
@@ -120,6 +122,7 @@ public class Agent  {
         if(pathFinished()){
             aGoal = goal();
             path = getPathFromAstar();
+            this.iterator = 0;
         }
         else{
             coords = nextMove();
@@ -135,6 +138,21 @@ public class Agent  {
         this.mapPosY = mapCoords[1];
     }
 
+    private boolean pathFinished(){
+        return iterator == path.size();
+    }
+
+    private ArrayList<int[]> getPathFromAstar(){
+        Position startPosition = new Position(this.mapPosX,this.mapPosY);
+        Position goal = new Position(this.aGoal[0],this.aGoal[1]);
+        return agentMove.getPath(startPosition, goal, this.map);
+    }
+
+    private int[] nextMove(){
+        iterator++;
+        return path.get(iterator-1);
+    }
+
     public void setInitialCoords(int[] coords){
         this.spawnX=coords[0];
         this.spawnY=coords[1];
@@ -142,10 +160,7 @@ public class Agent  {
         this.mapPosY = spawnY;
     }
 
-    public void
-
-
-    turn(double alpha){
+    public void turn(double alpha){
         /** angle expressed in radians counter clockwise*/
         this.orientation.turn(alpha);
         setVision();
@@ -333,7 +348,7 @@ public class Agent  {
     public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
     private void setLastVisited(int[] coords){this.lastVisited = coords;}
 
-    public void setLastPosition(int x, int y ){this.lastPosition[0]= x; this.lastposition[1]= y;}
+    public void setLastPosition(int x, int y ){this.lastPosition[0]= x; this.lastPosition[1]= y;}
     public int [] getLastPosition(){return this.lastPosition;}
     // initial orientation of the Wall to Avoid
     public void setWalltoAvoid(int wall){this.WalltoAvoid = wall;}
@@ -628,7 +643,7 @@ public class Agent  {
     public void startAvoidance(){
         //memorize the type of challenge
         int wallType = isWall();
-        if(wallType =! 0){
+        if(wallType != 0){
             /*
              * TO DO: put a flag at getAgentPositionX();
              */
@@ -652,7 +667,7 @@ public class Agent  {
      ***************************************************************************/
     public boolean End_Avoidance(){
 
-        if( /*map limit has been reached*/){
+        if(reachedEnd()){
             // dble security *
             return true;
         }
@@ -795,6 +810,27 @@ public class Agent  {
             return 0;
     }
 
+    public int wasWall(){
+        //somewhere in the surrounding
+        Tile[][] Copy = getAgentMap().getTiles();
+        if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
+            return 1;  //NORTH CASE
+        }
+
+        else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
+            return 2;   //SOUTH CASE
+        }
+
+        else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
+            return 3;   //EAST CASE
+        }
+
+        else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
+            return 4;   //WEST CASE
+        }
+        else
+            return 0;
+    }
     /*****************************************************************************
      * METHOD (8) : cases
      * identify the wall orientation
@@ -841,7 +877,7 @@ public class Agent  {
         else if(wall_North() == true && getFlagCounter() == 1){
             casE = 4;
         }
-        else if(isWall(getLastPosition()) == getWalltoAvoid() && isWall() == 0){
+        else if( wasWall() == getWalltoAvoid() && isWall() == 0){
             /*
              * Turn is required whenever we go out of the wall area
              * Stick vision concept: the tile on the right of the agent is free
@@ -849,8 +885,7 @@ public class Agent  {
              */
             casE = 5;
         }//2 WALLS BLOCKING THE AGENT
-        else if(isWall(getLastPosition()) == getWalltoAvoid()
-                && isWall() == switchWallLeft(getWalltoAvoid()){
+        else if(wasWall() == getWalltoAvoid() && isWall() == switchWallLeft(getWalltoAvoid()){
             /*LONGUER WAY: more obstacles on the way, keep circuling around  */
             casE = 6;
         }
@@ -859,7 +894,7 @@ public class Agent  {
          * NB 1: this method will overide the previous one
          * NB 2. detection is garantied by the radius of isWall()
          */
-      else if(isWall(getLastPosition()) == getWalltoAvoid()
+      else if(wasWall() == getWalltoAvoid()
                 && isWall() == switchWallLeft(getWalltoAvoid())
                 && isWall() == switchWallRight(getWalltoAvoid())){
             casE = 7;
@@ -913,16 +948,16 @@ public class Agent  {
      * updates sideWall reference when turning left
      ******************************************************************************/
     public int switchWallLeft(){
-        if(isWall(getLastPosition()) == 1){//north left turn is west
+        if(wasWall() == 1){//north left turn is west
             return 4;
         }
-        else if(isWall(getLastPosition()) == 2){//south  left turn is east
+        else if(wasWall() == 2){//south  left turn is east
             return 3;
         }
-        else if(isWall(getLastPosition()) == 3){//west  left turn is south
+        else if(wasWall() == 3){//west  left turn is south
             return 2;
         }
-        else if(isWall(getLastPosition()) == 4){//east  left turn is north
+        else if(wasWall() == 4){//east  left turn is north
             return 1;
         }
     }
