@@ -60,7 +60,7 @@ public class Map{
            }
     }//mapInit
 
-    public void teamCreation(/*pass an int to identify the group*/)){
+    public void teamCreation(/*pass an int to identify the group*/){
     /* creates a team of agents, places them on spawn and gives them initial info */
         double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
         for(int i = 0; i < variables.getNumberOfGuards(); i++){
@@ -325,6 +325,10 @@ public class Map{
             }
         }
         return true;
+    }
+
+    public boolean isInMap(int x, int y){
+        return x>=0 && x<this.mapWidth && y>=0 && y<this.mapHeight;
     }
 
 }

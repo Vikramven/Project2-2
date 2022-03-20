@@ -126,15 +126,14 @@ public class NeoExploAlgoPerAgent {
         return nextTile.hasWall() || nextTile.hasTrace();
     }
 
-    /**
-    private ExploAgent createCorrespondingExploAgent(Agent agent){
-        int x;
-        int y;
-        Map map;
-        double betaAngle; // in rads
-        ArrayList<int[]> traceList;
 
-        // return new ExploAgent(x, y, map, betaAngle, traceList);
+    private ExploAgent createCorrespondingExploAgent(Agent agent){
+        int x = agent.getAgentPositionX();
+        int y = agent.getAgentPositionY();
+        Map map = agent.getAgentMap();
+        double betaAngle = agent.getInitialAngle(); // in rads
+        ArrayList<int[]> traceList = agent.getAgentTrace();
+
+        return new ExploAgent(x, y, map, betaAngle, traceList);
     }
-    */
 }

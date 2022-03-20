@@ -137,4 +137,12 @@ public class Tile {
             }
         }
     }
+
+    public int getXCoord() {
+        return this.x;
+    }
+
+    public int getYCoord() {
+        return this.x;
+    }
 }
