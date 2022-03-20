@@ -109,6 +109,7 @@ public class Move {
     /* A_Star : Path Finding Algorithm
      * OUTPUT: an integer that describes how costy(beneficial) the potential Move is to the Agent
      * */
+
     public int aStar(Agent agent, Map map, int initialCost){
         int x = agent.getAgentPositionX();
         int y = agent.getAgentPositionY();
@@ -117,22 +118,15 @@ public class Move {
 
         /*What are the possible Moves to reach the Goal ?
             Candidate Paths
-        */
 
         int goalDistance =  manhattanHeuristic(x, y, newGoal[0], newGoal[1]);
 
+         */
         return 0;
     }
 
 
-    public static List<Position> getPath(Position startPos, Position targetPos){
-
-        Variables vars = new Variables();
-        vars.setHeight(10);
-        vars.setWidth(10);
-        vars.createWall(1,0, 1, 4);
-
-        Map map = new Map(vars);
+    public static ArrayList<int[]> getPath(Position startPos, Position targetPos, Map map){
 
 
         HashMap<Position, Boolean> vis = new HashMap<>();
@@ -166,7 +160,6 @@ public class Move {
         }
         if (!current.samePos(targetPos)){
             System.out.println("Could not reach");
-            //Could not reach.
         }
 
 
@@ -175,9 +168,22 @@ public class Move {
         }
 
         Collections.reverse(directions);
-        return directions;
+
+        return PosArrToIntArr(directions);
     }
 
+    private static ArrayList<int[]> PosArrToIntArr(List<Position> positions){
+        ArrayList<int[]> intArr = new ArrayList<>();
+
+        for(Position p : positions)
+            intArr.add(PositionToArray(p));
+
+        return intArr;
+    }
+
+    private static int[] PositionToArray(Position p){
+        return new int[] {p.getX(), p.getY()};
+    }
 
 
 //public int
