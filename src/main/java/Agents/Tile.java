@@ -5,7 +5,7 @@ public class Tile {
     private int x;
     private int y;
     private int value;
-    private int TRACE_VALUE = 2; // or any other val
+    private int TRACE_VALUE = 1; // or any other val
     private int WALL_VALUE = Integer.MAX_VALUE;
     private final int size = 8;
 

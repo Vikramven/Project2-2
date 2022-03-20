@@ -93,6 +93,7 @@ public class Map{
             int y = agent.getAgentPositionY();
             tiles[x][y].removeAgent();
             agent.move(); //method to implement, should be connected to A*
+            //agent.updateMap();
             x = agent.getAgentPositionX();
             y = agent.getAgentPositionY();
             tiles[x][y].placeAgent();
