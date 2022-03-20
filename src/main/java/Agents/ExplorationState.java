@@ -7,7 +7,6 @@ public class ExplorationState {
     private boolean needsToGoUp;
     private boolean needsToChangeRow;
 
-
     public ExplorationState() {
         this.isInRegion = false;
         this.needsToChangeRow = false;
@@ -48,9 +47,6 @@ public class ExplorationState {
 
     public void determineIfNeedsToMoveUpOrDown(double ang){
         int angle = (int)Math.toDegrees(ang);
-        if( 0 <= angle && angle < 180)
-            setNeedsToGoUp(true);
-        else
-            setNeedsToGoUp(false);
+        setNeedsToGoUp(0 <= angle && angle < 180);
     }
 }

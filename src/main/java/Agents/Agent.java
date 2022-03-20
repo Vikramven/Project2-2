@@ -68,6 +68,8 @@ public class Agent  {
     private int[] visionLeft;
     private int[] visionRight;
 
+    private NeoExploAlgoPerAgent exploAlgoMachine;
+
 
     /* METHOD(1): Agent
      *   constructor
@@ -92,6 +94,8 @@ public class Agent  {
         this.orientation = new Vector(this.agentPositionX,this.agentPositionY,this.initialAngle,this.visionRange);
         this.mapMaxX = variables.getWidth();
         this.mapMaxY = variables.getHeight();
+
+        exploAlgoMachine = new NeoExploAlgoPerAgent();
     }
 
     public void move(){
@@ -520,10 +524,6 @@ public class Agent  {
     }
 
     private int[] explore(){
-        return new int[2];
+        return exploAlgoMachine.explore(this);
     }
-
-
-
-
 }

@@ -3,11 +3,11 @@ package Agents;
 import java.util.ArrayList;
 
 public class NeoExploAlgoPerAgent {
-    ArrayList<ExploAgent> listOfActualAgents = new ArrayList<>();
-    ArrayList<ExplorationState> listOfAgentsExplorationState = new ArrayList<>();
+    ExplorationState explorationState;
     Map map;
 
     public NeoExploAlgoPerAgent(){
+        explorationState = new ExplorationState();
     }
 
     static void addToTraceList(Map map, ArrayList<Tile> traceList, int x, int y){
@@ -27,66 +27,51 @@ public class NeoExploAlgoPerAgent {
     }
 
     public int[] explore(Agent givenAgent){
-        // create corresponding exploAgent
 
         ExploAgent agent = createCorrespondingExploAgent(givenAgent);
-
-        // if given agent is not in list
-        // add to list
-        // and create explostate
-
-
         map = agent.getMap();
 
-        if(!listOfActualAgents.contains(agent)){
-            listOfActualAgents.add(agent);
-            ExplorationState explorationState = new ExplorationState();
-            explorationState.determineIfNeedsToMoveUpOrDown(agent.getBetaAngle());
-            listOfAgentsExplorationState.add(explorationState);
+        if(!explorationState.isInRegion()){
+            explorationState = new ExplorationState();  // create explo state
+            explorationState.determineIfNeedsToMoveUpOrDown(agent.getBetaAngle());  // determine if move up or down
+            explorationState.setGoRight(getOrientationFromAngle(agent.getBetaAngle()));  // determine if move right or left
+            explorationState.setInRegion(true);  // say its in region
 
-            explorationState.setGoRight(getOrientationFromAngle(agent.getBetaAngle()));
-            explorationState.setInRegion(true);
-
-            return putInsideOwnRegion(agent);
-        }
+            return putInsideOwnRegion(agent); // return int[] in region
+        } // if agent is not In region
 
         else{
-            int indexInList = listOfActualAgents.indexOf(agent);
-            ExplorationState exploState = listOfAgentsExplorationState.get(indexInList);
-
-            if(exploState.needsToChangeRow()){
-                if(exploState.needsToGoUp()){
-                    int tileUpY = agent.getCurrentTile().getYCoord()-1;
-                    exploState.setNeedsToChangeRow(!exploState.needsToChangeRow());
-                    if (map.isInMap(agent.getCurrentTile().getXCoord(), tileUpY))
-                        return new int[] {agent.getCurrentTile().getXCoord(), tileUpY};
-                    else
-                        return null;
-                }
+            if(explorationState.needsToChangeRow()){
+                if(explorationState.needsToGoUp()){
+                    int tileUpY = agent.getCurrentTile().getYCoord()-1; // get y of tile up
+                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow()); // say it doesnt need to move up anymore
+                    if (map.isInMap(agent.getCurrentTile().getXCoord(), tileUpY)) // if (coords of tile up) is in map
+                        return new int[] {agent.getCurrentTile().getXCoord(), tileUpY}; // return coords of tile up
+                    else // if coords of tileUp is not in map
+                        return null; // return null
+                } // if agent needs to move to row up
                 else{
-                    int tileUpY = agent.getCurrentTile().getYCoord()+1;
-                    exploState.setNeedsToChangeRow(!exploState.needsToChangeRow());
-                    if (map.isInMap(agent.getCurrentTile().getXCoord(), tileUpY))
-                        return new int[] {agent.getCurrentTile().getXCoord(), tileUpY};
-                    else
-                        return null;
-                }
-            }
+                    int tileDownY = agent.getCurrentTile().getYCoord()+1; // get y of tile down
+                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow()); // say it doesnt need to change rown anymore
+                    if (map.isInMap(agent.getCurrentTile().getXCoord(), tileDownY)) // if coords of tile down is in map
+                        return new int[] {agent.getCurrentTile().getXCoord(), tileDownY}; // return coords of tile down
+                    else // if coords of tile down is not in map
+                        return null; // return null
+                } // if agent needs to move to row down
+            } // if agent needs to change row
             else{
-                boolean goRight = exploState.goesRight();
+                boolean goRight = explorationState.goesRight(); // go right
 
-                ArrayList<Tile> viewingRange = agent.computeViewRange(goRight);
+                ArrayList<Tile> viewingRange = agent.computeViewRange(goRight); // get viewing range
+                Tile furthestViewedTile = viewingRange.get(viewingRange.size()-1); // get furthest tile you see
 
-                Tile furthestViewedTile = viewingRange.get(viewingRange.size()-1);
-
-                if (isOnEdgeOfWallOrTrace(furthestViewedTile, goRight)) {
-                    exploState.setGoRight(!goRight);
-                    exploState.setNeedsToChangeRow(true);
+                if (isOnEdgeOfWallOrTrace(furthestViewedTile, goRight)) { // if agent sees wall or trace
+                    explorationState.setGoRight(!goRight); // make it changes direction since it sees a wall
+                    explorationState.setNeedsToChangeRow(true); // now that it sees a wall, it needs to change row
                 }
-
-                return new int[] {furthestViewedTile.getXCoord(), furthestViewedTile.getYCoord()};
-            }
-        }
+                return new int[] {furthestViewedTile.getXCoord(), furthestViewedTile.getYCoord()}; // return furthest viewed title coords
+            } // if agent does not need to change row and has to continue on its lancee
+        } // if agent is in region
     }
 
     private int[] putInsideOwnRegion(ExploAgent agent){
