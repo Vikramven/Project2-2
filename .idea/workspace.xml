@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="astar + gui">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_17_02_22,_14_41_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_17_02_22__14_41__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_02_22,_11_54_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_02_22__11_54__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_22,_12_36_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_22__12_36__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/engine/graphics/textures/objConverter/OBJFileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/engine/graphics/textures/objConverter/OBJFileLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" afterDir="false" />
     </list>
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
@@ -123,6 +131,26 @@
       <workItem from="1645613588695" duration="4441000" />
       <workItem from="1645701760031" duration="1105000" />
       <workItem from="1645703087376" duration="849000" />
+      <workItem from="1646843973500" duration="600000" />
+      <workItem from="1646860924200" duration="3000" />
+      <workItem from="1646942626523" duration="773000" />
+      <workItem from="1647013578057" duration="1492000" />
+      <workItem from="1647040837289" duration="541000" />
+      <workItem from="1647085098955" duration="1033000" />
+      <workItem from="1647118917540" duration="2359000" />
+      <workItem from="1647164209058" duration="1514000" />
+      <workItem from="1647172804683" duration="1483000" />
+      <workItem from="1647268426736" duration="1366000" />
+      <workItem from="1647344510279" duration="757000" />
+      <workItem from="1647358927164" duration="641000" />
+      <workItem from="1647378048259" duration="3000" />
+      <workItem from="1647428403131" duration="600000" />
+      <workItem from="1647433146518" duration="3026000" />
+      <workItem from="1647454508975" duration="1249000" />
+      <workItem from="1647462847240" duration="118000" />
+      <workItem from="1647552591607" duration="2901000" />
+      <workItem from="1647687753045" duration="3000" />
+      <workItem from="1647776788809" duration="2041000" />
     </task>
     <task id="LOCAL-00001" summary="starting code is from Controller-For-Merge branch">
       <created>1645613707001</created>
@@ -159,7 +187,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646836684617</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="astar + gui">
+      <created>1646837686031</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1646837686031</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

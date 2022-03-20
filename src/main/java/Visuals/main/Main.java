@@ -183,7 +183,6 @@ public class Main implements Runnable {
 			for (int i = 0; i < s.length(); i++){
 				char c = s.charAt(i);
 				if(c == '1'){
-					entities.add(new Entity(texturedModelIntruder, new Vector3f(line,0,i), 0, 270,  0, 1F,1));
 					mazeMatrix[line][i] = 1;
 				}
 				else if(c == '0'){
@@ -201,6 +200,31 @@ public class Main implements Runnable {
 			line++;
 		}
 		scanner.close();
+
+
+		for (int j = 0; j < mazeMatrix.length; j++) {
+			for (int k = 0; k < mazeMatrix[0].length; k++) {
+				if(j>0 && k>0 && j<mazeMatrix.length-1 && k<mazeMatrix[0].length-1 && mazeMatrix[j][k]==1){
+					if((mazeMatrix[j-1][k]==1 || mazeMatrix[j+1][k]==1) && mazeMatrix[j][k-1]!=1 && mazeMatrix[j][k+1]!=1){
+						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 0,  0, 1F,1));
+					}
+					else if((mazeMatrix[j][k-1]==1 || mazeMatrix[j][k+1]==1) && mazeMatrix[j-1][k]!=1 && mazeMatrix[j+1][k]!=1){
+						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 90,  0, 1F,1));
+					}
+					else {
+						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 0,  0, 1F,1));
+					}
+				}
+				else if(mazeMatrix[j][k]==1){
+					if(j==0 || j== mazeMatrix.length-1){
+						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 90,  0, 1F,1));
+					}
+					if(k==0 || k== mazeMatrix.length-1){
+						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 0,  0, 1F,1));
+					}
+				}
+
+			}
 		}
 
 
@@ -216,6 +240,7 @@ public class Main implements Runnable {
 				System.out.print(mazeMatrix[j][k]);
 			}
 			System.out.println("");
+		}
 		}
 
 

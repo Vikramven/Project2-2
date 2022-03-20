@@ -7,14 +7,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Float.valueOf;
+
 //This OBJ loader has been imported from the internet.
 
 public class OBJFileLoader {
 
     private static final String RES_LOC = "res/3D/";
-
-
-
 
     public static ModelData loadOBJ(String objFileName) {
         FileReader read = null;
@@ -24,8 +23,6 @@ public class OBJFileLoader {
         } catch (FileNotFoundException e) {
             System.err.println("File not found in res; don't use any extention");
         }
-
-
 
         BufferedReader reader = new BufferedReader(read);
         String line;
@@ -38,22 +35,17 @@ public class OBJFileLoader {
                 line = reader.readLine();
                 if (line.startsWith("v ")) {
                     String[] currentLine = line.split(" ");
-                    Vector3f vertex = new Vector3f((float) Float.valueOf(currentLine[1]),
-                            (float) Float.valueOf(currentLine[2]),
-                            (float) Float.valueOf(currentLine[3]));
+                    Vector3f vertex = new Vector3f(valueOf(currentLine[1]), valueOf(currentLine[2]), valueOf(currentLine[3]));
                     Vertex newVertex = new Vertex(vertices.size(), vertex);
                     vertices.add(newVertex);
 
                 } else if (line.startsWith("vt ")) {
                     String[] currentLine = line.split(" ");
-                    Vector2f texture = new Vector2f((float) Float.valueOf(currentLine[1]),
-                            (float) Float.valueOf(currentLine[2]));
+                    Vector2f texture = new Vector2f(valueOf(currentLine[1]), valueOf(currentLine[2]));
                     textures.add(texture);
                 } else if (line.startsWith("vn ")) {
                     String[] currentLine = line.split(" ");
-                    Vector3f normal = new Vector3f((float) Float.valueOf(currentLine[1]),
-                            (float) Float.valueOf(currentLine[2]),
-                            (float) Float.valueOf(currentLine[3]));
+                    Vector3f normal = new Vector3f(valueOf(currentLine[1]), valueOf(currentLine[2]), valueOf(currentLine[3]));
                     normals.add(normal);
                 } else if (line.startsWith("f ")) {
                     break;
@@ -108,15 +100,15 @@ public class OBJFileLoader {
         return indicesArray;
     }
 
-    private static float convertDataToArrays(List<Vertex> vertices, List<Vector2f> textures,
-                                             List<Vector3f> normals, float[] verticesArray, float[] texturesArray,
-                                             float[] normalsArray) {
+    private static float convertDataToArrays(List<Vertex> vertices, List<Vector2f> textures, List<Vector3f> normals, float[] verticesArray, float[] texturesArray, float[] normalsArray){
         float furthestPoint = 0;
         for (int i = 0; i < vertices.size(); i++) {
             Vertex currentVertex = vertices.get(i);
+
             if (currentVertex.getLength() > furthestPoint) {
                 furthestPoint = currentVertex.getLength();
             }
+
             Vector3f position = currentVertex.getPosition();
             Vector2f textureCoord = textures.get(currentVertex.getTextureIndex());
             Vector3f normalVector = normals.get(currentVertex.getNormalIndex());
@@ -149,7 +141,6 @@ public class OBJFileLoader {
                 vertices.add(duplicateVertex);
                 indices.add(duplicateVertex.getIndex());
             }
-
         }
     }
 
