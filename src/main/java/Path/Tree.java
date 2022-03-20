@@ -72,8 +72,8 @@ public class Tree {
                 Node newNode = new Node(parent, null);
 
                 for(int j = 0; j < 2 ; j++){ //dimension of the move.array storing the coordinates
-                   //set the correct coordinates of the above created Node
-                    newNode.setPosition(move.legalMoveGenerator(agent, map).get(i)[j]);
+                    //set the correct coordinates of the above created Node
+                    //newNode.setPosition(move.legalMoveGenerator(agent, map).get(i)[j]);
                 }
                 //adding the created Node to the visitedArray
                 visitedNodes.get(0).get(i).addChild(newNode);
@@ -95,6 +95,3 @@ public class Tree {
         }
     }
 }
-
-
-
