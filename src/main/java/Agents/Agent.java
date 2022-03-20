@@ -113,6 +113,35 @@ public class Agent  {
         path = new ArrayList<>();
         iterator = 0;
     }
+    /**
+     * DOCUMENTATION FOR ZOFIA'S PART
+     *
+     * 1 : move
+     * 2 : pathFinished
+     * 3 : getPathFromAstar
+     * 4 : getNextMove
+     * 5 : setInitialCoords
+     * 6 : turn
+     * 7 : dropFlag
+     * 8 : isInMap
+     * 9 : currentlyVisibleFields
+     * 10 : lastSeenField
+     * 11 : setVision
+     * 12 : convertToMap
+     * 13 : convertToAgent
+     * 14 : goal
+     * 15 : updateStrategy
+     * 16 : shouldGoToSpawnAngle
+     * 17 : reachedWallFlag()
+     * 18 : isAtSpawn
+     * 19 : reachedEnd
+     * 20 : reachedWall
+     * 21 : nextCoord
+     * 22 : goToEndOfMapCoords
+     * 23 : exploreEdgeCoords
+     * 24 : gotoSpawnCorrds
+     * 25 : explore
+     * */
 
     public void move(){
         int[] coords = new int[2];
@@ -125,7 +154,7 @@ public class Agent  {
             this.iterator = 0;
         }
         else{
-            coords = nextMove();
+            coords = getNextMove();
         }
         //ArrayList<Integer> path = getPathFromAstar();
         //nextMove = path(0);
@@ -148,14 +177,14 @@ public class Agent  {
         return agentMove.getPath(startPosition, goal, this.map);
     }
 
-    private int[] nextMove(){
+    private int[] getNextMove(){
         iterator++;
         return path.get(iterator-1);
     }
 
     public void setInitialCoords(int[] coords){
-        this.spawnX=coords[0];
-        this.spawnY=coords[1];
+        this.spawnX = coords[0];
+        this.spawnY = coords[1];
         this.mapPosX = spawnX;
         this.mapPosY = spawnY;
     }
@@ -166,11 +195,6 @@ public class Agent  {
         setVision();
     }
 
-    public void setCurrentAngle(double alpha){
-        this.orientation.setAngle(alpha);
-        setVision();
-    }
-
     private void dropFlag(){
         this.map.getTile(this.mapPosX,this.mapPosY).placeFlag();
         int[] coords = new int[2];
@@ -178,9 +202,6 @@ public class Agent  {
         coords[1] = this.mapPosY;
         this.flags.add(coords);
     }
-
-
-
 
     private boolean isInMap(int x, int y){
         return x>=0 && x<this.mapMaxX && y>=0 && y<this.mapMaxY;
@@ -197,9 +218,6 @@ public class Agent  {
     private int[] lastSeenField(){
         return this.visibleFields.get(this.visibleFields.size()-1);
     }
-
-
-
     /*
     * vision is set to be a line of tiles, in the direction of the orientation vector and the length of vision range
     * this method sets the visibleFields parameter. (used for exploration updating)
@@ -342,7 +360,10 @@ public class Agent  {
     }
 
     /** SETTERS **/
-
+    public void setCurrentAngle(double alpha){
+        this.orientation.setAngle(alpha);
+        setVision();
+    }
     public void setInitialAngle(double angle ){this.initialAngle = angle; }
     public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
     public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
@@ -705,7 +726,7 @@ public class Agent  {
      * only increase step counter in first branch
      ****************************************************************************/
     public void mesureSteps(){
-        if(isWall(getLastPosition()) == getWalltoAvoid()){
+        if(wasWall() == getWalltoAvoid()){
             increaseStepsCounter();
         }
     }
@@ -885,7 +906,7 @@ public class Agent  {
              */
             casE = 5;
         }//2 WALLS BLOCKING THE AGENT
-        else if(wasWall() == getWalltoAvoid() && isWall() == switchWallLeft(getWalltoAvoid()){
+        else if(wasWall() == getWalltoAvoid() && isWall() == switchWallLeft(/*getWalltoAvoid()*/)){
             /*LONGUER WAY: more obstacles on the way, keep circuling around  */
             casE = 6;
         }
@@ -895,8 +916,8 @@ public class Agent  {
          * NB 2. detection is garantied by the radius of isWall()
          */
       else if(wasWall() == getWalltoAvoid()
-                && isWall() == switchWallLeft(getWalltoAvoid())
-                && isWall() == switchWallRight(getWalltoAvoid())){
+                && isWall() == switchWallLeft(/*getWalltoAvoid()*/)
+                && isWall() == switchWallRight(/*getWalltoAvoid()*/)){
             casE = 7;
         }
         return casE;
@@ -960,6 +981,7 @@ public class Agent  {
         else if(wasWall() == 4){//east  left turn is north
             return 1;
         }
+        return 0;
     }
     /*****************************************************************************
      * METHOD (14) : switchWallRight
@@ -992,26 +1014,6 @@ public class Agent  {
         else if(getWalltoAvoid() ==  4 && getTurnCounter() == 1){//east  right turn is south
             return 3;
         }
+        return 0;
     }
-
-/*
-    public int pastWall(){
-        //somewhere in the surrounding
-        Tile[][] Copy = getAgentMap().getTiles();
-        if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
-            return 1;  //NORTH CASE
-        }
-        else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
-            return 2;   //SOUTH CASE
-        }
-        else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
-            return 3;   //EAST CASE
-        }
-        else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
-            return 4;   //WEST CASE
-        }
-        else
-            return 0;
-    }
-*/
 }
