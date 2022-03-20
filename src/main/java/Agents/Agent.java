@@ -24,13 +24,13 @@ public class Agent  {
     private int spawnY;
     private double initialAngle;
     private double currentAngle;
-    private String strategy; //1 - go to end, 2 - go along end, 3 - go to spawn, 4 - explore inside
+    private String strategy;
     private String  GO_TO_END = "end";
-    private String  GO_ALONG_WALL = "along_wall";
     private String  GO_TO_SPAWN = "spawn";
     private String  GO_ALONG_END = "along_end";
     private String AVOID_WALL = "avoid_wall";
     private String  EXPLORE = "explore";
+    private boolean avoidWall;
     private int avoidance;
     private int agentSize;
     private int teamSize;
@@ -100,9 +100,9 @@ public class Agent  {
         coords[1] = this.agentPositionY;
         setLastVisited(coords);
         int[] agentGoal = goal();
-        ArrayList<Integer> path = getPathFromAstar();
-        nextMove = path(0);
-        path(0).delete;
+        //ArrayList<Integer> path = getPathFromAstar();
+        //nextMove = path(0);
+        //path(0).delete;
         /*
         * Some methods that change the agent position, to do in the connection
         * */
@@ -292,6 +292,13 @@ public class Agent  {
         return  this.visibleFields;
     }
 
+    public int[] getCurrentCoordinates() {
+        int[] coords = new int[2];
+        coords[0] = this.mapPosX;
+        coords[1] = this.mapPosY;
+        return coords;
+    }
+
     /** SETTERS **/
 
     public void setInitialAngle(double angle ){this.initialAngle = angle; }
@@ -342,20 +349,17 @@ public class Agent  {
         switch(this.strategy){
             case "end":
                 return goToEndOfMapCoords();
-                break;
             case "along_end":
                 return  exploreEdgeCoords();
-                break;
             case "spawn":
                 return goToSpawnCoords();
-                break;
             case "avoid_wall":
-                //wall avoidance method that returns int[] coordinates
+                //return wall();
                 break;
             case "explore":
-                explore();
-                break;
+                return explore();
         }
+        return getCurrentCoordinates();
     }
 
 
@@ -365,10 +369,15 @@ public class Agent  {
         /**
          * updates the strategy of the agent
          * */
+
+        if(reachedWall()){
+            this.avoidWall = true;
+        }
+
         if(strategy.equals(GO_TO_END) && reachedEnd()){
             this.strategy = GO_ALONG_END;
         }
-        else if(strategy.equals(AVOID_WALL) && reachedWallFlag()){
+        else if(this.avoidWall && reachedWallFlag()){
             this.strategy = GO_TO_SPAWN;
         }
         if(strategy.equals(GO_ALONG_END) && shouldGoToSpawnAngle()){
@@ -398,7 +407,6 @@ public class Agent  {
         else if (k == 0){
             k_alpha = (this.teamSize - 1) * alpha;
         }
-
         ratioTan = (double) this.agentPositionY/this.agentPositionX;
 
 
@@ -426,6 +434,11 @@ public class Agent  {
     private boolean reachedEnd(){
         int[] coords = nextCoord();
         return !isInMap(coords[0],coords[1]);
+    }
+
+    private boolean reachedWall(){
+        int[] coords = nextCoord();
+        return this.map.getTile(coords[0],coords[1]).hasWall();
     }
 
     private int[] nextCoord(){

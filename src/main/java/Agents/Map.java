@@ -19,11 +19,10 @@ public class Map{
    private int mapHeight; //map dimensions
    private int mapWidth;
    //private int[][] matrix;// SubMap storing the walls and the agents
-    private int[][] trace; // SubMap storing the map % exploration
+   //private int[][] trace; // SubMap storing the map % exploration
    private ArrayList <Wall> walls; //check every 2 integers
    private Variables variables = new Variables(); // why ?
    private Tile[][] tiles;
-   private ArrayList<Agent[]>;
    private Agent[] teamGuards;
    private Agent[] teamIntruders;
    private double exploredPercentage;
@@ -162,6 +161,13 @@ public class Map{
         return tiles[x][y];
     }
 
+    public int getMapHeight(){return mapHeight;};
+    public int getMapWidth(){return mapWidth;};
+    public int getFieldCost(int x, int y){
+        return tiles[x][y].getValue();
+    }
+    public double getExploredPercentage(){return this.exploredPercentage;}
+
     /* METHOD(5): teamCreation
      *   create the Agents and stores them in a fixed sized array
      *
@@ -193,7 +199,7 @@ public class Map{
 
         int width = Math.abs(x1-x2);
         int height = Math.abs(y1-y2);
-        int outline = 2*(height+width);
+        int outline = 2*(height+width)-4;
         int spacing = 1;
         ArrayList<int[]> spawnLine = new ArrayList<>();
         if (team.length<=outline){
@@ -264,103 +270,7 @@ public class Map{
         return outline;
     }
 
- /*  public void convertPosition(Agent[] team){
-       int teamSize = team.length();
-       int x1 = team[0].getAgentSpawning()[0];
-       int y1 = team[0].getAgentSpawning()[1];
-       int x2 = team[0].getAgentSpawning()[2];
-       int y2 = team[0].getAgentSpawning()[3];
 
-       int width = x1- x2;
-       int height = y1 - y2;
-       int counter = 0;
-
-   //CASE 1:  available position inferior or equal to number of guards
-       if(teamSize => (width * height)){
-           int i = x1;
-           int j = y1;
-           while( counter  < teamSize && i < x2 + 1 && j < y2 ){
-           team[counter].setAgentPositionX(i);
-           team[counter].setAgentPositionY(j);
-            i++;
-            j++;
-           counter++;
-                   }
-
-       }//END CASE 1
-
-       //CASE 2: available position superior to number of guards
-       int decisionRatio= 30/100;
-
-       if(teamSize < decisionRatio * (width * height)){
-           while( counter  < teamSize ){
-               // top line
-               for(int i = x1; i < x2 + 1; i ++){
-                   if (counter  < teamSize){
-                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                       team[counter].setAgentPositionX() = i;
-                       team[counter].setAgentPositionY() = y2;
-                       counter++;
-                   }
-               }
-               // bottom line
-               for(int i = x1; i < x2 + 1; i ++){
-                   if (counter  < teamSize){
-                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                       team[counter].setAgentPositionX() = i;
-                       team[counter].setAgentPositionY() = y1;
-                       counter++;
-                   }
-               }
-               // start column
-               for(int j = y1; j < y2 + 1; j ++){
-                   if (counter  < teamSize){
-   //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                       team[counter].setAgentPositionX() = x1;
-                       team[counter].setAgentPositionY() = j;
-                       counter++;
-                   }
-               }
-               // end column
-               for(int j = y1; j < y2 + 1; j ++){
-                   if (counter  < teamSize){
-                       //   map[getAgentSpawning()[0]][i] = 0 ; guards code
-                       team[counter].setAgentPositionX() = x2;
-                       team[counter].setAgentPositionY() = j;
-                       counter++;
-                   }
-               }
-           }
-       }//END CASE 2
-   }//END convertPosition
-*/
-
-/* METHOD (7): TeamTrace
-*   Keeps track of all the traces of every agent
-*   All position that have been visited so far
-* */
-    /* METHOD (8): updateTrace
-     *    Helper method of TeamTrace
-     * it should be called after each move
-     *  OR the principal should be called after each round
-     * */
-    /* METHODS: GETTERS AND SETTER
-    *   to access private instances of the class
-     * */
-    //public int[][] getMatrix(){return matrix;};
-   public int getMapHeight(){return mapHeight;};
-   public int getMapWidth(){return mapWidth;};
-   public int getFieldCost(int x, int y){
-       return tiles[x][y].getValue();
-   }
-   public double getExploredPercentage(){return this.exploredPercentage;}
-
-
-
-  /* public void setMatrix(int x, int y, int value){
-       matrix[x][y] = value;
-   }
-   */
     public void setTrace(int x, int y, int value){
        tiles[x][y].placeTrace();
     }
