@@ -45,6 +45,7 @@ public class Agent  {
     private int sideWall;
     private int flagCounter;
     private int stepCounter;
+    private int turnCounter;
     private int [] lastposition = new int [2];
 
     //Agent Geographical Informations
@@ -105,6 +106,12 @@ public class Agent  {
         public void increaseStepsCounter(){this.stepCounter++;}
         public void decreaseStepsCounter(){this.stepCounter--;}
         public int getStepsCounter(){return this.stepCounter;}
+
+        //the Agent tracks the number of turn(move&turns) performed
+        public void resetTurnCounter(){this.turnCounter =0;}
+        public void increaseTurnCounter(){this.turnCounter++;}
+        public void decreaseTurnCounter(){this.turnCounter--;}
+        public int getTurnCounter(){return this.turnCounter;}
 
 
     /* METHOD(1): Agent Object CONSTRUCTOR
@@ -261,6 +268,7 @@ public class Agent  {
     }
 /*
 * Wall avoidance control baord
+* TO DO: customize lines 360 and 361 into a boolean conditions to call the current method
 */
     public int[] wall(){ // to be called from Goal
         if(End_Avoidance() == false)
@@ -382,7 +390,7 @@ public class Agent  {
 
 public void mesureSteps(){
   //only increase step counter in first branch
-  if(isWall(lastPosition) == getWalltoAvoid()){
+  if(isWall(getLastPosition()) == getWalltoAvoid()){
     increaseStepsCounter();
   }
 }
@@ -399,36 +407,61 @@ public void mesureSteps(){
 public int [] moveCase(){
 
     int [] miniGoal = new int [2];// contains x, y positions of next move
+    int case = cases();
 
             if(isMapLimit() == false){
-              if(cases() == 1  || getSideWall() == 1 ){// go left
+              if(case == 1  || getSideWall() == 1 ){// go left
                 miniGoal[0] = getAgentPositionX()+1;
                 miniGoal[1] = getAgentPositionY();
               }
-            else if(cases() == 2  || getSideWall() == 2){// go right
+            else if(case == 2  || getSideWall() == 2){// go right
                 miniGoal[0] = getAgentPositionX()-1;
                 miniGoal[1] = getAgentPositionY();
               }
-            else if(cases() == 3 || getSideWall() == 3){//go down
+            else if(case == 3 || getSideWall() == 3){//go down
                 miniGoal[0] = getAgentPositionX();
                 miniGoal[1] = getAgentPositionY()-1;
               }
-          else if(cases() == 4 || getSideWall() == 4){//go up
+          else if(case == 4 || getSideWall() == 4){//go up
                 miniGoal[0] = getAgentPositionX();
                 miniGoal[1] = getAgentPositionY()+1;
               }
-            else if(cases() == 5){//same position
-                if(flagcounter == 0 /*first FLAG*/ || flagcounter == 1 /*second FLAG*/  ){
-                  setSideWall(switchWall());
+              //the #3 STAHL CASES : turn will be performed in different context
+            else if(case == 5 || case == 6 || case == 7){
+
+              if(case == 5 ){//when the space ahead is free: turn to the LEFT always
+                setSideWall(switchWallLeft());//left wall considered
+                turn(Math.toRadians(90));
+              }
+              else if(case == 6 || case == 7 ){//when the space ahead is not free: turn to the LEFT always
+
+                if(getTurnCounter() == 0 && case == 6 ) {
+                  turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
+                //  setSideWall(switchWallRight()); //will the turn counter enter the above conditions ?
+                  setSideWall(getWalltoAvoid);//so the next time it will enter the above position
+                  increaseTurnCounter();
                 }
-                    //go turn to the LEFT (always)
-                    turn(Math.toRadians(90));// internaly updates the position of the agent
-  //                  dropFlag();// FIRST FLAG
-                    increaseFlagCounter();
+                else if(getTurnCounter() == 0 && (case == 6 ||case == 7 ) ) {
+                  turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
+                  increaseTurnCounter();
+                }
+                else if(getTurnCounter() == 1 && case == 7){
+                  turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
+                  increaseTurnCounter();
+                }
+                //from here the procedure should execute base on classic cases 1 to 4
+                else if(getTurnCounter() == 2 && case == 7){
+                setSideWall(switchWallRight()); //makje sure the agent position is being updated at that stage ! 
+                }
+
+              }
                     miniGoal[0] = getAgentPositionX();
                     miniGoal[1] = getAgentPositionY();
                 }
-                if(getflagCounter() == 0){
+              /* Phase 1 and 2: the agent hasn't come across the obstacle
+              * Current wall is parallel to the inital avoidance
+              */
+                if(getflagCounter() < 2 && isWall() = getWalltoAvoid() ){
                   mesureSteps();
                 }
                 else if(getFlagCounter() == 2){
@@ -499,6 +532,7 @@ public int [] moveCase(){
         * in a very dense maze for exemple
         * Option 1 : we interrupt the avoidance procedure of the initial wall
         * to start a new avoidance procedure on the second wall
+        *
         * Option 2: we consider this obstacle wall as another side wall,
         * until we reach the map limit AND  everytime such side wall as same orientation as the initial wall avoidance we keep increasing the getStepsCounter
         *  then only we start a global phase 3 by going anti-initial wall and decreasing the step counter in the anti_initial wall direction
@@ -516,7 +550,7 @@ public int [] moveCase(){
       return case;
     }
 
-public int switchWall(){
+public int switchWallLeft(){
   if(isWall(getLastPosition()) == 1){//north left turn is west
     return 4;
   }
@@ -530,6 +564,35 @@ public int switchWall(){
     return 1;
   }
 }
+public int switchWallRight(){
+  //first turn : 90°
+  if(getWalltoAvoid() == 1 && getTurnCounter() == 0){//north right turn is east
+    return 3;
+  }
+  else if(getWalltoAvoid()  == 2 && getTurnCounter() == 0){//south  right turn is west
+    return 4;
+  }
+  else if(getWalltoAvoid() == 3 && getTurnCounter() == 0){//west  right turn is north
+    return 1;
+  }
+  else if(getWalltoAvoid() ==  4 && getTurnCounter() == 0){//east  right turn is south
+    return 2;
+  }
+  //second turn : 180°
+  else if(getWalltoAvoid() == 1 && getTurnCounter() == 1){//north right turn is east
+    return 2;
+  }
+  else if(getWalltoAvoid()  == 2 && getTurnCounter() == 1){//south  right turn is west
+    return 1;
+  }
+  else if(getWalltoAvoid() == 3 && getTurnCounter() == 1){//west  right turn is north
+    return 4;
+  }
+  else if(getWalltoAvoid() ==  4 && getTurnCounter() == 1){//east  right turn is south
+    return 3;
+  }
+}
+
   /*
   * A group of 4 method that identify the wall's position
   * TO DO: !Check if using the stick would be more consistent
