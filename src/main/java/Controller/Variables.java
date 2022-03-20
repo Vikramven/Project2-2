@@ -189,7 +189,7 @@ public class Variables {
 
     public int getNumberMakers(){return this.numberMarkers;}
 
-    public int getDistanceViewing(){return this.distanceViewing}
+    public int getDistanceViewing(){return this.distanceViewing;}
 
     public void createWall(int x1, int y1, int x2, int y2){
         if(unlock){
