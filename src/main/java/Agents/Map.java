@@ -75,6 +75,7 @@ public class Map{
 
     public void mapUpdate(){
         /*
+         * This method should be called sequentially somewhere
          * 1. move agents
          * 2. update agent location
          * 3. update exploration %
@@ -383,6 +384,13 @@ public class Map{
     }
 
     private void updateSeenTiles(){
+        // reset all the tiles to be out of vision to the agent
+        for(Tile[] tileRow : tiles){
+            for(Tile tile : tileRow){
+                tile.setAsNotVisible();
+            }
+        }
+        //set the tiles that are currently seen by the agent as visible
         for (Agent agent : teamGuards) {
             ArrayList<int[]> visibleFields = agent.getVisibleFields();
             for (int[] coords : visibleFields) {
