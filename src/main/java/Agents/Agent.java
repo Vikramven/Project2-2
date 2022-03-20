@@ -504,7 +504,7 @@ public class Agent {
     * only increase step counter in first branch
     ****************************************************************************/
 public void mesureSteps(){
-  if(isWall(getLastPosition()) == getWalltoAvoid()){
+  if(wasWall() == getWalltoAvoid()){
     increaseStepsCounter();
   }
 }
@@ -607,6 +607,27 @@ public int [] moveCase(){
             return 0;
     }
 
+    public int wasWall(){
+        //somewhere in the surrounding
+        Tile[][] Copy = getAgentMap().getTiles();
+        if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
+            return 1;  //NORTH CASE
+        }
+
+        else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
+            return 2;   //SOUTH CASE
+        }
+
+        else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
+            return 3;   //EAST CASE
+        }
+
+        else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
+            return 4;   //WEST CASE
+        }
+        else
+            return 0;
+    }
     /*****************************************************************************
     * METHOD (8) : cases
     * identify the wall orientation
@@ -653,7 +674,7 @@ public int [] moveCase(){
       else if(wall_North() == true && getFlagCounter() == 1){
         case = 4;
       }
-      else if(isWall(getLastPosition()) == getWalltoAvoid() && isWall() == 0){
+      else if(wasWall() == getWalltoAvoid() && isWall() == 0){
         /*
         * Turn is required whenever we go out of the wall area
         * Stick vision concept: the tile on the right of the agent is free
@@ -661,7 +682,7 @@ public int [] moveCase(){
         */
         case = 5;
       }//2 WALLS BLOCKING THE AGENT
-      else if(isWall(getLastPosition()) == getWalltoAvoid()
+      else if(wasWall() == getWalltoAvoid()
               && isWall() == switchWallLeft(getWalltoAvoid()){
         /*LONGUER WAY: more obstacles on the way, keep circuling around  */
         case = 6;
@@ -671,7 +692,7 @@ public int [] moveCase(){
       * NB 1: this method will overide the previous one
       * NB 2. detection is garantied by the radius of isWall()
       */
-      else if(isWall(getLastPosition()) == getWalltoAvoid()
+      else if(wasWall() == getWalltoAvoid()
               && isWall() == switchWallLeft(getWalltoAvoid())
               && isWall() == switchWallRight(getWalltoAvoid())){
         case = 7;
@@ -725,16 +746,16 @@ public int [] moveCase(){
         * updates sideWall reference when turning left
         ******************************************************************************/
         public int switchWallLeft(){
-          if(isWall(getLastPosition()) == 1){//north left turn is west
+          if(wasWall() == 1){//north left turn is west
             return 4;
           }
-          else if(isWall(getLastPosition()) == 2){//south  left turn is east
+          else if(wasWall() == 2){//south  left turn is east
             return 3;
           }
-          else if(isWall(getLastPosition()) == 3){//west  left turn is south
+          else if(wasWall() == 3){//west  left turn is south
             return 2;
           }
-          else if(isWall(getLastPosition()) == 4){//east  left turn is north
+          else if(wasWall() == 4){//east  left turn is north
             return 1;
           }
         }
