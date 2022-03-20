@@ -46,6 +46,7 @@ public class Agent  {
     private int mapMaxY;
     private int[] endOfVisionRange;
     private int[] lastVisited;
+    private ArrayList<int[]> path;
 
     //Agent Geographical Informations
 
@@ -96,6 +97,7 @@ public class Agent  {
         this.mapMaxY = variables.getHeight();
 
         exploAlgoMachine = new NeoExploAlgoPerAgent();
+        path = new ArrayList<>();
     }
 
     public void move(){
@@ -104,6 +106,7 @@ public class Agent  {
         coords[1] = this.agentPositionY;
         setLastVisited(coords);
         int[] agentGoal = goal();
+        path = getPathFromAstar();
         //ArrayList<Integer> path = getPathFromAstar();
         //nextMove = path(0);
         //path(0).delete;
