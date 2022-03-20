@@ -45,6 +45,7 @@ public class Agent  {
     private int sideWall;
     private int flagCounter;
     private int stepCounter;
+    private int [] lastposition = new int [2];
 
     //Agent Geographical Informations
     int[] spawning = new int [4]; // starting zone of the team
@@ -81,6 +82,9 @@ public class Agent  {
         public int [] getLastVisited(){
             return AgentTrace.get(AgentTrace.size()-1);
         }
+        //last position accessors
+        public void setLastPosition(int x, int y ){this.lastPosition[0]= x; this.lastposition[1]= y;}
+        public int [] getLastPosition(){return this.lastPosition;}
         // initial orientation of the Wall to Avoid
         public void setWalltoAvoid(int wall){this.WalltoAvoid = wall;}
         public int getWalltoAvoid(){return this.WalltoAvoid;}
@@ -260,7 +264,7 @@ public class Agent  {
 */
     public int[] wall(){ // to be called from Goal
         if(End_Avoidance() == false)
-          return wallAvoidance();
+          return moveCase();
 
         else {
           resetAvoidance();
@@ -292,6 +296,28 @@ public class Agent  {
         }
 
         else if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
+            return 4;   //WEST CASE
+        }
+        else
+            return 0;
+    }
+
+    public int pastWall(){
+        //somewhere in the surrounding
+        Tile[][] Copy = getAgentMap().getTiles();
+        if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
+            return 1;  //NORTH CASE
+        }
+
+        else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
+            return 2;   //SOUTH CASE
+        }
+
+        else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
+            return 3;   //EAST CASE
+        }
+
+        else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
             return 4;   //WEST CASE
         }
         else
@@ -409,6 +435,7 @@ public int [] moveCase(){
                   decreaseStepsCounter();
                   System.out.print("remaining steps" + getStepsCounter());
                 }
+                setLastPosition(miniGoal[0],miniGoal[1]);
                 return miniGoal;
         }//end of isMapLimit
     }//end of WALL AVOIDANCE METHOD
@@ -458,7 +485,7 @@ public int [] moveCase(){
       else if(wall_North() == true && getFlagCounter() == 1){
         case = 4;
       }
-      else if(isWall(lastPosition) == getWalltoAvoid() && isWall() == false){
+      else if(isWall(getLastPosition()) == getWalltoAvoid() && isWall() == 0){
         /*
         * Turn is required whenever we go out of the wall area
         * Stick vision concept: the tile on the right of the agent is free
@@ -466,20 +493,40 @@ public int [] moveCase(){
         */
         case = 5;
       }
+      else if(isWall(getLastPosition()) == getWalltoAvoid() && isWall() == nextWall(getWalltoAvoid())){
+        /* DENSE MASE LONGER AVOIDANCE
+        * when another wall comes in our way it might be imposible to reach the other side
+        * in a very dense maze for exemple
+        * Option 1 : we interrupt the avoidance procedure of the initial wall
+        * to start a new avoidance procedure on the second wall
+        * Option 2: we consider this obstacle wall as another side wall,
+        * until we reach the map limit AND  everytime such side wall as same orientation as the initial wall avoidance we keep increasing the getStepsCounter
+        *  then only we start a global phase 3 by going anti-initial wall and decreasing the step counter in the anti_initial wall direction
+        * this applies until counter = zero or we reach a teamate trace ,
+        (?)we follow trace to map limit
+        (?) then we spawn back !
+        * improvement: update the step tracking
+        */
+        case = 6;
+      }
+      else if (){
+        /*DEAD_END ; requires to turn 180° to go back to previous steps: call switch twice */
+        case = 7;
+      }
       return case;
     }
 
 public int switchWall(){
-  if(isWall(lastPosition) == 1){//north left turn is west
+  if(isWall(getLastPosition()) == 1){//north left turn is west
     return 4;
   }
-  else if(isWall(lastPosition) == 2){//south  left turn is east
+  else if(isWall(getLastPosition()) == 2){//south  left turn is east
     return 3;
   }
-  else if(isWall(lastPosition) == 3){//west  left turn is south
+  else if(isWall(getLastPosition()) == 3){//west  left turn is south
     return 2;
   }
-  else if(isWall(lastPosition) == 4){//east  left turn is north
+  else if(isWall(getLastPosition()) == 4){//east  left turn is north
     return 1;
   }
 }
@@ -489,7 +536,7 @@ public int switchWall(){
   */
         public boolean wall_North(){
             Tile[][] Copy = getAgentMap().getTiles();
-            if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
+            if(Copy[getAgentPositionX()][getAgentPositionY()+1].hasWall() == true){
                 return true;
             }
             else
@@ -520,7 +567,7 @@ public int switchWall(){
                 return false;
         }
 
-    /*METHOD (4) AGENT STRATEGY
+    /*METHOD () AGENT STRATEGY
     * CONTENT: each agent gets a specific exploration strategy to cover the map heavenly
     *  this exploration can be subdivised into 3 main routes:
     *       1/ from spawn Zone to map limit
@@ -543,7 +590,6 @@ public int switchWall(){
         int GoalA = new int [2];
         GoalA = CoordsCreator(initialAngle, visionRange);
 
-
     // STAGE 1: FROM SPAWNING RELATIVELY TOWARDS MAP LIMIT
         while(isEnd() == 0){
             if(isWall() == 1){
@@ -554,7 +600,6 @@ public int switchWall(){
               * needs to be tested
                 */
         }// The Map Limit has been reached successfully
-
 
     public int[] goal(){
         updateStrategy();
