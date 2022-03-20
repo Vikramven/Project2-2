@@ -515,56 +515,56 @@ public void mesureSteps(){
   ******************************************************************************/
 public int [] moveCase(){
     int [] miniGoal = new int [2];// contains x, y positions of next move
-    int case = cases();
+    int wallOrientation = cases();
 
-              if(case == 1  || getSideWall() == 1 ){// go left
+              if(wallOrientation == 1  || getSideWall() == 1 ){// go left
                 miniGoal[0] = getAgentPositionX()+1;
                 miniGoal[1] = getAgentPositionY();
               }
-            else if(case == 2  || getSideWall() == 2){// go right
+            else if(wallOrientation == 2  || getSideWall() == 2){// go right
                 miniGoal[0] = getAgentPositionX()-1;
                 miniGoal[1] = getAgentPositionY();
               }
-            else if(case == 3 || getSideWall() == 3){//go down
+            else if(wallOrientation == 3 || getSideWall() == 3){//go down
                 miniGoal[0] = getAgentPositionX();
                 miniGoal[1] = getAgentPositionY()-1;
               }
-          else if(case == 4 || getSideWall() == 4){//go up
+          else if(wallOrientation == 4 || getSideWall() == 4){//go up
                 miniGoal[0] = getAgentPositionX();
                 miniGoal[1] = getAgentPositionY()+1;
               }
               //the #3 STAHL CASES : turn will be performed in different context
-            else if(case == 5 || case == 6 || case == 7){
+            else if(wallOrientation == 5 ||  wallOrientation == 6 || wallOrientation == 7){
 
-              if(case == 5 ){//when the space ahead is free: turn to the LEFT always
+              if(wallOrientation == 5 ){//when the space ahead is free: turn to the LEFT always
                 setSideWall(switchWallLeft());//left wall considered
                 turn(Math.toRadians(90));
               }
-              else if(case == 6 || case == 7 ){//when the space ahead is not free: turn to the LEFT always
-                if(getTurnCounter() == 0 && case == 6 ) {
+              else if(wallOrientation == 6 || wallOrientation == 7 ){//when the space ahead is not free: turn to the LEFT always
+                if(getTurnCounter() == 0 && wallOrientation == 6 ) {
                   turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
                 //  setSideWall(switchWallRight()); //will the turn counter enter the above conditions ?
                   setSideWall(getWalltoAvoid());//so the next time it will enter the above position
                   increaseTurnCounter();
                 }
-                else if(getTurnCounter() == 0 && (case == 6 ||case == 7 ) ) {
+                else if(getTurnCounter() == 0 && (wallOrientation == 6 ||wallOrientation == 7 ) ) {
                   turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
                   increaseTurnCounter();
                   resetTurnCounter();
                 }
-                else if(getTurnCounter() == 1 && case == 7){
+                else if(getTurnCounter() == 1 && wallOrientation == 7){
                   turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
                   setSideWall(switchWallRight()); //make sure the agent position is being updated at that stage !
                 } //from here the procedure should execute base on classic cases 1 to 4
 
-                else if(getTurnCounter() == 2 && case == 7){
+                else if(getTurnCounter() == 2 &&  == 7){
                 setSideWall(switchWallRight()); //make sure the agent position is being updated at that stage !
                 resetTurnCounter();
                 }
               }
                     miniGoal[0] = getAgentPositionX();
                     miniGoal[1] = getAgentPositionY();
-                }//end of #3 STAHL CASES
+                }//end of #3 STAHL S
 
               /* Phase 1 and 2: the agent hasn't come across the obstacle
               * Current wall is parallel to the inital avoidance
@@ -579,7 +579,7 @@ public int [] moveCase(){
                 setLastPosition(miniGoal[0],miniGoal[1]);
                 return miniGoal;
 
-    }//end of move Case
+    }//end of move wallOrientation
 
     /*****************************************************************************
     * METHOD (7) : isWall
@@ -589,19 +589,19 @@ public int [] moveCase(){
         //somewhere in the surrounding
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getAgentPositionX()][getAgentPositionY()+1].hasWall() == true){
-            return 1;  //NORTH CASE
+            return 1;  //NORTH wallOrientation
         }
 
         else if(Copy[getagentPositionX()][getAgentPositionY()-1].hasWall() == true){
-            return 2;   //SOUTH CASE
+            return 2;   //SOUTH wallOrientation
         }
 
         else if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){
-            return 3;   //EAST CASE
+            return 3;   //EAST wallOrientation
         }
 
         else if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
-            return 4;   //WEST CASE
+            return 4;   //WEST wallOrientation
         }
         else
             return 0;
@@ -611,68 +611,68 @@ public int [] moveCase(){
         //somewhere in the surrounding
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
-            return 1;  //NORTH CASE
+            return 1;  //NORTH wallOrientation
         }
 
         else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
-            return 2;   //SOUTH CASE
+            return 2;   //SOUTH wallOrientation
         }
 
         else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
-            return 3;   //EAST CASE
+            return 3;   //EAST wallOrientation
         }
 
         else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
-            return 4;   //WEST CASE
+            return 4;   //WEST wallOrientation
         }
         else
             return 0;
     }
     /*****************************************************************************
-    * METHOD (8) : cases
+    * METHOD (8) : wallOrientations
     * identify the wall orientation
     ******************************************************************************/
-    public int cases(){
-      int case = 0;
-      //CASE (1): go right , increase abscisse by one whenever
+    public int wallOrientations(){
+      int wallOrientation = 0;
+      //wallOrientation (1): go right , increase abscisse by one whenever
       if(wall_North() == true && getFlagCounter() == 0){
-        case = 1;
+        wallOrientation = 1;
       }
       else if (wall_South()== true && getFlagCounter() == 2){
-        case = 1;
+        wallOrientation = 1;
       }
       else if(wall_West()== true && getFlagCounter() == 1){
-        case = 1;
+        wallOrientation = 1;
       }
-      //CASE (2): go left
+      //wallOrientation (2): go left
       else if(wall_North() == true && getFlagCounter() == 2){
-        case = 2;
+        wallOrientation = 2;
       }
       else if (wall_South() == true && getFlagCounter() == 0){
-        case = 2;
+        wallOrientation = 2;
       }
       else if(wall_East() == true && getFlagCounter() == 1){
-        case = 2;
+        wallOrientation = 2;
       }
-      //CASE (3): go down
+      //wallOrientation (3): go down
       else if(wall_East() == true && getFlagCounter() == 0){
-        case = 3;
+        wallOrientation = 3;
       }
       else if (wall_West() == true && getFlagCounter() == 2){
-        case = 3;
+        wallOrientation = 3;
       }
       else if(wall_South() == true && getFlagCounter() == 1){
-        case = 3;
+        wallOrientation = 3;
       }
-      //CASE (4): go up
+      //wallOrientation (4): go up
       else if(wall_West() == true && getFlagCounter() == 0){
-        case = 4;
+        wallOrientation = 4;
       }
       else if (wall_East() == true && getFlagCounter() == 2){
-        case = 4;
+        wallOrientation = 4;
       }
       else if(wall_North() == true && getFlagCounter() == 1){
-        case = 4;
+        wallOrientation = 4;
       }
       else if(wasWall() == getWalltoAvoid() && isWall() == 0){
         /*
@@ -680,12 +680,12 @@ public int [] moveCase(){
         * Stick vision concept: the tile on the right of the agent is free
         * Tif vision, call the latest stored wall avoidance
         */
-        case = 5;
+        wallOrientation = 5;
       }//2 WALLS BLOCKING THE AGENT
       else if(wasWall() == getWalltoAvoid()
               && isWall() == switchWallLeft(getWalltoAvoid()){
         /*LONGUER WAY: more obstacles on the way, keep circuling around  */
-        case = 6;
+        wallOrientation = 6;
       }
       /* DEAD_END: 3 WALLS BLOCKING THE AGENT:
       * requires to turn 180° to go back to previous steps: call switch twice
@@ -695,9 +695,9 @@ public int [] moveCase(){
       else if(wasWall() == getWalltoAvoid()
               && isWall() == switchWallLeft(getWalltoAvoid())
               && isWall() == switchWallRight(getWalltoAvoid())){
-        case = 7;
+        wallOrientation = 7;
       }
-      return case;
+      return wallOrientation;
     }
 
   /*****************************************************************************
@@ -797,19 +797,19 @@ public int [] moveCase(){
         //somewhere in the surrounding
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
-            return 1;  //NORTH CASE
+            return 1;  //NORTH wallOrientation
         }
 
         else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
-            return 2;   //SOUTH CASE
+            return 2;   //SOUTH wallOrientation
         }
 
         else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
-            return 3;   //EAST CASE
+            return 3;   //EAST wallOrientation
         }
 
         else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
-            return 4;   //WEST CASE
+            return 4;   //WEST wallOrientation
         }
         else
             return 0;
