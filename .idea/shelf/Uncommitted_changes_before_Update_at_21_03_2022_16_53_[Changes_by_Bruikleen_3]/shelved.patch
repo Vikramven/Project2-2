@@ -1,0 +1,81 @@
+Index: src/main/java/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Controller.PlayOut;\r\n\r\npublic class App {\r\n\r\n    public App() {\r\n    }\r\n\r\n    /**\r\n     * Run\r\n     * @param args\r\n     */\r\n    public static void main(String[] args)\r\n    {\r\n        PlayOut playOut = new PlayOut();\r\n\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/App.java b/src/main/java/App.java
+--- a/src/main/java/App.java	(revision f1c033afa128410d5debefdab39b6298cf4bc9c1)
++++ b/src/main/java/App.java	(date 1647877418548)
+@@ -11,8 +11,15 @@
+      */
+     public static void main(String[] args)
+     {
+-        PlayOut playOut = new PlayOut();
+-
+-    }
+-}
+-
++        String path = "";
++        String[] unparsedVars = new String[0];
++        try {
++            unparsedVars = ReadFiles.readFileAsString("C:\\Users\\zmilc\\OneDrive\\Documents\\GitHub\\Project2-2\\recources\\testmap.txt");
++        } catch (Exception e) {
++            e.printStackTrace();
++        }
++
++        PlayOut playOut = new PlayOut(unparsedVars);
++        playOut.computeWithPrint();
++    }
++}
+\ No newline at end of file
+Index: src/main/java/Controller/PlayOut.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\r\n\r\nimport Agents.Map;\r\nimport Agents.Agent;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class PlayOut {\r\n\r\n    private Map map;\r\n    private ArrayList<int[]> flags;\r\n    private final int STOP = 2000;\r\n\r\n    public PlayOut(){\r\n        Variables variables =  FileParser.readFile(\"./resources/testmap.txt\");\r\n        this.map = new Map(variables);\r\n    }\r\n\r\n    public void compute(){\r\n        int i = 0;\r\n        do{\r\n            i++;\r\n            map.mapUpdate();\r\n        }while(!this.map.explored() || i>this.STOP);\r\n    }\r\n\r\n    public void computeWithPrint(){\r\n        do{\r\n            map.mapUpdate();\r\n            System.out.print(map);\r\n        }while(!this.map.explored());\r\n    }\r\n\r\n    public ArrayList<ArrayList<int[]>> getPaths(){\r\n\r\n        compute();\r\n\r\n        ArrayList<ArrayList<int[]>> paths = new ArrayList<>();\r\n        Agent[] agents = map.getTeamGuards();\r\n        for (Agent a : agents){\r\n            paths.add(a.getPath());\r\n        }\r\n        return paths;\r\n    }\r\n\r\n    public ArrayList<int[]> getFlags(){\r\n        flags = map.getFlags();\r\n        return this.flags;\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Controller/PlayOut.java b/src/main/java/Controller/PlayOut.java
+--- a/src/main/java/Controller/PlayOut.java	(revision f1c033afa128410d5debefdab39b6298cf4bc9c1)
++++ b/src/main/java/Controller/PlayOut.java	(date 1647876600904)
+@@ -11,8 +11,8 @@
+     private ArrayList<int[]> flags;
+     private final int STOP = 2000;
+ 
+-    public PlayOut(){
+-        Variables variables =  FileParser.readFile("./resources/testmap.txt");
++    public PlayOut(String[] unparsedVars){
++        this.variables = FileParser.readFile(unparsedVars);
+         this.map = new Map(variables);
+     }
+ 
+@@ -47,9 +47,4 @@
+         flags = map.getFlags();
+         return this.flags;
+     }
+-
+-
+-
+-
+-
+ }
+Index: .idea/Project2-2.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule=\"true\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_16\">\r\n    <output url=\"file://$MODULE_DIR$/target/classes\" />\r\n    <output-test url=\"file://$MODULE_DIR$/target/test-classes\" />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/java\" isTestSource=\"false\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/target\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.openjfx:javafx-graphics:16\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.openjfx:javafx-graphics:win:16\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.openjfx:javafx-base:16\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.openjfx:javafx-base:win:16\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/Project2-2.iml b/.idea/Project2-2.iml
+--- a/.idea/Project2-2.iml	(revision f1c033afa128410d5debefdab39b6298cf4bc9c1)
++++ b/.idea/Project2-2.iml	(date 1647876926426)
+@@ -4,6 +4,7 @@
+     <output url="file://$MODULE_DIR$/target/classes" />
+     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+     <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/recources" isTestSource="false" />
+       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+       <excludeFolder url="file://$MODULE_DIR$/target" />
+     </content>

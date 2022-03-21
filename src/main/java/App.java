@@ -13,8 +13,15 @@ public class App {
      */
     public static void main(String[] args)
     {
-        PlayOut playOut = new PlayOut();
+        String path = "";
+        String[] unparsedVars = new String[0];
+        try {
+            unparsedVars = ReadFiles.readFileAsString("C:\\Users\\zmilc\\OneDrive\\Documents\\GitHub\\Project2-2\\recources\\testmap.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        PlayOut playOut = new PlayOut(unparsedVars);
+        playOut.computeWithPrint();
     }
 }
-

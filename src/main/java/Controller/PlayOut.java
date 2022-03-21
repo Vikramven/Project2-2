@@ -12,8 +12,8 @@ public class PlayOut {
     private final int STOP = 2000;
     Variables variables = new Variables();
 
-    public PlayOut(){
-        Variables variables =  FileParser.readFile("./resources/testmap.txt");
+    public PlayOut(String[] unparsedVars){
+        this.variables = FileParser.readFile(unparsedVars);
         this.map = new Map(variables);
     }
 
@@ -48,9 +48,4 @@ public class PlayOut {
         flags = map.getFlags();
         return this.flags;
     }
-
-
-
-
-
 }
