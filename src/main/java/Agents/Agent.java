@@ -641,6 +641,7 @@ public class Agent  {
      * TO DO: customize lines 360 and 361 into a boolean conditions to call the current method
      ********************************************************************************/
     public int[] wallAvoidance(){ // to be called from Goal
+        System.out.println("(1) wall_Avoidance ");
         if(End_Avoidance() == false){
             if(getFlagCounter() == 0){
                 startAvoidance();//initialize the parameters
@@ -662,6 +663,7 @@ public class Agent  {
      *  set the parameters for the wall avoidance
      ****************************************************************************/
     public void startAvoidance(){
+      System.out.println("(2) Start_Avoidance ");
         //memorize the type of challenge
         int wallType = isWall();
         if(wallType != 0){
@@ -673,7 +675,7 @@ public class Agent  {
             increaseFlagCounter();
             System.out.println("flagcounter at " + getFlagCounter());
         }
-        System.out.println("No need to set start: already or no wall");
+        System.out.println("No need to set start: already or no wall ");
     }//end startAvoidance
 
     /* **************************************************************************
@@ -687,7 +689,7 @@ public class Agent  {
      *  works under condition that the getWalltoAvoid() remains unchanged throughout the entire procedure
      ***************************************************************************/
     public boolean End_Avoidance(){
-
+      System.out.println("(3 )End_Avoidance ");
         if(reachedEnd()){
             // dble security *
             return true;
@@ -736,6 +738,7 @@ public class Agent  {
      * for a definite case associate the correct move to perform
      ******************************************************************************/
     public int[] moveCase(){
+      System.out.println("(6) moveCase ");
         int [] miniGoal = new int [2];// contains x, y positions of next move
         int casE = cases();
 
@@ -796,7 +799,7 @@ public class Agent  {
         }
         else if(getFlagCounter() == 2){
             decreaseStepsCounter();
-            System.out.print("remaining steps" + getStepsCounter());
+            System.out.println("remaining steps " + getStepsCounter());
         }
         setLastPosition(miniGoal[0],miniGoal[1]);
         return miniGoal;
@@ -810,6 +813,7 @@ public class Agent  {
      * if the agent has reached a goal this identifies which type
      ******************************************************************************/
     public int isWall(){
+        System.out.println("(7) isWall ");
         //somewhere in the surrounding
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
@@ -832,6 +836,7 @@ public class Agent  {
     }
 
     public int wasWall(){
+        System.out.println("(7 bis) wasWall ");
         //somewhere in the surrounding
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
@@ -857,6 +862,7 @@ public class Agent  {
      * identify the wall orientation
      ******************************************************************************/
     public int cases(){
+        System.out.println("(8) cases ");
         int casE = 0;
         //CASE (1): go right , increase abscisse by one whenever
         if(wall_North() == true && getFlagCounter() == 0){
@@ -920,6 +926,7 @@ public class Agent  {
                 && isWall() == switchWallRight(/*getWalltoAvoid()*/)){
             casE = 7;
         }
+          System.out.println("identified case " + casE);
         return casE;
     }
 
@@ -934,6 +941,7 @@ public class Agent  {
     public boolean wall_North(){
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getAgentPositionX()][getAgentPositionY()+1].hasWall() == true){
+            System.out.println("Wall is North ");
             return true;
         }
         else
@@ -942,6 +950,7 @@ public class Agent  {
     public boolean wall_South(){
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getAgentPositionX()][getAgentPositionY()-1].hasWall() == true){
+            System.out.println("Wall is South ");
             return true;
         }
         else
@@ -950,6 +959,7 @@ public class Agent  {
     public boolean wall_East(){
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){
+            System.out.println("Wall is East ");
             return true;
         }
         else
@@ -958,6 +968,7 @@ public class Agent  {
     public boolean wall_West(){
         Tile[][] Copy = getAgentMap().getTiles();
         if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
+          System.out.println("wall is West ");
             return true;
         }
         else
@@ -969,6 +980,7 @@ public class Agent  {
      * updates sideWall reference when turning left
      ******************************************************************************/
     public int switchWallLeft(){
+        System.out.println("(13) switchWallLeft");
         if(wasWall() == 1){//north left turn is west
             return 4;
         }
@@ -988,6 +1000,7 @@ public class Agent  {
      * updates sideWall reference when turning right
      ******************************************************************************/
     public int switchWallRight(){
+        System.out.println("(13) switchWallRight");
         //first turn : 90°
         if(getWalltoAvoid() == 1 && getTurnCounter() == 0){//north right turn is east
             return 3;
