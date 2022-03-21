@@ -54,6 +54,13 @@ public class Position {
             }else{
                 if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
                     delete.add(pos);
+                }else if (Math.abs(this.x-pos.x) > 0 && Math.abs(this.y-pos.y) > 0){
+
+                    //going diagonally
+                    if (map.getFieldCost(pos.x, this.y) == 1 && map.getFieldCost(this.x, pos.y) == 1){
+                        delete.add(pos);
+                    }
+
                 }
 
             }
@@ -93,6 +100,12 @@ public class Position {
             }else{
                 if (map[pos.x][pos.y] == 1){
                     delete.add(pos);
+
+                }else if (Math.abs(this.x-pos.x) > 0 && Math.abs(this.y-pos.y) > 0){
+                    //if going diagonally
+                    if (map[pos.x][this.y] == 1 && map[this.x][pos.y] == 1){
+                        delete.add(pos);
+                    }
                 }
             }
 

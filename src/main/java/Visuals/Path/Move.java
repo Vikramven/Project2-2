@@ -185,44 +185,16 @@ public class Move {
                     comparator = new Comparator<Position>() {
                         @Override
                         public int compare(Position o1, Position o2) {
-                            return Double.compare(o2.manhattanDistance(targetPos), o1.manhattanDistance(targetPos));
+                            return Double.compare(o1.manhattanDistance(targetPos), o2.manhattanDistance(targetPos));
                         }
                     };
                 }
 
 
-
-
                 List<Position> neighbours = new ArrayList<>(current.getNeighbours(map));
-
-                /*
-                System.out.println("Before:");
-                for (Position node : neighbours){
-                    if (useEuclidean){
-                        System.out.println("Euclidean "+node.euclideanDistance(targetPos));
-                    }else{
-                        System.out.println("Manhattan "+ node.manhattanDistance(targetPos));
-                    }
-                }
-
-                 */
-
-
                 neighbours.sort(comparator);
 
-                /*
-                System.out.println("After:");
 
-                for (Position node : neighbours){
-                    if (useEuclidean){
-                        System.out.println("Euclidean "+node.euclideanDistance(targetPos));
-                    }else{
-                        System.out.println("Manhattan "+ node.manhattanDistance(targetPos));
-                    }
-                }
-
-                System.out.println("-----");
-                 */
 
                 for(Position node : neighbours){
                     boolean contains = false;

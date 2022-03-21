@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GenMaze {
@@ -19,9 +20,13 @@ public class GenMaze {
         System.out.println("Euclidean - Manhattan (Step Count)");
 
         for (int i = 0; i < 1; i++) {
-            Maze maze = generateMaze(15, 15);
+            Maze maze = generateMaze(20, 20);
+
+            maze.reduceWalls(0.3);
+
             List<Position> manhattanPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix);
             List<Position> euclidPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix, true);
+
 
             System.out.println(euclidPath.size() + " - " + manhattanPath.size());
 
@@ -52,6 +57,23 @@ public class GenMaze {
             this.mazeMatrix = mazeMatrix;
             this.start = start;
             this.end = end;
+        }
+
+        public void reduceWalls(double percent){
+            for (int i = 0; i < this.mazeMatrix.length; i++) {
+                for (int j = 0; j < this.mazeMatrix[0].length; j++) {
+
+                    if (this.mazeMatrix[i][j] == 1){
+                        // if not walls
+                        if (i > 0 && j > 0 && j < this.mazeMatrix[0].length-1 && i < this.mazeMatrix.length-1){
+                            Random rand = new Random();
+                            if (rand.nextInt(100) < (int) (percent*100)){
+                                this.mazeMatrix[i][j] = 0;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public void printPath(List<Position> path){
