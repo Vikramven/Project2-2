@@ -10,6 +10,7 @@ public class PlayOut {
     private Map map;
     private ArrayList<int[]> flags;
     private final int STOP = 2000;
+    Variables variables = new Variables();
 
     public PlayOut(){
         Variables variables =  FileParser.readFile("./resources/testmap.txt");

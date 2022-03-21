@@ -156,6 +156,7 @@ public class Agent  {
         else{
             coords = getNextMove();
         }
+
         //ArrayList<Integer> path = getPathFromAstar();
         //nextMove = path(0);
         //path(0).delete;
@@ -357,6 +358,10 @@ public class Agent  {
         coords[0] = this.mapPosX;
         coords[1] = this.mapPosY;
         return coords;
+    }
+
+    public ArrayList<int[]> getPath(){
+        return this.path;
     }
 
     /** SETTERS **/

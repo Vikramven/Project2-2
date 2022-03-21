@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class FileParser {
     private static Variables map;
 
-    public static Variables readFile(String path) {
-        Path file = Paths.get(path);
+    public static Variables readFile(String[] variables) {
+        /*Path file = Paths.get(path);
         map = new Variables();//parse and set all values into variables class
         try (Scanner scan = new Scanner(file)) {
             int countNumberLines = 1;//we need to handle an exception for this case
@@ -19,17 +19,18 @@ public class FileParser {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Path invalid");
+        }*/
+
+        for(String line : variables){
+            parseNextLine("");
         }
 
         return map;
     }
 
-    public static void parseNextLine(String nextLine, int countLines) {
-        try (Scanner scan = new Scanner(nextLine)) {
+    public static void parseNextLine(String check, String value) {
 
-            if (scan.hasNext()) {
-                String check = scan.next();
-                String value = scan.next();
+
                 /**
                  * trim all lead and tail spaces if any
                  */
@@ -134,6 +135,6 @@ public class FileParser {
                 }
 
             }
-        }
+
     }
 }
