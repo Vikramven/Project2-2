@@ -1,7 +1,9 @@
 package Agents;
 
+import java.util.ArrayList;
+
 public class Tile {
-    private int[] dataset; //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent
+    private ArrayList<Integer> dataset = new ArrayList<>(); //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent
     private int x;
     private int y;
     private int value;
@@ -10,92 +12,91 @@ public class Tile {
     private final int size = 8;
 
     public Tile(int x, int y){
-        this.dataset = new int[size];
         for(int i = 0; i< this.size; i++){
-            this.dataset[i]=0;
+            dataset.add(0);
         }
         this.x = x;
         this.y = y;
     }
 
     public void placeAgent(){
-        if(this.dataset[1] == 0){
-            this.dataset[0] = 1;
+        if(this.dataset.get(1) == 0){
+            this.dataset.set(0,1);
         }
     }
 
     public void placeWall(){
-        if(this.dataset[2] == 0 && this.dataset[3]==0){
-            this.dataset[1] = 1;
+        if(this.dataset.get(2) == 0 && this.dataset.get(3)==0){
+            this.dataset.set(1,1);
             this.value = this.WALL_VALUE;
         }
     }
 
     public void placeShade(){
-        if(this.dataset[1] == 0 && this.dataset[3]==0){
-            this.dataset[2] = 1;
+        if(this.dataset.get(1) == 0 && this.dataset.get(1)==0){
+            this.dataset.set(2,1);
         }
     }
 
     public void placeTeleport(){
-        if(this.dataset[1] == 0 && this.dataset[2]==0){
-            this.dataset[3] = 1;
+        if(this.dataset.get(1) == 0 && this.dataset.get(2)==0){
+            this.dataset.set(3,1);
         }
     }
 
     public void placeTrace(){
-        this.dataset[4]=1;
+        this.dataset.set(4,1);
         this.value += this.TRACE_VALUE;
     }
 
     public void setAsExplored(){
-        this.dataset[5]=1;
+        this.dataset.set(5,1);
     }
 
     public void placeFlag(){
-        this.dataset[6]=1;
+        this.dataset.set(6,1);
     }
 
     public void setAsVisible(){
-        this.dataset[7]=1;
+        this.dataset.set(7,1);
     }
 
     public void setAsNotVisible(){
-        this.dataset[7]=0;
+        this.dataset.set(7,0);
     }
 
 
 
     public void removeAgent(){
-        this.dataset[0]=0;
+        this.dataset.set(0, 0);
     }
 
     public boolean hasAgent(){
-        return this.dataset[0]==1;
+        return this.dataset.get(0)==1;
     }
 
     public boolean hasWall(){
-        return this.dataset[1]==1;
+        return this.dataset.get(1)==1;
     }
 
     public boolean hasShade(){
-        return  this.dataset[2]==1;
+        return  this.dataset.get(2)==1;
     }
 
     public  boolean hasTeleport(){
-        return this.dataset[3]==1;
+        return this.dataset.get(3)==1;
     }
 
     public boolean hasTrace(){
-        return this.dataset[4]==1;
+        return this.dataset.get(4)==1;
     }
 
-    public boolean isExplored(){return  this.dataset[5]==1;}
+    public boolean isExplored(){return  this.dataset.get(5)==1;}
 
-    public boolean hasFlag(){return this.dataset[6]==1;}
+    public boolean hasFlag(){return this.dataset.get(6)==1;}
 
     public boolean isVisible(){
-        return this.dataset[7]==1;
+        return this.dataset.get(7) == 1;
     }
 
     public int getValue(){
@@ -109,7 +110,7 @@ public class Tile {
     public boolean isEmpty(){
         boolean isEmpty = true;
         for(int i=0; i<size; i++){
-            if (dataset[i] == 1) {
+            if (dataset.get(i) == 1) {
                 isEmpty = false;
                 break;
             }
@@ -146,6 +147,6 @@ public class Tile {
     }
 
     public int getYCoord() {
-        return this.x;
+        return this.y;
     }
 }

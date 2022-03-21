@@ -43,6 +43,7 @@ public class Map{
       numberOfTiles = mapHeight*mapWidth;
       //matrix = new int[mapWidth][mapHeight]; //dimension of
       tiles = new Tile[mapWidth][mapHeight];
+      this.teamGuards= new Agent[variables.getNumberOfGuards()];
       mapInit();
       teamCreation();
       walls = variables.getWalls(); //placing walls on the map
@@ -65,7 +66,7 @@ public class Map{
     /* creates a team of agents, places them on spawn and gives them initial info */
         double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
         for(int i = 0; i < variables.getNumberOfGuards(); i++){
-            Agent newAgent = new Agent(0,this.variables); //create the Agent; 0 for Guard
+            Agent newAgent = new Agent(0,this.variables,this); //create the Agent; 0 for Guard
             newAgent.setInitialAngle(initialAngle);
             teamGuards[i] = newAgent;
             initialAngle =+ initialAngle; // increase by one basic unit
@@ -129,8 +130,8 @@ public class Map{
       for(int i = 0; i < walls.size(); i++){
             ArrayList<Integer> coords = walls.get(i).getCoords();
             int x1 = coords.get(0);
-            int x2 = coords.get(1);
-            int y1 = coords.get(2);
+            int y1 = coords.get(1);
+            int x2 = coords.get(2);
             int y2 = coords.get(3);
             //@zofia For each of the walls : two separate loops, first we build the vertical walls, then the horizontal walls
           for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){

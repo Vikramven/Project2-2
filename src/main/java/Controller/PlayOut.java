@@ -13,7 +13,8 @@ public class PlayOut {
     Variables variables = new Variables();
 
     public PlayOut(String[] unparsedVars){
-        this.variables = FileParser.readFile(unparsedVars);
+        this.variables = new Variables();
+        this.variables.setVariables(unparsedVars);
         this.map = new Map(variables);
     }
 

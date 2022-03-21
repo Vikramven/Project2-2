@@ -27,7 +27,7 @@ public class Agent  {
     private int spawnY;
     private double initialAngle;
     private double currentAngle;
-    private String strategy;
+    private String strategy = "";
     private String  GO_TO_END = "end";
     private String  GO_TO_SPAWN = "spawn";
     private String  GO_ALONG_END = "along_end";
@@ -72,7 +72,7 @@ public class Agent  {
     double getHearing; // ? for PHASE 2
     private int[] visionLeft;
     private int[] visionRight;
-    private int[] aGoal;
+    private int[] aGoal = new int[2];
 
     private NeoExploAlgoPerAgent exploAlgoMachine;
 
@@ -89,7 +89,7 @@ public class Agent  {
      *   constructor
      *   create an agent belonging to a specific team
      * */
-    public Agent(int team, Variables vars){
+    public Agent(int team, Variables vars, Map map){
         this.visionWidth = java.lang.Math.toRadians(15);
         this.teamCode = team;
         this.variables = vars;// FileParser.readFile("./resources/testmap.txt");
@@ -103,6 +103,7 @@ public class Agent  {
         }
         this.agentPositionX = 0; //whenever agent moves, we have to update this
         this.agentPositionY = 0;
+        this.strategy = GO_TO_END;
 
         this.visionRange = variables.getDistanceViewing();
         this.orientation = new Vector(this.agentPositionX,this.agentPositionY,this.initialAngle,this.visionRange);
@@ -112,6 +113,11 @@ public class Agent  {
         exploAlgoMachine = new NeoExploAlgoPerAgent();
         path = new ArrayList<>();
         iterator = 0;
+        this.map = map;
+        this.aGoal = new int[2];
+        this.aGoal[0] = 0;
+        this.aGoal[1] = 0;
+        //make sure to
     }
     /**
      * DOCUMENTATION FOR ZOFIA'S PART
@@ -157,6 +163,9 @@ public class Agent  {
             coords = getNextMove();
         }
 
+        this.agentPositionX = coords[0];
+        this.agentPositionY = coords[1];
+
         //ArrayList<Integer> path = getPathFromAstar();
         //nextMove = path(0);
         //path(0).delete;
@@ -174,7 +183,9 @@ public class Agent  {
 
     private ArrayList<int[]> getPathFromAstar(){
         Position startPosition = new Position(this.mapPosX,this.mapPosY);
-        Position goal = new Position(this.aGoal[0],this.aGoal[1]);
+        int[] c = new int[2];
+        c=goal();
+        Position goal = new Position(c[0],c[1]);
         return agentMove.getPath(startPosition, goal, this.map);
     }
 
@@ -325,6 +336,12 @@ public class Agent  {
     /** GETTERS **/
 
     public Map getAgentMap(){return map;}
+    public int[] getMapCoords(){
+        int[] coords = new int[2];
+        coords[0] = this.agentPositionX;
+        coords[1] = this.agentPositionY;
+        return coords;
+    }
     public int[] getAgentSpawning(){return spawning;}
     public int getAgentPositionX(){return this.mapPosX;}
     public int getAgentPositionY(){return this.mapPosY;}
@@ -442,6 +459,7 @@ public class Agent  {
         /**
          * returns an array of 2 coordinates that define the goal based ont the current strategy
          * */
+        System.out.println("reached here");
         updateStrategy();
         switch(this.strategy){
             case "end":
@@ -451,8 +469,7 @@ public class Agent  {
             case "spawn":
                 return goToSpawnCoords();
             case "avoid_wall":
-                //return wall();
-                break;
+                return wallAvoidance();
             case "explore":
                 return explore();
         }
