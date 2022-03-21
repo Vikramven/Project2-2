@@ -27,6 +27,7 @@ public class Map{
    private Agent[] teamIntruders;
    private double exploredPercentage;
    private ArrayList<int[]> exploredTiles = new ArrayList<>();
+   private ArrayList<int[]> flags = new ArrayList<>();
    private int numberOfTiles;
 
     /* METHOD(1): Map
@@ -35,8 +36,8 @@ public class Map{
      * */
 
 
-   public Map(){
-      variables =  FileParser.readFile("./resources/testmap.txt");
+   public Map(Variables vars){
+      this.variables = vars;
       mapHeight = variables.getHeight();
       mapWidth = variables.getWidth();
       numberOfTiles = mapHeight*mapWidth;
@@ -84,6 +85,7 @@ public class Map{
         updateAgentLocation();
         updateExplorationPercentage();
         updateSeenTiles();
+        updateFlags();
         mapUpdate();
     }
 
@@ -168,6 +170,10 @@ public class Map{
         return tiles[x][y].getValue();
     }
     public double getExploredPercentage(){return this.exploredPercentage;}
+    public Agent[] getTeamGuards(){return teamGuards;}
+    public ArrayList<int[]> getFlags(){
+        return this.flags;
+    }
 
     /* METHOD(5): teamCreation
      *   create the Agents and stores them in a fixed sized array
@@ -290,6 +296,9 @@ public class Map{
             ArrayList<int[]> flags = agent.getFlags();
             for (int[] coords : flags) {
                 tiles[coords[0]][coords[1]].placeFlag();
+                if(!flags.contains(coords)){
+                    this.flags.add(coords);
+                }
             }
         }
     }
@@ -331,5 +340,34 @@ public class Map{
     public boolean isInMap(int x, int y){
         return x>=0 && x<this.mapWidth && y>=0 && y<this.mapHeight;
     }
+
+    public String toString(){
+
+        String output;
+        output = "explored percentage : "+this.exploredPercentage + "\n\n";
+
+        for(Tile[] tileRow : tiles){
+            output+= "\n";
+            for(Tile tile :tileRow){
+                if(tile.hasWall()){
+                    output += " x ";
+                }
+                else if(tile.hasAgent()){
+                    output +=" 0 ";
+                }
+                else if(tile.hasFlag()){
+                    output +=" A ";
+                }
+                else if(tile.hasTrace()){
+                    output +=" t ";
+                }
+                else{
+                    output +=" [] ";
+                }
+            }
+        }
+        return output;
+    }
+
 
 }
