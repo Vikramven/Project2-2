@@ -745,10 +745,12 @@ public class Agent  {
         if(casE == 1  || getSideWall() == 1 ){// go left
             miniGoal[0] = getAgentPositionX()+1;
             miniGoal[1] = getAgentPositionY();
+            System.out.println("North Go Left ");
         }
         else if(casE == 2  || getSideWall() == 2){// go right
             miniGoal[0] = getAgentPositionX()-1;
             miniGoal[1] = getAgentPositionY();
+              System.out.println("South Go Right");
         }
         else if(casE == 3 || getSideWall() == 3){//go down
             miniGoal[0] = getAgentPositionX();
@@ -757,6 +759,7 @@ public class Agent  {
         else if(casE == 4 || getSideWall() == 4){//go up
             miniGoal[0] = getAgentPositionX();
             miniGoal[1] = getAgentPositionY()+1;
+              System.out.println("West Go Up ");
         }
         //the #3 STAHL CASES : turn will be performed in different context
         else if(casE == 5 || casE == 6 || casE == 7){
@@ -764,6 +767,7 @@ public class Agent  {
             if(casE == 5 ){//when the space ahead is free: turn to the LEFT always
                 setSideWall(switchWallLeft());//left wall considered
                 turn(Math.toRadians(90));
+                  System.out.println("free to turn ");
             }
             else if(casE == 6 || casE == 7 ){//when the space ahead is not free: turn to the LEFT always
                 if(getTurnCounter() == 0 && casE == 6 ) {
@@ -776,10 +780,12 @@ public class Agent  {
                     turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
                     increaseTurnCounter();
                     resetTurnCounter();
+                      System.out.println("Front blocked turn right");
                 }
                 else if(getTurnCounter() == 1 && casE == 7){
                     turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
                     setSideWall(switchWallRight()); //make sure the agent position is being updated at that stage !
+
                 } //from here the procedure should execute base on classic cases 1 to 4
 
                 else if(getTurnCounter() == 2 && casE == 7){
