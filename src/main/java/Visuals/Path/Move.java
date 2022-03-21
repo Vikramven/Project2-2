@@ -12,65 +12,65 @@ public class Move {
     //convertor: angle to director based on a range
 
     //Left: -90 ° = -45 x 2
-public void leftMove(Agent agent){
-    agent.setAgentPositionX(agent.getAgentPositionX()-1);
-}
+    public void leftMove(Agent agent){
+        agent.setAgentPositionX(agent.getAgentPositionX()-1);
+    }
     //Right: +90° = +45 x 2
-public void rightMove(Agent agent){
-    agent.setAgentPositionX(agent.getAgentPositionX()+1);
-}
+    public void rightMove(Agent agent){
+        agent.setAgentPositionX(agent.getAgentPositionX()+1);
+    }
     //Up: +0°
-public void upMove(Agent agent){
-    agent.setAgentPositionY(agent.getAgentPositionY()+1);
-}
+    public void upMove(Agent agent){
+        agent.setAgentPositionY(agent.getAgentPositionY()+1);
+    }
     //Down: -180° = -45 x 4
-public void downMove(Agent agent){
-    agent.setAgentPositionY(agent.getAgentPositionY()-1);
-}
+    public void downMove(Agent agent){
+        agent.setAgentPositionY(agent.getAgentPositionY()-1);
+    }
     //Diagonal left-Up: +45°
-public void diagonalLeftUpMove(Agent agent){
-    agent.setAgentPositionX(agent.getAgentPositionX()-1);
-    agent.setAgentPositionY(agent.getAgentPositionY()+1);
-}
+    public void diagonalLeftUpMove(Agent agent){
+        agent.setAgentPositionX(agent.getAgentPositionX()-1);
+        agent.setAgentPositionY(agent.getAgentPositionY()+1);
+    }
     //Diagonal Right-Up: -45°
-public void diagonalRightUpMove(Agent agent){
-    agent.setAgentPositionX(agent.getAgentPositionX()+1);
-    agent.setAgentPositionY(agent.getAgentPositionY()+1);
-}
+    public void diagonalRightUpMove(Agent agent){
+        agent.setAgentPositionX(agent.getAgentPositionX()+1);
+        agent.setAgentPositionY(agent.getAgentPositionY()+1);
+    }
     //Diagonal left-Down: +225 = -45 x 5
-public void diagonalLeftDownMove(Agent agent){
-    agent.setAgentPositionX(agent.getAgentPositionX()-1);
-    agent.setAgentPositionY(agent.getAgentPositionY()-1);
-}
+    public void diagonalLeftDownMove(Agent agent){
+        agent.setAgentPositionX(agent.getAgentPositionX()-1);
+        agent.setAgentPositionY(agent.getAgentPositionY()-1);
+    }
     //Diagonal Right-Down: +135° = +45 x 3
-public void diagonalRightDownMove(Agent agent){
-    agent.setAgentPositionX(agent.getAgentPositionX()+1);
-    agent.setAgentPositionY(agent.getAgentPositionY()-1);
-}
-
-public boolean canMoveThere(Map map, int x, int y){
-    /**
-     * returns true if an agent can move to the (x,y) field
-     * on the map that is passed to this method
-     */
-
-    if(map.getFieldCost(x,y)==Integer.MAX_VALUE){
-        return false;
+    public void diagonalRightDownMove(Agent agent){
+        agent.setAgentPositionX(agent.getAgentPositionX()+1);
+        agent.setAgentPositionY(agent.getAgentPositionY()-1);
     }
-    else{
-        return true;
+
+    public boolean canMoveThere(Map map, int x, int y){
+        /**
+         * returns true if an agent can move to the (x,y) field
+         * on the map that is passed to this method
+         */
+
+        if(map.getFieldCost(x,y)==Integer.MAX_VALUE){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
-}
 
     public  ArrayList <int[]> legalMoveGenerator(Agent agent, Map map){
 
-    //call all the above methods
+        //call all the above methods
 
-    //check for validity;
-    // if output coordinates == MAX_VALUE
-    //if another agent is currently on this position
+        //check for validity;
+        // if output coordinates == MAX_VALUE
+        //if another agent is currently on this position
 
-    //return the list of possible tile coordinates to visit
+        //return the list of possible tile coordinates to visit
         return new ArrayList<>();
 
     }
@@ -107,10 +107,10 @@ public boolean canMoveThere(Map map, int x, int y){
 
 
 
-   /* A_Star : Path Finding Algorithm
-   * OUTPUT: an integer that describes how costy(beneficial) the potential Move is to the Agent
-   * */
-   public int aStar(Agent agent, Map map, int initialCost){
+    /* A_Star : Path Finding Algorithm
+     * OUTPUT: an integer that describes how costy(beneficial) the potential Move is to the Agent
+     * */
+    public int aStar(Agent agent, Map map, int initialCost){
         int x = agent.getAgentPositionX();
         int y = agent.getAgentPositionY();
 
@@ -120,13 +120,13 @@ public boolean canMoveThere(Map map, int x, int y){
             Candidate Paths
         */
 
-       int goalDistance =  manhattanHeuristic(x, y, newGoal[0], newGoal[1]);
+        int goalDistance =  manhattanHeuristic(x, y, newGoal[0], newGoal[1]);
 
-       return 0;
+        return 0;
     }
 
     public static List<Position> getPath(Position startPos, Position targetPos, int[][] map){
-       return getPath(startPos, targetPos, map, false);
+        return getPath(startPos, targetPos, map, false);
     }
 
 
@@ -245,5 +245,5 @@ public boolean canMoveThere(Map map, int x, int y){
 //    }
 
 
-   //D*
+    //D*
 }

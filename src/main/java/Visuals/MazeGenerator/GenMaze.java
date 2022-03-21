@@ -19,7 +19,7 @@ public class GenMaze {
         System.out.println("Euclidean - Manhattan (Step Count)");
 
         for (int i = 0; i < 1; i++) {
-            Maze maze = generateMaze(20, 20);
+            Maze maze = generateMaze(15, 15);
             List<Position> manhattanPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix);
             List<Position> euclidPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix, true);
 

@@ -4,17 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="astar + gui">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_17_02_22,_14_41_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_17_02_22__14_41__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_02_22,_11_54_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_23_02_22__11_54__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_22,_12_36_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_24_02_22__12_36__Changes_.xml" beforeDir="false" />
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="last one">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/CanPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/CanPlace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/engine/graphics/textures/objConverter/OBJFileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/engine/graphics/textures/objConverter/OBJFileLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Variables.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Vector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/MazeGenerator/GenMaze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/MazeGenerator/GenMaze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Node.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Tree.java" beforeDir="false" />
     </list>
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +152,9 @@
       <workItem from="1647462847240" duration="118000" />
       <workItem from="1647552591607" duration="2901000" />
       <workItem from="1647687753045" duration="3000" />
-      <workItem from="1647776788809" duration="2041000" />
+      <workItem from="1647776788809" duration="5086000" />
+      <workItem from="1647855880434" duration="2200000" />
+      <workItem from="1647862599612" duration="6146000" />
     </task>
     <task id="LOCAL-00001" summary="starting code is from Controller-For-Merge branch">
       <created>1645613707001</created>
@@ -194,7 +198,14 @@
       <option name="project" value="LOCAL" />
       <updated>1646837686031</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="last one">
+      <created>1647778997580</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1647778997580</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +228,7 @@
     <MESSAGE value="A* algorithm" />
     <MESSAGE value="library for javafx" />
     <MESSAGE value="astar + gui" />
-    <option name="LAST_COMMIT_MESSAGE" value="astar + gui" />
+    <MESSAGE value="last one" />
+    <option name="LAST_COMMIT_MESSAGE" value="last one" />
   </component>
 </project>

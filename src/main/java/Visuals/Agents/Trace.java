@@ -9,13 +9,13 @@ public class Trace {
     int mapWidth;
     int mapHeight;
     int[][] trace;
-    Agent agentTrace;
+    //Agent agentTrace;
 
-    public void Trace(Agent agent, Map map){
+    public void Trace(/*Agent agent, Map map*/){
         /* Initialize the Trace: it superposes to the map: has the same starting dimensions
                 The agent starts with No trace: so the matrix of visited place only contains zero
         */
-        agentTrace = agent;
+        /*agentTrace = agent;
         mapWidth = map.getMapWidth();
         mapHeight = map.getMapHeight();
         trace = new int[mapWidth][mapHeight];
@@ -23,11 +23,13 @@ public class Trace {
             for (int j = 0; j < mapHeight; j++) {
                 trace [i][j] = 0;
             }
-        }
+        }*/
     }//end of Trace constructor
 
+
     public void traceUpdate(/*Agent agent, Map map*/){
-      // trace[agentTrace.getAgentXPosition()][agentTrace.getAgentYPosition()] = 1; //or visit counter
+       //trace[agentTrace.getAgentXPosition()][agentTrace.getAgentYPosition()] = 1; //or visit counter
     }
+
 
 }
