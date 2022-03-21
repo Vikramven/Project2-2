@@ -125,6 +125,23 @@ public class Move {
         return 0;
     }
 
+    public static List<Position> getPath(Position startPos, Position targetPos, Map map){
+        int[][] mapMatrix = new int[map.getMapWidth()][map.getMapHeight()];
+
+        for (int i = 0; i < map.getMapWidth(); i++) {
+            for (int j = 0; j < map.getMapHeight(); j++) {
+                int val = 0; // Nothing
+                if (map.getTile(i, j).getValue() == Integer.MAX_VALUE){
+                    val = 1;
+                }
+                mapMatrix[i][j] = val;
+            }
+        }
+        return getPath(startPos, targetPos, mapMatrix, false);
+    }
+
+
+
     public static List<Position> getPath(Position startPos, Position targetPos, int[][] map){
         return getPath(startPos, targetPos, map, false);
     }

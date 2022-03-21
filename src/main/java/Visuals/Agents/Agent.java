@@ -174,7 +174,16 @@ public class Agent  {
     private ArrayList<int[]> getPathFromAstar(){
         Position startPosition = new Position(this.mapPosX,this.mapPosY);
         Position goal = new Position(this.aGoal[0],this.aGoal[1]);
-        return agentMove.getPath(startPosition, goal, this.map);
+
+        ArrayList<int[]> poses = new ArrayList<>();
+        for (Position pos : agentMove.getPath(startPosition, goal, this.map)){
+
+            int[] posArray = new int[]{pos.getX(), pos.getY()};
+            poses.add(posArray);
+
+        }
+
+        return poses;
     }
 
     private int[] getNextMove(){
