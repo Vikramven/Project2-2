@@ -64,13 +64,17 @@ public class Map{
 
     public void teamCreation(/*pass an int to identify the group*/){
     /* creates a team of agents, places them on spawn and gives them initial info */
+        System.out.println("im creating a team");
         double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
+        double copyAngle = initialAngle;
         for(int i = 0; i < variables.getNumberOfGuards(); i++){
             Agent newAgent = new Agent(0,this.variables,this); //create the Agent; 0 for Guard
             newAgent.setInitialAngle(initialAngle);
             teamGuards[i] = newAgent;
-            initialAngle =+ initialAngle; // increase by one basic unit
+            initialAngle = (i+1) * copyAngle; // increase by one basic unit
+            System.out.println("initial angle "+ initialAngle );
         }
+        System.out.println("AAAAAAAAAAAAAa");
         placeAgentsOnSpawn(0);
     }
 
@@ -87,7 +91,7 @@ public class Map{
         updateExplorationPercentage();
         updateSeenTiles();
         updateFlags();
-        mapUpdate();
+        //mapUpdate();
     }
 
     private void updateAgentLocation(){
@@ -187,6 +191,7 @@ public class Map{
 
     public void placeAgentsOnSpawn(int teamNumber){
         Agent[] team;
+        System.out.println("im placing agents");
 
         if(teamNumber==0){
             team = teamGuards;

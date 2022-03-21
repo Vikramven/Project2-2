@@ -37,7 +37,7 @@ public class Agent  {
     private int avoidance;
     private int agentSize;
     private int teamSize;
-    private int visionRange = variables.getDistanceViewing();
+    private int visionRange = 20; //CHNAGE IT LATER
     private double visionWidth;
     private Agent[] team;
     private ArrayList<int[]> exploredFields = new ArrayList<>();
@@ -112,12 +112,11 @@ public class Agent  {
 
         exploAlgoMachine = new NeoExploAlgoPerAgent();
         path = new ArrayList<>();
-        iterator = 0;
+        this.iterator = 0;
         this.map = map;
         this.aGoal = new int[2];
         this.aGoal[0] = 0;
         this.aGoal[1] = 0;
-        //make sure to
     }
     /**
      * DOCUMENTATION FOR ZOFIA'S PART
@@ -272,6 +271,7 @@ public class Agent  {
             a1=0;a2=1;
             b1=-1;b2=0;
         }
+        System.out.println("current pos"+"("+mapPosX+","+mapPosY+")");
         int[] coords = new int[2];
         coords[0] = this.mapPosX+a1;
         coords[1] = this.mapPosY+b1;
@@ -306,8 +306,12 @@ public class Agent  {
                 break;
             }
         }
-
+        System.out.println(Math.toDegrees(this.currentAngle));
         this.endOfVisionRange = fields.get(fields.size()-1);
+        for(int[] field : fields){
+            System.out.println("("+field[0]+","+field[1]+")");
+        }
+        System.out.println("last seen field" + this.endOfVisionRange[0] +" "+this.endOfVisionRange[1]);
         this.visibleFields = fields;
     }
 
@@ -386,7 +390,11 @@ public class Agent  {
         this.orientation.setAngle(alpha);
         setVision();
     }
-    public void setInitialAngle(double angle ){this.initialAngle = angle; }
+    public void setInitialAngle(double angle ){
+        this.initialAngle = angle;
+        this.currentAngle = angle;
+        setVision();
+    }
     public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
     public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
     private void setLastVisited(int[] coords){this.lastVisited = coords;}
@@ -429,12 +437,6 @@ public class Agent  {
     * OUTPUT: the end coordonate of the Route vector
     * */
 
-
-
-
-
-
-
     /*METHOD (4) AGENT STRATEGY
     * CONTENT: each agent gets a specific exploration strategy to cover the map heavenly
     *  this exploration can be subdivised into 3 main routes:
@@ -461,6 +463,7 @@ public class Agent  {
          * */
         System.out.println("reached here");
         updateStrategy();
+        System.out.println(this.strategy);
         switch(this.strategy){
             case "end":
                 return goToEndOfMapCoords();
