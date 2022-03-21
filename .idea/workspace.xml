@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" afterDir="false" />
     </list>
     <list id="4910b3c3-583e-4d41-81aa-1bc7a6f4af65" name="Changes by nathaliebent" comment="" />
-    <list id="5dfe30e5-581f-4166-b1ab-9f15b324981e" name="Changes by tiphanie" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-    </list>
+    <list id="5dfe30e5-581f-4166-b1ab-9f15b324981e" name="Changes by tiphanie" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="AStar" />
+        <entry key="$PROJECT_DIR$" value="test-branch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,29 +40,6 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/Agents/Agent.java">
-      <ranges>
-        <range start1="5" end1="5" start2="5" end2="6" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="82" end1="83" start2="83" end2="84" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="112" end1="112" start2="113" end2="114" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="122" end1="122" start2="124" end2="125" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="136" end1="136" start2="139" end2="154" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="144" end1="148" start2="162" end2="163" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="335" end1="336" start2="350" end2="351" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="630" end1="631" start2="645" end2="646" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="654" end1="655" start2="669" end2="670" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="797" end1="797" start2="812" end2="833" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="843" end1="844" start2="879" end2="880" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="851" end1="853" start2="887" end2="888" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="861" end1="862" start2="896" end2="897" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="915" end1="916" start2="950" end2="951" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="918" end1="919" start2="953" end2="954" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="921" end1="922" start2="956" end2="957" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-        <range start1="924" end1="925" start2="959" end2="960" changelist="5dfe30e5-581f-4166-b1ab-9f15b324981e" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -86,6 +60,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />

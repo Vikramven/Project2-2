@@ -42,21 +42,39 @@ public class NeoExploAlgoPerAgent {
 
         else{
             if(explorationState.needsToChangeRow()){
-                if(explorationState.needsToGoUp()){
-                    int tileUpY = agent.getCurrentTile().getYCoord()-1; // get y of tile up
-                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow()); // say it doesnt need to move up anymore
-                    if (map.isInMap(agent.getCurrentTile().getXCoord(), tileUpY)) // if (coords of tile up) is in map
-                        return new int[] {agent.getCurrentTile().getXCoord(), tileUpY}; // return coords of tile up
-                    else // if coords of tileUp is not in map
-                        return null; // return null
+                if(explorationState.needsToGoUp()) {
+                    int tileUpY = agent.getCurrentTile().getYCoord() - 1; // get y of tile up
+                    int tileUpX = agent.getCurrentTile().getXCoord(); // get x of tile up
+                    explorationState.setGoRight(!explorationState.goesRight()); // make it switch
+
+                    while (map.getTile(tileUpX, tileUpY).hasTrace()) { // while tile up has trace
+                        if (map.getTile(tileUpX, tileUpY + 1).hasTrace())
+                            return null;
+                        //go back until tile up doesnt have trace
+                        if (explorationState.goesRight()) // if it was original
+                            tileUpX = tileUpX + 1; // move baxk towards left
+                        else
+                            tileUpX = tileUpX - 1; //
+                    }
+                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow());
+                    return new int[]{tileUpX, tileUpY};
                 } // if agent needs to move to row up
                 else{
-                    int tileDownY = agent.getCurrentTile().getYCoord()+1; // get y of tile down
-                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow()); // say it doesnt need to change rown anymore
-                    if (map.isInMap(agent.getCurrentTile().getXCoord(), tileDownY)) // if coords of tile down is in map
-                        return new int[] {agent.getCurrentTile().getXCoord(), tileDownY}; // return coords of tile down
-                    else // if coords of tile down is not in map
-                        return null; // return null
+                    int tileUpY = agent.getCurrentTile().getYCoord() + 1; // get y of tile down
+                    int tileUpX = agent.getCurrentTile().getXCoord(); // get x of tile down
+                    explorationState.setGoRight(!explorationState.goesRight()); // make it switch
+
+                    while (map.getTile(tileUpX, tileUpY).hasTrace()) { // while tile up has trace
+                        if (map.getTile(tileUpX, tileUpY - 1).hasTrace()) // if there is no space to go there
+                            return null;
+                        //go back until tile up doesnt have trace
+                        if (explorationState.goesRight())
+                            tileUpX = tileUpX + 1;
+                        else
+                            tileUpX = tileUpX - 1; //
+                    }
+                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow());
+                    return new int[]{tileUpX, tileUpY};
                 } // if agent needs to move to row down
             } // if agent needs to change row
             else{
