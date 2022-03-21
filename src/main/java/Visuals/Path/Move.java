@@ -125,8 +125,13 @@ public boolean canMoveThere(Map map, int x, int y){
        return 0;
     }
 
-
     public static List<Position> getPath(Position startPos, Position targetPos, int[][] map){
+       return getPath(startPos, targetPos, map, false);
+    }
+
+
+
+    public static List<Position> getPath(Position startPos, Position targetPos, int[][] map, boolean useEuclidean){
 
        /* Variables vars = new Variables();
         vars.setHeight(10);
@@ -151,7 +156,58 @@ public boolean canMoveThere(Map map, int x, int y){
             if (current.samePos(targetPos)){
                 break;
             }else{
-                for(Position node : current.getNeighbours(map)){
+                Comparator<Position> comparator;
+                if (useEuclidean){
+                    comparator = new Comparator<Position>() {
+                        @Override
+                        public int compare(Position o1, Position o2) {
+                            return Double.compare(o1.euclideanDistance(targetPos), o2.euclideanDistance(targetPos));
+                        }
+                    };
+                }else{
+                    comparator = new Comparator<Position>() {
+                        @Override
+                        public int compare(Position o1, Position o2) {
+                            return Double.compare(o2.manhattanDistance(targetPos), o1.manhattanDistance(targetPos));
+                        }
+                    };
+                }
+
+
+
+
+                List<Position> neighbours = new ArrayList<>(current.getNeighbours(map));
+
+                /*
+                System.out.println("Before:");
+                for (Position node : neighbours){
+                    if (useEuclidean){
+                        System.out.println("Euclidean "+node.euclideanDistance(targetPos));
+                    }else{
+                        System.out.println("Manhattan "+ node.manhattanDistance(targetPos));
+                    }
+                }
+
+                 */
+
+
+                neighbours.sort(comparator);
+
+                /*
+                System.out.println("After:");
+
+                for (Position node : neighbours){
+                    if (useEuclidean){
+                        System.out.println("Euclidean "+node.euclideanDistance(targetPos));
+                    }else{
+                        System.out.println("Manhattan "+ node.manhattanDistance(targetPos));
+                    }
+                }
+
+                System.out.println("-----");
+                 */
+
+                for(Position node : neighbours){
                     boolean contains = false;
                     for (Position oNode : vis.keySet()){
                         if (oNode.samePos(node)){

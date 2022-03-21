@@ -17,7 +17,7 @@ public class ReadFiles
         String[] values = new String[20];
         int i = 0;
 
-        String content = new String(Files.readAllBytes(Paths.get("C:\\Users\\Zaker\\IdeaProjects\\Project2-2\\res\\testmap.txt")));
+        String content = new String(Files.readAllBytes(Paths.get("C:\\Users\\cmjus\\Documents\\GitHub\\Project2-2\\res\\testmap.txt")));
 
         Scanner scanner = new Scanner(content);
         while (scanner.hasNextLine() && i<20) {

@@ -113,11 +113,28 @@ public class Position {
 
 
 
+
     @Override
     public String toString() {
         return "Position{" +
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public double euclideanDistance(Position targetPos){
+        return Math.sqrt(Math.pow(targetPos.y-this.y, 2) + Math.pow(targetPos.x-this.x, 2));
+    }
+
+    public double manhattanDistance(Position targetPos){
+        return Math.abs(targetPos.y-this.y) + Math.abs(targetPos.x-this.x);
+    }
+
+    public static double euclideanDistanceStatic(Position fromPos, Position targetPos){
+        return Math.sqrt(Math.pow(targetPos.y-fromPos.y, 2) + Math.pow(targetPos.x-fromPos.x, 2));
+    }
+
+    public static double manhattanDistanceStatic(Position fromPos, Position targetPos){
+        return Math.abs(targetPos.y-fromPos.y) + Math.abs(targetPos.x-fromPos.x);
     }
 }
