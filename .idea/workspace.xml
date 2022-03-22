@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Project2-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project2-2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_22__13_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_22__13_47__Changes_.xml" afterDir="false" />
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="last one">
+      <change afterPath="$PROJECT_DIR$/res/3D/stoneWall.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/3D/stoneWall.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Controller/ReadFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/ReadFiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/3D/blendMap.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/3D/blendMap.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/3D/wall.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/res/3D/wall.mtl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/3D/wall.obj" beforeDir="false" afterPath="$PROJECT_DIR$/res/3D/wall.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/MazeGenerator/GenMaze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/MazeGenerator/GenMaze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/entities/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/entities/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/terrain/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/terrain/Terrain.java" afterDir="false" />
     </list>
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +74,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -213,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647778997580</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="last one">
+      <created>1647975103865</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1647975103865</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

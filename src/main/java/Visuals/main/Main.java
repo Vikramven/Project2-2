@@ -95,6 +95,7 @@ public class Main implements Runnable {
 	public List<Position> path;
 	public Input input;
 	public long lastClick;
+	public static int L = 150;
 
 
 
@@ -143,7 +144,7 @@ public class Main implements Runnable {
 
 		texturedModelGuard = new TexturedModel(guardModel, new ModelTexture(loader.loadTexture("wallTexture")));
 		texturedModelIntruder = new TexturedModel(intruderModel, new ModelTexture(loader.loadTexture("portalTexture")));
-		texturedModelWall = new TexturedModel(wallModel, new ModelTexture(loader.loadTexture("wallTexture")));
+		texturedModelWall = new TexturedModel(wallModel, new ModelTexture(loader.loadTexture("stoneWall")));
 		texturedModelPortal = new TexturedModel(portalModel, new ModelTexture(loader.loadTexture("portalTexture")));
 
 		textureGuard = texturedModelGuard.getTexture();
@@ -160,8 +161,8 @@ public class Main implements Runnable {
 		// Maze Generation
 		if(generateMaze){
 
-		int mazeHeight = 10;
-		int mazeLength = 10;
+		int mazeHeight = 25;
+		int mazeLength = 25;
 		int line = 0;
 		mazeMatrix = new int[mazeHeight*2+1][mazeLength*2+1];
 
@@ -206,21 +207,21 @@ public class Main implements Runnable {
 			for (int k = 0; k < mazeMatrix[0].length; k++) {
 				if(j>0 && k>0 && j<mazeMatrix.length-1 && k<mazeMatrix[0].length-1 && mazeMatrix[j][k]==1){
 					if((mazeMatrix[j-1][k]==1 || mazeMatrix[j+1][k]==1) && mazeMatrix[j][k-1]!=1 && mazeMatrix[j][k+1]!=1){
-						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 0,  0, 1F,1));
+						entities.add(new Entity(texturedModelWall, new Vector3f(j+L,0,k+L), 0, 0,  0, 1F,1));
 					}
 					else if((mazeMatrix[j][k-1]==1 || mazeMatrix[j][k+1]==1) && mazeMatrix[j-1][k]!=1 && mazeMatrix[j+1][k]!=1){
-						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 90,  0, 1F,1));
+						entities.add(new Entity(texturedModelWall, new Vector3f(j+L,0,k+L), 0, 90,  0, 1F,1));
 					}
 					else {
-						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 0,  0, 1F,1));
+						entities.add(new Entity(texturedModelWall, new Vector3f(j+L,0,k+L), 0, 0,  0, 1F,1));
 					}
 				}
 				else if(mazeMatrix[j][k]==1){
 					if(j==0 || j== mazeMatrix.length-1){
-						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 90,  0, 1F,1));
+						entities.add(new Entity(texturedModelWall, new Vector3f(j+L,0,k+L), 0, 90,  0, 1F,1));
 					}
 					if(k==0 || k== mazeMatrix.length-1){
-						entities.add(new Entity(texturedModelIntruder, new Vector3f(j,0,k), 0, 0,  0, 1F,1));
+						entities.add(new Entity(texturedModelWall, new Vector3f(j+L,0,k+L), 0, 0,  0, 1F,1));
 					}
 				}
 
@@ -228,7 +229,7 @@ public class Main implements Runnable {
 		}
 
 
-		path = Move.getPath(start, end, mazeMatrix);
+		path = Move.properAStar(start, end, mazeMatrix);
 
 		for (Position p : path){
 			mazeMatrix[p.getX()][p.getY()] = 3;
@@ -249,20 +250,22 @@ public class Main implements Runnable {
 
 		// generate light
 		lights = new ArrayList<>();
-		lights.add(new Light(new Vector3f(1000,1000,300), new Vector3f(1f,1f,1f)));
+		lights.add(new Light(new Vector3f(1000+L,1000,300+L), new Vector3f(1f,1f,1f)));
 
 
 		// generate players
 		// * step 4: Generate entities or players.
 
-		ArrayList<ArrayList<Entity>> walls = createWallsFromFile();
-		intruder = new Player(texturedModelGuard, new Vector3f(start.getX(),0,start.getY()),0,90,0,1,1);  //portal
+		//ArrayList<ArrayList<Entity>> walls = createWallsFromFile();
+		intruder = new Player(texturedModelGuard, new Vector3f(start.getX()+L,0,start.getY()+L),0,90,0,1,1);  //portal
 		//guard = new Player(texturedModelGuard, new Vector3f(variables.getSpawnGuard().x,0,variables.getSpawnGuard().y),0,90,0,1,1);  //portal
-		camPlayer = new Player(texturedModelIntruder, new Vector3f(10,0,10),0,90,0,1,1);
+		camPlayer = new Player(texturedModelIntruder, new Vector3f(10+L,0,10+L),0,90,0,1,1);
 
-		for(ArrayList<Entity> wall : walls){
+		/*for(ArrayList<Entity> wall : walls){
 			entities.addAll(wall);
 		}
+
+		 */
 
 		players.add(intruder);
 		//players.add(guard);
@@ -289,7 +292,7 @@ public class Main implements Runnable {
 				long currTime = System.currentTimeMillis();
 				if(currTime-lastClick > 100){
 					Position pos = path.get(pathIndex);
-					intruder.move(new Vector2f(pos.getX(),pos.getY()));
+					intruder.move(new Vector2f(pos.getX()+L,pos.getY()+L));
 					pathIndex++;
 					lastClick = currTime;
 				}
@@ -300,7 +303,7 @@ public class Main implements Runnable {
 				long currTime = System.currentTimeMillis();
 				if(currTime-lastClick > 100){
 					Position pos = path.get(pathIndex-1);
-					intruder.move(new Vector2f(pos.getX(),pos.getY()));
+					intruder.move(new Vector2f(pos.getX()+L,pos.getY()+L));
 					pathIndex--;
 					lastClick = currTime;
 				}
@@ -356,14 +359,14 @@ public class Main implements Runnable {
 	private ArrayList<Entity> createWallParallelToX(double wallLength, int startX, int startY){
 		ArrayList<Entity> walls = new ArrayList<>();
 		for(int i = 0; i < wallLength; i++)
-			walls.add(new Entity(texturedModelWall, new Vector3f(startX + i,0,startY),0,0,0,1,1));
+			walls.add(new Entity(texturedModelWall, new Vector3f(startX + i+L,0,startY+L),0,0,0,1,1));
 		return walls;
 	}
 
 	private ArrayList<Entity> createWallParallelToY(double wallLength, int startX, int startY){
 		ArrayList<Entity> walls = new ArrayList<>();
 		for(int i = 0; i < wallLength; i++)
-			walls.add(new Entity(texturedModelWall, new Vector3f(startX,0,startY + i),0,90,0,1,1));
+			walls.add(new Entity(texturedModelWall, new Vector3f(startX+L,0,startY + i+L),0,90,0,1,1));
 		return walls;
 	}
 

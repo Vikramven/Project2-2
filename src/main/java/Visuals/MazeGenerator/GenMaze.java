@@ -22,19 +22,16 @@ public class GenMaze {
         for (int i = 0; i < 1; i++) {
             Maze maze = generateMaze(50, 50);
 
-
-
-
             maze.reduceWalls(0.3);
 
 
             List<Position> manhattanPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix);
+
             /*
             List<Position> euclidPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix, true);
             List<Position> DFSPath = Move.DFS(maze.start, maze.end, maze.mazeMatrix);
-
-
              */
+
             List<Position> AStarPath = Move.properAStar(maze.start, maze.end, maze.mazeMatrix);
 
 

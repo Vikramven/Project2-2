@@ -15,7 +15,6 @@ public class Player extends Entity {
         newPosition.x = newPos.x;
         newPosition.z = newPos.y;
         newPosition.y = 0;
-
         super.setPosition(newPosition);
     }
 

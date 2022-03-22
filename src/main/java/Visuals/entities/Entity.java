@@ -7,6 +7,19 @@ public class Entity {
     private TexturedModel model;
     private Vector3f position;
     private float rotX,rotY,rotZ;
+
+    public void setRotX(float rotX) {
+        this.rotX = rotX;
+    }
+
+    public void setRotY(float rotY) {
+        this.rotY = rotY;
+    }
+
+    public void setRotZ(float rotZ) {
+        this.rotZ = rotZ;
+    }
+
     private float scale;
     private int textureIndex = 0;
     private int entityID;
