@@ -12,7 +12,7 @@ Our code is structured into 3 packages:
 
 	Step 1. Open the project via the zipFile, Please use the map named: "Visuals", because there are two different version of code. "GoalUpdater" contains the goalUpdater Algorithm and "Visuals" contains the A* star connected with the GUI.
 	Step 2. Open in IDE (preferably Intelij)
-	Step 3. Navigate in the top right corner, File -> Project Structure -> (1) Libraries -> (2) add lib folder via the + -> (3) Navigate to lib folder, select and press ok.
+	Step 3. Navigate in the top left corner, File -> Project Structure -> (1) Libraries -> (2) add lib folder via the + -> (3) Navigate to lib folder, select and press ok.
 
 ![image](https://user-images.githubusercontent.com/56164753/159579446-34e46ba4-09ef-481f-8842-aedb2d898054.png)
 
@@ -20,7 +20,11 @@ Our code is structured into 3 packages:
 
 ![image](https://user-images.githubusercontent.com/56164753/159579900-caf5280f-54a9-424b-bf61-5e8b3e45dfba.png)
 
-	Step 5. Navigate to the package src/main/java/Visuals/main/
-	Step 6. Run StartGame.java
+    Step 5. Navigate to the package src/main/java/Visuals/Controller/
+    Step 6. Open the ReadFiles.java class -> Copy the ABSOLUTE PATH of Resources/lib/testmap.txt and replace it in the String in line 20.
+
+	Step 7. Navigate to the package src/main/java/Visuals/main/
+	Step 8. Run StartGame.java
+    Step 9. Press M to move the agent forward, and N to move it backwards.
 
 
