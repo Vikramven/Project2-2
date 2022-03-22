@@ -241,7 +241,7 @@ public class Map{
             spawnLine = outlineOfMatrix(x1,y1,x2,y2);
 
             for(int[] pos : spawnLine){
-                System.out.print(" (" + pos[0] + ", " + pos[1] + ") ");
+                System.out.print("spawn line (" + pos[0] + ", " + pos[1] + ") ");
             }
 
             spacing = (int) (spawnLine.size()/team.length);

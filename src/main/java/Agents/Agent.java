@@ -375,6 +375,7 @@ public class Agent  {
         /**
          * takes relative x,y from agent's POV
          * */
+        System.out.println("spawn x y :" + this.spawnX +", "+this.spawnY);
         int[] coords = new int[2];
         coords[0] = x + this.spawnX;
         coords[1] = y + this.spawnY;
