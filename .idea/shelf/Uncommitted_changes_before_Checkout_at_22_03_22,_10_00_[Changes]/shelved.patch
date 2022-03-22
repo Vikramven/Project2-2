@@ -1,0 +1,16 @@
+Index: src/main/java/Visuals/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Visuals;\n\nimport Visuals.Path.Move;\nimport Visuals.Path.Position;\nimport javafx.scene.Scene;\nimport javafx.stage.Stage;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport static javafx.application.Application.launch;\n\npublic class App {\n    private Stage stage;\n\n    /*\n    @Override\n    public void start(Stage stage) throws IOException{\n        this.stage = stage;\n    }\n\n     */\n\n    /**\n     * Run\n     * @param args\n     */\n    public static void main(String[] args)\n    {\n        //System.out.print(\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\");\n      //  List<Position> pos = Move.getPath(new Position(0,0), new Position(9,9));\n\n      //  for (Position p : pos){\n       //     System.out.println(p);\n      //  }\n    }\n}\n\n
+===================================================================
+diff --git a/src/main/java/Visuals/App.java b/src/main/java/Visuals/App.java
+--- a/src/main/java/Visuals/App.java	
++++ b/src/main/java/Visuals/App.java	
+@@ -27,7 +27,6 @@
+      */
+     public static void main(String[] args)
+     {
+-        //System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+       //  List<Position> pos = Move.getPath(new Position(0,0), new Position(9,9));
+ 
+       //  for (Position p : pos){
