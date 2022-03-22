@@ -215,8 +215,8 @@ public class Agent  {
     public void setInitialCoords(int[] coords){
         this.spawnX = coords[0];
         this.spawnY = coords[1];
-        this.mapPosX = spawnX;
-        this.mapPosY = spawnY;
+        this.mapPosX = coords[0];
+        this.mapPosY = coords[1];
     }
 
     public void turn(double alpha){
@@ -291,7 +291,6 @@ public class Agent  {
             a1=0;a2=1;
             b1=-1;b2=0;
         }
-        System.out.println("current pos"+"("+mapPosX+","+mapPosY+")");
         int[] coords = new int[2];
         coords[0] = mapPosX+a1;
         coords[1] = this.mapPosY+b2;
@@ -317,12 +316,43 @@ public class Agent  {
         for(int i =0; i<=this.visionRange; i++){
             double ratio = Math.abs(this.orientation.getY2()/this.orientation.getX2());
             int x = i;
+
+            if(conditionAngle>=Math.toRadians(360-45) && conditionAngle<Math.toRadians(45)){
+                x = i;
+            }
+            else if(conditionAngle>=Math.toRadians(45) && conditionAngle<Math.toRadians(90)){
+                x = 0;
+            }
+            else if(conditionAngle>=Math.toRadians(90) && conditionAngle<Math.toRadians(90+45)){
+                x = 0;
+            }
+            else if(conditionAngle>=Math.toRadians(90+45) && conditionAngle<Math.toRadians(180)){
+                x = -i;
+            }
+            else if(conditionAngle>=Math.toRadians(180) && conditionAngle<Math.toRadians(180+45)){
+                x = -i;
+            }
+            else if(conditionAngle>=Math.toRadians(180+45) && conditionAngle<Math.toRadians(270)){
+                x  = 0;
+            }
+            else if(conditionAngle>=Math.toRadians(270) && conditionAngle<Math.toRadians(270+45)){
+                x = 0;
+            }
+            else if(conditionAngle>=Math.toRadians(270+45) && conditionAngle<Math.toRadians(360)){
+                x = i;
+            }
+
             int y = (int) (ratio*x);
+            System.out.println(Math.toDegrees(this.currentAngle));
             System.out.println("vision coords x: "+x+", y: "+y);
             coords = convertToMap(x,y);
             System.out.println("map vision coords x: "+coords[0]+", y: "+coords[1]);
             fields.add(coords);
+            System.out.println();
+            System.out.println("before if statement");
             if(!exploredFields.contains(coords)){
+                System.out.println();
+                System.out.println("explored coord: "+coords[0]+", "+coords[1]);
                 exploredFields.add(coords);
             }
             if(map.getTile(x,y).hasWall() || !isInMap(x,y)){
@@ -345,8 +375,9 @@ public class Agent  {
          * takes relative x,y from agent's POV
          * */
         int[] coords = new int[2];
-        coords[0] = this.agentPositionX + this.spawnX;
-        coords[1] = this.agentPositionY + this.spawnY;
+        coords[0] = x + this.spawnX;
+        coords[1] = y + this.spawnY;
+        System.out.println("rel x y :" + x +", "+y);
         System.out.println("map pos: "+coords[0]+", "+coords[1]);
         /*
             if(isInMap(coords[0],coords[1]) == false ){

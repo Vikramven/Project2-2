@@ -278,6 +278,7 @@ public class Map{
 
 
         if(teamNumber==0){
+            System.out.println("if statement reached");
             this.teamGuards = team;
             System.out.println("TeamGuards: ");
             for (Agent a:teamGuards) {
@@ -328,6 +329,7 @@ public class Map{
     private void updateExplored(){
         for (Agent agent : teamGuards) {
             ArrayList<int[]> exploredTiles = agent.getExplored();
+
 //            for(int i=0; i<exploredTiles.size(); i++){
             for (int[] coords : exploredTiles) {
                 System.out.println("X:"+coords[0]+" y: "+coords[1]);
