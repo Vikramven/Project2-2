@@ -82,6 +82,7 @@ public class Agent  {
     private int stepCounter;
     private int turnCounter;
     private int[] lastPosition = new int [2];
+    private static int counter;
 
 
 
@@ -89,7 +90,7 @@ public class Agent  {
      *   constructor
      *   create an agent belonging to a specific team
      * */
-    public Agent(int team, Variables vars, Map map){
+    public Agent(int team, Variables vars, Map map, float initialAngle){
         this.visionWidth = java.lang.Math.toRadians(15);
         this.teamCode = team;
         this.variables = vars;// FileParser.readFile("./resources/testmap.txt");
@@ -106,7 +107,7 @@ public class Agent  {
         this.strategy = GO_TO_END;
 
         this.visionRange = variables.getDistanceViewing();
-        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,this.initialAngle,this.visionRange);
+        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,initialAngle*(counter+1),this.visionRange);
         this.mapMaxX = variables.getWidth();
         this.mapMaxY = variables.getHeight();
 
@@ -117,6 +118,7 @@ public class Agent  {
         this.aGoal = new int[2];
         this.aGoal[0] = 0;
         this.aGoal[1] = 0;
+        counter++;
     }
     /**
      * DOCUMENTATION FOR ZOFIA'S PART
@@ -154,7 +156,9 @@ public class Agent  {
         coords[1] = this.agentPositionY;
         setLastVisited(coords);
         if(pathFinished()){
+            System.out.println("pathfinishedd");
             aGoal = goal();
+            System.out.println(aGoal[0]+" " + aGoal[1]);
             path = getPathFromAstar();
             this.iterator = 0;
         }
@@ -183,9 +187,13 @@ public class Agent  {
     private ArrayList<int[]> getPathFromAstar(){
         Position startPosition = new Position(this.mapPosX,this.mapPosY);
         int[] c = new int[2];
-        c=goal();
+        c[0]=visionRange+this.mapPosX;
+        c[1]=visionRange+this.mapPosY;
         Position goal = new Position(c[0],c[1]);
-        return agentMove.getPath(startPosition, goal, this.map);
+        System.out.println("start pos given to astar = " + startPosition.getX() + ", " + startPosition.getY()+ " ");
+        System.out.println("goal given to astar = " + c[0] + ", " + c[1] + " ");
+
+        return Move.getPath(startPosition, goal, this.map);
     }
 
     private int[] getNextMove(){
@@ -238,7 +246,8 @@ public class Agent  {
         ArrayList<int[]> fields = new ArrayList<int[]>();
 
         int a1=0,a2=0,b1=0,b2=0;
-        double conditionAngle = this.orientation.getAngle() - Math.toRadians(22.5);
+        double conditionAngle = this.orientation.getAngle() - Math.toRadians(25);
+        System.out.println("333333333333  "+ Math.toDegrees(conditionAngle));
         if(conditionAngle>=Math.toRadians(360-45) && conditionAngle<Math.toRadians(45)){
             a1 = 0; a2=0;
             b1 = 1; b2 = -1;
@@ -639,6 +648,22 @@ public class Agent  {
     private int[] explore(){
         return exploAlgoMachine.explore(this);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*******************************************************************************
      *                               @TIPHANIE'S methods (documentation)

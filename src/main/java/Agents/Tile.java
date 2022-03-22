@@ -5,6 +5,11 @@ import java.util.ArrayList;
 public class Tile {
     private ArrayList<Integer> dataset = new ArrayList<>(); //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent
     private int x;
+
+    public ArrayList<Integer> getDataset() {
+        return dataset;
+    }
+
     private int y;
     private int value;
     private int TRACE_VALUE = 1; // or any other val

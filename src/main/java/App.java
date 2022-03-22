@@ -16,7 +16,7 @@ public class App {
         String path = "";
         String[] unparsedVars = new String[0];
         try {
-            unparsedVars = ReadFiles.readFileAsString("C:\\Users\\zmilc\\OneDrive\\Documents\\GitHub\\Project2-2\\recources\\testmap.txt");
+            unparsedVars = ReadFiles.readFileAsString("C:\\Users\\Zaker\\IdeaProjects\\Project2-2Zofia\\recources\\testmap.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import Controller.Variables;
 import java.lang.Integer;
 import java.util.ArrayList;
 import Controller.Wall;
+import org.w3c.dom.ls.LSOutput;
 
 /*
      The General Map is :
@@ -43,21 +44,25 @@ public class Map{
       numberOfTiles = mapHeight*mapWidth;
       //matrix = new int[mapWidth][mapHeight]; //dimension of
       tiles = new Tile[mapWidth][mapHeight];
-      this.teamGuards= new Agent[variables.getNumberOfGuards()];
+      this.teamGuards = new Agent[variables.getNumberOfGuards()];
       mapInit();
       teamCreation();
       walls = variables.getWalls(); //placing walls on the map
       buildingWalls();//update the map with the wall
+
    }
    /* METHOD(2): mapInit
    *   stores zero in every map position
    *    initialize both the Matrix (Int containing wall and agent)
    * */
+
+    private int counter = 0;
     public void mapInit(){
            for(int i =0; i < mapWidth; i++){
                for(int j =0; j < mapHeight; j++){
                     //setMatrix(i, j , 0);
                     this.tiles[i][j] = new Tile(i,j);
+                    counter++;
                }
            }
     }//mapInit
@@ -65,17 +70,20 @@ public class Map{
     public void teamCreation(/*pass an int to identify the group*/){
     /* creates a team of agents, places them on spawn and gives them initial info */
         System.out.println("im creating a team");
-        double initialAngle =  (double) java.lang.Math.toRadians(360) / variables.getNumberOfGuards();
-        double copyAngle = initialAngle;
+        float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
+        System.out.println("angle is " + Math.toDegrees(initialAngle));
         for(int i = 0; i < variables.getNumberOfGuards(); i++){
-            Agent newAgent = new Agent(0,this.variables,this); //create the Agent; 0 for Guard
-            newAgent.setInitialAngle(initialAngle);
+            Agent newAgent = new Agent(0,this.variables,this, initialAngle); //create the Agent; 0 for Guard
+            newAgent.setInitialAngle(initialAngle*(i+1));
+            System.out.println(initialAngle*(i+1));
             teamGuards[i] = newAgent;
-            initialAngle = (i+1) * copyAngle; // increase by one basic unit
-            System.out.println("initial angle "+ initialAngle );
         }
-        System.out.println("AAAAAAAAAAAAAa");
+
         placeAgentsOnSpawn(0);
+
+        for (Agent agent: teamGuards) {
+            System.out.println(agent.getAgentPositionX() + " ||| " +agent.getAgentPositionY());
+        }
     }
 
     public void mapUpdate(){
@@ -87,7 +95,9 @@ public class Map{
          * 4. update trace, flags etc
          * 5. update seen fields
          * */
+
         updateAgentLocation();
+
         updateExplorationPercentage();
         updateSeenTiles();
         updateFlags();
@@ -99,6 +109,7 @@ public class Map{
             int x = agent.getAgentPositionX();
             int y = agent.getAgentPositionY();
             tiles[x][y].removeAgent();
+
             agent.move(); //method to implement, should be connected to A*
             //agent.updateMap();
             x = agent.getAgentPositionX();
@@ -106,10 +117,6 @@ public class Map{
             tiles[x][y].placeAgent();
         }
 
-        for(Agent agent:teamIntruders){
-            break;
-            //for phase 2
-        }
     }
 
 
@@ -135,8 +142,9 @@ public class Map{
             ArrayList<Integer> coords = walls.get(i).getCoords();
             int x1 = coords.get(0);
             int y1 = coords.get(1);
-            int x2 = coords.get(2);
-            int y2 = coords.get(3);
+            int x2 = coords.get(4);
+            int y2 = coords.get(5);
+          System.out.println(x1 + "," + y1 + "===="+ x2 + "," + y2 );
             //@zofia For each of the walls : two separate loops, first we build the vertical walls, then the horizontal walls
           for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){
               tiles[x1][i].placeWall();
@@ -191,7 +199,6 @@ public class Map{
 
     public void placeAgentsOnSpawn(int teamNumber){
         Agent[] team;
-        System.out.println("im placing agents");
 
         if(teamNumber==0){
             team = teamGuards;
@@ -199,24 +206,37 @@ public class Map{
         else{
             team = teamIntruders;
         }
+
         ArrayList<Integer> spawnCoords = new ArrayList<>();
+
         if(team[0].teamCode == 0){
             spawnCoords = this.variables.getSpawnAreaGuards().getCoords();
+
         }
         else{
             spawnCoords = this.variables.getSpawnAreaIntruders().getCoords();
         }
+        System.out.println(spawnCoords.size());
 
         int x1 = spawnCoords.get(0); int y1 = spawnCoords.get(1);
-        int x2 = spawnCoords.get(2); int y2 = spawnCoords.get(3);
+        int x2 = spawnCoords.get(4); int y2 = spawnCoords.get(5);
+        System.out.println(spawnCoords.toString());
 
-        int width = Math.abs(x1-x2);
-        int height = Math.abs(y1-y2);
+        int width = Math.abs(x1-x2); //18
+        int height = Math.abs(y1-y2); //8
+        System.out.println(width + " " + height);
+
         int outline = 2*(height+width)-4;
+        System.out.println(outline);
         int spacing = 1;
         ArrayList<int[]> spawnLine = new ArrayList<>();
         if (team.length<=outline){
             spawnLine = outlineOfMatrix(x1,y1,x2,y2);
+
+            for(int[] pos : spawnLine){
+                System.out.print(" (" + pos[0] + ", " + pos[1] + ") ");
+            }
+
             spacing = (int) (spawnLine.size()/team.length);
         }
         else {
@@ -240,21 +260,31 @@ public class Map{
         for(int i=0; i<team.length; i++){
             int[] coords = spawnLine.get(spacing*i);
             team[i].setInitialCoords(coords);
+            //System.out.println();
+            //System.out.println(" (" + coords[0] + ", " + coords[1] + ") ");
+        }
+       for (Agent a:team) {
+            System.out.println();
+            System.out.println(" (" + a.getAgentPositionX() + ", " + a.getAgentPositionY() + ") ");
         }
 
+
+
         if(teamNumber==0){
-            teamGuards = team;
+            this.teamGuards = team;
+            System.out.println("TeamGuards: ");
+            for (Agent a:teamGuards) {
+                System.out.println(" (" + a.getAgentPositionX() + ", " + a.getAgentPositionY() + ") ");
+            }
         }
         else {
-            teamIntruders = team;
+            this.teamIntruders = team;
         }
+
 
     }
 
     private ArrayList<int[]> outlineOfMatrix(int x1, int y1, int x2, int y2){
-        int width = Math.abs(x1-x2);
-        int height = Math.abs(y1-y2);
-        int outlineLength = 2*(height+width);
         ArrayList<int[]> outline = new ArrayList<>();
         for(int i = y1; i < y2+1; i++){
             int[] coords = new int[2];
@@ -268,13 +298,13 @@ public class Map{
             coords[1] = y2;
             outline.add(coords);
         }
-        for(int i = y2; i>=y1; i--){
+        for(int i = y2-1; i>=y1; i--){
             int[] coords = new int[2];
             coords[0] = x2;
             coords[1] = i;
             outline.add(coords);
         }
-        for(int i=x2; i>x1; i--){
+        for(int i=x2-1; i>x1; i--){
             int[] coords = new int[2];
             coords[0] = i;
             coords[1] = y1;
