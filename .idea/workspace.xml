@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Agent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Map.class" afterDir="false" />
     </list>
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -20,6 +19,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
     </list>
     <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
+    <list id="8feed662-fb01-4eee-826b-8ee5a0c1a5a1" name="Changes by Zaker" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
+    </list>
     <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
@@ -59,18 +61,28 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/main/java/Agents/Agent.java">
       <ranges>
-        <range start1="217" end1="219" start2="217" end2="219" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="322" end1="322" start2="322" end2="324" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="323" end1="323" start2="325" end2="327" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="344" end1="344" start2="348" end2="349" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
-        <range start1="348" end1="349" start2="353" end2="355" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="350" end1="355" start2="356" end2="361" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="356" end1="358" start2="362" end2="365" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="359" end1="361" start2="366" end2="369" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="362" end1="364" start2="370" end2="373" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="365" end1="365" start2="374" end2="376" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="366" end1="367" start2="377" end2="377" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="383" end1="383" start2="393" end2="400" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="159" end1="159" start2="159" end2="160" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="165" end1="166" start2="166" end2="167" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="217" end1="219" start2="218" end2="220" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="293" end1="294" start2="294" end2="294" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="295" end1="297" start2="295" end2="299" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="317" end1="317" start2="319" end2="352" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="318" end1="318" start2="353" end2="354" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="322" end1="322" start2="358" end2="360" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="323" end1="323" start2="361" end2="363" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="333" end1="334" start2="373" end2="374" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="344" end1="344" start2="384" end2="385" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="345" end1="347" start2="386" end2="389" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="348" end1="355" start2="390" end2="398" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="356" end1="358" start2="399" end2="402" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="359" end1="361" start2="403" end2="406" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="362" end1="364" start2="407" end2="410" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="365" end1="365" start2="411" end2="413" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="366" end1="367" start2="414" end2="414" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="383" end1="383" start2="430" end2="437" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="438" end1="438" start2="492" end2="493" changelist="8feed662-fb01-4eee-826b-8ee5a0c1a5a1" />
+        <range start1="506" end1="507" start2="561" end2="562" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
+        <range start1="508" end1="509" start2="563" end2="564" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
       </ranges>
     </file>
     <file path="$PROJECT_DIR$/src/main/java/Agents/Map.java">
@@ -78,18 +90,19 @@
         <range start1="243" end1="244" start2="243" end2="244" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
         <range start1="280" end1="280" start2="280" end2="281" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
         <range start1="330" end1="330" start2="331" end2="332" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="333" end1="334" start2="335" end2="336" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
       </ranges>
     </file>
     <file path="$PROJECT_DIR$/.idea/workspace.xml">
       <ranges>
-        <range start1="6" end1="7" start2="6" end2="7" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
         <range start1="8" end1="9" start2="8" end2="9" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="12" end1="12" start2="12" end2="17" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="13" end1="14" start2="18" end2="21" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="54" end1="56" start2="61" end2="90" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="213" end1="214" start2="247" end2="255" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="237" end1="238" start2="278" end2="280" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
+        <range start1="10" end1="11" start2="10" end2="10" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="22" end1="22" start2="21" end2="24" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="61" end1="73" start2="63" end2="85" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="80" end1="81" start2="92" end2="92" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="85" end1="86" start2="96" end2="96" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="87" end1="92" start2="97" end2="105" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="249" end1="250" start2="262" end2="277" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="273" end1="274" start2="300" end2="302" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
       </ranges>
     </file>
   </component>
@@ -247,7 +260,21 @@
       <option name="project" value="LOCAL" />
       <updated>1647778997580</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="last changes">
+      <created>1647945236626</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1647945236627</updated>
+    </task>
+    <task id="LOCAL-00009" summary="last changes">
+      <created>1647946549045</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1647946549045</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -293,8 +293,10 @@ public class Agent  {
         }
         System.out.println("current pos"+"("+mapPosX+","+mapPosY+")");
         int[] coords = new int[2];
-        coords[0] = this.mapPosX+a1;
-        coords[1] = this.mapPosY+b1;
+        coords[0] = mapPosX+a1;
+        coords[1] = this.mapPosY+b2;
+        System.out.println("current pos"+"("+mapPosX+","+mapPosY+")");
+
         this.visionLeft = coords;
         if(isInMap(coords[0],coords[1])) {
             fields.add(coords);
