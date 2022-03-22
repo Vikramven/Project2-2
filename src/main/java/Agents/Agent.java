@@ -157,13 +157,14 @@ public class Agent  {
      * */
 
     public void move(){
+        System.out.println("          " );
        System.out.println("agent performing move has Number " + getNumber());
         int[] coords = new int[2];
         coords[0] = this.agentPositionX;
         coords[1] = this.agentPositionY;
         setLastVisited(coords);
         if(pathFinished()){
-            System.out.println("pathfinishedd");
+            System.out.println("pathfinished");
             aGoal = goal();
             System.out.println(aGoal[0]+" " + aGoal[1]);
             path = getPathFromAstar();
@@ -363,7 +364,7 @@ public class Agent  {
         System.out.println(Math.toDegrees(this.currentAngle));
         this.endOfVisionRange = fields.get(fields.size()-1);
         for(int[] field : fields){
-            System.out.println("("+field[0]+","+field[1]+")");
+            System.out.println("end of Vision range " + "("+ field[0] + " , "+field[1]+")");
         }
         System.out.println("last seen field" + this.endOfVisionRange[0] +" "+this.endOfVisionRange[1]);
         this.visibleFields = fields;
@@ -379,25 +380,30 @@ public class Agent  {
         coords[1] = y + this.spawnY;
         System.out.println("rel x y :" + x +", "+y);
         System.out.println("map pos: "+coords[0]+", "+coords[1]);
-        /*
-            if(isInMap(coords[0],coords[1]) == false ){
-            int deltaX = Math.Abs(MapMaxX - coords[0];
-            int deltaY = Math.Abs(MapMaxY - coords[1];
-                //update, shorten the coords so it remains in bound
-                if( MapMaxX > coords[0]){
-                coords[0] = coords[0] + deltaX );
+
+
+            if(isInMap(coords[0],coords[1]) == false){
+                System.out.println("Agent looks outside of the map => shortens the coords ");
+
+                if(coords[0] < 0 ){
+                    System.out.println("Looking out X" + coords[0] );
+                coords[0] = 0;
                 }
-                if( MapMaxX < coords[0]){
-                coords[0] = coords[0] - deltaX);
+                if( getMapMaxX() < coords[0]){
+                    System.out.println("Looking out X" + coords[0] );
+                coords[0] = getMapMaxX();
                 }
-                 if( MapMaxY > coords[1]){
-                coords[1] = coords[1] - deltaY);
+                 if(coords[1] < 0 ){
+                     System.out.println("Looking out Y" + coords[1] );
+                coords[1] = 0;
                 }
-                if( MapMaxY < coords[1]){
-                coords[1] =  coords[1] + deltaY);
+                if( getMapMaxY() < coords[1]){
+                    System.out.println("Looking out Y" + coords[1] );
+                coords[1] = getMapMaxY();
                 }
+                System.out.println("Corrected to X" + coords[0] );
+                System.out.println("Corrected to Y" + coords[1] );
             }
-         */
         return coords;
     }
 
@@ -413,6 +419,13 @@ public class Agent  {
 
 
     /** GETTERS **/
+
+    public int getMapMaxX(){
+        return this.mapMaxX;
+    }
+    public int getMapMaxY(){
+        return this.mapMaxY;
+    }
 
     public Map getAgentMap(){return map;}
     public int[] getMapCoords(){
@@ -537,9 +550,9 @@ public class Agent  {
         /**
          * returns an array of 2 coordinates that define the goal based ont the current strategy
          * */
-        System.out.println("reached here");
+        System.out.println("entering goal method");
         updateStrategy();
-        System.out.println(this.strategy);
+        System.out.println("STRATEGY is set to "+ this.strategy);
         switch(this.strategy){
             case "end":
                 return goToEndOfMapCoords();
