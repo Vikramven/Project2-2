@@ -321,8 +321,10 @@ public class Map{
     private void updateExplored(){
         for (Agent agent : teamGuards) {
             ArrayList<int[]> exploredTiles = agent.getExplored();
+//            for(int i=0; i<exploredTiles.size(); i++){
             for (int[] coords : exploredTiles) {
                 tiles[coords[0]][coords[1]].isExplored();
+                System.out.println();
             }
         }
     }
