@@ -482,6 +482,7 @@ public class Agent  {
         this.initialAngle = angle;
         this.currentAngle = angle;
         setVision();
+        System.out.println();
     }
     public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
     public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
