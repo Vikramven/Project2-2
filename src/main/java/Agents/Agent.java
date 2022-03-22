@@ -345,9 +345,26 @@ public class Agent  {
         int[] coords = new int[2];
         coords[0] = this.agentPositionX + this.spawnX;
         coords[1] = this.agentPositionY + this.spawnY;
-        System.out.println("spawn x Y");
-        /*  if(isInMap(coords[0],coords[1])){
-    }
+        System.out.println("map pos: "+coords[0]+", "+coords[1]);
+        /*
+            if(isInMap(coords[0],coords[1]) == false ){
+            int deltaX = Math.Abs(MapMaxX - coords[0];
+            int deltaY = Math.Abs(MapMaxY - coords[1];
+                //update, shorten the coords so it remains in bound
+                if( MapMaxX > coords[0]){
+                coords[0] = coords[0] + deltaX );
+                }
+                if( MapMaxX < coords[0]){
+                coords[0] = coords[0] - deltaX);
+                }
+                 if( MapMaxY > coords[1]){
+                coords[1] = coords[1] - deltaY);
+                }
+                if( MapMaxY < coords[1]){
+                coords[1] =  coords[1] + deltaY);
+                }
+            }
+         */
         return coords;
     }
 

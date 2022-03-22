@@ -7,16 +7,16 @@
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="last one">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Agent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Map.class" afterDir="false" />
     </list>
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
-    <list id="e319a3c8-9ba8-4a97-8cad-97afdc946391" name="Changes by tiphanie" comment="">
+    <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
+    <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
+    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
     </list>
-    <list id="36570594-b436-4a88-b021-c6c1f0f90647" name="Changes by vikramvenkat" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,22 +52,8 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/main/java/Agents/Agent.java">
       <ranges>
-        <range start1="42" end1="42" start2="42" end2="43" changelist="e319a3c8-9ba8-4a97-8cad-97afdc946391" />
-        <range start1="92" end1="93" start2="93" end2="95" changelist="e319a3c8-9ba8-4a97-8cad-97afdc946391" />
-        <range start1="122" end1="122" start2="124" end2="128" changelist="e319a3c8-9ba8-4a97-8cad-97afdc946391" />
-        <range start1="153" end1="153" start2="159" end2="160" changelist="e319a3c8-9ba8-4a97-8cad-97afdc946391" />
-        <range start1="198" end1="198" start2="205" end2="209" changelist="e319a3c8-9ba8-4a97-8cad-97afdc946391" />
-        <range start1="409" end1="409" start2="420" end2="421" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/Agents/Map.java">
-      <ranges>
-        <range start1="75" end1="76" start2="75" end2="76" changelist="e319a3c8-9ba8-4a97-8cad-97afdc946391" />
-        <range start1="99" end1="100" start2="99" end2="100" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="103" end1="103" start2="103" end2="104" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="120" end1="120" start2="121" end2="127" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="325" end1="325" start2="332" end2="333" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="326" end1="327" start2="334" end2="334" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="344" end1="344" start2="344" end2="345" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="347" end1="350" start2="348" end2="368" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
       </ranges>
     </file>
   </component>
