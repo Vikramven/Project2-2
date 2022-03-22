@@ -331,7 +331,7 @@ public class Map{
 //            for(int i=0; i<exploredTiles.size(); i++){
             for (int[] coords : exploredTiles) {
                 System.out.println("X:"+coords[0]+" y: "+coords[1]);
-                tiles[coords[0]][coords[1]].isExplored();
+                tiles[coords[0]][coords[1]].setAsExplored();
             }
         }
     }
