@@ -73,7 +73,7 @@ public class Map{
         float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
         System.out.println("angle is " + Math.toDegrees(initialAngle));
         for(int i = 0; i < variables.getNumberOfGuards(); i++){
-            Agent newAgent = new Agent(0,this.variables,this, initialAngle); //create the Agent; 0 for Guard
+            Agent newAgent = new Agent(0,this.variables,this, initialAngle, i /*number of agent*/); //create the Agent; 0 for Guard
             newAgent.setInitialAngle(initialAngle*(i+1));
             System.out.println(initialAngle*(i+1));
             teamGuards[i] = newAgent;
@@ -97,10 +97,11 @@ public class Map{
          * */
 
         updateAgentLocation();
-
+        updateAgentMap();
         updateExplorationPercentage();
         updateSeenTiles();
         updateFlags();
+
         //mapUpdate();
     }
 
@@ -117,6 +118,12 @@ public class Map{
             tiles[x][y].placeAgent();
         }
 
+    }
+
+    public void updateAgentMap(){
+        for(Agent agent  : teamGuards){
+            agent.setMap(this);
+        }
     }
 
 
@@ -323,8 +330,8 @@ public class Map{
             ArrayList<int[]> exploredTiles = agent.getExplored();
 //            for(int i=0; i<exploredTiles.size(); i++){
             for (int[] coords : exploredTiles) {
+                System.out.println("X:"+coords[0]+" y: "+coords[1]);
                 tiles[coords[0]][coords[1]].isExplored();
-                System.out.println();
             }
         }
     }

@@ -40,6 +40,7 @@ public class Agent  {
     private int visionRange = 20; //CHNAGE IT LATER
     private double visionWidth;
     private Agent[] team;
+    private int number;
     private ArrayList<int[]> exploredFields = new ArrayList<>();
     private ArrayList<int[]> visibleFields = new ArrayList<>(); //what the agent sees
     /**/
@@ -90,7 +91,8 @@ public class Agent  {
      *   constructor
      *   create an agent belonging to a specific team
      * */
-    public Agent(int team, Variables vars, Map map, float initialAngle){
+    public Agent(int team, Variables vars, Map map, float initialAngle, int number){
+        this.number = number;
         this.visionWidth = java.lang.Math.toRadians(15);
         this.teamCode = team;
         this.variables = vars;// FileParser.readFile("./resources/testmap.txt");
@@ -120,6 +122,10 @@ public class Agent  {
         this.aGoal[1] = 0;
         counter++;
     }
+
+   // public Agent(int team, Variables variables, Map map, float initialAngle, int i) {
+    //}
+
     /**
      * DOCUMENTATION FOR ZOFIA'S PART
      *
@@ -151,6 +157,7 @@ public class Agent  {
      * */
 
     public void move(){
+       System.out.println("agent performing move has Number " + getNumber());
         int[] coords = new int[2];
         coords[0] = this.agentPositionX;
         coords[1] = this.agentPositionY;
@@ -194,6 +201,10 @@ public class Agent  {
         System.out.println("goal given to astar = " + c[0] + ", " + c[1] + " ");
 
         return Move.getPath(startPosition, goal, this.map);
+    }
+
+    public int getNumber(){
+        return this.number;
     }
 
     private int[] getNextMove(){
@@ -305,7 +316,9 @@ public class Agent  {
             double ratio = Math.abs(this.orientation.getY2()/this.orientation.getX2());
             int x = i;
             int y = (int) (ratio*x);
+            System.out.println("vision coords x: "+x+", y: "+y);
             coords = convertToMap(x,y);
+            System.out.println("map vision coords x: "+coords[0]+", y: "+coords[1]);
             fields.add(coords);
             if(!exploredFields.contains(coords)){
                 exploredFields.add(coords);
@@ -325,13 +338,16 @@ public class Agent  {
     }
 
 
-    private int[] convertToMap(int x, int y){
+    private int[] convertToMap(int x, int y) {
         /**
          * takes relative x,y from agent's POV
          * */
         int[] coords = new int[2];
-        coords[0]=this.agentPositionX + this.spawnX;
-        coords[1]=this.agentPositionY + this.spawnY;
+        coords[0] = this.agentPositionX + this.spawnX;
+        coords[1] = this.agentPositionY + this.spawnY;
+        System.out.println("spawn x Y");
+        /*  if(isInMap(coords[0],coords[1])){
+    }
         return coords;
     }
 
@@ -407,6 +423,7 @@ public class Agent  {
     public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
     public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
     private void setLastVisited(int[] coords){this.lastVisited = coords;}
+    public void setMap(Map map){ this.map = map;}
 
     public void setLastPosition(int x, int y ){this.lastPosition[0]= x; this.lastPosition[1]= y;}
     public int [] getLastPosition(){return this.lastPosition;}
