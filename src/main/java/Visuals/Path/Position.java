@@ -124,6 +124,31 @@ public class Position {
     }
 
 
+    public Collection<Position> getNeighbours(int[][] map, List<Position> exclude){
+
+
+        List<Position> neighbours = new ArrayList<>(this.getNeighbours(map));
+
+        List<Position> toExclude = new ArrayList<>();
+
+        for (Position pos : neighbours){
+            for (Position _pos : exclude){
+                if (pos.samePos(_pos)){
+                    toExclude.add(pos);
+                }
+            }
+        }
+
+        for (Position pos : toExclude){
+            neighbours.remove(pos);
+        }
+
+
+        return neighbours;
+
+    }
+
+
 
 
 

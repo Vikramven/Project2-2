@@ -160,6 +160,7 @@ public class Move {
         */
 
 
+        long startTime = System.currentTimeMillis();
         HashMap<Position, Boolean> vis = new HashMap<>();
         HashMap<Position, Position> prev = new HashMap<>();
 
@@ -214,6 +215,7 @@ public class Move {
         }
         if (!current.samePos(targetPos)){
             System.out.println("Could not reach");
+            return null;
             //Could not reach.
         }
 
@@ -223,10 +225,106 @@ public class Move {
         }
 
         Collections.reverse(directions);
+
+        long took = System.currentTimeMillis() - startTime;
+        if (useEuclidean){
+            System.out.println("Astar BFS with euclidean took "+ took+"ms to complete the path.");
+        }else{
+            System.out.println("Astar BFS with manhattan took "+ took+"ms to complete the path.");
+        }
+
         return directions;
     }
 
 
+    public static List<Position> DFS(Position start, Position targetPos, int[][] map)
+    {
+        long startTime = System.currentTimeMillis();
+        List<Position> visited = new ArrayList<>();
+        Stack<Position> stack = new Stack<>();
+        List<Position> directions = new LinkedList<>();
+        HashMap<Position, Position> prev = new HashMap<>();
+        stack.push(start);
+
+        Position lastPos = null;
+
+        boolean found = false;
+        while(!stack.empty())
+        {
+
+            Position currentPos = stack.peek();
+            stack.pop();
+
+
+            if (currentPos.samePos(targetPos)){
+                found = true;
+                lastPos = currentPos;
+                long took = System.currentTimeMillis() - startTime;
+                System.out.println("DFS took "+ took+"ms to complete the path.");
+                break;
+            }
+
+
+            boolean alreadyVisited = false;
+
+            for (Position pos : visited){
+                if (pos.samePos(currentPos)){
+                    alreadyVisited = true;
+                }
+            }
+
+
+            if(!alreadyVisited)
+            {
+                visited.add(currentPos);
+            }
+
+            List<Position> neighbours = new ArrayList<>(currentPos.getNeighbours(map, visited));
+
+            Comparator comparator = new Comparator<Position>() {
+                @Override
+                public int compare(Position o1, Position o2) {
+                    return Double.compare(o1.manhattanDistance(targetPos), o2.manhattanDistance(targetPos));
+                }
+            };
+
+            neighbours.sort(comparator);
+
+            Iterator<Position> itr = neighbours.iterator();
+
+
+            while (itr.hasNext())
+            {
+                Position itrPos = itr.next();
+                boolean didVisit = false;
+                for (Position visPos : visited){
+                    if (itrPos.samePos(visPos)){
+                        didVisit = true;
+                    }
+                }
+                if (!didVisit){
+                    for (Position key : prev.keySet()){
+                        if (key.samePos(itrPos)){
+                            prev.remove(key);
+                            break;
+                        }
+                    }
+                    prev.put(itrPos, currentPos);
+                    stack.push(itrPos);
+                }
+            }
+
+        }
+
+        for(Position pos = lastPos; pos != null; pos = prev.get(pos)) {
+            directions.add(pos);
+        }
+        Collections.reverse(directions);
+
+        if (found)
+            return directions;
+        return null;
+    }
 
 //public int
 //       while(/* Goal not reached, equivalent to Position of Agent != Goal Position */){

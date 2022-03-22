@@ -17,28 +17,38 @@ public class GenMaze {
 
     public static void main(String[] args) {
 
-        System.out.println("Euclidean - Manhattan (Step Count)");
+        System.out.println("Euclidean - Manhattan - DFS (Step Count)");
 
         for (int i = 0; i < 1; i++) {
-            Maze maze = generateMaze(20, 20);
+            Maze maze = generateMaze(50, 50);
+
+
+
 
             maze.reduceWalls(0.3);
 
             List<Position> manhattanPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix);
             List<Position> euclidPath = Move.getPath(maze.start, maze.end, maze.mazeMatrix, true);
 
+            List<Position> DFSPath = Move.DFS(maze.start, maze.end, maze.mazeMatrix);
 
-            System.out.println(euclidPath.size() + " - " + manhattanPath.size());
+
+            System.out.println(euclidPath.size() + " - " + manhattanPath.size() + " - " + DFSPath.size());
 
             System.out.println("Manhattan Path");
             System.out.println(" ");
             maze.printPath(manhattanPath);
 
-
             System.out.println(" ------ ");
             System.out.println("Euclidean Path");
             System.out.println(" ");
             maze.printPath(euclidPath);
+
+            System.out.println(" ------ ");
+            System.out.println("DFS Path");
+            System.out.println(" ");
+            maze.printPath(DFSPath);
+
 
 
 
