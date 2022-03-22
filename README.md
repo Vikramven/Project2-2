@@ -8,5 +8,5 @@ Our code is structured into 3 packages:
 
 <b>Path:</b> contains the A* algorithm as well as essential Move method to update the agent positions.
 
-## Instruction on how to run the code: ##
+## How to run the code: ##
 run from main 
