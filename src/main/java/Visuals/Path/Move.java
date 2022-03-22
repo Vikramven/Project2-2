@@ -160,6 +160,7 @@ public class Move {
         */
 
 
+        int movesTried = 0;
         long startTime = System.currentTimeMillis();
         HashMap<Position, Boolean> vis = new HashMap<>();
         HashMap<Position, Position> prev = new HashMap<>();
@@ -170,6 +171,7 @@ public class Move {
         q.add(current);
         vis.put(current, true);
         while(!q.isEmpty()){
+            movesTried++;
             current = q.remove();
             if (current.samePos(targetPos)){
                 break;
@@ -228,9 +230,11 @@ public class Move {
 
         long took = System.currentTimeMillis() - startTime;
         if (useEuclidean){
-            System.out.println("Astar BFS with euclidean took "+ took+"ms to complete the path.");
+            System.out.println("BFS with euclidean took "+ took+"ms to complete the path.");
+            System.out.println("BFS considered this many moves: " + movesTried);
         }else{
-            System.out.println("Astar BFS with manhattan took "+ took+"ms to complete the path.");
+            System.out.println("BFS with manhattan took "+ took+"ms to complete the path.");
+            System.out.println("BFS considered this many moves: " + movesTried);
         }
 
         return directions;
@@ -326,8 +330,10 @@ public class Move {
         return null;
     }
 
+
     public static List<Position> properAStar(Position start, Position targetPos, int[][] map){
         long startTime = System.currentTimeMillis();
+        int movesTried = 0;
 
         PriorityQueue<Position> closedList = new PriorityQueue<>();
         PriorityQueue<Position> openList = new PriorityQueue<>();
@@ -353,6 +359,7 @@ public class Move {
         openList.add(start);
 
         while(!openList.isEmpty()){
+            movesTried++;
             Position n = openList.peek();
             //n.weight = n.manhattanDistance(targetPos);
             if(n.samePos(targetPos)){
@@ -403,6 +410,7 @@ public class Move {
 
         long took = System.currentTimeMillis() - startTime;
         System.out.println("AStar took "+ took+"ms to complete the path.");
+        System.out.println("AStar considered this many moves: " + movesTried);
 
         List<Position> path = new ArrayList<>();
 

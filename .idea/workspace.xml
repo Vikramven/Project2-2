@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="last one">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Project2-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project2-2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_22__13_47__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_17_02_22__13_47__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/CanPlace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/CanPlace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Agents/Trace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Variables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/Vector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/MazeGenerator/GenMaze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/MazeGenerator/GenMaze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Controller/ReadFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Controller/ReadFiles.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Node.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/Path/Position.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/Path/Tree.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Visuals/main/Main.java" afterDir="false" />
     </list>
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -110,6 +105,19 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Project2-2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Project2-2" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
