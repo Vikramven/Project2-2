@@ -5,9 +5,24 @@ import Visuals.Agents.Map;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     int x;
+
+    int y;
+
+
+
+
+    //Move Function
+    public double weight = 0;
+
+
+    //Cost Function
+    public double cost = 0;
+
+
 
     public int getX() {
         return x;
@@ -17,13 +32,10 @@ public class Position {
         return y;
     }
 
-    int y;
-
     public Position(int x, int y){
         this.x = x;
         this.y = y;
     }
-
 
     public float getDistance(){
         return 0;
@@ -149,8 +161,18 @@ public class Position {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x && y == position.y;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 
     @Override
     public String toString() {
@@ -158,6 +180,13 @@ public class Position {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+
+    public double getCost(Position from, Position target){
+
+        return this.weight+this.manhattanDistance(target);
+
     }
 
     public double euclideanDistance(Position targetPos){
@@ -174,5 +203,12 @@ public class Position {
 
     public static double manhattanDistanceStatic(Position fromPos, Position targetPos){
         return Math.abs(targetPos.y-fromPos.y) + Math.abs(targetPos.x-fromPos.x);
+    }
+
+
+    @Override
+    public int compareTo(Position o) {
+        //return x == o.x && y == o.y ? 1 : 0;
+        return this.weight > o.weight ? 1 : 0;
     }
 }

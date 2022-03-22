@@ -326,6 +326,95 @@ public class Move {
         return null;
     }
 
+    public static List<Position> properAStar(Position start, Position targetPos, int[][] map){
+        long startTime = System.currentTimeMillis();
+
+        PriorityQueue<Position> closedList = new PriorityQueue<>();
+        PriorityQueue<Position> openList = new PriorityQueue<>();
+
+        HashMap<Position, Position> parents = new HashMap<>();
+
+
+        Position[][] fixedPos = new Position[map.length][map[0].length];
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                fixedPos[i][j] = new Position(i, j);
+            }
+        }
+
+        start = fixedPos[start.x][start.y];
+        targetPos = fixedPos[targetPos.x][targetPos.y];
+
+
+        Position end = null;
+
+        //start.f = start.g + start.calculateHeuristic(target);
+        openList.add(start);
+
+        while(!openList.isEmpty()){
+            Position n = openList.peek();
+            //n.weight = n.manhattanDistance(targetPos);
+            if(n.samePos(targetPos)){
+                end = n;
+                break;
+                //return n;
+            }
+
+            for(Position pos : n.getNeighbours(map)){
+
+                pos = fixedPos[pos.x][pos.y];
+
+                double posWeight = pos.manhattanDistance(targetPos);
+                double totalWeight = n.weight + posWeight;
+                if(!openList.contains(pos) && !closedList.contains(pos)){
+                    parents.put(pos, n);
+                    pos.weight = totalWeight;
+                    pos.cost = pos.weight + posWeight;
+                    openList.add(pos);
+                } else {
+                    if(totalWeight < pos.weight){
+                        parents.put(pos, n);
+                        //m.parent = n;
+                        pos.weight = totalWeight;
+                        pos.cost = pos.weight+posWeight;
+                        //m.g = totalWeight;
+                        //m.f = m.g + m.calculateHeuristic(target);
+
+                        if(closedList.contains(pos)){
+                            closedList.remove(pos);
+                            openList.add(pos);
+                        }
+                    }
+
+                    }
+                }
+
+
+            openList.remove(n);
+            closedList.add(n);
+        }
+
+
+
+        if (end == null){
+            return null;
+        }
+
+        long took = System.currentTimeMillis() - startTime;
+        System.out.println("AStar took "+ took+"ms to complete the path.");
+
+        List<Position> path = new ArrayList<>();
+
+        while(parents.containsKey(end)){
+            path.add(end);
+            //ids.add(n.id);
+            end = parents.get(end);
+        }
+        Collections.reverse(path);
+        return path;
+    }
+
 //public int
 //       while(/* Goal not reached, equivalent to Position of Agent != Goal Position */){
 //        aStar(agent, map, initalCost);
