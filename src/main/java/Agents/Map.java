@@ -48,7 +48,7 @@ public class Map{
       mapInit();
       teamCreation();
       walls = variables.getWalls(); //placing walls on the map
-      buildingWalls();//update the map with the wall
+      buildingWalls(); //update the map with the wall
 
    }
    /* METHOD(2): mapInit
@@ -57,6 +57,7 @@ public class Map{
    * */
 
     private int counter = 0;
+
     public void mapInit(){
            for(int i =0; i < mapWidth; i++){
                for(int j =0; j < mapHeight; j++){
@@ -78,7 +79,6 @@ public class Map{
             System.out.println(initialAngle*(i+1));
             teamGuards[i] = newAgent;
         }
-
         placeAgentsOnSpawn(0);
 
         for (Agent agent: teamGuards) {

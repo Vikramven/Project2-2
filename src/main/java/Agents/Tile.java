@@ -120,7 +120,6 @@ public class Tile {
                 break;
             }
         }
-
         return isEmpty;
     }
 
@@ -131,9 +130,6 @@ public class Tile {
             }
             if(tile.hasAgent()){
                 this.placeAgent();
-            }
-            if(tile.hasTrace()){
-                this.placeTrace();
             }
             if(tile.hasFlag()){
                 this.placeFlag();

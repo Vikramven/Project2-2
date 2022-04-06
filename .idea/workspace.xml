@@ -4,23 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="" />
-    <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="Bug Fixing collin + zaker">
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/MapInit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/LineSegment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Point.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RayCast.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RotationMatrix.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Tester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_10_00_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_9_19_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__9_19__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/Vector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes_by_Bruikleen_3]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_by_Bruikleen_3_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22,_11_11_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22__11_11__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Agent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Map.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" afterDir="false" />
     </list>
+    <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
-    <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-    </list>
-    <list id="8feed662-fb01-4eee-826b-8ee5a0c1a5a1" name="Changes by Zaker" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-    </list>
-    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
-    </list>
+    <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
+    <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
+    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,40 +75,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/Agents/Agent.java">
-      <ranges>
-        <range start1="159" end1="159" start2="159" end2="160" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="165" end1="166" start2="166" end2="167" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="217" end1="219" start2="218" end2="220" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="293" end1="294" start2="294" end2="294" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="319" end1="319" start2="319" end2="345" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="320" end1="320" start2="346" end2="347" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="324" end1="324" start2="351" end2="353" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="325" end1="325" start2="354" end2="356" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="335" end1="336" start2="366" end2="367" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="346" end1="346" start2="377" end2="378" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
-        <range start1="347" end1="349" start2="379" end2="382" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="350" end1="357" start2="383" end2="391" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="358" end1="360" start2="392" end2="395" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="361" end1="363" start2="396" end2="399" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="364" end1="366" start2="400" end2="403" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="367" end1="367" start2="404" end2="406" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="368" end1="369" start2="407" end2="407" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="385" end1="385" start2="423" end2="430" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="440" end1="440" start2="485" end2="486" changelist="8feed662-fb01-4eee-826b-8ee5a0c1a5a1" />
-        <range start1="508" end1="509" start2="554" end2="555" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-        <range start1="510" end1="511" start2="556" end2="557" changelist="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/src/main/java/Agents/Map.java">
-      <ranges>
-        <range start1="243" end1="244" start2="243" end2="244" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
-        <range start1="280" end1="280" start2="280" end2="281" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-        <range start1="330" end1="330" start2="331" end2="332" changelist="c1d8c12b-8388-4e92-b4e4-cbc79450751e" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -111,12 +99,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.3505747" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Application.Tester">
     <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Visuals.App" />
       <module name="Project2-2" />
@@ -150,8 +139,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="newShit.Tester" />
+      <module name="Project2-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="newShit.RayCasting.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Tester" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.StartGame" />
         <item itemvalue="Application.App (1)" />
@@ -191,6 +194,7 @@
       <workItem from="1647776788809" duration="5086000" />
       <workItem from="1647855880434" duration="2200000" />
       <workItem from="1647862599612" duration="6146000" />
+      <workItem from="1649164305482" duration="9029000" />
     </task>
     <task id="LOCAL-00001" summary="starting code is from Controller-For-Merge branch">
       <created>1645613707001</created>
