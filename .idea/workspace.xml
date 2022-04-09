@@ -4,45 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="Bug Fixing collin + zaker">
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/MapInit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/LineSegment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Point.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RayCast.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RotationMatrix.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Tester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_10_00_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_9_19_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__9_19__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/Vector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes_by_Bruikleen_3]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_by_Bruikleen_3_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22,_11_11_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22__11_11__Changes_.xml" beforeDir="false" />
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="lastest">
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/QLearning/Qlearning.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Cell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Edge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RayCasting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Agent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Map.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/LineSegment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Point.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RayCast.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RotationMatrix.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java" beforeDir="false" />
     </list>
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
     <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
     <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
-    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="" />
+    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="Changes by zmilc">
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Guard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Intruder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/MapInit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/MapInit.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +60,18 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java">
+      <ranges>
+        <range start1="13" end1="14" start2="13" end2="16" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="22" end1="22" start2="24" end2="26" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="23" end1="24" start2="27" end2="29" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="34" end1="38" start2="39" end2="43" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="40" end1="41" start2="45" end2="45" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="47" end1="50" start2="51" end2="51" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+      </ranges>
+    </file>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -105,13 +102,20 @@
     <property name="project.structure.side.proportion" value="0.3505747" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager" selected="Application.Tester">
-    <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Visuals.App" />
+  <component name="RunManager" selected="Application.RayCasting">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="App" />
+      <module name="Project2-2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Qlearning" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="newShit.QLearning.Qlearning" />
       <module name="Project2-2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Visuals.*" />
+          <option name="PATTERN" value="newShit.QLearning.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -119,9 +123,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="App" />
+    <configuration name="RayCasting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="newShit.RayCasting.RayCasting" />
       <module name="Project2-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="newShit.RayCasting.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -154,10 +164,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RayCasting" />
+        <item itemvalue="Application.Qlearning" />
         <item itemvalue="Application.Tester" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.StartGame" />
-        <item itemvalue="Application.App (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -195,6 +206,11 @@
       <workItem from="1647855880434" duration="2200000" />
       <workItem from="1647862599612" duration="6146000" />
       <workItem from="1649164305482" duration="9029000" />
+      <workItem from="1649242719261" duration="3160000" />
+      <workItem from="1649276977952" duration="971000" />
+      <workItem from="1649334660314" duration="799000" />
+      <workItem from="1649342912503" duration="712000" />
+      <workItem from="1649516426933" duration="5566000" />
     </task>
     <task id="LOCAL-00001" summary="starting code is from Controller-For-Merge branch">
       <created>1645613707001</created>
@@ -266,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647949410378</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="lastest">
+      <created>1649242994929</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1649242994929</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -292,6 +315,7 @@
     <MESSAGE value="last one" />
     <MESSAGE value="last changes" />
     <MESSAGE value="the many else if statements corrected" />
-    <option name="LAST_COMMIT_MESSAGE" value="the many else if statements corrected" />
+    <MESSAGE value="lastest" />
+    <option name="LAST_COMMIT_MESSAGE" value="lastest" />
   </component>
 </project>
