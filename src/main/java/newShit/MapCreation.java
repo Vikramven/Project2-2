@@ -11,7 +11,9 @@ public class MapCreation {
     private Tile[][] map;
     private int xSize;
     private int ySize;
-    private ArrayList<Agent> listOfAgents;
+    private ArrayList<ArrayList<Agent>> listOfAllAgents;
+    private ArrayList<Agent> listOfGuards;
+    private ArrayList<Agent> listOfIntruders;
 
     public MapCreation(String[] unparsedVars ){
         this.variables = new Variables();
@@ -20,8 +22,11 @@ public class MapCreation {
         System.out.println(map.length + " and " + map[0].length);
         xSize = variables.getHeight();
         ySize = variables.getWidth();
+        listOfGuards = new ArrayList<>();
+        listOfIntruders = new ArrayList<>();
 
-        listOfAgents = new ArrayList<>();
+        listOfAllAgents.add(listOfGuards);
+        listOfAllAgents.add(listOfIntruders);
 
         float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
 
@@ -32,10 +37,10 @@ public class MapCreation {
             System.out.println("Number of guards = "+ i);
             System.out.println("angle is " + Math.toDegrees(initialAngle));
             System.out.println(initialAngle*(i+1));
-            listOfAgents.add(new Agent(initialAngle,startX, startY));
-            for (Agent agent: listOfAgents) {
-                System.out.println(agent.getCurrentX() + " ||| " +agent.getCurrentY());
-            }
+           // listOfAllAgents.add(new Agent(initialAngle,startX, startY));
+           // for (Agent agent: listOfAllAgents) {
+           //     System.out.println(agent.getCurrentX() + " ||| " +agent.getCurrentY());
+          //  }
             }
 
         }

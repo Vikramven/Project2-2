@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Agent {
 
+    private int ID;
     private int currentX;
     private int currentY;
     private float initialAngle;
     private int visionRange = 20;
     private ArrayList<int[]> path;
+    private ArrayList<int[]> visionArea;
 
 
     public Agent(float initialAngle, int startX, int startY){
@@ -18,8 +20,6 @@ public class Agent {
     }
 
     public static void agentInit(){
-
-
 
     }
 
