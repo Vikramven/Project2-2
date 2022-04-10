@@ -7,40 +7,48 @@ import static java.lang.Math.*;
 
 public class RayCasting {
 
-    int x = 50;
-    int y = 30;
+    int x;
+    int y;
 
     Cell[] world;
     LinkedList<Edge> edges = new LinkedList<>();
 
-  public RayCasting(){
-
-      world = new Cell[x*y];
-
+  public RayCasting(int mapX, int mapY){
+      this.x = mapX;
+      this.y = mapY;
+      world = new Cell[this.x*this.y];
+      System.out.println(world.length);
+      // Add a boundary to the world
 
   }
+
 
   public void convertToRayCastingMap(int startX, int startY, int width, int height, int blockWidth, int pitch){
 
       edges.clear();
+      int count = 0;
 
       for (int i = 0; i < width; i++) {
           for (int j = 0; j < height; j++) {
               for (int k = 0; k < 4; k++) {
-                  world[(y+startY)*pitch + (x+startX)].edgeExists[j] = false;
-                  world[(y+startY)*pitch + (x+startX)].edgeId[j] = 0;
+                  int i1 = (j + startY) * pitch + (i + startX);
+                  world[i1].edgeExists[k] = false;
+                  world[i1].edgeId[k] = 0;
+                  count++;
+                  System.out.println(i1);
+                  System.out.println(count);
               }
           }
       }
 
-      for (int i = 0; i < width-1; i++) {
-          for (int j = 0; j < height-1; j++) {
+      for (int i = 1; i < width-1; i++) {
+          for (int j = 1; j < height-1; j++) {
 
-              int currentCellIndex = (y + startY) * pitch + (x + startX);			// This
-              int n = (y + startY - 1) * pitch + (x + startX);		// Northern Neighbour
-              int s = (y + startY + 1) * pitch + (x + startX);		// Southern Neighbour
-              int w = (y + startY) * pitch + (x + startX - 1);	// Western Neighbour
-              int e = (y + startY) * pitch + (x + startX + 1);	// Eastern Neighbour
+              int currentCellIndex = (j + startY) * pitch + (i + startX);			// This
+              int n = (j + startY - 1) * pitch + (i + startX);		// Northern Neighbour
+              int s = (j + startY + 1) * pitch + (i + startX);		// Southern Neighbour
+              int w = (j + startY) * pitch + (i + startX - 1);	// Western Neighbour
+              int e = (j + startY) * pitch + (i + startX + 1);	// Eastern Neighbour
 
               // North = 0 | South = 1 | East = 2 | West = 3|
 

@@ -25,8 +25,8 @@ public class MapCreation {
         listOfGuards = new ArrayList<>();
         listOfIntruders = new ArrayList<>();
 
-        listOfAllAgents.add(listOfGuards);
-        listOfAllAgents.add(listOfIntruders);
+        //listOfAllAgents.add(listOfGuards);
+        //listOfAllAgents.add(listOfIntruders);
 
         float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
 

@@ -1,6 +1,7 @@
 package newShit;
 
 import Controller.ReadFiles;
+import newShit.RayCasting.RayCasting;
 
 public class Tester {
 
@@ -15,6 +16,11 @@ public class Tester {
         }
 
         MapCreation a = new MapCreation(unparsedVars);
+        int height = a.getVariables().getHeight();
+        int width = a.getVariables().getWidth();
+        System.out.println(height + " " + width);
+        RayCasting ray = new RayCasting(height, width);
+        ray.convertToRayCastingMap(0,0, width, height, 1, width);
 
     }
 }
