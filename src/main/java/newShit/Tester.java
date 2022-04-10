@@ -21,6 +21,7 @@ public class Tester {
         System.out.println(height + " " + width);
         RayCasting ray = new RayCasting(height, width);
         ray.convertToRayCastingMap(0,0, width, height, 1, width);
+        System.out.println(ray.toString());
 
     }
 }
