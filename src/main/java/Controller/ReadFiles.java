@@ -30,7 +30,6 @@ public class ReadFiles
 
         scanner.close();
 
-
         return values;
     }
 

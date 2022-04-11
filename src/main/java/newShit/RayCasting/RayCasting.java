@@ -13,6 +13,7 @@ public class RayCasting {
 
     ArrayList<Cell> world;
     LinkedList<Edge> edges = new LinkedList<>();
+    LinkedList<Float> visionPolygonPoints = new LinkedList<>();
 
   public RayCasting(int mapX, int mapY){
       this.x = mapX;
@@ -28,6 +29,48 @@ public class RayCasting {
 
   }
 
+  public void calculateVision(float originX, float originY, float radiusAngle){
+
+      visionPolygonPoints.clear();
+
+      for (Edge edge1 : edges) {
+
+          for (int i = 0; i < 2; i++) {
+
+              float rayX, rayY;
+                rayX = (i == 0 ? edge1.getStartX() : edge1.getEndX()) - originX;
+                rayY = (i == 0 ? edge1.getStartY() : edge1.getEndY()) - originY;
+
+                float baseAngle = (float) atan2(rayY,rayX);
+
+                float angle = 0;
+
+              for (int j = 0; j < 3; j++) {
+                    if(j==0){
+                        angle = baseAngle - 0.0001f;
+                    }
+                    if(j==1){
+                        angle = baseAngle;
+                    }
+                    if(j==2){
+                        angle = baseAngle + 0.0001f;
+                    }
+
+                    rayX = (float) (radiusAngle * cos(angle));
+                    rayY = (float) (radiusAngle * sin(angle));
+
+                  for (Edge edge2 :edges) {
+
+
+                  }
+
+
+              }
+          }
+          
+      }
+
+  }
 
   public void convertToRayCastingMap(int startX, int startY, int width, int height, int blockWidth, int pitch){
 
