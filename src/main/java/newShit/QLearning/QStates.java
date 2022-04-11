@@ -1,5 +1,6 @@
 package newShit.QLearning;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 
 import Controller.Variables;
@@ -54,6 +55,7 @@ public class QStates {
                  * if it's not final state,which direction to go?
                  *assume left initially
                  * possible to call this evaluation function?
+                 * formula for goal updater - index * width + location of move
                  */
                 //if else for moving left
                 int moveLeft=j-1;
@@ -128,7 +130,7 @@ public class QStates {
      * method for running number of training cycles
      * inital 1000
      */
-    public void calculateQValues{
+    public void calculateQValues(){
         Random randomVelue=new Random();
 
         for (int i = 0; i <1000 ; i++) {
@@ -136,14 +138,54 @@ public class QStates {
         }
     }
 
-    public boolean decidefinalState(int state){
+    public boolean decideFinalState(int state){
         int i = state / mazeWidth;
         int j = state - i * mazeWidth;
 
         return maze[i][j]=='F';
     }
     /**
-     * define list of next states the agent can turn to, can only exist if value is !--1
+     * define list of next states the agent can turn to, can only exist if value is !=1
+     * tracks index of states that can be reached
      */
+    public int[] listOfPossibleStates(int state){
+        ArrayList<Integer> possibleStates=new ArrayList<>();
+        for (int i = 0; i < numberOfStates; i++) {
+            if(R[state][i]!=-1){
+                possibleStates.add(i);
+            }
+        }
+        return possibleStates.stream().mapToInt(i -> i).toArray();
     }
+
+    double maxQvalues(int nextState){
+        int[] actionsFromState = listOfPossibleStates(nextState);
+        double maxValue=-10;//resetting later, set initial as -10 according to our model
+        for(int action:actionsFromState){
+            double value=Q[nextState][action];
+
+            if(value>maxValue){
+                maxValue=value;
+            }
+        }
+        return maxValue;
+
+    }
+
+    /**
+     * tester
+     */
+    void printQValues(){
+        System.out.println("Q matrix values");
+        for (int i = 0; i < Q.length; i++) {
+            System.out.print("From state " + i + ":  ");
+            for (int j = 0; j < Q[i].length; j++) {
+                System.out.println((Q[i][j]));
+            }
+            System.out.println();
+        }
+        }
+    }
+
+
 
