@@ -1,0 +1,293 @@
+Index: src/main/java/newShit/Agent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package newShit;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Agent {\r\n\r\n    private int currentX;\r\n    private int currentY;\r\n    private float initialAngle;\r\n    private int visionRange = 20;\r\n    private ArrayList<int[]> path;\r\n\r\n\r\n    public Agent(float initialAngle, int startX, int startY){\r\n        this.initialAngle = initialAngle;\r\n        this.currentX = startX;\r\n        this.currentY = startY;\r\n    }\r\n\r\n    public static void agentInit(){\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n    // ======================= Getters n Setters ================================\r\n\r\n    public int getCurrentX() {\r\n        return currentX;\r\n    }\r\n\r\n    public void setCurrentX(int currentX) {\r\n        this.currentX = currentX;\r\n    }\r\n\r\n    public int getCurrentY() {\r\n        return currentY;\r\n    }\r\n\r\n    public void setCurrentY(int currentY) {\r\n        this.currentY = currentY;\r\n    }\r\n\r\n    public float getInitialAngle() {\r\n        return initialAngle;\r\n    }\r\n\r\n    public void setInitialAngle(float initialAngle) {\r\n        this.initialAngle = initialAngle;\r\n    }\r\n\r\n    public int getVisionRange() {\r\n        return visionRange;\r\n    }\r\n\r\n    public void setVisionRange(int visionRange) {\r\n        this.visionRange = visionRange;\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/newShit/Agent.java b/src/main/java/newShit/Agent.java
+--- a/src/main/java/newShit/Agent.java	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ b/src/main/java/newShit/Agent.java	(date 1649243171027)
+@@ -10,7 +10,6 @@
+     private int visionRange = 20;
+     private ArrayList<int[]> path;
+ 
+-
+     public Agent(float initialAngle, int startX, int startY){
+         this.initialAngle = initialAngle;
+         this.currentX = startX;
+@@ -25,8 +24,6 @@
+ 
+ 
+ 
+-
+-
+     // ======================= Getters n Setters ================================
+ 
+     public int getCurrentX() {
+Index: src/main/java/newShit/RayCasting/RotationMatrix.java
+===================================================================
+diff --git a/src/main/java/newShit/RayCasting/RotationMatrix.java b/src/main/java/newShit/RayCasting/RotationMatrix.java
+deleted file mode 100644
+--- a/src/main/java/newShit/RayCasting/RotationMatrix.java	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ /dev/null	(revision a758e9d202d8b621ca14e843a9f2711467855948)
+@@ -1,63 +0,0 @@
+-package newShit.RayCasting;
+-
+-public class RotationMatrix {
+-    private double a1;
+-    private double a2;
+-    private double b1;
+-    private double b2;
+-
+-    // a1 a2
+-    // b1 b2
+-
+-    public RotationMatrix(double theta)
+-    {
+-        theta = -theta;
+-        double cosA = Math.cos(Math.toRadians(theta));
+-        double sinA = Math.sin(Math.toRadians(theta));
+-        this.a1 = cosA;
+-        this.a2 = -sinA;
+-        this.b1 = sinA;
+-        this.b2 = cosA;
+-    }
+-
+-
+-
+-
+-
+-
+-
+-    // ============================== getters n setters ==========================
+-
+-
+-    public double getA1() {
+-        return a1;
+-    }
+-
+-    public void setA1(double a1) {
+-        this.a1 = a1;
+-    }
+-
+-    public double getA2() {
+-        return a2;
+-    }
+-
+-    public void setA2(double a2) {
+-        this.a2 = a2;
+-    }
+-
+-    public double getB1() {
+-        return b1;
+-    }
+-
+-    public void setB1(double b1) {
+-        this.b1 = b1;
+-    }
+-
+-    public double getB2() {
+-        return b2;
+-    }
+-
+-    public void setB2(double b2) {
+-        this.b2 = b2;
+-    }
+-}
+Index: src/main/java/newShit/RayCasting/LineSegment.java
+===================================================================
+diff --git a/src/main/java/newShit/RayCasting/LineSegment.java b/src/main/java/newShit/RayCasting/LineSegment.java
+deleted file mode 100644
+--- a/src/main/java/newShit/RayCasting/LineSegment.java	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ /dev/null	(revision a758e9d202d8b621ca14e843a9f2711467855948)
+@@ -1,26 +0,0 @@
+-package newShit.RayCasting;
+-
+-public class LineSegment {
+-
+-    public Point A;
+-    public Point B;
+-    public Vector dir;
+-
+-    public LineSegment(Point A,Point B){
+-        this.A = A;
+-        this.B = B;
+-        dir = new Vector(B.x-A.x,B.y-A.y);
+-    }
+-
+-    public LineSegment(Point A,Vector dir){
+-        this.A = A;
+-        this.dir = dir;
+-        this.B = new Point(A.x + dir.x,A.y + dir.y);
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "(" + A + " -> " + B + ")";
+-    }
+-
+-}
+\ No newline at end of file
+Index: src/main/java/newShit/RayCasting/Point.java
+===================================================================
+diff --git a/src/main/java/newShit/RayCasting/Point.java b/src/main/java/newShit/RayCasting/Point.java
+deleted file mode 100644
+--- a/src/main/java/newShit/RayCasting/Point.java	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ /dev/null	(revision a758e9d202d8b621ca14e843a9f2711467855948)
+@@ -1,19 +0,0 @@
+-package newShit.RayCasting;
+-
+-public class Point {
+-
+-    public int x;
+-    public int y;
+-
+-    public Point(int x, int y) {
+-        this.x = x;
+-        this.y = y;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "(" + x + "|" + y + ")";
+-    }
+-
+-}
+-
+Index: src/main/java/newShit/RayCasting/Vector.java
+===================================================================
+diff --git a/src/main/java/newShit/RayCasting/Vector.java b/src/main/java/newShit/RayCasting/Vector.java
+deleted file mode 100644
+--- a/src/main/java/newShit/RayCasting/Vector.java	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ /dev/null	(revision a758e9d202d8b621ca14e843a9f2711467855948)
+@@ -1,32 +0,0 @@
+-package newShit.RayCasting;
+-
+-public class Vector {
+-
+-    public int x;
+-    public int y;
+-
+-    public Vector(int x, int y) {
+-        this.x = x;
+-        this.y = y;
+-    }
+-
+-    public Vector rotate(double degrees)
+-    {
+-        RotationMatrix M = new RotationMatrix(degrees);
+-        return M.dot(this);
+-    }
+-
+-    public Vector dot(RotationMatrix matrix)
+-    {
+-        double x = (a2 * v.getY()) + (a1 * v.getX());
+-        double y = (b2 * v.getY()) + (b1 * v.getX());
+-        return new Vector(x, y);
+-    }
+-}
+-
+-    @Override
+-    public String toString() {
+-        return "(" + x + "|" + y + ")";
+-    }
+-
+-}
+\ No newline at end of file
+Index: src/main/java/newShit/RayCasting/RayCast.java
+===================================================================
+diff --git a/src/main/java/newShit/RayCasting/RayCast.java b/src/main/java/newShit/RayCasting/RayCast.java
+deleted file mode 100644
+--- a/src/main/java/newShit/RayCasting/RayCast.java	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ /dev/null	(revision a758e9d202d8b621ca14e843a9f2711467855948)
+@@ -1,35 +0,0 @@
+-package newShit.RayCasting;
+-
+-import java.util.ArrayList;
+-
+-public class RayCast {
+-
+-    private Vector startPos;
+-    private Vector endPos;
+-
+-    public RayCast(Vector startVector, Vector endVector){
+-        this.startPos = startVector;
+-        this.endPos = endVector;
+-    }
+-
+-    public double angle()
+-    {
+-        return endPos.sub(u).getAngle();
+-    }
+-
+-    public Ray rotate(double degrees)
+-    {
+-        Vector a = v.sub(u);
+-        Vector rotatedVector = a.rotate(degrees);
+-        Vector b = u.add(rotatedVector);
+-        return new Ray(this.u, b);
+-    }
+-
+-    public double rayLength()
+-    {
+-        double yValue = u.getY() - v.getY();
+-        double xValue = u.getX() - v.getX();
+-        return Math.sqrt(Math.pow(yValue, 2) + Math.pow(xValue, 2));
+-    }
+-
+-}
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"99094a21-1a8a-4d5d-8078-78165bded4be\" name=\"Changes\" comment=\"Bug Fixing collin + zaker\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/Agent.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/MapCreation.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/MapInit.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/RayCasting/LineSegment.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/RayCasting/Point.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/RayCasting/RayCast.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/RayCasting/RotationMatrix.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/newShit/Tester.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_10_00_[Changes]1/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_9_19_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_1.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__9_19__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/Vector.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes_by_Bruikleen_3]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_by_Bruikleen_3_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22,_11_11_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22__11_11__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/README.md\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/README.md\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Agents/Map.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Agents/Map.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Agents/Tile.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Agents/Tile.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/Controller/PlayOut.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/Controller/PlayOut.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/Agents/Agent.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/Agents/Agent.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/Agents/Map.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/Agents/Map.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/Agents/Tile.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/Agents/Tile.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/Controller/PlayOut.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/Controller/PlayOut.class\" afterDir=\"false\" />\r\n    </list>\r\n    <list id=\"c1d8c12b-8388-4e92-b4e4-cbc79450751e\" name=\"Changes by Bruikleen 3\" comment=\"\" />\r\n    <list id=\"70e5dc33-d91b-495a-a940-6f15d4c62e05\" name=\"Changes by cmjus\" comment=\"\" />\r\n    <list id=\"28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9\" name=\"Changes by tiphanie\" comment=\"\" />\r\n    <list id=\"02a2e82e-c7a5-407b-9645-c555f1108ddc\" name=\"Changes by vikramvenkat\" comment=\"\" />\r\n    <list id=\"7ab52772-061c-4b8d-aeb6-872a88f8cd11\" name=\"Changes by zmilc\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Merge.Settings\">\r\n    <option name=\"BRANCH\" value=\"algoWithoutControllers\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"debugging\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitSEFilterConfiguration\">\r\n    <file-type-list>\r\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\r\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\r\n      <filtered-out-file-type name=\"TAG\" />\r\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\r\n    </file-type-list>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"256KGD7WaqHSuu6w26u96APtVh7\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"codeWithMe.voiceChat.enabledByDefault\" value=\"false\" />\r\n    <property name=\"project.structure.last.edited\" value=\"Project\" />\r\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\r\n    <property name=\"project.structure.side.proportion\" value=\"0.3505747\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.pluginManager\" />\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.Tester\">\r\n    <configuration name=\"App (1)\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Visuals.App\" />\r\n      <module name=\"Project2-2\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Visuals.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"App\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"App\" />\r\n      <module name=\"Project2-2\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"StartGame\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Visuals.main.StartGame\" />\r\n      <module name=\"Project2-2\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Visuals.main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Tester\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"newShit.Tester\" />\r\n      <module name=\"Project2-2\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"newShit.RayCasting.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Tester\" />\r\n        <item itemvalue=\"Application.App\" />\r\n        <item itemvalue=\"Application.StartGame\" />\r\n        <item itemvalue=\"Application.App (1)\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"99094a21-1a8a-4d5d-8078-78165bded4be\" name=\"Changes\" comment=\"\" />\r\n      <created>1644842061035</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1644842061035</updated>\r\n      <workItem from=\"1645613588695\" duration=\"4441000\" />\r\n      <workItem from=\"1645701760031\" duration=\"1105000\" />\r\n      <workItem from=\"1645703087376\" duration=\"849000\" />\r\n      <workItem from=\"1646843973500\" duration=\"600000\" />\r\n      <workItem from=\"1646860924200\" duration=\"3000\" />\r\n      <workItem from=\"1646942626523\" duration=\"773000\" />\r\n      <workItem from=\"1647013578057\" duration=\"1492000\" />\r\n      <workItem from=\"1647040837289\" duration=\"541000\" />\r\n      <workItem from=\"1647085098955\" duration=\"1033000\" />\r\n      <workItem from=\"1647118917540\" duration=\"2359000\" />\r\n      <workItem from=\"1647164209058\" duration=\"1514000\" />\r\n      <workItem from=\"1647172804683\" duration=\"1483000\" />\r\n      <workItem from=\"1647268426736\" duration=\"1366000\" />\r\n      <workItem from=\"1647344510279\" duration=\"757000\" />\r\n      <workItem from=\"1647358927164\" duration=\"641000\" />\r\n      <workItem from=\"1647378048259\" duration=\"3000\" />\r\n      <workItem from=\"1647428403131\" duration=\"600000\" />\r\n      <workItem from=\"1647433146518\" duration=\"3026000\" />\r\n      <workItem from=\"1647454508975\" duration=\"1249000\" />\r\n      <workItem from=\"1647462847240\" duration=\"118000\" />\r\n      <workItem from=\"1647552591607\" duration=\"2901000\" />\r\n      <workItem from=\"1647687753045\" duration=\"3000\" />\r\n      <workItem from=\"1647776788809\" duration=\"5086000\" />\r\n      <workItem from=\"1647855880434\" duration=\"2200000\" />\r\n      <workItem from=\"1647862599612\" duration=\"6146000\" />\r\n      <workItem from=\"1649164305482\" duration=\"9029000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"starting code is from Controller-For-Merge branch\">\r\n      <created>1645613707001</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645613707001</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"A* algorithm\">\r\n      <created>1645616987133</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645616987133</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"A* algorithm\">\r\n      <created>1645617009022</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645617009022</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"library for javafx\">\r\n      <created>1645703247369</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645703247369</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"astar + gui\">\r\n      <created>1646836684617</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1646836684617</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"astar + gui\">\r\n      <created>1646837686031</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1646837686031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"last one\">\r\n      <created>1647778997580</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647778997580</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"last changes\">\r\n      <created>1647945236626</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647945236627</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"last changes\">\r\n      <created>1647946549045</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647946549045</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"the many else if statements corrected\">\r\n      <created>1647949410378</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647949410378</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"11\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"starting code is from Controller-For-Merge branch\" />\r\n    <MESSAGE value=\"A* algorithm\" />\r\n    <MESSAGE value=\"library for javafx\" />\r\n    <MESSAGE value=\"astar + gui\" />\r\n    <MESSAGE value=\"last one\" />\r\n    <MESSAGE value=\"last changes\" />\r\n    <MESSAGE value=\"the many else if statements corrected\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"the many else if statements corrected\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a758e9d202d8b621ca14e843a9f2711467855948)
++++ b/.idea/workspace.xml	(date 1650442564464)
+@@ -4,39 +4,11 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="Bug Fixing collin + zaker">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/MapInit.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/LineSegment.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Point.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RayCast.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/RotationMatrix.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Tester.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_10_00_[Changes]1/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22,_9_19_[Changes]/shelved.patch" beforeDir="false" />
++    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="the many else if statements corrected">
+       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_1.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__9_19__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_14_16__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/Vector.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53_[Changes_by_Bruikleen_3]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_03_2022_16_53__Changes_by_Bruikleen_3_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22,_11_11_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_03_22__11_11__Changes_.xml" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Agent.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Map.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Agents/Tile.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/RayCasting/Vector.java" afterDir="false" />
+     </list>
+     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
+     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />

@@ -15,6 +15,7 @@ public class MapCreation {
     private ArrayList<Agent> listOfGuards;
     private ArrayList<Agent> listOfIntruders;
 
+
     public MapCreation(String[] unparsedVars ){
         this.variables = new Variables();
         this.variables.setVariables(unparsedVars);
@@ -22,8 +23,8 @@ public class MapCreation {
         System.out.println(map.length + " and " + map[0].length);
         xSize = variables.getHeight();
         ySize = variables.getWidth();
-        listOfGuards = new ArrayList<>();
-        listOfIntruders = new ArrayList<>();
+        listOfGuards = new ArrayList<Agent>();
+        listOfIntruders = new ArrayList<Agent>();
 
         //listOfAllAgents.add(listOfGuards);
         //listOfAllAgents.add(listOfIntruders);
@@ -42,6 +43,10 @@ public class MapCreation {
            //     System.out.println(agent.getCurrentX() + " ||| " +agent.getCurrentY());
           //  }
             }
+
+        }
+
+        public void agentsInit(int teamID){
 
         }
 
