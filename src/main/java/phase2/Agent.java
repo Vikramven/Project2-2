@@ -52,7 +52,7 @@ public class Agent {
 
     // ======================= Getters n Setters ================================
     public Agents.Tile getTile(int x, int y){
-        return Agents.Tile(x,y);
+        return new Tile(x,y);
     }
 
 
@@ -65,11 +65,11 @@ public class Agent {
     }
 
     public int getCurrentY() {
-        return currentY;
+        return position[1];
     }
 
     public void setCurrentY(int currentY) {
-        this.currentY = currentY;
+        this.position[1] = currentY;
     }
 
     public float getInitialAngle() {

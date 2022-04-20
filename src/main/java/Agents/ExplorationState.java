@@ -1,6 +1,6 @@
 package Agents;
 
-public class ExplorationState {
+public class  ExplorationState {
 
     private boolean isInRegion;
     private boolean goRight;
