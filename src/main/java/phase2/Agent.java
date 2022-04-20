@@ -1,8 +1,8 @@
-package newShit;
+package phase2;
 
-import newShit.QLearning.QStates;
-import newShit.RayCasting.RayCasting;
-
+import phase2.QLearning.QStates;
+import phase2.RayCasting.RayCasting;
+import Agents.Tile;
 import java.util.ArrayList;
 
 public class Agent {
@@ -12,8 +12,7 @@ public class Agent {
     * PAST EXPERIENCE <-- PATH 
     * */
     private int ID;//  could be useful to differenciate agent among their team
-    private int currentX;
-    private int currentY;
+    private int [] position = new int[2];
     private float initialAngle;
     private int visionRange = 20;
     private ArrayList<int[]> path;
@@ -23,15 +22,23 @@ public class Agent {
     //instance of QLearning
     private QStates qLearning = new QStates();
 
+    /*INSTANCE NAME: Tables
+     * to store the Q and EM tables informations
+     * PROCEDURE: Calls the Qlearn submethod (distinct from Q decision to select best move)
+     * */
+    public int[][] EMTable = new int[][];
+    public int[][] QTable = new int[][];
+
     /*METHOD NAME: Basic Agent Constructor
      * GOAL: to create an agent 
      * TO DO: need to connect with guard and intruder extensions
      * */
     public Agent(float initialAngle, int startX, int startY){
         this.initialAngle = initialAngle;
-        this.currentX = startX;
-        this.currentY = startY;
+        position[0] = startX;
+        position[1] = startY;
         this.dead = false;
+
     }
 
     /*METHOD NAME: Vision Area
@@ -39,16 +46,8 @@ public class Agent {
     * PROCEDURE: Calling Ray Casting
     * */
     public void updateVision(){
-        this.visionArea = RayCasting.getVision(this.currentX,this.currentY,this.visionRange);
+        this.visionArea = RayCasting.getVision(this.position[0],this.position[1],this.visionRange);
     }
-
-    /*METHOD NAME: Tables
-     * GOAL: to store the Q and EM tables informations
-     * PROCEDURE: Calls the Qlearn submethod (distinct from Q decision to select best move)
-     * */
-
-
-
 
 
     // ======================= Getters n Setters ================================
@@ -58,11 +57,11 @@ public class Agent {
 
 
     public int getCurrentX() {
-        return currentX;
+        return position[0];
     }
 
     public void setCurrentX(int currentX) {
-        this.currentX = currentX;
+        this.position[0] = currentX;
     }
 
     public int getCurrentY() {

@@ -1,4 +1,4 @@
-package newShit;
+package phase2;
 
 public class Intruder extends Agent{
 

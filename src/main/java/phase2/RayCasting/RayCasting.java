@@ -1,8 +1,7 @@
-package newShit.RayCasting;
+package phase2.RayCasting;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import static java.lang.Math.*;
 

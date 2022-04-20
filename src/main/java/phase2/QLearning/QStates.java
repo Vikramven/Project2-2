@@ -1,9 +1,6 @@
-package newShit.QLearning;
-import java.io.File;
+package phase2.QLearning;
 import java.util.ArrayList;
 import java.util.Random;
-
-import Controller.Variables;
 
 public class QStates {
     private final double alpha=0.1;//learning rate, alpha

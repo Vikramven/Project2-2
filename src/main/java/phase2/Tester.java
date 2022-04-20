@@ -1,7 +1,7 @@
-package newShit;
+package phase2;
 
 import Controller.ReadFiles;
-import newShit.RayCasting.RayCasting;
+import phase2.RayCasting.RayCasting;
 
 public class Tester {
 

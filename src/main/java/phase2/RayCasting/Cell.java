@@ -1,4 +1,4 @@
-package newShit.RayCasting;
+package phase2.RayCasting;
 
 public class Cell {
 
