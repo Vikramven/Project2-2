@@ -6,9 +6,14 @@ public class Edge {
     private float endX;
     private float endY;
 
-
     public Edge() {
+    }
 
+    public Edge(float startX, float startY, float endX, float endY) {
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
     }
 
     public float getStartX() {

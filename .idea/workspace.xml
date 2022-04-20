@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="Bug Fixing collin + zaker">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -24,9 +24,7 @@
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
-    <list id="3f4196c9-b984-4db7-880a-412dc16d5bb0" name="Changes by nathaliebent" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
-    </list>
+    <list id="3f4196c9-b984-4db7-880a-412dc16d5bb0" name="Changes by nathaliebent" comment="" />
     <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
     <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
     <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="" />
@@ -62,22 +60,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/newShit/Agent.java">
-      <ranges>
-        <range start1="2" end1="2" start2="2" end2="5" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="6" end1="7" start2="9" end2="19" changelist="3f4196c9-b984-4db7-880a-412dc16d5bb0" />
-        <range start1="13" end1="13" start2="25" end2="26" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="14" end1="14" start2="27" end2="29" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="19" end1="19" start2="34" end2="35" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="21" end1="21" start2="37" end2="38" changelist="3f4196c9-b984-4db7-880a-412dc16d5bb0" />
-        <range start1="22" end1="23" start2="39" end2="40" changelist="3f4196c9-b984-4db7-880a-412dc16d5bb0" />
-        <range start1="25" end1="25" start2="42" end2="55" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="26" end1="26" start2="56" end2="61" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="62" end1="62" start2="97" end2="102" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -96,17 +78,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.3505747" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/Collin/IdeaProjects/Project2-2/src/main/java/phase2/RayCasting"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Collin\IdeaProjects\Project2-2\src\main\java\phase2\RayCasting" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Tester">
     <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">

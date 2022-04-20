@@ -26,8 +26,10 @@ public class Agent {
      * to store the Q and EM tables informations
      * PROCEDURE: Calls the Qlearn submethod (distinct from Q decision to select best move)
      * */
-    public int[][] EMTable = new int[][];
-    public int[][] QTable = new int[][];
+
+
+    public int[][] EMTable;
+    public int[][] QTable;
 
     /*METHOD NAME: Basic Agent Constructor
      * GOAL: to create an agent 
@@ -45,9 +47,10 @@ public class Agent {
     * GOAL: to update the Tile directly visible by the Agent
     * PROCEDURE: Calling Ray Casting
     * */
-    public void updateVision(){
-        this.visionArea = RayCasting.getVision(this.position[0],this.position[1],this.visionRange);
-    }
+
+//    public void updateVision(){
+//        this.visionArea = RayCasting.getVision(this.position[0],this.position[1],this.visionRange);
+//    }
 
 
     // ======================= Getters n Setters ================================
