@@ -13,6 +13,16 @@ public class QStates {
 
     private boolean reachedGoal = false;
 
+    //Table Updators
+    public void EMupdate(phase2.Agent n){
+        for(int i = 0; i < EM.length(); i++){
+            n.get
+        }
+    }
+    public void QUpdate(int[][] newQTable){
+
+    }
+
 
     public int[] rewardTable = {-1,-10,10,-100,100,20,Integer.MIN_VALUE, -100, 1000};
 /*
