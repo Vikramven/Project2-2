@@ -62,7 +62,7 @@ public class Agent {
         }
     }
 
-    public void turnRight()
+    public void turnRight(){}
 
     public void moveOnAPath(ArrayList<int[]> instructions){
         for(int[] coords: instructions){
@@ -91,6 +91,7 @@ public class Agent {
     public Agents.Tile getTile(int x, int y){
         return new Tile(x,y);
     }
+
 
     public int getCurrentX() {
         return position[0];
@@ -135,6 +136,7 @@ public class Agent {
       public ArrayList<int[]> getPath(){return path;};
       public void setPath(ArrayList<int[]> path){this.path = path;};
       public ArrayList<int[]> getVisionArea(){return visionArea;};
+      public float getCurrentAngle(){return this.currentAngle;}
       public void setVisionArea(ArrayList<int[]> visionArea){this.visionArea = visionArea;};
       public QStates getQLearning(){return qLearning;};
       public void setQLearning(QStates qLearning){this.qLearning = qLearning;};

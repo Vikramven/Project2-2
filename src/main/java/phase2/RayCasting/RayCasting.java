@@ -1,5 +1,6 @@
 package phase2.RayCasting;
 
+import phase2.Agent;
 import Agents.Map;
 import Agents.Tile;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.LinkedList;
 import static java.lang.Math.*;
 
 public class RayCasting {
+
+    final double FIELD_OF_VIEW = Math.toRadians(150);
 
     int mapHeight; //height
     int mapWidth; // width
@@ -35,7 +38,7 @@ public class RayCasting {
     }
 
     /**
-     * method represents map and walls as a list of cells with edges
+     * method represents map in list edges as a list of cells with edges
      * representation in edges list
      */
     public void convertToRayCastingMap(){
@@ -174,6 +177,7 @@ public class RayCasting {
             }
         }
 
+        // add edges on each of the 4 map boarders as a limit of the viewing range; agent cannot see past map
         edges.add(new Edge(startX, startY, width, startY));
         edges.add(new Edge(startX, startY, startX, height));
         edges.add(new Edge(width, 0, width, height));
@@ -183,11 +187,15 @@ public class RayCasting {
     /**
      * @return List of [x,y] coordinates of tiles in agent's viewing range
      */
-    public ArrayList<int[]> getVisibleTiles(int agentX, int agentY, int visionRange){
+    public ArrayList<int[]> getVisibleTiles(Agent agent){
 
         Tile[][] mapTiles = this.map.getTiles();
+        float agentX = agent.getCurrentX(), agentY = agent.getCurrentY(),
+                visionRange = agent.getVisionRange();
+        float angle = agent.getCurrentAngle();
+        float[] limits  = getViewingLimits(angle);
 
-        calculateVision((float) agentX, (float) agentY, (float) visionRange); // makes visionPolygon
+        calculateVision( agentX, agentY, visionRange, limits); // creates endpoints of vision polygon
 
         ArrayList<int[]> listOfVisibleTiles = new ArrayList<>();
 
@@ -202,6 +210,10 @@ public class RayCasting {
 
     }
 
+    /**
+     * given a tile's position [x,y] and agent's position [agentX,agentY],
+     * @return true if tile is in agent's vision range
+     */
     private boolean isInsideVisionRange(float x, float y, float agentX, float agentY){
         float tileX = (2*x + 1)/2, // basically x + 0.5
                 tileY = (2*y + 1)/2; // y + 0.5
@@ -232,7 +244,14 @@ public class RayCasting {
         return true;
     }
 
-    public void calculateVision(float originX, float originY, float radius) {
+    /**
+     * method fills visionPolygonPoints with points describing agent's "vision polygon"
+     * @param originX: x-coordinate of agent
+     * @param originY: y-coordinate of agent
+     * @param radius: agent's viewing distance
+     * @param limits: [limit1,limit2] of agent's viewing angle respective to its orientation
+     */
+    public void calculateVision(float originX, float originY, float radius, float[] limits) {
 
         visionPolygonPoints.clear();
 
@@ -246,54 +265,58 @@ public class RayCasting {
                 float angle = 0;
 
                 for (int j = 0; j < 2; j++) {
-                    if (j == 0) {
-                        angle = baseAngle - 0.0001f;
-                    }
-                    if (j == 1) {
-                        angle = baseAngle + 0.0001f;
-                    }
+                    float limit1 = limits[0], limit2 = limits[1];
 
-                    rayVectorX = (float) (radius * cos(angle));
-                    rayVectorY = (float) (radius * sin(angle));
+                    if(limit1 <= baseAngle && baseAngle <= limit2){
+                        if (j == 0) {
+                            angle = baseAngle - 0.0001f;
+                        }
+                        if (j == 1) {
+                            angle = baseAngle + 0.0001f;
+                        }
 
-                    float lowestDistance = Float.POSITIVE_INFINITY;
-                    float closestIntersectX = 0, closestIntersectY = 0, closestIntersectAng = 0;
+                        rayVectorX = (float) (radius * cos(angle));
+                        rayVectorY = (float) (radius * sin(angle));
 
-                    int interceptionCount = 0;
+                        float lowestDistance = Float.POSITIVE_INFINITY;
+                        float closestIntersectX = 0, closestIntersectY = 0, closestIntersectAng = 0;
 
-                    for (Edge edge2 : edges) {
+                        int interceptionCount = 0;
 
-                        float edgeVectorX = edge2.getEndX() - edge2.getStartX(),
-                                edgeVectorY = edge2.getEndY() - edge2.getStartY();
+                        for (Edge edge2 : edges) {
 
-                        float[] edgeStart = {edge2.getStartX(), edge2.getStartY()},
-                                edgeEnd = {edge2.getEndX(), edge2.getEndY()},
-                                rayStart = {originX, originY},
-                                rayEnd = {originX + rayVectorX, originY + rayVectorY};
+                            float edgeVectorX = edge2.getEndX() - edge2.getStartX(),
+                                    edgeVectorY = edge2.getEndY() - edge2.getStartY();
 
-                        if (Math.abs(edgeVectorX - rayVectorX) > 0.0f && Math.abs(edgeVectorY - rayVectorY) > 0.0f) {
+                            float[] edgeStart = {edge2.getStartX(), edge2.getStartY()},
+                                    edgeEnd = {edge2.getEndX(), edge2.getEndY()},
+                                    rayStart = {originX, originY},
+                                    rayEnd = {originX + rayVectorX, originY + rayVectorY};
 
-                            float[] closestIntersectData = getDistanceOfIntersectionAlongRay(rayStart, rayEnd, edgeStart, edgeEnd);
-                            float distance = closestIntersectData[0], edgeVectorCoef = closestIntersectData[1];
+                            if (Math.abs(edgeVectorX - rayVectorX) > 0.0f && Math.abs(edgeVectorY - rayVectorY) > 0.0f) {
 
-                            if (0 <= distance && distance <= 1 && 0 <= edgeVectorCoef && edgeVectorCoef <= 1) {
-                                interceptionCount++;
-                                if (distance < lowestDistance) {
-                                    lowestDistance = distance;
-                                    closestIntersectX = closestIntersectData[2];
-                                    closestIntersectY = closestIntersectData[3];
-                                    closestIntersectAng = (float) atan2(closestIntersectY - originY, closestIntersectX - originX);
+                                float[] closestIntersectData = getDistanceOfIntersectionAlongRay(rayStart, rayEnd, edgeStart, edgeEnd);
+                                float distance = closestIntersectData[0], edgeVectorCoef = closestIntersectData[1];
+
+                                if (0 <= distance && distance <= 1 && 0 <= edgeVectorCoef && edgeVectorCoef <= 1) {
+                                    interceptionCount++;
+                                    if (distance < lowestDistance) {
+                                        lowestDistance = distance;
+                                        closestIntersectX = closestIntersectData[2];
+                                        closestIntersectY = closestIntersectData[3];
+                                        closestIntersectAng = (float) atan2(closestIntersectY - originY, closestIntersectX - originX);
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if(interceptionCount == 0) {
-                        closestIntersectX = rayVectorX + originX;
-                        closestIntersectY = rayVectorY + originY;
-                        closestIntersectAng = angle;
+                        if(interceptionCount == 0) {
+                            closestIntersectX = rayVectorX + originX;
+                            closestIntersectY = rayVectorY + originY;
+                            closestIntersectAng = angle;
+                        }
+                        visionPolygonPoints.add(new Ray(closestIntersectAng, closestIntersectX, closestIntersectY));
                     }
-                    visionPolygonPoints.add(new Ray(closestIntersectAng, closestIntersectX, closestIntersectY));
                 }
             }
         }
@@ -310,8 +333,14 @@ public class RayCasting {
             if(!ray.sameAs(temp))
                 output.add(ray);temp=ray;
         }
-
         return output;
+    }
+
+    private float[] getViewingLimits(float angle){
+        float limit1, limit2;
+        limit1 = (float) (toRadians(angle) - FIELD_OF_VIEW/2);
+        limit2 = (float) (toRadians(angle) + FIELD_OF_VIEW/2);
+        return new float[]{limit1,limit2};
     }
 
     private boolean isInMap(int currentIndex, int directionOfNeighbour){
