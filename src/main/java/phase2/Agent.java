@@ -120,22 +120,21 @@ public class Agent {
 
 
     //make the getter&setter for each private instance above : for path, for EM and Q table
-      public int getID(){};
+      public int getID(){return ID;};
       public void setID(){};
-      public int[] getPosition(){};
+      public int[] getPosition(){return position;};
       public void setPosition(){};
-      public float getInitialAngle(){};
+      public float getInitialAngle(){return initialAngle;};
       public void setInitialAngle(){};
-      public int getVisionRange(){};
+      public int getVisionRange(){return visionRange;};
       public void setVisitionRang(){};
-
-    public ArrayList<int[]> getPath(){};
-    public void getPath(){};
-
-//    private ArrayList<int[]> visionArea;
-//    private boolean dead;
-//
-//    //instance of QLearning
-//    private QStates qLearning = new QStates();
+      public ArrayList<int[]> getPath(){return path;};
+      public void setPath(){};
+      public ArrayList<int[]> getVisionArea(){return visionArea;};
+      public void setVisionArea(){};
+      public boolean getDead(){return dead;};
+      public void setDead(){};
+      public QStates getQLearning(){return qLearning;};
+      public void setQLearning(){};
 
 }
