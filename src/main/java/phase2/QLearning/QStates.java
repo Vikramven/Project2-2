@@ -3,11 +3,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class QStates {
+
+    /* S STATE CLASS DESCRIPTION
+    * OUT-CONNECTION: requires instances from Agent to compute their Q table
+    * GOAL: A reinforcement learning method that uses heuristics to associate a grade to a (state; action) pair
+    *       We iterate through t step to make the value converge.
+    *
+    * */
     private final double alpha=0.1;//learning rate, alpha
     private int[][] R;//rewards
     private double[][] Q;
     private int[][] EM;
-    private int[][] IN;
+    private int[][] IN; // instruction table TO BE DONE
     private final double gamma = 0.5;
     int currentState = 0;
 
@@ -25,7 +32,10 @@ public class QStates {
 
 
     public int[] rewardTable = {-1,-10,10,-100,100,20,Integer.MIN_VALUE, -100, 1000};
-/*
+/* STATIC REWARD TABLE
+
+    We associate an arbitrary grade to a given situation
+
     0 = private int move = -1;
     1 = private int wrongPath = -10; // random move with a low probability.
     2 = private int correctPath = 10;
@@ -35,7 +45,6 @@ public class QStates {
     6 = private int wall = Integer.MIN_VALUE;
     7 = private int startPoint = -100
     8 = private int goal = 1000;
-
 
  */
 
@@ -60,9 +69,9 @@ public class QStates {
 
     public void init(){
 
-        R = new int[numberOfStates][5];
-        Q = new double[numberOfStates][5];
-        maze = new int[mazeHeight][mazeWidth];
+        R = new int[numberOfStates][5]; // creation of the reward Table
+        Q = new double[numberOfStates][5];// creation of the Q Table
+        maze = new int[mazeHeight][mazeWidth]; // the whole map, copy of agent (.??.)
 
 
         for (int k = 0; k < numberOfStates; k++) {
@@ -78,19 +87,8 @@ public class QStates {
             //HOW TO RETRIEVE/SET FINAL STATE?
             //if not in the final state, or there is no wall ahead, move in all directions
             //can fill in later, but I will just fill this in for now
-            if(!reachedGoal) {
-
-
-                /**
-                 * if it's not final state,which direction to go?
-                 *assume left initially
-                 * possible to call this evaluation function?
-                 * formula for goal updater - index * width + location of move
-                 */
-                //if else for moving left
-
-                }
-            }
+            if(!reachedGoal())
+                getpath();
             }
         initializeQ();
         }

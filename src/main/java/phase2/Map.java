@@ -5,7 +5,7 @@ import Controller.Variables;
 
 import java.util.ArrayList;
 
-public class MapCreation {
+public class Map {
 
     private Variables variables;
     private Tile[][] map;
@@ -16,7 +16,7 @@ public class MapCreation {
     private ArrayList<Agent> listOfIntruders;
 
 
-    public MapCreation(String[] unparsedVars ){
+    public Map(String[] unparsedVars) {
         this.variables = new Variables();
         this.variables.setVariables(unparsedVars);
         this.map = new Tile[variables.getHeight()][variables.getWidth()];
@@ -35,24 +35,39 @@ public class MapCreation {
         int startY = 20;
 
         for (int i = 0; i < variables.getNumberOfGuards(); i++) {
-            System.out.println("Number of guards = "+ i);
+            System.out.println("Number of guards = " + i);
             System.out.println("angle is " + Math.toDegrees(initialAngle));
-            System.out.println(initialAngle*(i+1));
-           // listOfAllAgents.add(new Agent(initialAngle,startX, startY));
-           // for (Agent agent: listOfAllAgents) {
-           //     System.out.println(agent.getCurrentX() + " ||| " +agent.getCurrentY());
-          //  }
-            }
-
+            System.out.println(initialAngle * (i + 1));
+            // listOfAllAgents.add(new Agent(initialAngle,startX, startY));
+            // for (Agent agent: listOfAllAgents) {
+            //     System.out.println(agent.getCurrentX() + " ||| " +agent.getCurrentY());
+            //  }
         }
 
-        public void agentsInit(int teamID){
+    }
 
+
+
+    public void agentsInit(int teamID){
+
+    }
+
+
+
+    public void moveAgentToPosition(Agent agent, int[] position){
+        /** moves agent to coordinates if possible */
+        if(canMoveTo(position)){
+            agent.moveTo(position[0],position[1]);
         }
+    }
 
+    private boolean canMoveTo(int[] pos){
+        return inMap(pos) && !map[pos[0]][pos[1]].hasWall() && !map[pos[0]][pos[1]].hasAgent();
+    }
 
-
-
+    private boolean inMap(int[] position){
+        return position[0] < xSize && position[1] < ySize && position[0] > 0 && position[1] > 0;
+    }
 
 
     // Getters n Setters
