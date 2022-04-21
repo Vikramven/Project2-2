@@ -15,7 +15,7 @@ public class Agent {
     private int [] position = new int[2];
     private float initialAngle;
     private int visionRange = 20;
-    private ArrayList<int[]> path;
+    private ArrayList<int[]> path; // AGENT PAST EXPERIENCE
     private ArrayList<int[]> visionArea;
     private boolean dead;
 
@@ -41,6 +41,28 @@ public class Agent {
         position[1] = startY;
         this.dead = false;
 
+    }
+
+    public void moveTo(int x, int y){
+        this.position[0] = x;
+        this.position[1] = y;
+    }
+
+    public void moveTo(int[] position){
+        this.position = position;
+    }
+
+    public void moveOnAPath(ArrayList<int[]> instructions){
+        for(int[] coords: instructions){
+            moveTo(coords);
+        }
+    }
+
+    public boolean inMap(int[] position){
+        /** this should return true if a position is in map
+         * TODO : connect agent with map and implement this
+         * */
+        return true;
     }
 
     /*METHOD NAME: Vision Area
@@ -96,5 +118,24 @@ public class Agent {
         return this.dead;
     }
 
+
+    //make the getter&setter for each private instance above : for path, for EM and Q table
+      public int getID(){};
+      public void setID(){};
+      public int[] getPosition(){};
+      public void setPosition(){};
+      public float getInitialAngle(){};
+      public void setInitialAngle(){};
+      public int getVisionRange(){};
+      public void setVisitionRang(){};
+
+    public ArrayList<int[]> getPath(){};
+    public void getPath(){};
+
+//    private ArrayList<int[]> visionArea;
+//    private boolean dead;
+//
+//    //instance of QLearning
+//    private QStates qLearning = new QStates();
 
 }

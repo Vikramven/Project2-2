@@ -18,7 +18,7 @@ public class Tester {
             e.printStackTrace();
         }
 //
-//        MapCreation a = new MapCreation(unparsedVars);
+//        Map a = new Map(unparsedVars);
 //        int height = a.getVariables().getHeight();
 //        int width = a.getVariables().getWidth();
 //        System.out.println(height + " " + width);

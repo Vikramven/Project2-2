@@ -1,0 +1,17 @@
+Index: src/main/java/newShit/Agent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package newShit;\r\n\r\nimport newShit.QLearning.QStates;\r\nimport newShit.RayCasting.RayCasting;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Agent {\r\n\r\n    /*AGENT INFORMATIONS\r\n    * CURRENT LOCATION INFO\r\n    * PAST EXPERIENCE <-- PATH \r\n    * */\r\n    private int ID;//  could be useful to differenciate agent among their team\r\n    private int currentX;\r\n    private int currentY;\r\n    private float initialAngle;\r\n    private int visionRange = 20;\r\n    private ArrayList<int[]> path;\r\n    private ArrayList<int[]> visionArea;\r\n    private boolean dead;\r\n\r\n    //instance of QLearning\r\n    private QStates qLearning = new QStates();\r\n\r\n    /*METHOD NAME: Basic Agent Constructor\r\n     * GOAL: to create an agent \r\n     * TO DO: need to connect with guard and intruder extensions\r\n     * */\r\n    public Agent(float initialAngle, int startX, int startY){\r\n        this.initialAngle = initialAngle;\r\n        this.currentX = startX;\r\n        this.currentY = startY;\r\n        this.dead = false;\r\n    }\r\n\r\n    /*METHOD NAME: Vision Area\r\n    * GOAL: to update the Tile directly visible by the Agent\r\n    * PROCEDURE: Calling Ray Casting\r\n    * */\r\n    public void updateVision(){\r\n        this.visionArea = RayCasting.getVision(this.currentX,this.currentY,this.visionRange);\r\n    }\r\n\r\n    /*METHOD NAME: Tables\r\n     * GOAL: to store the Q and EM tables informations\r\n     * PROCEDURE: Calls the Qlearn submethod (distinct from Q decision to select best move)\r\n     * */\r\n\r\n\r\n\r\n\r\n\r\n    // ======================= Getters n Setters ================================\r\n    public Agents.Tile getTile(int x, int y){\r\n        return Agents.Tile(x,y);\r\n    }\r\n\r\n\r\n    public int getCurrentX() {\r\n        return currentX;\r\n    }\r\n\r\n    public void setCurrentX(int currentX) {\r\n        this.currentX = currentX;\r\n    }\r\n\r\n    public int getCurrentY() {\r\n        return currentY;\r\n    }\r\n\r\n    public void setCurrentY(int currentY) {\r\n        this.currentY = currentY;\r\n    }\r\n\r\n    public float getInitialAngle() {\r\n        return initialAngle;\r\n    }\r\n\r\n    public void setInitialAngle(float initialAngle) {\r\n        this.initialAngle = initialAngle;\r\n    }\r\n\r\n    public int getVisionRange() {\r\n        return visionRange;\r\n    }\r\n\r\n    public void setVisionRange(int visionRange) {\r\n        this.visionRange = visionRange;\r\n    }\r\n\r\n    public boolean isDead(){\r\n        /** returns true if the agent is dead (or caught) */\r\n        return this.dead;\r\n    }\r\n\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/newShit/Agent.java b/src/main/java/newShit/Agent.java
+--- a/src/main/java/newShit/Agent.java	
++++ b/src/main/java/newShit/Agent.java	
+@@ -39,7 +39,7 @@
+     * PROCEDURE: Calling Ray Casting
+     * */
+     public void updateVision(){
+-        this.visionArea = RayCasting.getVision(this.currentX,this.currentY,this.visionRange);
++        this.visionArea = RayCasting.getVisibleTiles(this.currentX,this.currentY,this.visionRange);
+     }
+ 
+     /*METHOD NAME: Tables

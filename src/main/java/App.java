@@ -1,3 +1,4 @@
+import Controller.Controller;
 import Controller.FileParser;
 import Controller.PlayOut;
 import Controller.ReadFiles;
@@ -21,7 +22,8 @@ public class App {
             e.printStackTrace();
         }
 
-        PlayOut playOut = new PlayOut(unparsedVars);
-        playOut.computeWithPrint();
+        //PlayOut playOut = new PlayOut(unparsedVars);
+
+        Controller controller= new Controller(unparsedVars);
     }
 }

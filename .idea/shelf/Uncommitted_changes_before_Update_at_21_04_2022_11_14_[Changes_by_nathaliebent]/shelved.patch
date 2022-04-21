@@ -1,0 +1,35 @@
+Index: src/main/java/newShit/QLearning/QStates.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package newShit.QLearning;\r\nimport java.io.File;\r\nimport java.util.ArrayList;\r\nimport java.util.Random;\r\n\r\nimport Controller.Variables;\r\n\r\npublic class QStates {\r\n    private final double alpha=0.1;//learning rate, alpha\r\n    private int[][] R;//rewards\r\n    private double[][] Q;\r\n    private int[][] EM;\r\n    private int[][] IN;\r\n    private final double gamma = 0.5;\r\n    int currentState = 0;\r\n\r\n    private boolean reachedGoal = false;\r\n\r\n\r\n    public int[] rewardTable = {-1,-10,10,-100,100,20,Integer.MIN_VALUE, -100, 1000};\r\n/*\r\n    0 = private int move = -1;\r\n    1 = private int wrongPath = -10; // random move with a low probability.\r\n    2 = private int correctPath = 10;\r\n    3 = private int death = -100;\r\n    4 = private int visionOnIntruder = 100;\r\n    5 = private int hearingOnIntruder = 20;\r\n    6 = private int wall = Integer.MIN_VALUE;\r\n    7 = private int startPoint = -100\r\n    8 = private int goal = 1000;\r\n\r\n\r\n */\r\n\r\n\r\n    /**\r\n     * how do i init the maze? create new one or read in?\r\n     */\r\n    private int[][] maze;//init with width and height? is it computationally effective?\r\n    int mazeWidth = 100;\r\n    int mazeHeight = 200;\r\n    private final int numberOfStates = mazeWidth * mazeHeight;\r\n    private final int numberOfActions = 5;\r\n    private int finalState=100;//change this, don't know if correct\r\n\r\n    /**\r\n     * necessary general methods\r\n     * init- kind of for reading file\r\n     * calculateQ\r\n     * printQ\r\n     *printPolicy\r\n     */\r\n\r\n    public void init(){\r\n\r\n        R = new int[numberOfStates][5];\r\n        Q = new double[numberOfStates][5];\r\n        maze = new int[mazeHeight][mazeWidth];\r\n\r\n\r\n        for (int k = 0; k < numberOfStates; k++) {\r\n\r\n            /**\r\n             * initiate reward matrix with -1\r\n             */\r\n\r\n            for (int l = 0; l < numberOfActions; l++) {\r\n\r\n                R[k][l]=-1; // everything value of -1; representing that each move costs -1, to ensure it takes the shortest path.\r\n\r\n            //HOW TO RETRIEVE/SET FINAL STATE?\r\n            //if not in the final state, or there is no wall ahead, move in all directions\r\n            //can fill in later, but I will just fill this in for now\r\n            if(!reachedGoal) {\r\n\r\n\r\n                /**\r\n                 * if it's not final state,which direction to go?\r\n                 *assume left initially\r\n                 * possible to call this evaluation function?\r\n                 * formula for goal updater - index * width + location of move\r\n                 */\r\n                //if else for moving left\r\n\r\n                }\r\n            }\r\n            }\r\n        initializeQ();\r\n        }\r\n\r\n\r\n    /**\r\n     * below methods for deciding states, possible actions from states\r\n     */\r\n\r\n\r\n    //Set Q values to R values\r\n    public void initializeQ()\r\n    {\r\n        for (int i = 0; i < numberOfStates; i++){\r\n            for(int j = 0; j < numberOfActions; j++){\r\n\r\n                // read from map\r\n\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * method for running number of training cycles\r\n     * inital 1000\r\n     */\r\n    public void calculateQValues(){\r\n        Random randomValue = new Random();\r\n\r\n\r\n\r\n    }\r\n\r\n    public boolean decideFinalState(int state){\r\n        int i = state / mazeWidth;\r\n        int j = state - i * mazeWidth;\r\n\r\n        return maze[i][j]=='F';\r\n    }\r\n    /**\r\n     * define list of next states the agent can turn to, can only exist if value is !=1\r\n     * tracks index of states that can be reached\r\n     */\r\n    public int[] listOfPossibleStates(int state){\r\n        ArrayList<Integer> possibleStates=new ArrayList<>();\r\n        for (int i = 0; i < numberOfStates; i++) {\r\n            if(R[state][i]!=-1){\r\n                possibleStates.add(i);\r\n            }\r\n        }\r\n        return possibleStates.stream().mapToInt(i -> i).toArray();\r\n    }\r\n\r\n    double maxQvalues(int nextState){\r\n        int[] actionsFromState = listOfPossibleStates(nextState);\r\n        double maxValue=-10;//resetting later, set initial as -10 according to our model\r\n        for(int action:actionsFromState){\r\n            double value=Q[nextState][action];\r\n\r\n            if(value>maxValue){\r\n                maxValue=value;\r\n            }\r\n        }\r\n        return maxValue;\r\n\r\n    }\r\n\r\n    /**\r\n     * tester\r\n     */\r\n    void printQValues(){\r\n        System.out.println(\"Q matrix values\");\r\n        for (int i = 0; i < Q.length; i++) {\r\n            System.out.print(\"From state \" + i + \":  \");\r\n            for (int j = 0; j < Q[i].length; j++) {\r\n                System.out.println((Q[i][j]));\r\n            }\r\n            System.out.println();\r\n        }\r\n        }\r\n    }\r\n\r\n\r\n\r\n
+===================================================================
+diff --git a/src/main/java/newShit/QLearning/QStates.java b/src/main/java/newShit/QLearning/QStates.java
+--- a/src/main/java/newShit/QLearning/QStates.java	
++++ b/src/main/java/newShit/QLearning/QStates.java	
+@@ -10,7 +10,7 @@
+     private int[][] R;//rewards
+     private double[][] Q;
+     private int[][] EM;
+-    private int[][] IN;
++    private int[][] IN; //
+     private final double gamma = 0.5;
+     int currentState = 0;
+ 
+@@ -18,7 +18,8 @@
+ 
+ 
+     public int[] rewardTable = {-1,-10,10,-100,100,20,Integer.MIN_VALUE, -100, 1000};
+-/*
++
++    /*
+     0 = private int move = -1;
+     1 = private int wrongPath = -10; // random move with a low probability.
+     2 = private int correctPath = 10;
+@@ -29,7 +30,6 @@
+     7 = private int startPoint = -100
+     8 = private int goal = 1000;
+ 
+-
+  */
+ 
+ 
