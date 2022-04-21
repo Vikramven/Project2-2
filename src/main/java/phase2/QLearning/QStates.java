@@ -47,11 +47,6 @@ public class QStates {
     8 = private int goal = 1000;
 
  */
-
-
-    /**
-     * how do i init the maze? create new one or read in?
-     */
     private int[][] maze;//init with width and height? is it computationally effective?
     int mazeWidth = 100;
     int mazeHeight = 200;
@@ -65,6 +60,8 @@ public class QStates {
      * calculateQ
      * printQ
      *printPolicy
+     * look up Q table
+     * decide move;=> update the Agent position
      */
 
     public void init(){
@@ -111,6 +108,20 @@ public class QStates {
         }
     }
 
+    public void lookupQTable(){
+            /**
+             * made to decide whether the agent moves left or right in front of a wall, for example
+             * create instance of the table
+             * go through the table, compare q values of left,right,up and down and turn and set the higher one
+             */
+            for(int i=0;i<R.length;i++){
+                for (int j = 0; j <R[0] .length; j++) {
+
+                }
+            }
+
+        }
+
     /**
      * method for running number of training cycles
      * inital 1000
@@ -135,7 +146,7 @@ public class QStates {
     public int[] listOfPossibleStates(int state){
         ArrayList<Integer> possibleStates=new ArrayList<>();
         for (int i = 0; i < numberOfStates; i++) {
-            if(R[state][i]!=-1){
+            if(R[state][i]!=-1){//use tile to refactor this
                 possibleStates.add(i);
             }
         }
