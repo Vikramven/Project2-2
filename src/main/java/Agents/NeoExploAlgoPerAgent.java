@@ -26,9 +26,9 @@ public class NeoExploAlgoPerAgent {
         return returnList;
     }
 
-    public int[] explore(Agent givenAgent){
+    public int[] explore(Agents givenAgents){
 
-        ExploAgent agent = createCorrespondingExploAgent(givenAgent);
+        ExploAgent agent = createCorrespondingExploAgent(givenAgents);
         map = agent.getMap();
 
         if(!explorationState.isInRegion()){
@@ -130,12 +130,12 @@ public class NeoExploAlgoPerAgent {
     }
 
 
-    private ExploAgent createCorrespondingExploAgent(Agent agent){
-        int x = agent.getAgentPositionX();
-        int y = agent.getAgentPositionY();
-        Map map = agent.getAgentMap();
-        double betaAngle = agent.getInitialAngle(); // in rads
-        ArrayList<int[]> traceList = agent.getAgentTrace();
+    private ExploAgent createCorrespondingExploAgent(Agents agents){
+        int x = agents.getAgentPositionX();
+        int y = agents.getAgentPositionY();
+        Map map = agents.getAgentMap();
+        double betaAngle = agents.getInitialAngle(); // in rads
+        ArrayList<int[]> traceList = agents.getAgentTrace();
 
         return new ExploAgent(x, y, map, betaAngle, traceList);
     }

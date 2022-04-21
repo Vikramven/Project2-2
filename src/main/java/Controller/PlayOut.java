@@ -1,12 +1,10 @@
 package Controller;
 
+import Agents.Agents;
 import Agents.Map;
-import Agents.Agent;
-import Path.Move;
 import Path.Position;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PlayOut {
@@ -51,8 +49,8 @@ public class PlayOut {
         compute();
 
         ArrayList<ArrayList<int[]>> paths = new ArrayList<>();
-        Agent[] agents = map.getTeamGuards();
-        for (Agent a : agents){
+        Agents[] agents = map.getTeamGuards();
+        for (Agents a : agents){
             paths.add(a.getPath());
         }
         return paths;

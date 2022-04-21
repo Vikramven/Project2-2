@@ -21,9 +21,9 @@ public class QStates {
     private boolean reachedGoal = false;
 
     //Table Updators
-    public void EMupdate(phase2.Agent n){
+    public void EMupdate(Agent n){
         for(int i = 0; i < EM.length(); i++){
-            n.get
+            //n.get;
         }
     }
     public void QUpdate(int[][] newQTable){
@@ -64,7 +64,7 @@ public class QStates {
      * decide move;=> update the Agent position
      */
 
-    public void init(){
+    public void init() {
 
         R = new int[numberOfStates][5]; // creation of the reward Table
         Q = new double[numberOfStates][5];// creation of the Q Table
@@ -79,49 +79,68 @@ public class QStates {
 
             for (int l = 0; l < numberOfActions; l++) {
 
-                R[k][l]=-1; // everything value of -1; representing that each move costs -1, to ensure it takes the shortest path.
+                R[k][l] = -1; // everything value of -1; representing that each move costs -1, to ensure it takes the shortest path.
 
-            //HOW TO RETRIEVE/SET FINAL STATE?
-            //if not in the final state, or there is no wall ahead, move in all directions
-            //can fill in later, but I will just fill this in for now
-            if(!reachedGoal())
-                getpath();
+                //HOW TO RETRIEVE/SET FINAL STATE?
+                //if not in the final state, or there is no wall ahead, move in all directions
+                //can fill in later, but I will just fill this in for now
+                if (!reachedGoal())
+                    getpath();
             }
-        initializeQ();
-        }
-
-
-    /**
-     * below methods for deciding states, possible actions from states
-     */
-
-
-    //Set Q values to R values
-    public void initializeQ()
-    {
-        for (int i = 0; i < numberOfStates; i++){
-            for(int j = 0; j < numberOfActions; j++){
-
-                // read from map
-
-            }
+            initializeQ();
         }
     }
 
-    public void lookupQTable(){
-            /**
-             * made to decide whether the agent moves left or right in front of a wall, for example
-             * create instance of the table
-             * go through the table, compare q values of left,right,up and down and turn and set the higher one
-             */
-            for(int i=0;i<R.length;i++){
-                for (int j = 0; j <R[0] .length; j++) {
+
+        /**
+         * below methods for deciding states, possible actions from states
+         */
+
+
+        //Set Q values to R values
+        public void initializeQ ()
+        {
+            for (int i = 0; i < numberOfStates; i++) {
+                for (int j = 0; j < numberOfActions; j++) {
+
+                    // read from map
 
                 }
             }
-
         }
 
+        public void lookupQTable(Agent a){
+            /** return the best move for an agent
+             * by looking for the max value
+             *  Up down, left, right OR Turn left turn right
+             */
+
+        int agentPositionX = a.getCurrentX();
+        int agentPositionY = a.getCurrentY();
+        int currentMax = -100;// set as minimum when tile contains a wall
+
+            int[] maxList = new int[4];
+            //look up left
+           maxList[0] = R[agentPositionX][agentPositionY - 1];
+            //look right
+            maxList[1] = R[agentPositionX][agentPositionY + 1]
+            //look up Up
+            maxList[2] = R[agentPositionX + 1][agentPositionY]
+            //look up Down
+            maxList[3] = R[agentPositionX - 1][agentPositionY]
+
+            //in case no surrounding position is better than the current one: turn
+            for (int i = 0; i < maxList.length; i++){
+                if(currentMax < maxList[i]){
+                    currentMax = maxList[i];//
+                }
+                if(currentMax > -1000){
+                    //update
+                    a.move()
+                else
+                //call turn + or minus : TO DO evaluate the best half average left > average right ?
+
+        }
     /**
      * method for running number of training cycles
      * inital 1000
@@ -179,8 +198,9 @@ public class QStates {
             }
             System.out.println();
         }
-        }
     }
+
+}
 
 
 

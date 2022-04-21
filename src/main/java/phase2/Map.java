@@ -49,6 +49,7 @@ public class Map {
 
 
     public void agentsInit(int teamID){
+        float initialAngle = (float) (Math.toRadians(360)/variables.getNumberOfGuards());
 
     }
 

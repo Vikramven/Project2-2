@@ -5,29 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/newShit/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/newShit/MapCreation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/newShit/MapInit.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Agent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/ExploAgent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Map.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/NeoExploAlgoPerAgent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Tile.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/PlayOut.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Path/Move.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Path/Position.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Agents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Path/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
-    <list id="3f4196c9-b984-4db7-880a-412dc16d5bb0" name="Changes by nathaliebent" comment="" />
     <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
-    <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
-    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="" />
+    <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" afterDir="false" />
+    </list>
+    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Move.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +49,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="debugging" />
+        <entry key="$PROJECT_DIR$" value="phase2-main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,6 +61,52 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/phase2/Map.java">
+      <ranges>
+        <range start1="51" end1="51" start2="51" end2="52" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="73" end1="73" start2="74" end2="83" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="77" end1="77" start2="87" end2="89" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/phase2/Agent.java">
+      <ranges>
+        <range start1="13" end1="14" start2="13" end2="14" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="16" end1="16" start2="16" end2="17" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="54" end1="54" start2="55" end2="66" changelist="7ab52772-061c-4b8d-aeb6-872a88f8cd11" />
+        <range start1="82" end1="83" start2="94" end2="94" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="119" end1="122" start2="130" end2="130" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="123" end1="124" start2="131" end2="132" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="125" end1="130" start2="133" end2="134" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="131" end1="132" start2="135" end2="136" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="133" end1="136" start2="137" end2="138" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="137" end1="139" start2="139" end2="140" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java">
+      <ranges>
+        <range start1="3" end1="3" start2="3" end2="4" changelist="02a2e82e-c7a5-407b-9645-c555f1108ddc" />
+        <range start1="19" end1="19" start2="20" end2="21" changelist="02a2e82e-c7a5-407b-9645-c555f1108ddc" />
+        <range start1="23" end1="24" start2="25" end2="26" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="25" end1="26" start2="27" end2="28" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="66" end1="67" start2="68" end2="69" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="81" end1="82" start2="83" end2="84" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="83" end1="88" start2="85" end2="90" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="89" end1="90" start2="91" end2="92" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="91" end1="91" start2="93" end2="94" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="93" end1="96" start2="96" end2="99" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="98" end1="103" start2="101" end2="106" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="104" end1="105" start2="107" end2="108" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="106" end1="109" start2="109" end2="112" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="110" end1="115" start2="113" end2="117" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="116" end1="118" start2="118" end2="122" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="119" end1="119" start2="123" end2="137" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="120" end1="121" start2="138" end2="143" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="123" end1="124" start2="145" end2="145" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="181" end1="183" start2="202" end2="205" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -78,11 +126,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "C:/Users/Collin/IdeaProjects/Project2-2/src/main/java/phase2/RayCasting"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Collin\IdeaProjects\Project2-2\src\main\java\phase2\RayCasting" />
@@ -178,6 +226,7 @@
       <workItem from="1647855880434" duration="2200000" />
       <workItem from="1647862599612" duration="6146000" />
       <workItem from="1649164305482" duration="9029000" />
+      <workItem from="1650536841238" duration="2710000" />
     </task>
     <task id="LOCAL-00001" summary="starting code is from Controller-For-Merge branch">
       <created>1645613707001</created>

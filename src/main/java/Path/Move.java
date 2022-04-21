@@ -1,8 +1,7 @@
 package Path;
 
-import Agents.Agent;
+import Agents.Agents;
 import Agents.Map;
-import Controller.Variables;
 
 import java.lang.Integer;
 import java.util.*;
@@ -12,40 +11,40 @@ public class Move {
     //convertor: angle to director based on a range
 
     //Left: -90 ° = -45 x 2
-    public void leftMove(Agent agent){
-        agent.setAgentPositionX(agent.getAgentPositionX()-1);
+    public void leftMove(Agents agents){
+        agents.setAgentPositionX(agents.getAgentPositionX()-1);
     }
     //Right: +90° = +45 x 2
-    public void rightMove(Agent agent){
-        agent.setAgentPositionX(agent.getAgentPositionX()+1);
+    public void rightMove(Agents agents){
+        agents.setAgentPositionX(agents.getAgentPositionX()+1);
     }
     //Up: +0°
-    public void upMove(Agent agent){
-        agent.setAgentPositionY(agent.getAgentPositionY()+1);
+    public void upMove(Agents agents){
+        agents.setAgentPositionY(agents.getAgentPositionY()+1);
     }
     //Down: -180° = -45 x 4
-    public void downMove(Agent agent){
-        agent.setAgentPositionY(agent.getAgentPositionY()-1);
+    public void downMove(Agents agents){
+        agents.setAgentPositionY(agents.getAgentPositionY()-1);
     }
     //Diagonal left-Up: +45°
-    public void diagonalLeftUpMove(Agent agent){
-        agent.setAgentPositionX(agent.getAgentPositionX()-1);
-        agent.setAgentPositionY(agent.getAgentPositionY()+1);
+    public void diagonalLeftUpMove(Agents agents){
+        agents.setAgentPositionX(agents.getAgentPositionX()-1);
+        agents.setAgentPositionY(agents.getAgentPositionY()+1);
     }
     //Diagonal Right-Up: -45°
-    public void diagonalRightUpMove(Agent agent){
-        agent.setAgentPositionX(agent.getAgentPositionX()+1);
-        agent.setAgentPositionY(agent.getAgentPositionY()+1);
+    public void diagonalRightUpMove(Agents agents){
+        agents.setAgentPositionX(agents.getAgentPositionX()+1);
+        agents.setAgentPositionY(agents.getAgentPositionY()+1);
     }
     //Diagonal left-Down: +225 = -45 x 5
-    public void diagonalLeftDownMove(Agent agent){
-        agent.setAgentPositionX(agent.getAgentPositionX()-1);
-        agent.setAgentPositionY(agent.getAgentPositionY()-1);
+    public void diagonalLeftDownMove(Agents agents){
+        agents.setAgentPositionX(agents.getAgentPositionX()-1);
+        agents.setAgentPositionY(agents.getAgentPositionY()-1);
     }
     //Diagonal Right-Down: +135° = +45 x 3
-    public void diagonalRightDownMove(Agent agent){
-        agent.setAgentPositionX(agent.getAgentPositionX()+1);
-        agent.setAgentPositionY(agent.getAgentPositionY()-1);
+    public void diagonalRightDownMove(Agents agents){
+        agents.setAgentPositionX(agents.getAgentPositionX()+1);
+        agents.setAgentPositionY(agents.getAgentPositionY()-1);
     }
 
     public boolean canMoveThere(Map map, int x, int y){
@@ -62,7 +61,7 @@ public class Move {
         }
     }
 
-    public  ArrayList <int[]> legalMoveGenerator(Agent agent, Map map){
+    public  ArrayList <int[]> legalMoveGenerator(Agents agents, Map map){
 
         //call all the above methods
 
@@ -89,7 +88,7 @@ public class Move {
 
 
 
-    public int[] goalUpdator(Agent agent, Map map) {
+    public int[] goalUpdator(Agents agents, Map map) {
     /* Sort the option from most to less costly
         Need to sort the distance from AgentPosition to all know Map Limits
         Need to sort the distance from AgentPosition to all know Traces
@@ -110,11 +109,11 @@ public class Move {
      * OUTPUT: an integer that describes how costy(beneficial) the potential Move is to the Agent
      * */
 
-    public int aStar(Agent agent, Map map, int initialCost){
-        int x = agent.getAgentPositionX();
-        int y = agent.getAgentPositionY();
+    public int aStar(Agents agents, Map map, int initialCost){
+        int x = agents.getAgentPositionX();
+        int y = agents.getAgentPositionY();
 
-        int[] newGoal = goalUpdator(agent, map);
+        int[] newGoal = goalUpdator(agents, map);
 
         /*What are the possible Moves to reach the Goal ?
             Candidate Paths

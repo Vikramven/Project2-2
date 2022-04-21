@@ -15,7 +15,7 @@ when you reach goal
  */
 
 
-public class Agent  {
+public class Agents {
     //INSTANCES of class Agent
     //Agent Team information
     int teamCode; //1 if Intruder, 0 if Guard
@@ -39,7 +39,7 @@ public class Agent  {
     private int teamSize;
     private int visionRange = 20; //CHNAGE IT LATER
     private double visionWidth;
-    private Agent[] team;
+    private Agents[] team;
     private int number;
     private ArrayList<int[]> exploredFields = new ArrayList<>();
     private ArrayList<int[]> visibleFields = new ArrayList<>(); //what the agent sees
@@ -91,7 +91,7 @@ public class Agent  {
      *   constructor
      *   create an agent belonging to a specific team
      * */
-    public Agent(int team, Variables vars, Map map, float initialAngle, int number){
+    public Agents(int team, Variables vars, Map map, float initialAngle, int number){
         this.number = number;
         this.visionWidth = java.lang.Math.toRadians(15);
         this.teamCode = team;

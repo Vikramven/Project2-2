@@ -1,10 +1,8 @@
 package Agents;
-import Controller.FileParser;
 import Controller.Variables;
 import java.lang.Integer;
 import java.util.ArrayList;
 import Controller.Wall;
-import org.w3c.dom.ls.LSOutput;
 
 /*
      The General Map is :
@@ -24,8 +22,8 @@ public class Map{
    private ArrayList <Wall> walls; //check every 2 integers
    private Variables variables = new Variables(); // why ?
    private Tile[][] tiles;
-   private Agent[] teamGuards;
-   private Agent[] teamIntruders;
+   private Agents[] teamGuards;
+   private Agents[] teamIntruders;
    private double exploredPercentage;
    private ArrayList<int[]> exploredTiles = new ArrayList<>();
    private ArrayList<int[]> flags = new ArrayList<>();
@@ -44,7 +42,7 @@ public class Map{
       numberOfTiles = mapHeight*mapWidth;
       //matrix = new int[mapWidth][mapHeight]; //dimension of
       tiles = new Tile[mapWidth][mapHeight];
-      this.teamGuards = new Agent[variables.getNumberOfGuards()];
+      this.teamGuards = new Agents[variables.getNumberOfGuards()];
       mapInit();
       teamCreation();
       walls = variables.getWalls(); //placing walls on the map
@@ -74,15 +72,15 @@ public class Map{
         float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
         System.out.println("angle is " + Math.toDegrees(initialAngle));
         for(int i = 0; i < variables.getNumberOfGuards(); i++){
-            Agent newAgent = new Agent(0,this.variables,this, initialAngle, i /*number of agent*/); //create the Agent; 0 for Guard
-            newAgent.setInitialAngle(initialAngle*(i+1));
+            Agents newAgents = new Agents(0,this.variables,this, initialAngle, i /*number of agent*/); //create the Agent; 0 for Guard
+            newAgents.setInitialAngle(initialAngle*(i+1));
             System.out.println(initialAngle*(i+1));
-            teamGuards[i] = newAgent;
+            teamGuards[i] = newAgents;
         }
         placeAgentsOnSpawn(0);
 
-        for (Agent agent: teamGuards) {
-            System.out.println(agent.getAgentPositionX() + " ||| " +agent.getAgentPositionY());
+        for (Agents agents : teamGuards) {
+            System.out.println(agents.getAgentPositionX() + " ||| " + agents.getAgentPositionY());
         }
     }
 
@@ -106,23 +104,23 @@ public class Map{
     }
 
     private void updateAgentLocation(){
-        for(Agent agent:teamGuards){
-            int x = agent.getAgentPositionX();
-            int y = agent.getAgentPositionY();
+        for(Agents agents :teamGuards){
+            int x = agents.getAgentPositionX();
+            int y = agents.getAgentPositionY();
             tiles[x][y].removeAgent();
 
-            agent.move(); //method to implement, should be connected to A*
+            agents.move(); //method to implement, should be connected to A*
             //agent.updateMap();
-            x = agent.getAgentPositionX();
-            y = agent.getAgentPositionY();
+            x = agents.getAgentPositionX();
+            y = agents.getAgentPositionY();
             tiles[x][y].placeAgent();
         }
 
     }
 
     public void updateAgentMap(){
-        for(Agent agent  : teamGuards){
-            agent.setMap(this);
+        for(Agents agents : teamGuards){
+            agents.setMap(this);
         }
     }
 
@@ -190,7 +188,7 @@ public class Map{
         return tiles[x][y].getValue();
     }
     public double getExploredPercentage(){return this.exploredPercentage;}
-    public Agent[] getTeamGuards(){return teamGuards;}
+    public Agents[] getTeamGuards(){return teamGuards;}
     public ArrayList<int[]> getFlags(){
         return this.flags;
     }
@@ -205,7 +203,7 @@ public class Map{
      * */
 
     public void placeAgentsOnSpawn(int teamNumber){
-        Agent[] team;
+        Agents[] team;
 
         if(teamNumber==0){
             team = teamGuards;
@@ -270,7 +268,7 @@ public class Map{
             //System.out.println();
             //System.out.println(" (" + coords[0] + ", " + coords[1] + ") ");
         }
-       for (Agent a:team) {
+       for (Agents a:team) {
             System.out.println();
             System.out.println(" (" + a.getAgentPositionX() + ", " + a.getAgentPositionY() + ") ");
         }
@@ -281,7 +279,7 @@ public class Map{
             System.out.println("if statement reached");
             this.teamGuards = team;
             System.out.println("TeamGuards: ");
-            for (Agent a:teamGuards) {
+            for (Agents a:teamGuards) {
                 System.out.println(" (" + a.getAgentPositionX() + ", " + a.getAgentPositionY() + ") ");
             }
         }
@@ -327,8 +325,8 @@ public class Map{
     }
 
     private void updateExplored(){
-        for (Agent agent : teamGuards) {
-            ArrayList<int[]> exploredTiles = agent.getExplored();
+        for (Agents agents : teamGuards) {
+            ArrayList<int[]> exploredTiles = agents.getExplored();
 
 //            for(int i=0; i<exploredTiles.size(); i++){
             for (int[] coords : exploredTiles) {
@@ -339,8 +337,8 @@ public class Map{
     }
 
     private void updateFlags(){
-        for (Agent agent : teamGuards) {
-            ArrayList<int[]> flags = agent.getFlags();
+        for (Agents agents : teamGuards) {
+            ArrayList<int[]> flags = agents.getFlags();
             for (int[] coords : flags) {
                 tiles[coords[0]][coords[1]].placeFlag();
                 if(!flags.contains(coords)){
@@ -358,8 +356,8 @@ public class Map{
             }
         }
         //set the tiles that are currently seen by the agent as visible
-        for (Agent agent : teamGuards) {
-            ArrayList<int[]> visibleFields = agent.getVisibleFields();
+        for (Agents agents : teamGuards) {
+            ArrayList<int[]> visibleFields = agents.getVisibleFields();
             for (int[] coords : visibleFields) {
                 tiles[coords[0]][coords[1]].setAsVisible();
             }
@@ -367,9 +365,9 @@ public class Map{
     }
 
     public void updateTiles(){
-        for(Agent agent : teamGuards){
-            int[] coords = agent.getLastVisited();
-            tiles[coords[0]][coords[1]].overlay(agent.getTiles()[coords[0]][coords[1]]);
+        for(Agents agents : teamGuards){
+            int[] coords = agents.getLastVisited();
+            tiles[coords[0]][coords[1]].overlay(agents.getTiles()[coords[0]][coords[1]]);
         }
     }
 

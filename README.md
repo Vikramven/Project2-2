@@ -6,7 +6,7 @@ Our code is structured into 3 packages:
 
 <b>Controller:</b> establishes the connections between the logic and the visuals of the user interface, also contains useful generic method and interface to be used at any time (vectors).
 
-<b>Path:</b> contains the A* algorithm as well as essential Move method to update the agent positions.
+<b>Path:</b> contains the A* algorithm as well as essential Move method to update the agents positions.
 
 ## Set up Libraries and Dependencies: ##
 
@@ -25,6 +25,6 @@ Our code is structured into 3 packages:
 
 	Step 7. Navigate to the package src/main/java/Visuals/main/
 	Step 8. Run StartGame.java
-    Step 9. Press M to move the agent forward, and N to move it backwards.
+    Step 9. Press M to move the agents forward, and N to move it backwards.
 
 

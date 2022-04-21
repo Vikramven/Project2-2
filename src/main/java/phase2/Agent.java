@@ -11,7 +11,7 @@ public class Agent {
     * CURRENT LOCATION INFO
     * PAST EXPERIENCE <-- PATH 
     * */
-    private int ID;//  could be useful to differenciate agent among their team
+    private int ID;//  could be useful to differentiate agent among their team
     private int [] position = new int[2];
     private float initialAngle;
     private int visionRange = 20;
@@ -80,7 +80,6 @@ public class Agent {
         return new Tile(x,y);
     }
 
-
     public int getCurrentX() {
         return position[0];
     }
@@ -117,24 +116,14 @@ public class Agent {
         /** returns true if the agent is dead (or caught) */
         return this.dead;
     }
-
-
-    //make the getter&setter for each private instance above : for path, for EM and Q table
       public int getID(){return ID;};
-      public void setID(){};
+      public void setID(int ID){this.ID = ID;};
       public int[] getPosition(){return position;};
-      public void setPosition(){};
-      public float getInitialAngle(){return initialAngle;};
-      public void setInitialAngle(){};
-      public int getVisionRange(){return visionRange;};
-      public void setVisitionRang(){};
+      public void setPosition(int[] position){this.position = position;};
       public ArrayList<int[]> getPath(){return path;};
-      public void setPath(){};
+      public void setPath(ArrayList<int[]> path){this.path = path;};
       public ArrayList<int[]> getVisionArea(){return visionArea;};
-      public void setVisionArea(){};
-      public boolean getDead(){return dead;};
-      public void setDead(){};
+      public void setVisionArea(ArrayList<int[]> visionArea){this.visionArea = visionArea;};
       public QStates getQLearning(){return qLearning;};
-      public void setQLearning(){};
-
+      public void setQLearning(QStates qLearning){this.qLearning = qLearning;};
 }
