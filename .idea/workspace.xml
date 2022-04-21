@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="Bug Fixing collin + zaker">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/MapCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
@@ -18,7 +13,6 @@
     <list id="da5981b2-c56a-408b-9f11-9c49b1065121" name="Changes by Collin" comment="" />
     <list id="3f4196c9-b984-4db7-880a-412dc16d5bb0" name="Changes by nathaliebent" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" afterDir="false" />
     </list>
     <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
     <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
@@ -58,9 +52,8 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/src/main/java/phase2/Agent.java">
       <ranges>
-        <range start1="17" end1="18" start2="17" end2="18" changelist="3f4196c9-b984-4db7-880a-412dc16d5bb0" />
-        <range start1="44" end1="44" start2="44" end2="66" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
-        <range start1="98" end1="98" start2="120" end2="137" changelist="3f4196c9-b984-4db7-880a-412dc16d5bb0" />
+        <range start1="120" end1="120" start2="120" end2="138" changelist="3f4196c9-b984-4db7-880a-412dc16d5bb0" />
+        <range start1="121" end1="140" start2="139" end2="139" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
       </ranges>
     </file>
   </component>
