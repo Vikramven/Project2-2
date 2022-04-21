@@ -14,6 +14,7 @@ public class Agent {
     private int ID;//  could be useful to differentiate agent among their team
     private int [] position = new int[2];
     private float initialAngle;
+    private float currentAngle;
     private int visionRange = 20;
     private ArrayList<int[]> path; // AGENT PAST EXPERIENCE
     private ArrayList<int[]> visionArea;
@@ -51,6 +52,17 @@ public class Agent {
     public void moveTo(int[] position){
         this.position = position;
     }
+
+    public void turnLeft(){
+        if(this.currentAngle>Math.toRadians(90)) {
+            this.currentAngle = (float) Math.toRadians((Math.toDegrees(this.currentAngle) - 90) % 360);
+        }
+        else{
+            this.currentAngle = (float) Math.toRadians(360-(Math.toDegrees(this.currentAngle)-90));
+        }
+    }
+
+    public void turnRight()
 
     public void moveOnAPath(ArrayList<int[]> instructions){
         for(int[] coords: instructions){
