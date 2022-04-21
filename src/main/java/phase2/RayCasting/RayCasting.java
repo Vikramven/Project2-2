@@ -10,165 +10,43 @@ import static java.lang.Math.*;
 
 public class RayCasting {
 
-    int x; //height
-    int y; // width
-
+    int mapHeight; //height
+    int mapWidth; // width
     ArrayList<Cell> world;
     LinkedList<Edge> edges = new LinkedList<>();
     ArrayList<Ray> visionPolygonPoints = new ArrayList<>();
-
     Map map;
 
     public RayCasting(Map map){
         this.map = map;
         Tile[][] tiles = map.getTiles();
-        this.x = map.getMapHeight();
-        this.y = map.getMapWidth();
+        this.mapHeight = map.getMapHeight();
+        this.mapWidth = map.getMapWidth();
         world = new ArrayList<>();
-        for (int i = 0; i < this.x; i++) {
-            for (int j = 0; j < this.y; j++) {
+        for (int i = 0; i < this.mapHeight; i++) {
+            for (int j = 0; j < this.mapWidth; j++) {
                 Cell cell = new Cell();
                 if(tiles[i][j].hasWall())
                     cell.exists = true;
                 world.add(cell);
             }
         }
-        // make edges list
-        convertToRayCastingMap(0,0, this.y, this.x, 1, this.y);
+        convertToRayCastingMap();
     }
 
-    public ArrayList<int[]> getVisibleTiles(int x, int y, int visionRange){
+    /**
+     * method represents map and walls as a list of cells with edges
+     * representation in edges list
+     */
+    public void convertToRayCastingMap(){
 
-        Tile[][] mapTiles = this.map.getTiles();
+        // coordinates of point at which to start conversion into map with edges
+        int startX = 0, startY = 0;
+        // height and width of map with edges
+        int width = this.mapWidth, height = this.mapHeight;
+        // width of a tile and pitch for conversion
+        int blockWidth = 1, pitch = this.mapWidth;
 
-        calculateVision((float) x, (float) y, (float) visionRange);
-
-        ArrayList<int[]> listOfVisibleTiles = new ArrayList<>();
-
-        for(Tile[] tiles : mapTiles){
-            for(Tile tile : tiles){
-                if(isInsideVisionRange(tile.getXCoord(),tile.getYCoord(), (float) x, (float) y))
-                    listOfVisibleTiles.add(new int[]{tile.getXCoord(), tile.getYCoord()});
-            }
-        }
-
-        return listOfVisibleTiles;
-
-    }
-
-    private boolean isInsideVisionRange(float x, float y, float agentX, float agentY){
-        float tileX = (2*x + 1)/2,
-                tileY = (2*y + 1)/2;
-
-        float[] rayStart = {tileX,tileY}, rayEnd = {agentX,agentY};
-
-        for(int i = 0; i < visionPolygonPoints.size()-1; i++){
-            Ray point1 = visionPolygonPoints.get(i);
-            Ray point2 = visionPolygonPoints.get(i+1);
-            float[] edgeStart = {point1.getEndX(), point1.getEndY()},
-                    edgeEnd = {point2.getEndX(), point2.getEndY()};
-            float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);
-            float distanceAlongRay = intersectionData[0],
-                    distanceAlongEdge = intersectionData[1];
-            if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)
-                return false;
-        }
-
-        Ray point1 = visionPolygonPoints.get(0);
-        Ray point2 = visionPolygonPoints.get(visionPolygonPoints.size()-1);
-        float[] edgeStart = {point1.getEndX(), point1.getEndY()},
-                edgeEnd = {point2.getEndX(), point2.getEndY()};
-        float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);
-        float distanceAlongRay = intersectionData[0],
-                distanceAlongEdge = intersectionData[1];
-        if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)
-            return false;
-        return true;
-    }
-
-    public void calculateVision(float originX, float originY, float radius) {
-
-        visionPolygonPoints.clear();
-
-        for (Edge edge1 : edges) {
-            for (int i = 0; i < 2; i++) {
-                float rayVectorX, rayVectorY;
-                rayVectorX = (i == 0 ? edge1.getStartX() : edge1.getEndX()) - originX;
-                rayVectorY = (i == 0 ? edge1.getStartY() : edge1.getEndY()) - originY;
-
-                float baseAngle = (float) atan2(rayVectorY, rayVectorX);
-                float angle = 0;
-
-                for (int j = 0; j < 2; j++) {
-                    if (j == 0) {
-                        angle = baseAngle - 0.0001f;
-                    }
-                    if (j == 1) {
-                        angle = baseAngle + 0.0001f;
-                    }
-
-                    rayVectorX = (float) (radius * cos(angle));
-                    rayVectorY = (float) (radius * sin(angle));
-
-                    float lowestDistance = Float.POSITIVE_INFINITY;
-                    float closestIntersectX = 0, closestIntersectY = 0, closestIntersectAng = 0;
-
-                    int interceptionCount = 0;
-
-                    for (Edge edge2 : edges) {
-
-                        float edgeVectorX = edge2.getEndX() - edge2.getStartX(),
-                                edgeVectorY = edge2.getEndY() - edge2.getStartY();
-
-                        float[] edgeStart = {edge2.getStartX(), edge2.getStartY()},
-                                edgeEnd = {edge2.getEndX(), edge2.getEndY()},
-                                rayStart = {originX, originY},
-                                rayEnd = {originX + rayVectorX, originY + rayVectorY};
-
-                        if (Math.abs(edgeVectorX - rayVectorX) > 0.0f && Math.abs(edgeVectorY - rayVectorY) > 0.0f) {
-
-                            float[] closestIntersectData = getDistanceOfIntersectionAlongRay(rayStart, rayEnd, edgeStart, edgeEnd);
-                            float distance = closestIntersectData[0], edgeVectorCoef = closestIntersectData[1];
-
-                            if (0 <= distance && distance <= 1 && 0 <= edgeVectorCoef && edgeVectorCoef <= 1) {
-                                interceptionCount++;
-                                if (distance < lowestDistance) {
-                                    lowestDistance = distance;
-                                    closestIntersectX = closestIntersectData[2];
-                                    closestIntersectY = closestIntersectData[3];
-                                    closestIntersectAng = (float) atan2(closestIntersectY - originY, closestIntersectX - originX);
-                                }
-                            }
-                        }
-                    }
-
-                    if(interceptionCount == 0) {
-                        closestIntersectX = rayVectorX + originX;
-                        closestIntersectY = rayVectorY + originY;
-                        closestIntersectAng = angle;
-                    }
-                    visionPolygonPoints.add(new Ray(closestIntersectAng, closestIntersectX, closestIntersectY));
-                }
-            }
-        }
-
-        visionPolygonPoints.sort(Comparator.comparing(Ray::getAngle));
-        visionPolygonPoints = removeDuplicates(visionPolygonPoints);
-    }
-
-    private ArrayList<Ray> removeDuplicates(ArrayList<Ray> list){
-        Ray temp = list.get(list.size()-1);
-        ArrayList<Ray> output = new ArrayList<>();
-
-        for(Ray ray : list){
-            if(!ray.sameAs(temp))
-                output.add(ray);temp=ray;
-        }
-
-        return output;
-    }
-
-    public void convertToRayCastingMap(int startX, int startY, int width, int height, int blockWidth, int pitch){
         edges.clear();
 
         for (int i = 0; i < width; i++) {
@@ -301,12 +179,147 @@ public class RayCasting {
         edges.add(new Edge(width, 0, width, height));
         edges.add(new Edge(0, height, width, height));
     }
+
+    /**
+     * @return List of [x,y] coordinates of tiles in agent's viewing range
+     */
+    public ArrayList<int[]> getVisibleTiles(int agentX, int agentY, int visionRange){
+
+        Tile[][] mapTiles = this.map.getTiles();
+
+        calculateVision((float) agentX, (float) agentY, (float) visionRange); // makes visionPolygon
+
+        ArrayList<int[]> listOfVisibleTiles = new ArrayList<>();
+
+        for(Tile[] tiles : mapTiles){
+            for(Tile tile : tiles){
+                if(isInsideVisionRange(tile.getXCoord(),tile.getYCoord(), (float) agentX, (float) agentY))
+                    listOfVisibleTiles.add(new int[]{tile.getXCoord(), tile.getYCoord()});
+            }
+        }
+
+        return listOfVisibleTiles;
+
+    }
+
+    private boolean isInsideVisionRange(float x, float y, float agentX, float agentY){
+        float tileX = (2*x + 1)/2, // basically x + 0.5
+                tileY = (2*y + 1)/2; // y + 0.5
+
+        float[] rayStart = {tileX,tileY}, rayEnd = {agentX,agentY};
+
+        for(int i = 0; i < visionPolygonPoints.size()-1; i++){
+            Ray point1 = visionPolygonPoints.get(i);
+            Ray point2 = visionPolygonPoints.get(i+1);
+            float[] edgeStart = {point1.getEndX(), point1.getEndY()},
+                    edgeEnd = {point2.getEndX(), point2.getEndY()};
+            float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);
+            float distanceAlongRay = intersectionData[0],
+                    distanceAlongEdge = intersectionData[1];
+            if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)
+                return false;
+        }
+
+        Ray point1 = visionPolygonPoints.get(0);
+        Ray point2 = visionPolygonPoints.get(visionPolygonPoints.size()-1);
+        float[] edgeStart = {point1.getEndX(), point1.getEndY()},
+                edgeEnd = {point2.getEndX(), point2.getEndY()};
+        float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);
+        float distanceAlongRay = intersectionData[0],
+                distanceAlongEdge = intersectionData[1];
+        if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)
+            return false;
+        return true;
+    }
+
+    public void calculateVision(float originX, float originY, float radius) {
+
+        visionPolygonPoints.clear();
+
+        for (Edge edge1 : edges) {
+            for (int i = 0; i < 2; i++) {
+                float rayVectorX, rayVectorY;
+                rayVectorX = (i == 0 ? edge1.getStartX() : edge1.getEndX()) - originX;
+                rayVectorY = (i == 0 ? edge1.getStartY() : edge1.getEndY()) - originY;
+
+                float baseAngle = (float) atan2(rayVectorY, rayVectorX);
+                float angle = 0;
+
+                for (int j = 0; j < 2; j++) {
+                    if (j == 0) {
+                        angle = baseAngle - 0.0001f;
+                    }
+                    if (j == 1) {
+                        angle = baseAngle + 0.0001f;
+                    }
+
+                    rayVectorX = (float) (radius * cos(angle));
+                    rayVectorY = (float) (radius * sin(angle));
+
+                    float lowestDistance = Float.POSITIVE_INFINITY;
+                    float closestIntersectX = 0, closestIntersectY = 0, closestIntersectAng = 0;
+
+                    int interceptionCount = 0;
+
+                    for (Edge edge2 : edges) {
+
+                        float edgeVectorX = edge2.getEndX() - edge2.getStartX(),
+                                edgeVectorY = edge2.getEndY() - edge2.getStartY();
+
+                        float[] edgeStart = {edge2.getStartX(), edge2.getStartY()},
+                                edgeEnd = {edge2.getEndX(), edge2.getEndY()},
+                                rayStart = {originX, originY},
+                                rayEnd = {originX + rayVectorX, originY + rayVectorY};
+
+                        if (Math.abs(edgeVectorX - rayVectorX) > 0.0f && Math.abs(edgeVectorY - rayVectorY) > 0.0f) {
+
+                            float[] closestIntersectData = getDistanceOfIntersectionAlongRay(rayStart, rayEnd, edgeStart, edgeEnd);
+                            float distance = closestIntersectData[0], edgeVectorCoef = closestIntersectData[1];
+
+                            if (0 <= distance && distance <= 1 && 0 <= edgeVectorCoef && edgeVectorCoef <= 1) {
+                                interceptionCount++;
+                                if (distance < lowestDistance) {
+                                    lowestDistance = distance;
+                                    closestIntersectX = closestIntersectData[2];
+                                    closestIntersectY = closestIntersectData[3];
+                                    closestIntersectAng = (float) atan2(closestIntersectY - originY, closestIntersectX - originX);
+                                }
+                            }
+                        }
+                    }
+
+                    if(interceptionCount == 0) {
+                        closestIntersectX = rayVectorX + originX;
+                        closestIntersectY = rayVectorY + originY;
+                        closestIntersectAng = angle;
+                    }
+                    visionPolygonPoints.add(new Ray(closestIntersectAng, closestIntersectX, closestIntersectY));
+                }
+            }
+        }
+
+        visionPolygonPoints.sort(Comparator.comparing(Ray::getAngle));
+        visionPolygonPoints = removeDuplicates(visionPolygonPoints);
+    }
+
+    private ArrayList<Ray> removeDuplicates(ArrayList<Ray> list){
+        Ray temp = list.get(list.size()-1);
+        ArrayList<Ray> output = new ArrayList<>();
+
+        for(Ray ray : list){
+            if(!ray.sameAs(temp))
+                output.add(ray);temp=ray;
+        }
+
+        return output;
+    }
+
     private boolean isInMap(int currentIndex, int directionOfNeighbour){
 
         // North = 0 | South = 1 | East = 2 | West = 3|
 
-        int currentX = currentIndex % this.y;
-        int currentY = currentIndex / this.y;
+        int currentX = currentIndex % this.mapHeight;
+        int currentY = currentIndex / this.mapWidth;
 
         if(currentX == 0 && directionOfNeighbour == 3) {
             return false;
@@ -314,10 +327,10 @@ public class RayCasting {
         else if (currentY == 0 && directionOfNeighbour == 0) {
             return false;
         }
-        else if (currentX == this.y-1 && directionOfNeighbour == 2) {
+        else if (currentX == this.mapWidth-1 && directionOfNeighbour == 2) {
             return false;
         }
-        else if (currentY == this.x-1 && directionOfNeighbour == 1) {
+        else if (currentY == this.mapHeight-1 && directionOfNeighbour == 1) {
             return false;
         }
         return true;
