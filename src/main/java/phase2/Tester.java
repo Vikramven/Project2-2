@@ -1,7 +1,10 @@
 package phase2;
 
+import Agents.Map;
 import Controller.ReadFiles;
 import phase2.RayCasting.RayCasting;
+
+import java.util.ArrayList;
 
 public class Tester {
 
