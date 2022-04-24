@@ -23,7 +23,7 @@ public class QStates {
 
     //Table Updators
     public void EMupdate(Agent n){
-        for(int i = 0; i < EM.length(); i++){
+        for(int i = 0; i < EM.length; i++){
             //n.get;
         }
     }
@@ -86,7 +86,7 @@ public class QStates {
                 //HOW TO RETRIEVE/SET FINAL STATE?
                 //if not in the final state, or there is no wall ahead, move in all directions
                 //can fill in later, but I will just fill this in for now
-                if (!reachedGoal())
+                if (!reachedGoal)
                     getpath();
             }
             initializeQ();
