@@ -1,0 +1,107 @@
+Index: src/main/java/phase2/Move.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\n\npublic class Move {\n    private int x;\n    private int y;\n\n    public Move(int x, int y){\n\n    }\n\n    public void move(int a, int b){\n        setX(x+a);\n        setY(y+b);\n    }\n\n    public void moveUp(){\n        move(0,1);\n    }\n\n    public void moveUpRight(){\n        move(1,1);\n    }\n\n    public void moveRight(){\n        move(1,0);\n    }\n\n    public void moveDownRight(){\n        move(1,-1);\n    }\n\n    public void moveDown(){\n        move(0,-1);\n    }\n\n    public void moveDownLeft(){\n        move(-1,-1);\n    }\n\n    public void moveLeft(){\n        move(-1,0);\n    }\n\n    public void moveUpLeft(){\n        move(-1,1);\n    }\n\n\n    public void setX(int x) {\n        this.x=x;\n    }\n\n    public void setY(int y){\n        this.y=y;\n    }\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Move.java b/src/main/java/phase2/Move.java
+--- a/src/main/java/phase2/Move.java	(revision 2c21b94eade9c84d5f149fc80d8a070e8e453036)
++++ b/src/main/java/phase2/Move.java	(date 1650539434666)
+@@ -46,6 +46,7 @@
+     }
+ 
+ 
++
+     public void setX(int x) {
+         this.x=x;
+     }
+Index: src/main/java/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Controller.Controller;\nimport Controller.FileParser;\nimport Controller.PlayOut;\nimport Controller.ReadFiles;\n\npublic class App {\n\n    public App() {\n    }\n\n    /**\n     * Run\n     * @param args\n     */\n    public static void main(String[] args)\n    {\n        String path = \"\";\n        String[] unparsedVars = new String[0];\n        try {\n            unparsedVars = ReadFiles.readFileAsString(\"recources/testmap.txt\");\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n\n        //PlayOut playOut = new PlayOut(unparsedVars);\n\n        Controller controller= new Controller(unparsedVars);\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/App.java b/src/main/java/App.java
+--- a/src/main/java/App.java	(revision 2c21b94eade9c84d5f149fc80d8a070e8e453036)
++++ b/src/main/java/App.java	(date 1650538353807)
+@@ -25,5 +25,6 @@
+         //PlayOut playOut = new PlayOut(unparsedVars);
+ 
+         Controller controller= new Controller(unparsedVars);
++        controller.testRayCasting();
+     }
+ }
+\ No newline at end of file
+Index: src/main/java/phase2/Map.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\n\nimport Agents.Tile;\nimport Controller.Variables;\n\nimport java.util.ArrayList;\n\npublic class Map {\n\n    private Variables variables;\n    private Tile[][] map;\n    private int xSize;\n    private int ySize;\n    private ArrayList<ArrayList<Agent>> listOfAllAgents;\n    private ArrayList<Agent> listOfGuards;\n    private ArrayList<Agent> listOfIntruders;\n\n\n    public Map(String[] unparsedVars) {\n        this.variables = new Variables();\n        this.variables.setVariables(unparsedVars);\n        this.map = new Tile[variables.getHeight()][variables.getWidth()];\n        System.out.println(map.length + \" and \" + map[0].length);\n        xSize = variables.getHeight();\n        ySize = variables.getWidth();\n        listOfGuards = new ArrayList<Agent>();\n        listOfIntruders = new ArrayList<Agent>();\n\n        //listOfAllAgents.add(listOfGuards);\n        //listOfAllAgents.add(listOfIntruders);\n\n        float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());\n\n        int startX = 20;\n        int startY = 20;\n\n        for (int i = 0; i < variables.getNumberOfGuards(); i++) {\n            System.out.println(\"Number of guards = \" + i);\n            System.out.println(\"angle is \" + Math.toDegrees(initialAngle));\n            System.out.println(initialAngle * (i + 1));\n            // listOfAllAgents.add(new Agent(initialAngle,startX, startY));\n            // for (Agent agent: listOfAllAgents) {\n            //     System.out.println(agent.getCurrentX() + \" ||| \" +agent.getCurrentY());\n            //  }\n        }\n\n    }\n\n\n\n    public void agentsInit(int teamID){\n        float initialAngle = (float) (Math.toRadians(360)/variables.getNumberOfGuards());\n\n    }\n\n\n\n    public void moveAgentToPosition(Agent agent, int[] position){\n        /** moves agent to coordinates if possible */\n        if(canMoveTo(position)){\n            agent.moveTo(position[0],position[1]);\n        }\n    }\n\n    private boolean canMoveTo(int[] pos){\n        return inMap(pos) && !map[pos[0]][pos[1]].hasWall() && !map[pos[0]][pos[1]].hasAgent();\n    }\n\n    private boolean inMap(int[] position){\n        return position[0] < xSize && position[1] < ySize && position[0] > 0 && position[1] > 0;\n    }\n\n\n    // Getters n Setters\n    public void setVariables(Variables variables) {\n        this.variables = variables;\n    }\n\n    public Variables getVariables() {\n        return variables;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Map.java b/src/main/java/phase2/Map.java
+--- a/src/main/java/phase2/Map.java	(revision 2c21b94eade9c84d5f149fc80d8a070e8e453036)
++++ b/src/main/java/phase2/Map.java	(date 1650538818249)
+@@ -72,10 +72,21 @@
+ 
+ 
+     // Getters n Setters
++
++    public ArrayList<Agent> getListOfGuards(){
++        return this.listOfGuards;
++    }
++
++    public ArrayList<Agent> getListOfIntruders(){
++        return this.listOfIntruders;
++    }
++
+     public void setVariables(Variables variables) {
+         this.variables = variables;
+     }
+ 
++
++
+     public Variables getVariables() {
+         return variables;
+     }
+Index: src/main/java/Controller/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\n\nimport java.util.ArrayList;\n\npublic class Controller {\n    private phase2.Map map;\n    private ArrayList<phase2.Agent> listOfIntruders;\n    private ArrayList<phase2.Agent> listOfGuards;\n\n\n    public Controller(String[] unparsedVars){\n        this.map = initializeMap(unparsedVars);\n        listOfGuards = this.map.get\n    }\n\n    private phase2.Map initializeMap(String[] unparsedVars){\n\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Controller/Controller.java b/src/main/java/Controller/Controller.java
+--- a/src/main/java/Controller/Controller.java	(revision 2c21b94eade9c84d5f149fc80d8a070e8e453036)
++++ b/src/main/java/Controller/Controller.java	(date 1650538818253)
+@@ -1,4 +1,5 @@
+ package Controller;
++import phase2.Map;
+ 
+ import java.util.ArrayList;
+ 
+@@ -10,11 +11,20 @@
+ 
+     public Controller(String[] unparsedVars){
+         this.map = initializeMap(unparsedVars);
+-        listOfGuards = this.map.get
++        this.listOfGuards = this.map.getListOfGuards();
++        this.listOfIntruders = this.map.getListOfIntruders();
++    }
++
++    private Map initializeMap(String[] unparsedVars){
++        return new Map(unparsedVars);
+     }
+ 
+-    private phase2.Map initializeMap(String[] unparsedVars){
++    public void playWithPrint(){
++
++    }
+ 
++    public void testRayCasting(){
++        /***/
+     }
+ 
+ }
