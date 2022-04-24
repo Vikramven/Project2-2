@@ -72,9 +72,20 @@ public class Map {
 
 
     // Getters n Setters
+
+    public ArrayList<Agent> getListOfGuards(){
+        return this.listOfGuards;
+    }
+
+    public ArrayList<Agent> getListOfIntruders(){
+        return this.listOfIntruders;
+    }
+
     public void setVariables(Variables variables) {
         this.variables = variables;
     }
+
+
 
     public Variables getVariables() {
         return variables;

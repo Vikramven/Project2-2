@@ -55,11 +55,6 @@ public class Position {
                 }
 
             }
-
-
-
-            // check if position has a wall or is outside the map.
-            // remove from neighboours if so
         }
 
         for (Position pos : delete){

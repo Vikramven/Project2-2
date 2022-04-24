@@ -4,45 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="raycasting finished 2.0">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/phase2/Position.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/ExplorationState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Entrance.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/FileParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MapObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Shade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Spawn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Target.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Teleport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Texture.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Variables.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Vector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Wall.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/Agent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/Guard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/Intruder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/MapCreation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/MapInit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/QLearning/Qlearning.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/RayCasting/Cell.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/RayCasting/Edge.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/newShit/Tester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Path/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
-    <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
-    <list id="3f4196c9-b984-4db7-880a-412dc16d5bb0" name="Changes by nathaliebent" comment="" />
+    <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/phase2/EMTable/EMTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" afterDir="false" />
+    </list>
     <list id="28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9" name="Changes by tiphanie" comment="" />
-    <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="" />
-    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="" />
+    <list id="02a2e82e-c7a5-407b-9645-c555f1108ddc" name="Changes by vikramvenkat" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" afterDir="false" />
+    </list>
+    <list id="7ab52772-061c-4b8d-aeb6-872a88f8cd11" name="Changes by zmilc" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Move.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +45,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="phase2-main" />
+        <entry key="$PROJECT_DIR$" value="bugFixingLAstMoment" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,6 +57,22 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java">
+      <ranges>
+        <range start1="3" end1="3" start2="3" end2="4" changelist="02a2e82e-c7a5-407b-9645-c555f1108ddc" />
+        <range start1="22" end1="22" start2="23" end2="24" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="24" end1="25" start2="26" end2="27" changelist="70e5dc33-d91b-495a-a940-6f15d4c62e05" />
+        <range start1="34" end1="34" start2="36" end2="37" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="86" end1="87" start2="89" end2="90" changelist="70e5dc33-d91b-495a-a940-6f15d4c62e05" />
+        <range start1="125" end1="126" start2="128" end2="129" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="127" end1="128" start2="130" end2="131" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="129" end1="130" start2="132" end2="133" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="138" end1="140" start2="141" end2="143" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+        <range start1="149" end1="151" start2="152" end2="152" changelist="99094a21-1a8a-4d5d-8078-78165bded4be" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -101,6 +100,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Collin\IdeaProjects\Project2-2\src\main\java\phase2\RayCasting" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="phase2" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Tester">

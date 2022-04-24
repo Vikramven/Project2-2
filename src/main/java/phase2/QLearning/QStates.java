@@ -20,6 +20,7 @@ public class QStates {
 
     private boolean reachedGoal = false;
 
+
     //Table Updators
     public void EMupdate(Agent n){
         for(int i = 0; i < EM.length(); i++){
@@ -32,6 +33,7 @@ public class QStates {
 
 
     public int[] rewardTable = {-1,-10,10,-100,100,20,Integer.MIN_VALUE, -100, 1000};
+
 /* STATIC REWARD TABLE
 
     We associate an arbitrary grade to a given situation
@@ -123,11 +125,11 @@ public class QStates {
             //look up left
            maxList[0] = R[agentPositionX][agentPositionY - 1];
             //look right
-            maxList[1] = R[agentPositionX][agentPositionY + 1]
+            maxList[1] = R[agentPositionX][agentPositionY + 1];
             //look up Up
-            maxList[2] = R[agentPositionX + 1][agentPositionY]
+            maxList[2] = R[agentPositionX + 1][agentPositionY];
             //look up Down
-            maxList[3] = R[agentPositionX - 1][agentPositionY]
+            maxList[3] = R[agentPositionX - 1][agentPositionY];
 
             //in case no surrounding position is better than the current one: turn
             for (int i = 0; i < maxList.length; i++){
@@ -136,8 +138,8 @@ public class QStates {
                 }
                 if(currentMax > -1000){
                     //update
-                    a.move()
-                else
+                   // a.move();
+                //else
                 //call turn + or minus : TO DO evaluate the best half average left > average right ?
 
         }
@@ -147,8 +149,6 @@ public class QStates {
      */
     public void calculateQValues(){
         Random randomValue = new Random();
-
-
 
     }
 
