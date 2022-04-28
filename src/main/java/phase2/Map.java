@@ -11,9 +11,9 @@ public class Map {
     private Tile[][] map;
     private int xSize;
     private int ySize;
-    private ArrayList<ArrayList<Agent>> listOfAllAgents;
-    private ArrayList<Agent> listOfGuards;
-    private ArrayList<Agent> listOfIntruders;
+    private ArrayList<AgentTeam> listOfAllAgents;
+    private AgentTeam listOfGuards;
+    private AgentTeam listOfIntruders;
 
 
     public Map(String[] unparsedVars) {
@@ -21,37 +21,24 @@ public class Map {
         this.variables.setVariables(unparsedVars);
         this.map = new Tile[variables.getHeight()][variables.getWidth()];
         System.out.println(map.length + " and " + map[0].length);
+        int guardsSize = this.variables.getNumberOfGuards();
+        int intrudersSize = this.variables.getNumberOfIntruders();
         xSize = variables.getHeight();
         ySize = variables.getWidth();
-        listOfGuards = new ArrayList<Agent>();
-        listOfIntruders = new ArrayList<Agent>();
-
-        //listOfAllAgents.add(listOfGuards);
-        //listOfAllAgents.add(listOfIntruders);
-
-        float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
-
-        int startX = 20;
-        int startY = 20;
-
-        for (int i = 0; i < variables.getNumberOfGuards(); i++) {
-            System.out.println("Number of guards = " + i);
-            System.out.println("angle is " + Math.toDegrees(initialAngle));
-            System.out.println(initialAngle * (i + 1));
-            // listOfAllAgents.add(new Agent(initialAngle,startX, startY));
-            // for (Agent agent: listOfAllAgents) {
-            //     System.out.println(agent.getCurrentX() + " ||| " +agent.getCurrentY());
-            //  }
-        }
-
+        listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());
+        listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords());
+        listOfAllAgents.add(listOfGuards);
+        listOfAllAgents.add(listOfIntruders);
     }
 
 
 
-    public void agentsInit(int teamID){
-        float initialAngle = (float) (Math.toRadians(360)/variables.getNumberOfGuards());
-
+    public void allAgentsInit(){
+        this.listOfGuards.placeOnSpawn();
+        this.listOfIntruders.placeOnSpawn();
     }
+
+
 
 
 
@@ -78,5 +65,9 @@ public class Map {
 
     public Variables getVariables() {
         return variables;
+    }
+
+    public Tile getTile(int x, int y){
+        return this.map[x][y];
     }
 }

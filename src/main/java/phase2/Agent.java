@@ -11,6 +11,13 @@ public class Agent {
     * CURRENT LOCATION INFO
     * PAST EXPERIENCE <-- PATH 
     * */
+
+    /**
+    *
+    * The agent can get map info by passing map into each method that uses it
+    * NOTE: pass map to each method
+     *
+    * */
     private int ID;//  could be useful to differentiate agent among their team
     private int [] position = new int[2];
     private float initialAngle;
@@ -88,8 +95,8 @@ public class Agent {
 
 
     // ======================= Getters n Setters ================================
-    public Agents.Tile getTile(int x, int y){
-        return new Tile(x,y);
+    public Agents.Tile getTile(int x, int y, Map map){
+        return map.getTile(x,y);
     }
 
 
