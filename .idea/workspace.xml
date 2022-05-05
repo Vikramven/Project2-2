@@ -6,32 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="raycasting finished 2.0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agents.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/ExploAgent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/ExplorationState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Position.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/States.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Trace.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Agents/ExplorationState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MapObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/MapObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
@@ -286,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650467740614</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="raycasting finished 2.0">
+      <created>1651748388524</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1651748388524</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,6 +299,7 @@
     <MESSAGE value="last changes" />
     <MESSAGE value="the many else if statements corrected" />
     <MESSAGE value="raycasting finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="raycasting finished" />
+    <MESSAGE value="raycasting finished 2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="raycasting finished 2.0" />
   </component>
 </project>

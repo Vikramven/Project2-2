@@ -16,6 +16,7 @@ public class Tester {
 
         Map map = new Map(unparsedVars);
         map.allAgentsInit();
-        map.updateAllAgents();
+        System.out.println(map);
+        //map.updateAllAgents();
     }
 }
