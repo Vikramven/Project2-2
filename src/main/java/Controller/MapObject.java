@@ -21,8 +21,6 @@ public abstract class MapObject {
         return coords;
     }
 
-
-
     public int getId() {
         return id;
     }

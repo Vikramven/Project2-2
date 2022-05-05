@@ -8,26 +8,25 @@ import java.util.ArrayList;
  *       INFO CONTAINED IN THE REWARD TABLE
  */
 
+    //0 = private int move = -1; move ? in connection to EM infos?
+    //path correctness (?)
+    //1 = private int wrongPath = -10;  random move with a low probability.
+    //2 = private int correctPath = 10;
 
-//0 = private int move = -1; move ? in connection to EM infos?
-//path correctness (?)
-//1 = private int wrongPath = -10;  random move with a low probability.
-//2 = private int correctPath = 10;
+    //3 = private int death = -100; (?)
 
-//3 = private int death = -100; (?)
+    //vision & hearing : sensorial informations
+    //4 = private int visionOnIntruder = 100; for a guard !! because he wants to catch the other !
+    // 5 = private int hearingOnIntruder = 20; <-- FOOT STEPS
+    //6 = private int wall = Integer.MIN_VALUE;
 
-//vision & hearing : sensorial informations
-//4 = private int visionOnIntruder = 100; for a guard !! because he wants to catch the other !
-// 5 = private int hearingOnIntruder = 20; <-- FOOT STEPS
-//6 = private int wall = Integer.MIN_VALUE;
+    //end and start
+    //7 = private int startPoint = -100
+    // 8 = private int goal = 1000;
 
-//end and start
-//7 = private int startPoint = -100
-// 8 = private int goal = 1000;
-
-//required from Markers
-//9= Trace survey along the stress
-// 10= Yell
+    //required from Markers
+    //9= Trace survey along the stress
+    // 10= Yell
     }
 
 public class rewardTable {
