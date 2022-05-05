@@ -28,6 +28,7 @@ public class Map {
         //int intrudersSize = this.variables.getNumberOfIntruders(); //parser doesnt work for this
         int intrudersSize = 4;
         this.wallpoints = wallPoints();
+        //printWalls();
         xSize = variables.getHeight();
         ySize = variables.getWidth();
         listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());
@@ -81,10 +82,17 @@ public class Map {
 
 
     private void initializeMap(){
+        int[] coord = new int[2];
+        coord[0] = 0;
+        coord[1] = 0;
+        System.out.println(this.wallpoints.get(0)==coord);
+        System.out.println(this.wallpoints.get(0)[0]+" "+this.wallpoints.get(0)[1]);
         for(int i = 0; i<this.xSize; i++)
             for(int j = 0; j<this.ySize; j++){
                 this.map[i][j] = determineTile(i,j);
+                //System.out.println(determineTile(i,j));
             }
+        //System.out.println(this);
     }
 
     private Tile determineTile(int i, int j){
@@ -109,6 +117,7 @@ public class Map {
         int[] coord = new int[2];
         coord[0] = x;
         coord[1] = y;
+        //printWalls();
         return this.wallpoints.contains(coord);
     }
 
@@ -116,9 +125,19 @@ public class Map {
         ArrayList<Wall> walls = this.variables.getWalls();
         ArrayList<int[]> wallPoints = new ArrayList<>();
         for(Wall w: walls){
+            //System.out.println(w.getPoints().size());
             wallPoints.addAll(w.getPoints());
+            for(int[] xy : w.getPoints()){
         }
-        return new ArrayList<int[]>();
+        printWalls();
+        return wallPoints;
+    }
+
+    private void printWalls(){
+        System.out.println("wall size = "+wallpoints.size());
+        for(int[] coords : wallpoints){
+            System.out.println("x: "+coords[0]+" y: "+coords[1]);
+        }
     }
 
     private ArrayList<int[]> teleportPoints(){
@@ -165,6 +184,18 @@ public class Map {
         return this.xSize;
     }
 
+    public String toString(){
+        StringBuilder s = new StringBuilder();
 
+        for(int i = 0; i<xSize;i++){
+            for(int j = 0; j<ySize; j++){
+                String c = map[i][j].toString();
+                s.append(c);
+            }
+            s.append("\n");
+        }
+
+        return s.toString();
+    }
 
 }

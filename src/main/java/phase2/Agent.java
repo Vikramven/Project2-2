@@ -62,7 +62,7 @@ public class Agent {
     public void update(Map map, RayCasting rayCaster){
         //RayCasting rayCaster = new RayCasting(map);
         updateVision(rayCaster);
-        printVision();
+        //printVision();
         moveTo(position[0],position[1]);  //<- some method to make for agent movement with qlearn
         if(!path.contains(this.position)){
             this.path.add(this.position);

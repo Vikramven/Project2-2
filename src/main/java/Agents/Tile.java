@@ -169,4 +169,15 @@ public class Tile {
     public int getYCoord() {
         return this.y;
     }
+
+    public String toString(){
+        String s = "_";
+        if(this.hasAgent()){
+            s = "0";
+        }
+        if(this.hasWall()){
+            s = "X";
+        }
+        return s;
+    }
 }
