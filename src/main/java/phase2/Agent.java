@@ -62,7 +62,6 @@ public class Agent {
     public void update(Map map, RayCasting rayCaster){
         //RayCasting rayCaster = new RayCasting(map);
         updateVision(rayCaster);
-        printVision();
         moveTo(position[0],position[1]);  //<- some method to make for agent movement with qlearn
         if(!path.contains(this.position)){
             this.path.add(this.position);
@@ -171,5 +170,15 @@ public class Agent {
 
     public String toString(){
         return "position ("+getCurrentX()+","+getCurrentY()+") angle:"+this.currentAngle+"\n";
+    }
+
+
+    ArrayList<int[]> yellSources = new ArrayList<>();
+
+    public boolean hearsYell(){
+        return yellSources.size() != 0;
+    }
+    public void hearsYell(int[] source){
+        yellSources.add(source);
     }
 }
