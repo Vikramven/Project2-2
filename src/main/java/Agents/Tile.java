@@ -3,7 +3,8 @@ package Agents;
 import java.util.ArrayList;
 
 public class Tile {
-    private ArrayList<Integer> dataset = new ArrayList<>(); //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent
+    private ArrayList<Integer> dataset = new ArrayList<>();
+    //0 - guard,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent 8 -intruder
     private int x;
 
     public ArrayList<Integer> getDataset() {
@@ -11,10 +12,10 @@ public class Tile {
     }
 
     private int y;
-    private int value;
+    private int stressLevel; //
     private int TRACE_VALUE = 1; // or any other val
     private int WALL_VALUE = Integer.MAX_VALUE;
-    private final int size = 8;
+    private final int size = 9;
 
     public Tile(int x, int y){
         for(int i = 0; i< this.size; i++){
@@ -30,15 +31,26 @@ public class Tile {
         }
     }
 
+    public void placeAgent(int team){
+        if(this.dataset.get(1) == 0){
+            if(team==0){
+                this.dataset.set(0,1);
+            }
+            else{
+                this.dataset.set(8,1);
+            }
+        }
+    }
+
     public void placeWall(){
         if(this.dataset.get(2) == 0 && this.dataset.get(3)==0){
             this.dataset.set(1,1);
-            this.value = this.WALL_VALUE;
+            this.stressLevel = this.WALL_VALUE;
         }
     }
 
     public void placeShade(){
-        if(this.dataset.get(1) == 0 && this.dataset.get(1)==0){
+        if(this.dataset.get(1) == 0){
             this.dataset.set(2,1);
         }
     }
@@ -51,7 +63,14 @@ public class Tile {
 
     public void placeTrace(){
         this.dataset.set(4,1);
-        this.value += this.TRACE_VALUE;
+        this.stressLevel = 1;
+    }
+
+    public void placeTrace(int stressLevel){
+        this.dataset.set(4,1);
+        if(this.stressLevel < stressLevel){
+            this.stressLevel = stressLevel;
+        }
     }
 
     public void setAsExplored(){
@@ -104,12 +123,12 @@ public class Tile {
         return this.dataset.get(7) == 1;
     }
 
-    public int getValue(){
-        return value;
+    public int getStressLevel(){
+        return stressLevel;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setStressLevel(int stressLevel) {
+        this.stressLevel = stressLevel;
     }
 
     public boolean isEmpty(){

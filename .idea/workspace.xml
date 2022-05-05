@@ -5,18 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="raycasting finished 2.0">
-      <change afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_04_2022_13_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_04_2022_13_04__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_04_2022_10_17_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_04_2022_10_17__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_by_nathaliebent_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_by_nathaliebent_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agents.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/ExploAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/ExplorationState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Position.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/States.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Trace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/ExplorationState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/MapObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/MapObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
@@ -88,7 +103,7 @@
       <recent name="C:\Users\Collin\IdeaProjects\Project2-2\src\main\java\phase2\RayCasting" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Tester">
+  <component name="RunManager" selected="Application.Tester (1)">
     <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Visuals.App" />
       <module name="Project2-2" />
@@ -122,6 +137,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tester (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="phase2.Tester" />
+      <module name="Project2-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="phase2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="newShit.Tester" />
       <module name="Project2-2" />
@@ -137,6 +165,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Tester (1)" />
         <item itemvalue="Application.Tester" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.StartGame" />

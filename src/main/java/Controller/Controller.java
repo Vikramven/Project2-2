@@ -10,11 +10,11 @@ public class Controller {
 
     public Controller(String[] unparsedVars){
         this.map = initializeMap(unparsedVars);
-        listOfGuards = this.map.get
+        //listOfGuards = this.map.get
     }
 
     private phase2.Map initializeMap(String[] unparsedVars){
-
+        return new phase2.Map(unparsedVars);
     }
 
 }

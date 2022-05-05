@@ -1,11 +1,12 @@
 package phase2.RayCasting;
 
 import phase2.Agent;
-import Agents.Map;
+import phase2.Map;
 import Agents.Tile;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
+
 
 import static java.lang.Math.*;
 
@@ -26,8 +27,8 @@ public class RayCasting {
         this.mapHeight = map.getMapHeight();
         this.mapWidth = map.getMapWidth();
         world = new ArrayList<>();
-        for (int i = 0; i < this.mapHeight; i++) {
-            for (int j = 0; j < this.mapWidth; j++) {
+        for (int i = 0; i < this.mapWidth; i++) {
+            for (int j = 0; j < this.mapHeight; j++) {
                 Cell cell = new Cell();
                 if(tiles[i][j].hasWall())
                     cell.exists = true;
@@ -220,6 +221,7 @@ public class RayCasting {
 
         float[] rayStart = {tileX,tileY}, rayEnd = {agentX,agentY};
 
+
         for(int i = 0; i < visionPolygonPoints.size()-1; i++){
             Ray point1 = visionPolygonPoints.get(i);
             Ray point2 = visionPolygonPoints.get(i+1);
@@ -231,6 +233,8 @@ public class RayCasting {
             if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)
                 return false;
         }
+
+
 
         Ray point1 = visionPolygonPoints.get(0);
         Ray point2 = visionPolygonPoints.get(visionPolygonPoints.size()-1);
@@ -320,6 +324,8 @@ public class RayCasting {
                 }
             }
         }
+
+        System.out.println(visionPolygonPoints.size());
 
         visionPolygonPoints.sort(Comparator.comparing(Ray::getAngle));
         visionPolygonPoints = removeDuplicates(visionPolygonPoints);

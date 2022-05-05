@@ -65,9 +65,9 @@ public class Trace {
         //no agent detected
         return 0;
         //at least 1 agent from other team detected
-        return 1;
+        //return 1;
         //more than 1 agent of the team detected /OR/ very large d to opponent
-        return 2;
+        //return 2;
     }
 
     /* METHOD 2: UPDATE TRACE . MOST IMPORTANT BECAUSE ONLY CALL INSIDE OF AGENT
