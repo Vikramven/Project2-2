@@ -7,20 +7,27 @@ import java.util.ArrayList;
 /*
  *       INFO CONTAINED IN THE REWARD TABLE
  */
+    /*  In connection to EM infos?
+    *   So that the Agent minimizes the pathCost
+    */
+    //0 = private int move = -1;
 
-    //0 = private int move = -1; move ? in connection to EM infos?
-    //path correctness (?)
+    // COMING SOOON : path correctness (?)
     //1 = private int wrongPath = -10;  random move with a low probability.
-    //2 = private int correctPath = 10;
+    //2 = private int correctPath = 10; //highest Q value
 
-    //3 = private int death = -100; (?)
+        // COMING SOOON : for exemple if falls in a pit action leading to death
+        //3 = private int death = -100;
 
     //vision & hearing : sensorial informations
     //4 = private int visionOnIntruder = 100; for a guard !! because he wants to catch the other !
     // 5 = private int hearingOnIntruder = 20; <-- FOOT STEPS
     //6 = private int wall = Integer.MIN_VALUE;
 
-    //end and start
+    /* end and start:
+    *   if intruder <-- find the object
+    *   if guard <-- capture one or more intruider
+    */
     //7 = private int startPoint = -100
     // 8 = private int goal = 1000;
 
@@ -49,8 +56,9 @@ public class rewardTable {
      * */
     public void initDataSet() { // should we use GA to twcih it or start with random value between 1 and 1000 ?
         //move ? in connection to EM infos?
-        for (int i = 0; i < dataSet.size(); i++)
-            dataSet.set(1, 0);
+        dataSet.set(0, -1);
+        for (int i = 1; i < dataSet.size(); i++)
+            dataSet.set(i, 0);
     }
 
     /* HELPER METHOD(1): Reward
