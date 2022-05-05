@@ -1,7 +1,5 @@
 package phase2;
 
-import phase2.RayCasting.RayCasting;
-
 import java.util.ArrayList;
 
 public class AgentTeam {
@@ -9,8 +7,7 @@ public class AgentTeam {
     private int size;
     private int type;
     private ArrayList<int[]> spawnCoords; //list of x,y coordinates
-    private ArrayList<int[]> spawnPoints; //x,y coordinates of tiles in the spawn area
-    private ArrayList<int[]> agentPositions = new ArrayList<>();
+    private ArrayList<int[]> spawnTiles; //x,y coordinates of tiles in the spawn area
 
     /**
      * COULD HAVE:
@@ -22,9 +19,7 @@ public class AgentTeam {
         this.size = size;
         this.type = type;
         this.spawnCoords = initSpawnCoords(spawnCoords);
-        this.spawnPoints = initSpawnPoints();
-        this.team = new ArrayList<>();
-
+        this.spawnTiles = initSpawnTiles();
     }
 
     /*
@@ -32,15 +27,12 @@ public class AgentTeam {
     * */
 
     public void placeOnSpawn(){
-        ArrayList<int[]> editedSpawn = this.spawnPoints;
-        if(this.size>this.spawnPoints.size()){
+        if(this.size>this.spawnTiles.size()){
             System.out.println("SPAWN: TOO MANY AGENTS, CAN'T PLACE ALL ON SPAWN");
         }
         else {
             for (int i = 0; i < this.size; i++) {
-                //int[] initAgentCoords = this.spawnPoints.get(i);
-                int[] initAgentCoords = getRandomSpawnPoint(editedSpawn);
-                editedSpawn.remove(initAgentCoords);
+                int[] initAgentCoords = this.spawnCoords.get(i);
                 Agent agent;
                 if (type == 0) {
                     agent = new Guard(0, initAgentCoords[0], initAgentCoords[1]);
@@ -53,28 +45,8 @@ public class AgentTeam {
                 this.team.add(agent);
             }
         }
-        updateAgentPos();
-        System.out.println("agents type: "+type+" spawn coords: \n"+this.toString());
     }
 
-    /*
-    * updateAgents: update data about each agent using the Agent class method
-    * */
-
-    public void updateAgents(Map map, RayCasting raycaster){
-        for(Agent agent: team){
-            agent.update(map, raycaster);
-        }
-        updateAgentPos();
-    }
-
-    private void updateAgentPos(){
-        ArrayList<int[]> positions = new ArrayList<>();
-        for(Agent a: team){
-            positions.add(a.getPosition());
-        }
-        this.agentPositions = positions;
-    }
 
     /**
      * INITIALIZERS
@@ -89,8 +61,8 @@ public class AgentTeam {
         int x2y2[] = new int[2];
         x1y1[0] = values.get(0);
         x1y1[1] = values.get(1);
-        x2y2[0] = values.get(4);
-        x2y2[1] = values.get(5);
+        x2y2[0] = values.get(2);
+        x2y2[2] = values.get(3);
 
         ArrayList<int[]> coordinates = new ArrayList<>();
         coordinates.add(x1y1);
@@ -103,7 +75,7 @@ public class AgentTeam {
     * in the order from bottom row to top
     * */
 
-    private ArrayList<int[]> initSpawnPoints(){
+    private ArrayList<int[]> initSpawnTiles(){
         int[] start = spawnCoords.get(0);
         int[] end = spawnCoords.get(1);
         ArrayList<int[]> tiles = new ArrayList<>();
@@ -121,16 +93,6 @@ public class AgentTeam {
         return tiles;
     }
 
-    /*
-    * getRandomSpawnPoint - returns a random element from the list
-    * containing spawn points
-    * */
-    private int[] getRandomSpawnPoint(ArrayList<int[]> coords){
-        int size = coords.size();
-        int i = (int) (size*Math.random());
-        return coords.get(i);
-    }
-
     /** GETTERS AND SETTERS*/
 
 
@@ -141,10 +103,6 @@ public class AgentTeam {
 
     public ArrayList<int[]> getSpawnCoords(){
         return spawnCoords;
-    }
-
-    public ArrayList<int[]> getAgentPositions(){
-        return this.agentPositions;
     }
 
 
@@ -162,14 +120,6 @@ public class AgentTeam {
         return new Agent(0,0,0);
     }
 
-    public String toString(){
-        StringBuilder s = new StringBuilder();
-
-        for(Agent agent: team){
-            s.append(agent.toString());
-        }
-        return s.toString();
-    }
 
 
 }

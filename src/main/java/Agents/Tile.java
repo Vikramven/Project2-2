@@ -3,8 +3,7 @@ package Agents;
 import java.util.ArrayList;
 
 public class Tile {
-    private ArrayList<Integer> dataset = new ArrayList<>();
-    //0 - guard,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent 8 -intruder
+    private ArrayList<Integer> dataset = new ArrayList<>(); //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent
     private int x;
 
     public ArrayList<Integer> getDataset() {
@@ -12,10 +11,10 @@ public class Tile {
     }
 
     private int y;
-    private int stressLevel; //
+    private int value;
     private int TRACE_VALUE = 1; // or any other val
     private int WALL_VALUE = Integer.MAX_VALUE;
-    private final int size = 9;
+    private final int size = 8;
 
     public Tile(int x, int y){
         for(int i = 0; i< this.size; i++){
@@ -25,19 +24,18 @@ public class Tile {
         this.y = y;
     }
 
-    public void placeAgent(){
-        if(this.dataset.get(1) == 0){
-            this.dataset.set(0,1);
-        }
-    }
+/* METHOD GROUP : SETTERS PLACEMENT
+* Place object on the Tile: Agent, Wall, Shade, Teleport
+*
+ */
 
-    public void placeAgent(int team){
+    public void placeAgent(phase2.Agent a){
         if(this.dataset.get(1) == 0){
-            if(team==0){
+            if(a.getTeam() == 0){ //zero if intruder 1 if guards
                 this.dataset.set(0,1);
             }
-            else{
-                this.dataset.set(8,1);
+            else if(a.getTeam() == 1){ //zero if intruder 1 if guards
+                this.dataset.set(0,2);
             }
         }
     }
@@ -45,12 +43,12 @@ public class Tile {
     public void placeWall(){
         if(this.dataset.get(2) == 0 && this.dataset.get(3)==0){
             this.dataset.set(1,1);
-            this.stressLevel = this.WALL_VALUE;
+            this.value = this.WALL_VALUE;
         }
     }
 
     public void placeShade(){
-        if(this.dataset.get(1) == 0){
+        if(this.dataset.get(1) == 0 && this.dataset.get(1)==0){
             this.dataset.set(2,1);
         }
     }
@@ -63,14 +61,7 @@ public class Tile {
 
     public void placeTrace(){
         this.dataset.set(4,1);
-        this.stressLevel = 1;
-    }
-
-    public void placeTrace(int stressLevel){
-        this.dataset.set(4,1);
-        if(this.stressLevel < stressLevel){
-            this.stressLevel = stressLevel;
-        }
+        this.value += this.TRACE_VALUE;
     }
 
     public void setAsExplored(){
@@ -89,15 +80,21 @@ public class Tile {
         this.dataset.set(7,0);
     }
 
-
-
     public void removeAgent(){
         this.dataset.set(0, 0);
     }
 
+
+    /* METHOD GROUP : BOOLEAN GETTERS
+    *       UTILITY: assess what's contains on a given Tile
+    *       INFORMATIONAL SET: Agent Wall Shade Teleport Trace
+    *       QUESTION / Remark : are the 3 following outdated : Explored, Flag, Visible ?
+    *
+    */
+
     public boolean hasAgent(){
-        return this.dataset.get(0)==1;
-    }
+        return this.dataset.get(0);
+    } // always return smt make sure it aint zero
 
     public boolean hasWall(){
         return this.dataset.get(1)==1;
@@ -123,12 +120,12 @@ public class Tile {
         return this.dataset.get(7) == 1;
     }
 
-    public int getStressLevel(){
-        return stressLevel;
+    public int getValue(){
+        return value;
     }
 
-    public void setStressLevel(int stressLevel) {
-        this.stressLevel = stressLevel;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public boolean isEmpty(){
@@ -168,16 +165,5 @@ public class Tile {
 
     public int getYCoord() {
         return this.y;
-    }
-
-    public String toString(){
-        String s = "_";
-        if(this.hasAgent()){
-            s = "0";
-        }
-        if(this.hasWall()){
-            s = "X";
-        }
-        return s;
     }
 }
