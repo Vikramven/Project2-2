@@ -1,7 +1,6 @@
 import Controller.Controller;
-import Controller.FileParser;
-import Controller.PlayOut;
 import Controller.ReadFiles;
+import phase2.Tester;
 
 public class App {
 
@@ -24,6 +23,8 @@ public class App {
 
         //PlayOut playOut = new PlayOut(unparsedVars);
 
-        Controller controller= new Controller(unparsedVars);
+        //Controller controller= new Controller(unparsedVars);
+
+        //Tester tester = new Tester(unparsedVars);
     }
 }

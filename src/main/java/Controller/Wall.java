@@ -12,24 +12,39 @@ public class Wall extends Rectangle {
         int[] start = new int[2];
         int[] end = new int[2];
 
-        start[0] = coords.get(0);
-        start[1] = coords.get(1);
-
-        end[0] = coords.get(4);
-        end[1] = coords.get(5);
-
         ArrayList<int[]> points = new ArrayList<>();
 
-        int xLength = Math.abs(start[0]-end[0]);
-        int yLength = Math.abs(start[1]-end[1]);
-        for(int i = 0; i<yLength; i++){
-            for(int j = 0; j<xLength; j++){
-                int[] coords = new int[2];
-                coords[0] = j;
-                coords[1] = i;
-                points.add(coords);
-            }
+        for(int i=coords.get(0);i<=coords.get(2);i++){
+            int[] c = new int[2];
+            c[0] = i;
+            c[1] = coords.get(1);
+            points.add(c);
         }
+        for(int i=coords.get(6);i<=coords.get(4);i++){
+            int[] c = new int[2];
+            c[0] = i;
+            c[1] = coords.get(5);
+            points.add(c);
+        }
+
+        for(int i=coords.get(1);i<=coords.get(7);i++){
+            int[] c = new int[2];
+            c[0] = coords.get(0);
+            c[1] = i;
+            points.add(c);
+        }
+
+        for(int i=coords.get(3);i<=coords.get(5);i++){
+            int[] c = new int[2];
+            c[0] = coords.get(2);
+            c[1] = i;
+            points.add(c);
+        }
+
+        for(int[] p: points){
+            System.out.println(p[0]+", "+p[1]);
+        }
+
         return points;
     }
 

@@ -56,19 +56,18 @@ public class Trace {
 
     /* METHOD 1:  ALERT LEVEL
      *   Compute the agent's stress based on environmental information such as
-     *   * The number of opponent within vision range HELPER METHOD
+     *   * The number of opponent within vision range
      *   * The average distance of the opponent to the Agent
      *           NB: larger d <-- reduces stress for an intruder
      *               larger d <-- increases stress for a guard
      * */
     public int AlertLevel(){
         //no agent detected
-        if()
         return 0;
         //at least 1 agent from other team detected
-        return 1;
+        //return 1;
         //more than 1 agent of the team detected /OR/ very large d to opponent
-        return 2;
+        //return 2;
     }
 
     /* METHOD 2: UPDATE TRACE . MOST IMPORTANT BECAUSE ONLY CALL INSIDE OF AGENT
