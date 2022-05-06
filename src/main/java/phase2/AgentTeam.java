@@ -12,8 +12,6 @@ public class AgentTeam {
     private ArrayList<int[]> spawnPoints; //x,y coordinates of tiles in the spawn area
     private ArrayList<int[]> agentPositions = new ArrayList<>();
 
-
-    /***/
     /**
      * COULD HAVE:
      *  - the markers
@@ -146,6 +144,7 @@ public class AgentTeam {
     }
 
     public ArrayList<int[]> getAgentPositions(){
+        this.updateAgentPos();
         return this.agentPositions;
     }
 

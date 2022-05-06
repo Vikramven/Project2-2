@@ -6,11 +6,6 @@ public class Tile {
     private ArrayList<Integer> dataset = new ArrayList<>();
     //0 - guard,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent 8 -intruder
     private int x;
-
-    public ArrayList<Integer> getDataset() {
-        return dataset;
-    }
-
     private int y;
     private int stressLevel; //
     private int TRACE_VALUE = 1; // or any other val
@@ -25,22 +20,18 @@ public class Tile {
         this.y = y;
     }
 
-    public void placeAgent(){
-        if(this.dataset.get(1) == 0){
+    public void placeGuard(){
+        if(!this.hasWall() && !this.hasAgent()){
             this.dataset.set(0,1);
         }
     }
 
-    public void placeAgent(int team){
-        if(this.dataset.get(1) == 0){
-            if(team==0){
-                this.dataset.set(0,1);
-            }
-            else{
-                this.dataset.set(8,1);
-            }
+    public void placeIntruder(){
+        if(!this.hasWall() && !this.hasAgent()){
+            this.dataset.set(8,1);
         }
     }
+
 
     public void placeWall(){
         if(this.dataset.get(2) == 0 && this.dataset.get(3)==0){
@@ -90,12 +81,28 @@ public class Tile {
     }
 
 
-
     public void removeAgent(){
+        this.removeGuard();
+        this.removeIntruder();
+    }
+
+    public void removeGuard(){
         this.dataset.set(0, 0);
     }
 
+    public void removeIntruder(){
+        this.dataset.set(8, 0);
+    }
+
     public boolean hasAgent(){
+        return hasGuard() || hasIntruder();
+    }
+
+    public boolean hasIntruder(){
+        return this.dataset.get(8)==1;
+    }
+
+    public boolean hasGuard(){
         return this.dataset.get(0)==1;
     }
 
@@ -131,6 +138,10 @@ public class Tile {
         this.stressLevel = stressLevel;
     }
 
+    public ArrayList<Integer> getDataset() {
+        return dataset;
+    }
+
     public boolean isEmpty(){
         boolean isEmpty = true;
         for(int i=0; i<size; i++){
@@ -147,8 +158,11 @@ public class Tile {
             if(tile.hasTrace()){
                 this.placeTrace();
             }
-            if(tile.hasAgent()){
-                this.placeAgent();
+            if(tile.hasGuard()){
+                this.placeGuard();
+            }
+            if(tile.hasIntruder()){
+                this.placeIntruder();
             }
             if(tile.hasFlag()){
                 this.placeFlag();
@@ -172,11 +186,20 @@ public class Tile {
 
     public String toString(){
         String s = "_";
-        if(this.hasAgent()){
-            s = "0";
+        if(this.hasGuard()){
+            s = "G";
+        }
+        if(this.hasIntruder()){
+            s = "I";
+        }
+        if(this.hasTeleport()){
+            s = "T";
+        }
+        if(this.hasShade()){
+            s = "S";
         }
         if(this.hasWall()){
-            s = "X";
+            s = "W";
         }
         return s;
     }

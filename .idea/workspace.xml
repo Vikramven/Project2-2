@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="raycasting finished 2.0">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="map updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/Wall.class" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
@@ -272,7 +271,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651748388524</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="map updated">
+      <created>1651754058531</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1651754058531</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,6 +306,7 @@
     <MESSAGE value="the many else if statements corrected" />
     <MESSAGE value="raycasting finished" />
     <MESSAGE value="raycasting finished 2.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="raycasting finished 2.0" />
+    <MESSAGE value="map updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="map updated" />
   </component>
 </project>

@@ -17,6 +17,7 @@ public class Map {
     private AgentTeam listOfGuards;
     private AgentTeam listOfIntruders;
     private ArrayList<int[]> wallpoints = new ArrayList<>();
+    //private
 
 
 
@@ -76,7 +77,6 @@ public class Map {
 
     public void allAgentsInit(){
         this.listOfGuards.placeOnSpawn();
-        //System.out.println(this.listOfGuards);
         this.listOfIntruders.placeOnSpawn();
     }
 
@@ -95,57 +95,99 @@ public class Map {
         int[] coord = new int[2];
         coord[0] = 0;
         coord[1] = 0;
-        System.out.println(this.wallpoints.get(0)==coord);
-        System.out.println(this.wallpoints.get(0)[0]+" "+this.wallpoints.get(0)[1]);
-        for(int i = 0; i<this.xSize; i++)
+        //System.out.println(this.wallpoints.get(0)==coord);
+        //System.out.println(this.wallpoints.get(0)[0]+" "+this.wallpoints.get(0)[1]);
+        /*for(int i = 0; i<this.xSize; i++)
             for(int j = 0; j<this.ySize; j++){
                 this.map[i][j] = determineTile(i,j);
                 //System.out.println(determineTile(i,j));
             }
-        //System.out.println(this);
+        //System.out.println(this);*/
+        placeWalls();
+        allAgentsInit();
+        System.out.println(listOfGuards);
+        System.out.println(listOfIntruders);
+        placeAgentsOnTiles();
+    }
+
+    private void placeWalls(){
+        for(int[] wallCoord : this.wallpoints){
+            map[wallCoord[0]][wallCoord[1]].placeWall();
+        }
+    }
+
+    private void placeAgentsOnTiles(){
+        for(int i=0;i<xSize;i++){
+            for(int j=0;j<ySize;j++){
+                map[i][j].removeAgent();
+            }
+        }
+        placeGuards();
+        placeIntruders();
+    }
+
+    private void placeGuards(){
+        for(int[] pos: listOfGuards.getAgentPositions()){
+            map[pos[0]][pos[1]].placeGuard();
+        }
+    }
+
+    private void placeIntruders(){
+        for(int[] pos: listOfIntruders.getAgentPositions()){
+            map[pos[0]][pos[1]].placeIntruder();
+        }
     }
 
     private Tile determineTile(int i, int j){
        Tile tile = new Tile(i,j);
         if(isAWall(i,j)){
             tile.placeWall();
+            //System.out.println("AAAAAAAAAAAAAAAAAAAA");
         }
         if(hasAgent(i,j)){
-            tile.placeAgent();
+            //tile.placeAgent();
         }
-        return new Tile(i,j);
+        return tile;
     }
 
     private boolean hasAgent(int x, int y){
         int[] coord = new int[2];
         coord[0] = x;
         coord[1] = y;
+        for(int[] wallCoord : this.wallpoints){
+            if(wallCoord[0]==coord[0] && wallCoord[1]==coord[1]){
+                return true;
+            }
+        }
         return listOfGuards.getAgentPositions().contains(coord) || listOfIntruders.getAgentPositions().contains(coord);
     }
 
     private boolean isAWall(int x, int y){
-        int[] coord = new int[2];
-        coord[0] = x;
-        coord[1] = y;
-        //printWalls();
-        return this.wallpoints.contains(coord);
+        for(int[] wallCoord : this.wallpoints){
+            if(wallCoord[0]==x && wallCoord[1]==y){
+                return true;
+            }
+        }
+        return false;
     }
 
     private ArrayList<int[]> wallPoints() {
         tileInit();
         ArrayList<Wall> walls = this.variables.getWalls();
         ArrayList<int[]> wallPoints = new ArrayList<>();
+
         for (Wall w : walls) {
             //System.out.println(w.getPoints().size());
             ArrayList<int[]> wall = w.getPoints();
             wallPoints.addAll(wall);
             for (int[] xy : wall) {
-                System.out.println("wall xy"+xy[0]+", "+xy[1]);
-                map[xy[0]][xy[1]].placeWall();
-                System.out.println(map[xy[0]][xy[1]]);
+                //System.out.println("wall xy"+xy[0]+", "+xy[1]);
+                //this.map[xy[0]][xy[1]].placeWall();
+                //System.out.println(this.map[xy[0]][xy[1]]);
             }
         }
-        //printWalls();
+
+        //System.out.println(this);
         return wallPoints;
     }
 
