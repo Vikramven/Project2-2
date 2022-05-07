@@ -33,7 +33,7 @@ public class Footsteps {
                 int agentX = agentPosition[0], agentY = agentPosition[1];
                 int guardX = agent.getPosition()[0], guardY =agent.getPosition()[1];
                 if(guardX-agentX<footstepRange && guardY-agentY<footstepRange){
-                   // agent.
+                    agent.hearsFootsteps(agentPosition);
                 }
             }
         }

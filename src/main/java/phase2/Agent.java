@@ -182,6 +182,8 @@ public class Agent {
 
 
     ArrayList<int[]> yellSources = new ArrayList<>();
+    ArrayList<int[]> footstepSources=new ArrayList<>();
+
 
     public boolean hearsYell(){
         return yellSources.size() != 0;
@@ -189,4 +191,8 @@ public class Agent {
     public void hearsYell(int[] source){
         yellSources.add(source);
     }
+    public void hearsFootsteps(int[] footSteps){
+`       footstepSources.add(footSteps);
+    }
+
 }
