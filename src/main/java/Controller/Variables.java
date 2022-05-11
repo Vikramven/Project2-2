@@ -207,7 +207,11 @@ public class Variables {
     /**
      * TODO:methods for first todo
      */
-    public ArrayList <Wall> getWalls() {return walls;}; //to be PARSED
+    public ArrayList <Wall> getWalls() {return walls;} //to be PARSED
+
+    public ArrayList<Teleport> getPortals(){return portals;}
+
+    public ArrayList<Shade> getShades(){return shades;}
 
     public int getMode() {
         return mode;

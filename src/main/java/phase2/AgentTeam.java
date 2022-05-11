@@ -10,7 +10,7 @@ public class AgentTeam {
     private int type;
     private ArrayList<int[]> spawnCoords; //list of x,y coordinates
     private ArrayList<int[]> spawnPoints; //x,y coordinates of tiles in the spawn area
-    private ArrayList<int[]> agentPositions = new ArrayList<>();
+    private ArrayList<int[]> currentAgentPositions = new ArrayList<>();
 
     /**
      * COULD HAVE:
@@ -31,7 +31,7 @@ public class AgentTeam {
     * placeOnSpawn : creates agents and places them all on spawn, before the agent list is empty
     * */
 
-    public void placeOnSpawn(){
+    public void placeOnSpawn(Map map){
         ArrayList<int[]> editedSpawn = this.spawnPoints;
         if(this.size>this.spawnPoints.size()){
             System.out.println("SPAWN: TOO MANY AGENTS, CAN'T PLACE ALL ON SPAWN");
@@ -39,7 +39,7 @@ public class AgentTeam {
         else {
             for (int i = 0; i < this.size; i++) {
                 //int[] initAgentCoords = this.spawnPoints.get(i);
-                int[] initAgentCoords = getRandomSpawnPoint(editedSpawn);
+                int[] initAgentCoords = getRandomSpawnPoint(editedSpawn, map);
                 editedSpawn.remove(initAgentCoords);
                 Agent agent;
                 if (type == 0) {
@@ -54,18 +54,18 @@ public class AgentTeam {
             }
         }
         updateAgentPos();
-        System.out.println("agents type: "+type+" spawn coords: \n"+this.toString());
+        //System.out.println("agents type: "+type+" spawn coords: \n"+this.toString());
     }
 
-    /*
-    * updateAgents: update data about each agent using the Agent class method
+    /**
+    * updateAgentVision: update each agents vision
     * */
 
-    public void updateAgents(Map map, RayCasting raycaster){
+    public void updateAgentVision(Map map, RayCasting raycaster){
         for(Agent agent: team){
-            agent.update(map, raycaster);
+            agent.updateVision(raycaster);
         }
-        updateAgentPos();
+        //updateAgentPos();
     }
 
     private void updateAgentPos(){
@@ -73,7 +73,15 @@ public class AgentTeam {
         for(Agent a: team){
             positions.add(a.getPosition());
         }
-        this.agentPositions = positions;
+        this.currentAgentPositions = positions;
+    }
+
+    public void moveAgents(Map map,RayCasting rayCaster){
+        for(Agent a: team){
+            a.update(map,rayCaster);
+        }
+        updateAgentPos();
+        //updateAgentVision(map,rayCaster);
     }
 
     /**
@@ -108,10 +116,8 @@ public class AgentTeam {
         int[] end = spawnCoords.get(1);
         ArrayList<int[]> tiles = new ArrayList<>();
 
-        int xLength = Math.abs(start[0]-end[0]);
-        int yLength = Math.abs(start[1]-end[1]);
-        for(int i = 0; i<yLength; i++){
-            for(int j = 0; j<xLength; j++){
+        for(int i = start[1]; i<end[1]; i++){
+            for(int j = start[0]; j<end[0]; j++){
                 int[] coords = new int[2];
                 coords[0] = j;
                 coords[1] = i;
@@ -125,9 +131,12 @@ public class AgentTeam {
     * getRandomSpawnPoint - returns a random element from the list
     * containing spawn points
     * */
-    private int[] getRandomSpawnPoint(ArrayList<int[]> coords){
+    private int[] getRandomSpawnPoint(ArrayList<int[]> coords, Map map){
         int size = coords.size();
         int i = (int) (size*Math.random());
+        while(map.hasWall(coords.get(i))){
+            i = (int) (size*Math.random());
+        }
         return coords.get(i);
     }
 
@@ -143,9 +152,9 @@ public class AgentTeam {
         return spawnCoords;
     }
 
-    public ArrayList<int[]> getAgentPositions(){
+    public ArrayList<int[]> getCurrentAgentPositions(){
         this.updateAgentPos();
-        return this.agentPositions;
+        return this.currentAgentPositions;
     }
 
 

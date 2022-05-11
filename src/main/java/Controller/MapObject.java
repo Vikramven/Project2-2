@@ -21,7 +21,9 @@ public abstract class MapObject {
         return coords;
     }
 
-
+    public ArrayList<int[]> getPoints(){
+        return new ArrayList<>();
+    }
 
     public int getId() {
         return id;

@@ -2,8 +2,9 @@ package phase2;
 
 //import phase2.QLearning.QStates;
 import phase2.RayCasting.RayCasting;
-import Agents.Tile;
+
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Agent {
 
@@ -18,7 +19,6 @@ public class Agent {
     * NOTE: pass map to each method
      *
     * */
-    private int ID;//  could be useful to differentiate agent among their team
     private int [] position = new int[2];
     private float initialAngle;
     private float currentAngle;
@@ -26,6 +26,13 @@ public class Agent {
     private ArrayList<int[]> path = new ArrayList<>(); // AGENT PAST EXPERIENCE
     private ArrayList<int[]> visionArea = new ArrayList<>();
     private boolean dead;
+    //private boolean
+
+    //uniqueID used to generate agent id
+    static AtomicInteger uniqueId=new AtomicInteger();
+    private final int id;//  could be useful to differentiate agent among their team
+
+
 
     //instance of QLearning
     //private QStates qLearning = new QStates();
@@ -48,7 +55,7 @@ public class Agent {
         position[0] = startX;
         position[1] = startY;
         this.dead = false;
-
+        this.id = uniqueId.incrementAndGet();
     }
 
     /*
@@ -56,35 +63,42 @@ public class Agent {
     *  - vision range
     *  - location
     *  - degree of turn
-    *  -
     * */
 
     public void update(Map map, RayCasting rayCaster){
-        //RayCasting rayCaster = new RayCasting(map);
+        move(map);  //<- some method to make for agent movement with qlearn
         updateVision(rayCaster);
-        //printVision();
-        moveTo(position[0],position[1]);  //<- some method to make for agent movement with qlearn
         if(!path.contains(this.position)){
             this.path.add(this.position);
         }
     }
 
-    private void printVision(){
-        for(int[] point: visionArea){
-            System.out.println("x: "+point[0]+" y: "+point[1]);
+
+
+    public void move(Map map) {
+        /**
+         * TODO : create a method that defines a move based on Qlearn
+         * */
+        int[] newPos = new int[2];
+        newPos[0] = this.position[0]+4;
+        newPos[1] = this.position[1]+5;
+        this.turnLeft();
+        if(inMap(newPos,map)){
+            setPosition(newPos);
         }
     }
 
-    public void moveTo(int x, int y){
-        this.position[0] = x;
-        this.position[1] = y;
-    }
+    /**
+     * moveTo methods dont check wether the move is possible, they just set the new coords
+     * */
 
-    public void moveTo(int[] position){
-        this.position = position;
-    }
 
-    public void turnLeft(){
+    /**
+     * turnRight and turnLeft assume counting degrees counter-clockwise
+     * */
+
+    public void turnRight(){
+        //turns agent 90degrees to right
         if(this.currentAngle>Math.toRadians(90)) {
             this.currentAngle = (float) Math.toRadians((Math.toDegrees(this.currentAngle) - 90) % 360);
         }
@@ -93,16 +107,23 @@ public class Agent {
         }
     }
 
-    public void turnRight(){}
+    public void turnLeft(){
+        //turns 90 degrees to left
+        this.currentAngle = (float) Math.toRadians((Math.toDegrees(this.currentAngle)+90)%360);
+    }
 
     public void moveOnAPath(ArrayList<int[]> instructions){
         for(int[] coords: instructions){
-            moveTo(coords);
+            setPosition(coords);
         }
     }
 
     public boolean inMap(int[] position,Map map){
         return map.inMap(position);
+    }
+
+    public boolean canMove(int[] position, Map map){
+        return map.canMoveTo(position);
     }
 
     /*METHOD NAME: Vision Area
@@ -111,35 +132,59 @@ public class Agent {
     * */
 
     public void updateVision(RayCasting rayCaster){
-        this.visionArea = rayCaster.getVisibleTiles(this);
+        try {
+            this.visionArea = rayCaster.getVisibleTiles(this);
+            //System.out.println("agent."+id+": "+visionArea.size());
+        }
+        catch (Exception e){
+            if(this.visionArea.size()<1){
+                ArrayList<int[]> vis= new ArrayList<int[]>();
+                vis.add(this.getPosition());
+                setVisionArea(vis);
+                //e.printStackTrace();
+            }
+        }
+
     }
 
 
     // ======================= Getters n Setters ================================
-    public Agents.Tile getTile(int x, int y, Map map){
-        return map.getTile(x,y);
-    }
 
+
+    /**GETTERS*/
 
     public int getCurrentX() {
         return position[0];
-    }
-
-    public void setCurrentX(int currentX) {
-        this.position[0] = currentX;
     }
 
     public int getCurrentY() {
         return position[1];
     }
 
+    public float getInitialAngle() {
+        return initialAngle;
+    }
+
+    public float getCurrentAngle(){return this.currentAngle;}
+    public float getCurrentAngleDegrees(){
+        return (int) Math.toDegrees(this.currentAngle);
+    }
+    public ArrayList<int[]> getVisionArea(){return visionArea;};
+
+
+    /**SETTERS*/
+
+
+    public void setCurrentX(int currentX) {
+        this.position[0] = currentX;
+    }
+
+
     public void setCurrentY(int currentY) {
         this.position[1] = currentY;
     }
 
-    public float getInitialAngle() {
-        return initialAngle;
-    }
+
 
     public void setInitialAngle(float initialAngle) {
         this.initialAngle = initialAngle;
@@ -157,19 +202,39 @@ public class Agent {
         /** returns true if the agent is dead (or caught) */
         return this.dead;
     }
-      public int getID(){return ID;};
-      public void setID(int ID){this.ID = ID;};
-      public int[] getPosition(){return position;};
-      public void setPosition(int[] position){this.position = position;};
-      public ArrayList<int[]> getPath(){return path;};
-      public void setPath(ArrayList<int[]> path){this.path = path;};
-      public ArrayList<int[]> getVisionArea(){return visionArea;};
-      public float getCurrentAngle(){return this.currentAngle;}
-      public void setVisionArea(ArrayList<int[]> visionArea){this.visionArea = visionArea;};
+    public int getID(){return id;};
+    //public void setID(int ID){this.id = id;};
+    public int[] getPosition(){return position;};
+
+    public void setPosition(int x, int y){
+        this.position[0] = x;
+        this.position[1] = y;
+    }
+
+    public void setPosition(int[] position){
+        this.position = position;
+    }
+
+    public ArrayList<int[]> getPath(){return path;};
+    public void setPath(ArrayList<int[]> path){this.path = path;};
+
+
+    public void setVisionArea(ArrayList<int[]> visionArea){this.visionArea = visionArea;};
       //public QStates getQLearning(){return qLearning;};
       //public void setQLearning(QStates qLearning){this.qLearning = qLearning;};
 
-    public String toString(){
-        return "position ("+getCurrentX()+","+getCurrentY()+") angle:"+this.currentAngle+"\n";
+    private String visionToString(){
+        StringBuilder s = new StringBuilder();
+        for(int[] point: visionArea){
+            s.append("x: "+point[0]+" y: "+point[1]+"\n");
+        }
+        return s.toString();
     }
+
+    public String toString(){
+        String s ="position ("+getCurrentX()+","+getCurrentY()+") angle:"+getCurrentAngleDegrees()+", id: "+this.id+"\n";
+        return s+"vision: "+visionArea.size()+"\n";
+    }
+
+
 }

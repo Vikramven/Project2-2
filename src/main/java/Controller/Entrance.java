@@ -20,5 +20,35 @@ public abstract class Entrance extends MapObject {
         super.coords.addAll(this.coordOut); //this allows to retrieve all coords at once with getCoords from MapObject
     }
 
+    /**
+     * Returns array list that has IN points (int[]) in the list and the OUT point (int[]) as the last element
+     * */
+    public ArrayList<int[]> getPoints(){
+        int[] start = new int[2];
+        int[] end = new int[2];
+
+        start[0] = coords.get(0);
+        start[1] = coords.get(1);
+
+        end[0] = coords.get(2);
+        end[1] = coords.get(3);
+
+        ArrayList<int[]> points = new ArrayList<>();
+
+        for(int i = start[0]; i<end[0]; i++){
+            for(int j = start[1]; j<end[1]; j++){
+                int[] coords = new int[2];
+                coords[0] = i;
+                coords[1] = j;
+                points.add(coords);
+            }
+        }
+
+        int[] out = new int[2];
+        out[0] = coords.get(4);
+        out[1] = coords.get(5);
+        points.add(out);
+        return points;
+    }
 
 }

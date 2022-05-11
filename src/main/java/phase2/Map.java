@@ -1,8 +1,7 @@
 package phase2;
 
 import Agents.Tile;
-import Controller.Variables;
-import Controller.Wall;
+import Controller.*;
 import phase2.RayCasting.RayCasting;
 
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ public class Map {
     private AgentTeam listOfGuards;
     private AgentTeam listOfIntruders;
     private ArrayList<int[]> wallpoints = new ArrayList<>();
+    private RayCasting rayCasting;
     //private
 
 
@@ -36,16 +36,26 @@ public class Map {
         //printWalls();
 
         listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());
-        //listOfGuards.placeOnSpawn();
         //listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords()); //parser doesnt work
         listOfIntruders = new AgentTeam(intrudersSize,1,this.intruderSpawnWorkaround());
-        //listOfGuards.placeOnSpawn();
+
         listOfAllAgents = new ArrayList<>();
         listOfAllAgents.add(listOfGuards);
         listOfAllAgents.add(listOfIntruders);
+
         initializeMap();
-        System.out.println(this);
     }
+
+
+
+    private ArrayList<Integer> intruderSpawnWorkaround(){
+        Spawn spawn = new Spawn(140,50,160,70);
+        return spawn.getCoords();
+    }
+
+    /**
+     * METHODS USED TO INITIALIZE THE MAP
+     * */
 
     private void tileInit(){
         for(int i = 0; i<xSize;i++){
@@ -55,58 +65,22 @@ public class Map {
         }
     }
 
-    private ArrayList<Integer> intruderSpawnWorkaround(){
-        int x = 0;
-        int y =0;
-        ArrayList<Integer> spawn = new ArrayList<>();
-        spawn.add(x);
-        spawn.add(y);
-        y = 5;
-        spawn.add(x);
-        spawn.add(y);
-        x = 5;
-        spawn.add(x);
-        spawn.add(y);
-        x =0;
-        spawn.add(x);
-        spawn.add(y);
-        return spawn;
-    }
-
-
-
     public void allAgentsInit(){
-        this.listOfGuards.placeOnSpawn();
-        this.listOfIntruders.placeOnSpawn();
+        this.listOfGuards.placeOnSpawn(this);
+        this.listOfIntruders.placeOnSpawn(this);
+        this.rayCasting = new RayCasting(this);
+        this.listOfGuards.updateAgentVision(this,rayCasting);
+        this.listOfIntruders.updateAgentVision(this,rayCasting);
     }
-
-    /*
-    * updateAllAgents: calls a method that updates a team of agents (moves them, updates their vision etc)
-    * */
-    public void updateAllAgents(){
-        RayCasting rayCasting = new RayCasting(this);
-        for(AgentTeam team: listOfAllAgents){
-            team.updateAgents(this,rayCasting);
-        }
-    }
-
 
     private void initializeMap(){
-        int[] coord = new int[2];
-        coord[0] = 0;
-        coord[1] = 0;
-        //System.out.println(this.wallpoints.get(0)==coord);
-        //System.out.println(this.wallpoints.get(0)[0]+" "+this.wallpoints.get(0)[1]);
-        /*for(int i = 0; i<this.xSize; i++)
-            for(int j = 0; j<this.ySize; j++){
-                this.map[i][j] = determineTile(i,j);
-                //System.out.println(determineTile(i,j));
-            }
-        //System.out.println(this);*/
         placeWalls();
+        placePortals();
+        placeShade();
+        //this.rayCasting = new RayCasting(this);
         allAgentsInit();
-        System.out.println(listOfGuards);
-        System.out.println(listOfIntruders);
+        //System.out.println(listOfGuards);
+        //System.out.println(listOfIntruders);
         placeAgentsOnTiles();
     }
 
@@ -117,6 +91,7 @@ public class Map {
     }
 
     private void placeAgentsOnTiles(){
+        /**places agents on tiles of map*/
         for(int i=0;i<xSize;i++){
             for(int j=0;j<ySize;j++){
                 map[i][j].removeAgent();
@@ -127,74 +102,146 @@ public class Map {
     }
 
     private void placeGuards(){
-        for(int[] pos: listOfGuards.getAgentPositions()){
+        for(int[] pos: listOfGuards.getCurrentAgentPositions()){
             map[pos[0]][pos[1]].placeGuard();
         }
     }
 
     private void placeIntruders(){
-        for(int[] pos: listOfIntruders.getAgentPositions()){
+        for(int[] pos: listOfIntruders.getCurrentAgentPositions()){
             map[pos[0]][pos[1]].placeIntruder();
         }
     }
 
-    private Tile determineTile(int i, int j){
-       Tile tile = new Tile(i,j);
-        if(isAWall(i,j)){
-            tile.placeWall();
-            //System.out.println("AAAAAAAAAAAAAAAAAAAA");
+    private void placePortals(){
+        ArrayList<int[]> inpoints = portalPointsIn();
+        ArrayList<int[]> outpoints = portalPointsOut();
+
+        for(int[] c: inpoints){
+            map[c[0]][c[1]].placeTeleportIN();
         }
-        if(hasAgent(i,j)){
-            //tile.placeAgent();
+
+        for(int[] c: outpoints){
+            map[c[0]][c[1]].placeTeleportOUT();
         }
-        return tile;
     }
 
-    private boolean hasAgent(int x, int y){
-        int[] coord = new int[2];
-        coord[0] = x;
-        coord[1] = y;
-        for(int[] wallCoord : this.wallpoints){
-            if(wallCoord[0]==coord[0] && wallCoord[1]==coord[1]){
-                return true;
-            }
+    private void placeShade(){
+        ArrayList<int[]> shadePoints = shadesPoints();
+        for(int[] c: shadePoints){
+            map[c[0]][c[1]].placeShade();
         }
-        return listOfGuards.getAgentPositions().contains(coord) || listOfIntruders.getAgentPositions().contains(coord);
     }
 
-    private boolean isAWall(int x, int y){
-        for(int[] wallCoord : this.wallpoints){
-            if(wallCoord[0]==x && wallCoord[1]==y){
-                return true;
-            }
+    /**
+     * UPDATORS: THEY UPDATE THE CURRENT STATE OF THE MAP
+     * */
+
+
+
+    private void updateAgentVision(){
+        /**uses raycasting to update the tiles seen by an agent*/
+        RayCasting rayCasting = new RayCasting(this);
+        for(AgentTeam team: listOfAllAgents){
+            team.updateAgentVision(this,rayCasting);
         }
-        return false;
     }
+
+    private void updateAgentMoves(){
+        /**updates the move (the position) of each agent within the AgentTeam class */
+        RayCasting raycast = new RayCasting(this);
+        for(AgentTeam team: listOfAllAgents){
+            team.moveAgents(this, raycast);
+        }
+    }
+
+
+    public void moveAllAgents(){
+        /**updates the position and vision of each agent
+         * updates the tiles with that info
+         * */
+        updateAgentMoves();
+        updateAgentVision();
+        placeAgentsOnTiles();
+    }
+
+
+
+
+    public boolean hasAgent(int x, int y){
+        return map[x][y].hasAgent();
+    }
+
+    public boolean hasAgent(int[] pos){
+        int x = pos[0];
+        int y = pos[1];
+        return map[x][y].hasAgent();
+    }
+
+    public boolean hasWall(int x, int y){
+        return map[x][y].hasWall();
+    }
+
+    public boolean hasWall(int[] pos){
+        int x = pos[0];
+        int y = pos[1];
+        return map[x][y].hasWall();
+    }
+
+
 
     private ArrayList<int[]> wallPoints() {
-        tileInit();
         ArrayList<Wall> walls = this.variables.getWalls();
         ArrayList<int[]> wallPoints = new ArrayList<>();
 
         for (Wall w : walls) {
-            //System.out.println(w.getPoints().size());
             ArrayList<int[]> wall = w.getPoints();
             wallPoints.addAll(wall);
-            for (int[] xy : wall) {
-                //System.out.println("wall xy"+xy[0]+", "+xy[1]);
-                //this.map[xy[0]][xy[1]].placeWall();
-                //System.out.println(this.map[xy[0]][xy[1]]);
-            }
         }
-
-        //System.out.println(this);
         return wallPoints;
+    }
+
+    private ArrayList<int[]> portalPointsIn(){
+        ArrayList<Teleport> portals = this.variables.getPortals();
+        ArrayList<int[]> inPoints = new ArrayList<>();
+        for (Teleport p : portals){
+            ArrayList<int[]> portalPoints = p.getPoints();
+            portalPoints.remove(portalPoints.size()-1);
+            inPoints.addAll(portalPoints);
+        }
+        return inPoints;
+    }
+
+    private ArrayList<int[]> portalPointsOut(){
+        ArrayList<Teleport> portals = this.variables.getPortals();
+        ArrayList<int[]> outPoints = new ArrayList<>();
+        for (Teleport p : portals){
+            ArrayList<int[]> portalPoints = p.getPoints();
+            int[] endPoint = portalPoints.get(portalPoints.size()-1);
+            outPoints.add(endPoint);
+        }
+        return outPoints;
+    }
+
+    private ArrayList<int[]> shadesPoints(){
+        ArrayList<Shade> shades = this.variables.getShades();
+        ArrayList<int[]> shadePoints = new ArrayList<>();
+        for(Shade s: shades){
+            shadePoints.addAll(s.getPoints());
+        }
+        return shadePoints;
     }
 
     private void printWalls(){
         System.out.println("wall size = "+wallpoints.size());
         for(int[] coords : wallpoints){
             System.out.println("x: "+coords[0]+" y: "+coords[1]);
+        }
+    }
+
+    public void printAgentPos(){
+        for(AgentTeam team: listOfAllAgents){
+            System.out.println(team);
         }
     }
 
@@ -205,11 +252,11 @@ public class Map {
     public void moveAgentToPosition(Agent agent, int[] position){
         /** moves agent to coordinates if possible */
         if(canMoveTo(position)){
-            agent.moveTo(position[0],position[1]);
+            agent.setPosition(position[0],position[1]);
         }
     }
 
-    private boolean canMoveTo(int[] pos){
+    public boolean canMoveTo(int[] pos){
         return inMap(pos) && !map[pos[0]][pos[1]].hasWall() && !map[pos[0]][pos[1]].hasAgent();
     }
 
@@ -246,6 +293,7 @@ public class Map {
         StringBuilder s = new StringBuilder();
 
         for(int i = 0; i<xSize;i++){
+            s.append(i+": ");
             for(int j = 0; j<ySize; j++){
                 String c = map[i][j].toString();
                 s.append(c);

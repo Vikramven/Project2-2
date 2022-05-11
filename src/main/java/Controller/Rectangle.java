@@ -40,11 +40,11 @@ x4 = x1, y4 = y3
 
         int xLength = Math.abs(start[0]-end[0]);
         int yLength = Math.abs(start[1]-end[1]);
-        for(int i = 0; i<yLength; i++){
-            for(int j = 0; j<xLength; j++){
+        for(int i = 0; i<xLength; i++){
+            for(int j = 0; j<yLength; j++){
                 int[] coords = new int[2];
-                coords[0] = j;
-                coords[1] = i;
+                coords[0] = i;
+                coords[1] = j;
                 points.add(coords);
             }
         }

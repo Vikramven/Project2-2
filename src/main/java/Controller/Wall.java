@@ -41,9 +41,9 @@ public class Wall extends Rectangle {
             points.add(c);
         }
 
-        for(int[] p: points){
+        /*for(int[] p: points){
             System.out.println(p[0]+", "+p[1]);
-        }
+        }*/
 
         return points;
     }
