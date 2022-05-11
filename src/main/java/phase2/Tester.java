@@ -15,10 +15,10 @@ public class Tester {
         }
 
         Map map = new Map(unparsedVars);
-        System.out.println(map);
+        //System.out.println(map);
         //map.printAgentPos();
         map.moveAllAgents();
-        //map.printAgentPos();
-        //System.out.println(map);
+        map.printAgentPos();
+        System.out.println(map);
     }
 }

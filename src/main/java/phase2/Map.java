@@ -17,6 +17,7 @@ public class Map {
     private AgentTeam listOfIntruders;
     private ArrayList<int[]> wallpoints = new ArrayList<>();
     private RayCasting rayCasting;
+    private ArrayList<int[]> seenPoints = new ArrayList<>();
     //private
 
 
@@ -79,6 +80,7 @@ public class Map {
         placeShade();
         //this.rayCasting = new RayCasting(this);
         allAgentsInit();
+        placeVisible();
         //System.out.println(listOfGuards);
         //System.out.println(listOfIntruders);
         placeAgentsOnTiles();
@@ -113,7 +115,7 @@ public class Map {
         }
     }
 
-    private void placePortals(){
+    /*private void placePortals(){
         ArrayList<int[]> inpoints = portalPointsIn();
         ArrayList<int[]> outpoints = portalPointsOut();
 
@@ -124,7 +126,7 @@ public class Map {
         for(int[] c: outpoints){
             map[c[0]][c[1]].placeTeleportOUT();
         }
-    }
+    }*/
 
     private void placeShade(){
         ArrayList<int[]> shadePoints = shadesPoints();
@@ -133,17 +135,41 @@ public class Map {
         }
     }
 
+    private void placePortals(){
+        ArrayList<Teleport> portals = this.variables.getPortals();
+        ArrayList<int[]> inPoints = new ArrayList<>();
+        for (Teleport p : portals){
+            ArrayList<int[]> portalPoints = p.getPoints();
+            int id = p.getId();
+            int[] out = portalPoints.get(portalPoints.size()-1);
+            map[out[0]][out[1]].placeTeleportOUT(id);
+            portalPoints.remove(portalPoints.size()-1);
+            for(int[] c: portalPoints){
+                map[c[0]][c[1]].placeTeleportIN(id,out);
+            }
+            inPoints.addAll(portalPoints);
+        }
+    }
+
     /**
      * UPDATORS: THEY UPDATE THE CURRENT STATE OF THE MAP
      * */
 
-
+    private void placeVisible(){
+        for(int[] c: this.seenPoints){
+            map[c[0]][c[1]].setAsVisible();
+        }
+    }
 
     private void updateAgentVision(){
         /**uses raycasting to update the tiles seen by an agent*/
+        this.seenPoints = new ArrayList<>();
         RayCasting rayCasting = new RayCasting(this);
         for(AgentTeam team: listOfAllAgents){
             team.updateAgentVision(this,rayCasting);
+            this.seenPoints.addAll(team.getSeenTiles());
+            //System.out.println("AAAAAAAAAA"+this.seenPoints.get(88)[0]);
+
         }
     }
 
@@ -201,18 +227,9 @@ public class Map {
         return wallPoints;
     }
 
-    private ArrayList<int[]> portalPointsIn(){
-        ArrayList<Teleport> portals = this.variables.getPortals();
-        ArrayList<int[]> inPoints = new ArrayList<>();
-        for (Teleport p : portals){
-            ArrayList<int[]> portalPoints = p.getPoints();
-            portalPoints.remove(portalPoints.size()-1);
-            inPoints.addAll(portalPoints);
-        }
-        return inPoints;
-    }
 
-    private ArrayList<int[]> portalPointsOut(){
+
+   /* private ArrayList<int[]> portalPointsOut(){
         ArrayList<Teleport> portals = this.variables.getPortals();
         ArrayList<int[]> outPoints = new ArrayList<>();
         for (Teleport p : portals){
@@ -221,7 +238,7 @@ public class Map {
             outPoints.add(endPoint);
         }
         return outPoints;
-    }
+    }*/
 
     private ArrayList<int[]> shadesPoints(){
         ArrayList<Shade> shades = this.variables.getShades();

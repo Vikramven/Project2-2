@@ -21,7 +21,9 @@ public class Tile {
     private int stressLevel; //
     private int TRACE_VALUE = 1; // or any other val
     private int WALL_VALUE = Integer.MAX_VALUE;
-    private final int size = 9;
+    private int portalID = 0;
+    private int[] portalOut = new int[2];
+    private final int size = 10;
 
     public Tile(int x, int y){
         for(int i = 0; i< this.size; i++){
@@ -57,15 +59,18 @@ public class Tile {
         }
     }
 
-    public void placeTeleportIN(){
+    public void placeTeleportIN(int portalID,int[] portalOut){
         if(!hasWall()){
             this.dataset.set(this.T_IN,1);
+            this.portalID = portalID;
+            this.portalOut = portalOut;
         }
     }
 
-    public void placeTeleportOUT(){
+    public void placeTeleportOUT(int portalID){
         if(!hasWall()){
             this.dataset.set(this.T_OUT,1);
+            this.portalID = portalID;
         }
     }
 
@@ -162,6 +167,8 @@ public class Tile {
         return dataset;
     }
 
+    public int[] getPortalOut(){return this.portalOut;}
+
     public boolean isEmpty(){
         boolean isEmpty = true;
         for(int i=0; i<size; i++){
@@ -191,7 +198,7 @@ public class Tile {
                 this.placeShade();
             }
             if(tile.hasTeleportIn()){
-                this.placeTeleportIN();
+                this.placeTeleportIN(this.portalID,this.portalOut);
             }
         }
     }
@@ -206,12 +213,7 @@ public class Tile {
 
     public String toString(){
         String s = "_";
-        if(this.hasGuard()){
-            s = "G";
-        }
-        if(this.hasIntruder()){
-            s = "I";
-        }
+
         if(this.hasTeleportIn()){
             s = "T";
         }
@@ -226,6 +228,16 @@ public class Tile {
         }
         if(this.hasShade()){
             s = "H";
+        }
+
+        if(this.isVisible()){
+            s = "V";
+        }
+        if(this.hasGuard()){
+            s = "G";
+        }
+        if(this.hasIntruder()){
+            s = "I";
         }
 
         return s;

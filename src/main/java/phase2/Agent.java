@@ -1,6 +1,7 @@
 package phase2;
 
 //import phase2.QLearning.QStates;
+import Agents.Tile;
 import phase2.RayCasting.RayCasting;
 
 import java.util.ArrayList;
@@ -68,9 +69,7 @@ public class Agent {
     public void update(Map map, RayCasting rayCaster){
         move(map);  //<- some method to make for agent movement with qlearn
         updateVision(rayCaster);
-        if(!path.contains(this.position)){
-            this.path.add(this.position);
-        }
+
     }
 
 
@@ -83,8 +82,15 @@ public class Agent {
         newPos[0] = this.position[0]+4;
         newPos[1] = this.position[1]+5;
         this.turnLeft();
+        Tile currentTile = map.getTile(newPos[0],newPos[1]);
+        if(currentTile.hasTeleportIn()){
+            newPos = currentTile.getPortalOut();
+        }
         if(inMap(newPos,map)){
             setPosition(newPos);
+        }
+        if(!path.contains(this.position)){
+            this.path.add(this.position);
         }
     }
 
@@ -122,6 +128,8 @@ public class Agent {
         return map.inMap(position);
     }
 
+
+
     public boolean canMove(int[] position, Map map){
         return map.canMoveTo(position);
     }
@@ -134,7 +142,7 @@ public class Agent {
     public void updateVision(RayCasting rayCaster){
         try {
             this.visionArea = rayCaster.getVisibleTiles(this);
-            //System.out.println("agent."+id+": "+visionArea.size());
+            System.out.println("agent."+id+": "+visionArea.size());
         }
         catch (Exception e){
             if(this.visionArea.size()<1){

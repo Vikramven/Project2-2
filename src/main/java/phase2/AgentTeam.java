@@ -11,6 +11,7 @@ public class AgentTeam {
     private ArrayList<int[]> spawnCoords; //list of x,y coordinates
     private ArrayList<int[]> spawnPoints; //x,y coordinates of tiles in the spawn area
     private ArrayList<int[]> currentAgentPositions = new ArrayList<>();
+    private ArrayList<int[]> seenTiles = new ArrayList<>();
 
     /**
      * COULD HAVE:
@@ -62,8 +63,16 @@ public class AgentTeam {
     * */
 
     public void updateAgentVision(Map map, RayCasting raycaster){
+        this.seenTiles = new ArrayList<>();
         for(Agent agent: team){
             agent.updateVision(raycaster);
+            this.seenTiles.addAll(agent.getVisionArea());
+            //System.out.println("AAAAAAAA"+seenTiles.size());
+        }
+        //System.out.println("seen tiles agent 1: ");
+        ArrayList<int[]> seen = team.get(0).getVisionArea();
+        for(int[] c : seen){
+            //System.out.println("x: "+c[0]+"y: "+c[1]);
         }
         //updateAgentPos();
     }
@@ -170,6 +179,10 @@ public class AgentTeam {
             System.out.println("access agent in team; exception thrown: "+e);
         }
         return new Agent(0,0,0);
+    }
+
+    public ArrayList<int[]> getSeenTiles(){
+        return seenTiles;
     }
 
     public String toString(){
