@@ -1,0 +1,3317 @@
+Index: src/main/java/phase2/Tester.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\r\n\r\nimport Agents.Map;\r\nimport Controller.ReadFiles;\r\nimport phase2.RayCasting.RayCasting;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Tester {\r\n\r\n    public static void main(String args[]){\r\n\r\n        String path = \"\";\r\n        String[] unparsedVars = new String[0];\r\n        try {\r\n            unparsedVars = ReadFiles.readFileAsString(\"recources/testmap.txt\");\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n//\r\n//        Map a = new Map(unparsedVars);\r\n//        int height = a.getVariables().getHeight();\r\n//        int width = a.getVariables().getWidth();\r\n//        System.out.println(height + \" \" + width);\r\n//        RayCasting ray = new RayCasting(height, width);\r\n//        ray.convertToRayCastingMap(0,0, width, height, 1, width);\r\n//        System.out.println(ray.toString());\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Tester.java b/src/main/java/phase2/Tester.java
+--- a/src/main/java/phase2/Tester.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/Tester.java	(date 1651747450200)
+@@ -1,11 +1,6 @@
+ package phase2;
+ 
+-import Agents.Map;
+ import Controller.ReadFiles;
+-import phase2.RayCasting.RayCasting;
+-
+-import java.util.ArrayList;
+-
+ public class Tester {
+ 
+     public static void main(String args[]){
+@@ -15,16 +10,12 @@
+         try {
+             unparsedVars = ReadFiles.readFileAsString("recources/testmap.txt");
+         } catch (Exception e) {
++            System.out.println("AAAAAAAAAAAAAAAAAAa");
+             e.printStackTrace();
+         }
+-//
+-//        Map a = new Map(unparsedVars);
+-//        int height = a.getVariables().getHeight();
+-//        int width = a.getVariables().getWidth();
+-//        System.out.println(height + " " + width);
+-//        RayCasting ray = new RayCasting(height, width);
+-//        ray.convertToRayCastingMap(0,0, width, height, 1, width);
+-//        System.out.println(ray.toString());
+ 
++        Map map = new Map(unparsedVars);
++        map.allAgentsInit();
++        map.updateAllAgents();
+     }
+ }
+Index: src/main/java/Controller/Rectangle.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic abstract class Rectangle extends MapObject {\r\n\r\n\r\n\r\n    /*\r\n    the rectangle is represented in an int array : [x1,y1,x2,y2,x3,y3,x4,y4]\r\n\r\n D(x4,y4) _____________ C (x3,y3)\r\n          |            |\r\n          |            |\r\nA(x1,y1)  |____________| B (x2,y2)\r\n\r\nx2 = x3, y2 = y1 <- that's how we get all 4 points\r\nx4 = x1, y4 = y3\r\n     */\r\n\r\n    public Rectangle(int x1, int y1,int x3,int y3){\r\n        super();\r\n        super.coords.add(x1); super.coords.add(y1); //point A\r\n        super.coords.add(x3); super.coords.add(y1); //point B\r\n        super.coords.add(x3); super.coords.add(y3); //point C\r\n        super.coords.add(x1); super.coords.add(y3); //point D\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Controller/Rectangle.java b/src/main/java/Controller/Rectangle.java
+--- a/src/main/java/Controller/Rectangle.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/Controller/Rectangle.java	(date 1651745794262)
+@@ -25,4 +25,29 @@
+         super.coords.add(x3); super.coords.add(y3); //point C
+         super.coords.add(x1); super.coords.add(y3); //point D
+     }
++
++    public ArrayList<int[]> getPoints(){
++        int[] start = new int[2];
++        int[] end = new int[2];
++
++        start[0] = coords.get(0);
++        start[1] = coords.get(1);
++
++        end[0] = coords.get(4);
++        end[1] = coords.get(5);
++
++        ArrayList<int[]> points = new ArrayList<>();
++
++        int xLength = Math.abs(start[0]-end[0]);
++        int yLength = Math.abs(start[1]-end[1]);
++        for(int i = 0; i<yLength; i++){
++            for(int j = 0; j<xLength; j++){
++                int[] coords = new int[2];
++                coords[0] = j;
++                coords[1] = i;
++                points.add(coords);
++            }
++        }
++        return points;
++    }
+ }
+Index: src/main/java/phase2/RayCasting/RayCasting.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2.RayCasting;\r\n\r\nimport phase2.Agent;\r\nimport Agents.Map;\r\nimport Agents.Tile;\r\nimport java.util.ArrayList;\r\nimport java.util.Comparator;\r\nimport java.util.LinkedList;\r\n\r\nimport static java.lang.Math.*;\r\n\r\npublic class RayCasting {\r\n\r\n    final double FIELD_OF_VIEW = Math.toRadians(150);\r\n\r\n    int mapHeight; //height\r\n    int mapWidth; // width\r\n    ArrayList<Cell> world;\r\n    LinkedList<Edge> edges = new LinkedList<>();\r\n    ArrayList<Ray> visionPolygonPoints = new ArrayList<>();\r\n    Map map;\r\n\r\n    public RayCasting(Map map){\r\n        this.map = map;\r\n        Tile[][] tiles = map.getTiles();\r\n        this.mapHeight = map.getMapHeight();\r\n        this.mapWidth = map.getMapWidth();\r\n        world = new ArrayList<>();\r\n        for (int i = 0; i < this.mapHeight; i++) {\r\n            for (int j = 0; j < this.mapWidth; j++) {\r\n                Cell cell = new Cell();\r\n                if(tiles[i][j].hasWall())\r\n                    cell.exists = true;\r\n                world.add(cell);\r\n            }\r\n        }\r\n        convertToRayCastingMap();\r\n    }\r\n\r\n    /**\r\n     * method represents map in list edges as a list of cells with edges\r\n     * representation in edges list\r\n     */\r\n    public void convertToRayCastingMap(){\r\n\r\n        // coordinates of point at which to start conversion into map with edges\r\n        int startX = 0, startY = 0;\r\n        // height and width of map with edges\r\n        int width = this.mapWidth, height = this.mapHeight;\r\n        // width of a tile and pitch for conversion\r\n        int blockWidth = 1, pitch = this.mapWidth;\r\n\r\n        edges.clear();\r\n\r\n        for (int i = 0; i < width; i++) {\r\n            for (int j = 0; j < height; j++) {\r\n                for (int k = 0; k < 4; k++) {\r\n                    int i1 = (j + startY) * pitch + (i + startX);\r\n                    world.get(i1).edgeExists[k] = false;\r\n                    world.get(i1).edgeId[k] = 0;\r\n                }\r\n            }\r\n        }\r\n\r\n        for (int i = 0; i < width; i++) {\r\n            for (int j = 0; j < height; j++) {\r\n\r\n                int currentCellIndex = (j + startY) * pitch + (i + startX);\t\t// This\r\n                int n = (j + startY - 1) * pitch + (i + startX);\t\t// Northern Neighbour\r\n                int s = (j + startY + 1) * pitch + (i + startX);\t\t// Southern Neighbour\r\n                int w = (j + startY) * pitch + (i + startX - 1);\t// Western Neighbour\r\n                int e = (j + startY) * pitch + (i + startX + 1);\t// Eastern Neighbour\r\n\r\n                // North = 0 | South = 1 | East = 2 | West = 3|\r\n\r\n                if(world.get(currentCellIndex).exists){\r\n                    if( isInMap(currentCellIndex, 3) && !world.get(w).exists){\r\n                        if (isInMap(currentCellIndex, 0) && world.get(n).edgeExists[3]){\r\n                            float p = edges.get(world.get(n).edgeId[3]).getEndY();\r\n                            edges.get(world.get(n).edgeId[3]).setEndY(p+blockWidth);\r\n                            world.get(currentCellIndex).edgeId[3] = world.get(n).edgeId[3];\r\n\r\n                        }\r\n                        else\r\n                        {\r\n                            Edge edge = new Edge();\r\n\r\n                            edge.setStartX( (startX + i) * blockWidth);\r\n                            edge.setStartY((startY+j)*blockWidth);\r\n                            edge.setEndX(edge.getStartX());\r\n                            edge.setEndY(edge.getStartY() + blockWidth);\r\n                            int edge_id = edges.size();\r\n\r\n                            edges.add(edge);\r\n\r\n                            world.get(currentCellIndex).edgeId[3] = edge_id;\r\n                        }\r\n                        world.get(currentCellIndex).edgeExists[3] = true;\r\n                    }\r\n\r\n                    if( isInMap(currentCellIndex, 2)  && !world.get(e).exists){\r\n                        if (isInMap(currentCellIndex, 0)  && world.get(n).edgeExists[2]){\r\n                            float p = edges.get(world.get(n).edgeId[2]).getEndY();\r\n                            edges.get(world.get(n).edgeId[2]).setEndY(p+blockWidth);\r\n                            world.get(currentCellIndex).edgeId[2] = world.get(n).edgeId[2];\r\n                        }\r\n                        else\r\n                        {\r\n                            Edge edge = new Edge();\r\n\r\n                            edge.setStartX( (startX + (i+1)) * blockWidth);\r\n                            edge.setStartY((startY+j)*blockWidth);\r\n                            edge.setEndX(edge.getStartX());\r\n                            edge.setEndY(edge.getStartY() + blockWidth);\r\n\r\n                            // Add edge to Polygon Pool\r\n                            int edge_id = edges.size();\r\n                            edges.add(edge);\r\n\r\n                            // Update tile information with edge information\r\n                            world.get(currentCellIndex).edgeId[2] = edge_id;\r\n                        }\r\n                        world.get(currentCellIndex).edgeExists[2] = true;\r\n                    }\r\n\r\n                    if( isInMap(currentCellIndex, 0) && !world.get(n).exists){\r\n                        if (isInMap(currentCellIndex, 3)  && world.get(w).edgeExists[0]){\r\n                            float p = edges.get(world.get(w).edgeId[0]).getEndX();\r\n                            edges.get(world.get(w).edgeId[0]).setEndX(p+blockWidth);\r\n                            world.get(currentCellIndex).edgeId[0] = world.get(w).edgeId[0];\r\n                        }\r\n                        else\r\n                        {\r\n                            Edge edge = new Edge();\r\n\r\n                            edge.setStartX( (startX + i) * blockWidth);\r\n                            edge.setStartY((startY+j)*blockWidth);\r\n                            edge.setEndX(edge.getStartX() + blockWidth);\r\n                            edge.setEndY(edge.getStartY());\r\n\r\n                            // Add edge to Polygon Pool\r\n                            int edge_id = edges.size();\r\n                            edges.add(edge);\r\n\r\n                            // Update tile information with edge information\r\n                            world.get(currentCellIndex).edgeId[0] = edge_id;\r\n                        }\r\n                        world.get(currentCellIndex).edgeExists[0] = true;\r\n                    }\r\n\r\n                    if( isInMap(currentCellIndex, 1) && !world.get(s).exists){\r\n                        if (isInMap(currentCellIndex, 3)  && world.get(w).edgeExists[1]){\r\n                            float p = edges.get(world.get(w).edgeId[1]).getEndX();\r\n                            edges.get(world.get(w).edgeId[1]).setEndX(p+blockWidth);\r\n                            world.get(currentCellIndex).edgeId[1] = world.get(w).edgeId[1];\r\n\r\n                        }\r\n                        else\r\n                        {\r\n                            Edge edge = new Edge();\r\n\r\n                            edge.setStartX( (startX + i) * blockWidth);\r\n                            edge.setStartY((startY+(j+1))*blockWidth);\r\n                            edge.setEndX(edge.getStartX() + blockWidth);\r\n                            edge.setEndY(edge.getStartY());\r\n\r\n                            // Add edge to Polygon Pool\r\n                            int edge_id = edges.size();\r\n                            edges.add(edge);\r\n\r\n                            // Update tile information with edge information\r\n                            world.get(currentCellIndex).edgeId[1] = edge_id;\r\n                        }\r\n                        world.get(currentCellIndex).edgeExists[1] = true;\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        // add edges on each of the 4 map boarders as a limit of the viewing range; agent cannot see past map\r\n        edges.add(new Edge(startX, startY, width, startY));\r\n        edges.add(new Edge(startX, startY, startX, height));\r\n        edges.add(new Edge(width, 0, width, height));\r\n        edges.add(new Edge(0, height, width, height));\r\n    }\r\n\r\n    /**\r\n     * @return List of [x,y] coordinates of tiles in agent's viewing range\r\n     */\r\n    public ArrayList<int[]> getVisibleTiles(Agent agent){\r\n\r\n        Tile[][] mapTiles = this.map.getTiles();\r\n        float agentX = agent.getCurrentX(), agentY = agent.getCurrentY(),\r\n                visionRange = agent.getVisionRange();\r\n        float angle = agent.getCurrentAngle();\r\n        float[] limits  = getViewingLimits(angle);\r\n\r\n        calculateVision( agentX, agentY, visionRange, limits); // creates endpoints of vision polygon\r\n\r\n        ArrayList<int[]> listOfVisibleTiles = new ArrayList<>();\r\n\r\n        for(Tile[] tiles : mapTiles){\r\n            for(Tile tile : tiles){\r\n                if(isInsideVisionRange(tile.getXCoord(),tile.getYCoord(), (float) agentX, (float) agentY))\r\n                    listOfVisibleTiles.add(new int[]{tile.getXCoord(), tile.getYCoord()});\r\n            }\r\n        }\r\n\r\n        return listOfVisibleTiles;\r\n\r\n    }\r\n\r\n    /**\r\n     * given a tile's position [x,y] and agent's position [agentX,agentY],\r\n     * @return true if tile is in agent's vision range\r\n     */\r\n    private boolean isInsideVisionRange(float x, float y, float agentX, float agentY){\r\n        float tileX = (2*x + 1)/2, // basically x + 0.5\r\n                tileY = (2*y + 1)/2; // y + 0.5\r\n\r\n        float[] rayStart = {tileX,tileY}, rayEnd = {agentX,agentY};\r\n\r\n        for(int i = 0; i < visionPolygonPoints.size()-1; i++){\r\n            Ray point1 = visionPolygonPoints.get(i);\r\n            Ray point2 = visionPolygonPoints.get(i+1);\r\n            float[] edgeStart = {point1.getEndX(), point1.getEndY()},\r\n                    edgeEnd = {point2.getEndX(), point2.getEndY()};\r\n            float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);\r\n            float distanceAlongRay = intersectionData[0],\r\n                    distanceAlongEdge = intersectionData[1];\r\n            if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)\r\n                return false;\r\n        }\r\n\r\n        Ray point1 = visionPolygonPoints.get(0);\r\n        Ray point2 = visionPolygonPoints.get(visionPolygonPoints.size()-1);\r\n        float[] edgeStart = {point1.getEndX(), point1.getEndY()},\r\n                edgeEnd = {point2.getEndX(), point2.getEndY()};\r\n        float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);\r\n        float distanceAlongRay = intersectionData[0],\r\n                distanceAlongEdge = intersectionData[1];\r\n        if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)\r\n            return false;\r\n        return true;\r\n    }\r\n\r\n    /**\r\n     * method fills visionPolygonPoints with points describing agent's \"vision polygon\"\r\n     * @param originX: x-coordinate of agent\r\n     * @param originY: y-coordinate of agent\r\n     * @param radius: agent's viewing distance\r\n     * @param limits: [limit1,limit2] of agent's viewing angle respective to its orientation\r\n     */\r\n    public void calculateVision(float originX, float originY, float radius, float[] limits) {\r\n\r\n        visionPolygonPoints.clear();\r\n\r\n        for (Edge edge1 : edges) {\r\n            for (int i = 0; i < 2; i++) {\r\n                float rayVectorX, rayVectorY;\r\n                rayVectorX = (i == 0 ? edge1.getStartX() : edge1.getEndX()) - originX;\r\n                rayVectorY = (i == 0 ? edge1.getStartY() : edge1.getEndY()) - originY;\r\n\r\n                float baseAngle = (float) atan2(rayVectorY, rayVectorX);\r\n                float angle = 0;\r\n\r\n                for (int j = 0; j < 2; j++) {\r\n                    float limit1 = limits[0], limit2 = limits[1];\r\n\r\n                    if(limit1 <= baseAngle && baseAngle <= limit2){\r\n                        if (j == 0) {\r\n                            angle = baseAngle - 0.0001f;\r\n                        }\r\n                        if (j == 1) {\r\n                            angle = baseAngle + 0.0001f;\r\n                        }\r\n\r\n                        rayVectorX = (float) (radius * cos(angle));\r\n                        rayVectorY = (float) (radius * sin(angle));\r\n\r\n                        float lowestDistance = Float.POSITIVE_INFINITY;\r\n                        float closestIntersectX = 0, closestIntersectY = 0, closestIntersectAng = 0;\r\n\r\n                        int interceptionCount = 0;\r\n\r\n                        for (Edge edge2 : edges) {\r\n\r\n                            float edgeVectorX = edge2.getEndX() - edge2.getStartX(),\r\n                                    edgeVectorY = edge2.getEndY() - edge2.getStartY();\r\n\r\n                            float[] edgeStart = {edge2.getStartX(), edge2.getStartY()},\r\n                                    edgeEnd = {edge2.getEndX(), edge2.getEndY()},\r\n                                    rayStart = {originX, originY},\r\n                                    rayEnd = {originX + rayVectorX, originY + rayVectorY};\r\n\r\n                            if (Math.abs(edgeVectorX - rayVectorX) > 0.0f && Math.abs(edgeVectorY - rayVectorY) > 0.0f) {\r\n\r\n                                float[] closestIntersectData = getDistanceOfIntersectionAlongRay(rayStart, rayEnd, edgeStart, edgeEnd);\r\n                                float distance = closestIntersectData[0], edgeVectorCoef = closestIntersectData[1];\r\n\r\n                                if (0 <= distance && distance <= 1 && 0 <= edgeVectorCoef && edgeVectorCoef <= 1) {\r\n                                    interceptionCount++;\r\n                                    if (distance < lowestDistance) {\r\n                                        lowestDistance = distance;\r\n                                        closestIntersectX = closestIntersectData[2];\r\n                                        closestIntersectY = closestIntersectData[3];\r\n                                        closestIntersectAng = (float) atan2(closestIntersectY - originY, closestIntersectX - originX);\r\n                                    }\r\n                                }\r\n                            }\r\n                        }\r\n\r\n                        if(interceptionCount == 0) {\r\n                            closestIntersectX = rayVectorX + originX;\r\n                            closestIntersectY = rayVectorY + originY;\r\n                            closestIntersectAng = angle;\r\n                        }\r\n                        visionPolygonPoints.add(new Ray(closestIntersectAng, closestIntersectX, closestIntersectY));\r\n                    }\r\n                }\r\n            }\r\n        }\r\n\r\n        visionPolygonPoints.sort(Comparator.comparing(Ray::getAngle));\r\n        visionPolygonPoints = removeDuplicates(visionPolygonPoints);\r\n    }\r\n\r\n    private ArrayList<Ray> removeDuplicates(ArrayList<Ray> list){\r\n        Ray temp = list.get(list.size()-1);\r\n        ArrayList<Ray> output = new ArrayList<>();\r\n\r\n        for(Ray ray : list){\r\n            if(!ray.sameAs(temp))\r\n                output.add(ray);temp=ray;\r\n        }\r\n        return output;\r\n    }\r\n\r\n    private float[] getViewingLimits(float angle){\r\n        float limit1, limit2;\r\n        limit1 = (float) (toRadians(angle) - FIELD_OF_VIEW/2);\r\n        limit2 = (float) (toRadians(angle) + FIELD_OF_VIEW/2);\r\n        return new float[]{limit1,limit2};\r\n    }\r\n\r\n    private boolean isInMap(int currentIndex, int directionOfNeighbour){\r\n\r\n        // North = 0 | South = 1 | East = 2 | West = 3|\r\n\r\n        int currentX = currentIndex % this.mapHeight;\r\n        int currentY = currentIndex / this.mapWidth;\r\n\r\n        if(currentX == 0 && directionOfNeighbour == 3) {\r\n            return false;\r\n        }\r\n        else if (currentY == 0 && directionOfNeighbour == 0) {\r\n            return false;\r\n        }\r\n        else if (currentX == this.mapWidth-1 && directionOfNeighbour == 2) {\r\n            return false;\r\n        }\r\n        else if (currentY == this.mapHeight-1 && directionOfNeighbour == 1) {\r\n            return false;\r\n        }\r\n        return true;\r\n    }\r\n\r\n    private float[] getDistanceOfIntersectionAlongRay(float[] rayStart, float[] rayEnd,float[] edgeStart, float[] edgeEnd){\r\n\r\n        // see: https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect\r\n\r\n        float rx = rayStart[0], ry = rayStart[1]; // ray start point\r\n        float ex = edgeStart[0], ey = edgeStart[1]; // end start point\r\n\r\n        float rvx = rayEnd[0] - rayStart[0], rvy = rayEnd[1] - rayStart[1]; // ray vector\r\n        float evx = edgeEnd[0] - edgeStart[0], evy = edgeEnd[1] - edgeStart[1]; // edge vector\r\n\r\n        // to get numerator of t\r\n        float[] e_r = {ex-rx, ey-ry};\r\n        float t_numerator = crossProduct(e_r, new float[]{evx, evy});\r\n        // to get denominator of t\r\n        float t_denominator = crossProduct(new float[]{rvx, rvy}, new float[]{evx, evy});\r\n        // to get t\r\n        float t = t_numerator/t_denominator;\r\n\r\n        // to get u\r\n        float u_numerator = crossProduct(e_r, new float[]{rvx, rvy});\r\n        float u_denominator = t_denominator;\r\n\r\n        float u = u_numerator/u_denominator;\r\n\r\n        float px = rx + t * rvx, py = ry + t * rvy;\r\n\r\n        return new float[]{t, u , px, py};\r\n\r\n    }\r\n\r\n    private float crossProduct(float[] vect1, float[] vect2){\r\n        return vect1[0]*vect2[1] - vect1[1]*vect2[0];\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/RayCasting/RayCasting.java b/src/main/java/phase2/RayCasting/RayCasting.java
+--- a/src/main/java/phase2/RayCasting/RayCasting.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/RayCasting/RayCasting.java	(date 1651747492975)
+@@ -1,12 +1,13 @@
+ package phase2.RayCasting;
+ 
+ import phase2.Agent;
+-import Agents.Map;
++import phase2.Map;
+ import Agents.Tile;
+ import java.util.ArrayList;
+ import java.util.Comparator;
+ import java.util.LinkedList;
+ 
++
+ import static java.lang.Math.*;
+ 
+ public class RayCasting {
+@@ -26,8 +27,8 @@
+         this.mapHeight = map.getMapHeight();
+         this.mapWidth = map.getMapWidth();
+         world = new ArrayList<>();
+-        for (int i = 0; i < this.mapHeight; i++) {
+-            for (int j = 0; j < this.mapWidth; j++) {
++        for (int i = 0; i < this.mapWidth; i++) {
++            for (int j = 0; j < this.mapHeight; j++) {
+                 Cell cell = new Cell();
+                 if(tiles[i][j].hasWall())
+                     cell.exists = true;
+Index: src/main/java/phase2/Agent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\r\n\r\nimport phase2.QLearning.QStates;\r\nimport phase2.RayCasting.RayCasting;\r\nimport Agents.Tile;\r\nimport java.util.ArrayList;\r\n\r\npublic class Agent {\r\n\r\n    /*AGENT INFORMATIONS\r\n    * CURRENT LOCATION INFO\r\n    * PAST EXPERIENCE <-- PATH \r\n    * */\r\n\r\n    /**\r\n    *\r\n    * The agent can get map info by passing map into each method that uses it\r\n    * NOTE: pass map to each method\r\n     *\r\n    * */\r\n    private int ID;//  could be useful to differentiate agent among their team\r\n    private int [] position = new int[2];\r\n    private float initialAngle;\r\n    private float currentAngle;\r\n    private int visionRange = 20;\r\n    private ArrayList<int[]> path; // AGENT PAST EXPERIENCE\r\n    private ArrayList<int[]> visionArea;\r\n    private boolean dead;\r\n\r\n    //instance of QLearning\r\n    private QStates qLearning = new QStates();\r\n\r\n    /*INSTANCE NAME: Tables\r\n     * to store the Q and EM tables informations\r\n     * PROCEDURE: Calls the Qlearn submethod (distinct from Q decision to select best move)\r\n     * */\r\n\r\n\r\n    public int[][] EMTable;\r\n    public int[][] QTable;\r\n\r\n    /*METHOD NAME: Basic Agent Constructor\r\n     * GOAL: to create an agent \r\n     * TO DO: need to connect with guard and intruder extensions\r\n     * */\r\n    public Agent(float initialAngle, int startX, int startY){\r\n        this.initialAngle = initialAngle;\r\n        position[0] = startX;\r\n        position[1] = startY;\r\n        this.dead = false;\r\n\r\n    }\r\n\r\n    public void moveTo(int x, int y){\r\n        this.position[0] = x;\r\n        this.position[1] = y;\r\n    }\r\n\r\n    public void moveTo(int[] position){\r\n        this.position = position;\r\n    }\r\n\r\n    public void turnLeft(){\r\n        if(this.currentAngle>Math.toRadians(90)) {\r\n            this.currentAngle = (float) Math.toRadians((Math.toDegrees(this.currentAngle) - 90) % 360);\r\n        }\r\n        else{\r\n            this.currentAngle = (float) Math.toRadians(360-(Math.toDegrees(this.currentAngle)-90));\r\n        }\r\n    }\r\n\r\n    public void turnRight(){}\r\n\r\n    public void moveOnAPath(ArrayList<int[]> instructions){\r\n        for(int[] coords: instructions){\r\n            moveTo(coords);\r\n        }\r\n    }\r\n\r\n    public boolean inMap(int[] position){\r\n        /** this should return true if a position is in map\r\n         * TODO : connect agent with map and implement this\r\n         * */\r\n        return true;\r\n    }\r\n\r\n    /*METHOD NAME: Vision Area\r\n    * GOAL: to update the Tile directly visible by the Agent\r\n    * PROCEDURE: Calling Ray Casting\r\n    * */\r\n\r\n//    public void updateVision(){\r\n//        this.visionArea = RayCasting.getVision(this.position[0],this.position[1],this.visionRange);\r\n//    }\r\n\r\n\r\n    // ======================= Getters n Setters ================================\r\n    public Agents.Tile getTile(int x, int y, Map map){\r\n        return map.getTile(x,y);\r\n    }\r\n\r\n\r\n    public int getCurrentX() {\r\n        return position[0];\r\n    }\r\n\r\n    public void setCurrentX(int currentX) {\r\n        this.position[0] = currentX;\r\n    }\r\n\r\n    public int getCurrentY() {\r\n        return position[1];\r\n    }\r\n\r\n    public void setCurrentY(int currentY) {\r\n        this.position[1] = currentY;\r\n    }\r\n\r\n    public float getInitialAngle() {\r\n        return initialAngle;\r\n    }\r\n\r\n    public void setInitialAngle(float initialAngle) {\r\n        this.initialAngle = initialAngle;\r\n    }\r\n\r\n    public int getVisionRange() {\r\n        return visionRange;\r\n    }\r\n\r\n    public void setVisionRange(int visionRange) {\r\n        this.visionRange = visionRange;\r\n    }\r\n\r\n    public boolean isDead(){\r\n        /** returns true if the agent is dead (or caught) */\r\n        return this.dead;\r\n    }\r\n      public int getID(){return ID;};\r\n      public void setID(int ID){this.ID = ID;};\r\n      public int[] getPosition(){return position;};\r\n      public void setPosition(int[] position){this.position = position;};\r\n      public ArrayList<int[]> getPath(){return path;};\r\n      public void setPath(ArrayList<int[]> path){this.path = path;};\r\n      public ArrayList<int[]> getVisionArea(){return visionArea;};\r\n      public float getCurrentAngle(){return this.currentAngle;}\r\n      public void setVisionArea(ArrayList<int[]> visionArea){this.visionArea = visionArea;};\r\n      public QStates getQLearning(){return qLearning;};\r\n      public void setQLearning(QStates qLearning){this.qLearning = qLearning;};\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Agent.java b/src/main/java/phase2/Agent.java
+--- a/src/main/java/phase2/Agent.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/Agent.java	(date 1651747558342)
+@@ -1,6 +1,6 @@
+ package phase2;
+ 
+-import phase2.QLearning.QStates;
++//import phase2.QLearning.QStates;
+ import phase2.RayCasting.RayCasting;
+ import Agents.Tile;
+ import java.util.ArrayList;
+@@ -23,12 +23,12 @@
+     private float initialAngle;
+     private float currentAngle;
+     private int visionRange = 20;
+-    private ArrayList<int[]> path; // AGENT PAST EXPERIENCE
+-    private ArrayList<int[]> visionArea;
++    private ArrayList<int[]> path = new ArrayList<>(); // AGENT PAST EXPERIENCE
++    private ArrayList<int[]> visionArea = new ArrayList<>();
+     private boolean dead;
+ 
+     //instance of QLearning
+-    private QStates qLearning = new QStates();
++    //private QStates qLearning = new QStates();
+ 
+     /*INSTANCE NAME: Tables
+      * to store the Q and EM tables informations
+@@ -51,6 +51,30 @@
+ 
+     }
+ 
++    /*
++    * update info about the agent:
++    *  - vision range
++    *  - location
++    *  - degree of turn
++    *  -
++    * */
++
++    public void update(Map map){
++        RayCasting rayCaster = new RayCasting(map);
++        updateVision(rayCaster);
++        printVision();
++        moveTo(position[0],position[1]);  //<- some method to make for agent movement with qlearn
++        if(!path.contains(this.position)){
++            this.path.add(this.position);
++        }
++    }
++
++    private void printVision(){
++        for(int[] point: visionArea){
++            System.out.println("x: "+point[0]+" y: "+point[1]);
++        }
++    }
++
+     public void moveTo(int x, int y){
+         this.position[0] = x;
+         this.position[1] = y;
+@@ -60,7 +84,7 @@
+         this.position = position;
+     }
+ 
+-    public void turnLeft(){
++    public void turnRight(){
+         if(this.currentAngle>Math.toRadians(90)) {
+             this.currentAngle = (float) Math.toRadians((Math.toDegrees(this.currentAngle) - 90) % 360);
+         }
+@@ -69,7 +93,9 @@
+         }
+     }
+ 
+-    public void turnRight(){}
++    public void turnLeft(){
++        this.currentAngle = (float) Math.toRadians((Math.toDegrees(this.currentAngle) + 90) % 360);
++    }
+ 
+     public void moveOnAPath(ArrayList<int[]> instructions){
+         for(int[] coords: instructions){
+@@ -77,11 +103,8 @@
+         }
+     }
+ 
+-    public boolean inMap(int[] position){
+-        /** this should return true if a position is in map
+-         * TODO : connect agent with map and implement this
+-         * */
+-        return true;
++    public boolean inMap(int[] position,Map map){
++        return map.inMap(position);
+     }
+ 
+     /*METHOD NAME: Vision Area
+@@ -89,9 +112,9 @@
+     * PROCEDURE: Calling Ray Casting
+     * */
+ 
+-//    public void updateVision(){
+-//        this.visionArea = RayCasting.getVision(this.position[0],this.position[1],this.visionRange);
+-//    }
++    public void updateVision(RayCasting rayCaster){
++        this.visionArea = rayCaster.getVisibleTiles(this);
++    }
+ 
+ 
+     // ======================= Getters n Setters ================================
+@@ -145,6 +168,10 @@
+       public ArrayList<int[]> getVisionArea(){return visionArea;};
+       public float getCurrentAngle(){return this.currentAngle;}
+       public void setVisionArea(ArrayList<int[]> visionArea){this.visionArea = visionArea;};
+-      public QStates getQLearning(){return qLearning;};
+-      public void setQLearning(QStates qLearning){this.qLearning = qLearning;};
++      //public QStates getQLearning(){return qLearning;};
++      //public void setQLearning(QStates qLearning){this.qLearning = qLearning;};
++
++    public String toString(){
++        return "position ("+getCurrentX()+","+getCurrentY()+") angle:"+this.currentAngle+"\n";
++    }
+ }
+Index: src/main/java/Agents/Tile.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Agents;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Tile {\r\n    private ArrayList<Integer> dataset = new ArrayList<>(); //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent\r\n    private int x;\r\n\r\n    public ArrayList<Integer> getDataset() {\r\n        return dataset;\r\n    }\r\n\r\n    private int y;\r\n    private int value;\r\n    private int TRACE_VALUE = 1; // or any other val\r\n    private int WALL_VALUE = Integer.MAX_VALUE;\r\n    private final int size = 8;\r\n\r\n    public Tile(int x, int y){\r\n        for(int i = 0; i< this.size; i++){\r\n            dataset.add(0);\r\n        }\r\n        this.x = x;\r\n        this.y = y;\r\n    }\r\n\r\n    public void placeAgent(){\r\n        if(this.dataset.get(1) == 0){\r\n            this.dataset.set(0,1);\r\n        }\r\n    }\r\n\r\n    public void placeWall(){\r\n        if(this.dataset.get(2) == 0 && this.dataset.get(3)==0){\r\n            this.dataset.set(1,1);\r\n            this.value = this.WALL_VALUE;\r\n        }\r\n    }\r\n\r\n    public void placeShade(){\r\n        if(this.dataset.get(1) == 0 && this.dataset.get(1)==0){\r\n            this.dataset.set(2,1);\r\n        }\r\n    }\r\n\r\n    public void placeTeleport(){\r\n        if(this.dataset.get(1) == 0 && this.dataset.get(2)==0){\r\n            this.dataset.set(3,1);\r\n        }\r\n    }\r\n\r\n    public void placeTrace(){\r\n        this.dataset.set(4,1);\r\n        this.value += this.TRACE_VALUE;\r\n    }\r\n\r\n    public void setAsExplored(){\r\n        this.dataset.set(5,1);\r\n    }\r\n\r\n    public void placeFlag(){\r\n        this.dataset.set(6,1);\r\n    }\r\n\r\n    public void setAsVisible(){\r\n        this.dataset.set(7,1);\r\n    }\r\n\r\n    public void setAsNotVisible(){\r\n        this.dataset.set(7,0);\r\n    }\r\n\r\n\r\n\r\n    public void removeAgent(){\r\n        this.dataset.set(0, 0);\r\n    }\r\n\r\n    public boolean hasAgent(){\r\n        return this.dataset.get(0)==1;\r\n    }\r\n\r\n    public boolean hasWall(){\r\n        return this.dataset.get(1)==1;\r\n    }\r\n\r\n    public boolean hasShade(){\r\n        return  this.dataset.get(2)==1;\r\n    }\r\n\r\n    public  boolean hasTeleport(){\r\n        return this.dataset.get(3)==1;\r\n    }\r\n\r\n    public boolean hasTrace(){\r\n        return this.dataset.get(4)==1;\r\n    }\r\n\r\n    public boolean isExplored(){return  this.dataset.get(5)==1;}\r\n\r\n    public boolean hasFlag(){return this.dataset.get(6)==1;}\r\n\r\n    public boolean isVisible(){\r\n        return this.dataset.get(7) == 1;\r\n    }\r\n\r\n    public int getValue(){\r\n        return value;\r\n    }\r\n\r\n    public void setValue(int value) {\r\n        this.value = value;\r\n    }\r\n\r\n    public boolean isEmpty(){\r\n        boolean isEmpty = true;\r\n        for(int i=0; i<size; i++){\r\n            if (dataset.get(i) == 1) {\r\n                isEmpty = false;\r\n                break;\r\n            }\r\n        }\r\n        return isEmpty;\r\n    }\r\n\r\n    public void overlay(Tile tile){\r\n        if(!tile.hasWall() && !this.hasWall()){\r\n            if(tile.hasTrace()){\r\n                this.placeTrace();\r\n            }\r\n            if(tile.hasAgent()){\r\n                this.placeAgent();\r\n            }\r\n            if(tile.hasFlag()){\r\n                this.placeFlag();\r\n            }\r\n            if(tile.hasShade()){\r\n                this.placeShade();\r\n            }\r\n            if(tile.hasTeleport()){\r\n                this.placeTeleport();\r\n            }\r\n        }\r\n    }\r\n\r\n    public int getXCoord() {\r\n        return this.x;\r\n    }\r\n\r\n    public int getYCoord() {\r\n        return this.y;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Agents/Tile.java b/src/main/java/Agents/Tile.java
+--- a/src/main/java/Agents/Tile.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/Agents/Tile.java	(date 1651747092768)
+@@ -3,7 +3,8 @@
+ import java.util.ArrayList;
+ 
+ public class Tile {
+-    private ArrayList<Integer> dataset = new ArrayList<>(); //0 - agent,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent
++    private ArrayList<Integer> dataset = new ArrayList<>();
++    //0 - guard,1 - wall,2 - shade,3 - teleport, 4 - trace, 5 - explored, 6-has flag, 7 - is seen by an agent 8 -intruder
+     private int x;
+ 
+     public ArrayList<Integer> getDataset() {
+@@ -11,10 +12,10 @@
+     }
+ 
+     private int y;
+-    private int value;
++    private int stressLevel; //
+     private int TRACE_VALUE = 1; // or any other val
+     private int WALL_VALUE = Integer.MAX_VALUE;
+-    private final int size = 8;
++    private final int size = 9;
+ 
+     public Tile(int x, int y){
+         for(int i = 0; i< this.size; i++){
+@@ -29,16 +30,27 @@
+             this.dataset.set(0,1);
+         }
+     }
++
++    public void placeAgent(int team){
++        if(this.dataset.get(1) == 0){
++            if(team==0){
++                this.dataset.set(0,1);
++            }
++            else{
++                this.dataset.set(8,1);
++            }
++        }
++    }
+ 
+     public void placeWall(){
+         if(this.dataset.get(2) == 0 && this.dataset.get(3)==0){
+             this.dataset.set(1,1);
+-            this.value = this.WALL_VALUE;
++            this.stressLevel = this.WALL_VALUE;
+         }
+     }
+ 
+     public void placeShade(){
+-        if(this.dataset.get(1) == 0 && this.dataset.get(1)==0){
++        if(this.dataset.get(1) == 0){
+             this.dataset.set(2,1);
+         }
+     }
+@@ -51,7 +63,14 @@
+ 
+     public void placeTrace(){
+         this.dataset.set(4,1);
+-        this.value += this.TRACE_VALUE;
++        this.stressLevel = 1;
++    }
++
++    public void placeTrace(int stressLevel){
++        this.dataset.set(4,1);
++        if(this.stressLevel < stressLevel){
++            this.stressLevel = stressLevel;
++        }
+     }
+ 
+     public void setAsExplored(){
+@@ -104,12 +123,12 @@
+         return this.dataset.get(7) == 1;
+     }
+ 
+-    public int getValue(){
+-        return value;
++    public int getStressLevel(){
++        return stressLevel;
+     }
+ 
+-    public void setValue(int value) {
+-        this.value = value;
++    public void setStressLevel(int stressLevel) {
++        this.stressLevel = stressLevel;
+     }
+ 
+     public boolean isEmpty(){
+Index: src/main/java/phase2/Map.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\r\n\r\nimport Agents.Tile;\r\nimport Controller.Variables;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Map {\r\n\r\n    private Variables variables;\r\n    private Tile[][] map;\r\n    private int xSize;\r\n    private int ySize;\r\n    private ArrayList<AgentTeam> listOfAllAgents;\r\n    private AgentTeam listOfGuards;\r\n    private AgentTeam listOfIntruders;\r\n\r\n\r\n    public Map(String[] unparsedVars) {\r\n        this.variables = new Variables();\r\n        this.variables.setVariables(unparsedVars);\r\n        this.map = new Tile[variables.getHeight()][variables.getWidth()];\r\n        System.out.println(map.length + \" and \" + map[0].length);\r\n        int guardsSize = this.variables.getNumberOfGuards();\r\n        int intrudersSize = this.variables.getNumberOfIntruders();\r\n        xSize = variables.getHeight();\r\n        ySize = variables.getWidth();\r\n        listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());\r\n        listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords());\r\n        listOfAllAgents.add(listOfGuards);\r\n        listOfAllAgents.add(listOfIntruders);\r\n    }\r\n\r\n\r\n\r\n    public void allAgentsInit(){\r\n        this.listOfGuards.placeOnSpawn();\r\n        this.listOfIntruders.placeOnSpawn();\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n    public void moveAgentToPosition(Agent agent, int[] position){\r\n        /** moves agent to coordinates if possible */\r\n        if(canMoveTo(position)){\r\n            agent.moveTo(position[0],position[1]);\r\n        }\r\n    }\r\n\r\n    private boolean canMoveTo(int[] pos){\r\n        return inMap(pos) && !map[pos[0]][pos[1]].hasWall() && !map[pos[0]][pos[1]].hasAgent();\r\n    }\r\n\r\n    private boolean inMap(int[] position){\r\n        return position[0] < xSize && position[1] < ySize && position[0] > 0 && position[1] > 0;\r\n    }\r\n\r\n\r\n    // Getters n Setters\r\n    public void setVariables(Variables variables) {\r\n        this.variables = variables;\r\n    }\r\n\r\n    public Variables getVariables() {\r\n        return variables;\r\n    }\r\n\r\n    public Tile getTile(int x, int y){\r\n        return this.map[x][y];\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Map.java b/src/main/java/phase2/Map.java
+--- a/src/main/java/phase2/Map.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/Map.java	(date 1651747558351)
+@@ -2,6 +2,7 @@
+ 
+ import Agents.Tile;
+ import Controller.Variables;
++import Controller.Wall;
+ 
+ import java.util.ArrayList;
+ 
+@@ -14,33 +15,113 @@
+     private ArrayList<AgentTeam> listOfAllAgents;
+     private AgentTeam listOfGuards;
+     private AgentTeam listOfIntruders;
++    private ArrayList<int[]> wallpoints = new ArrayList<>();
++
+ 
+ 
+     public Map(String[] unparsedVars) {
+         this.variables = new Variables();
+         this.variables.setVariables(unparsedVars);
+         this.map = new Tile[variables.getHeight()][variables.getWidth()];
+-        System.out.println(map.length + " and " + map[0].length);
+         int guardsSize = this.variables.getNumberOfGuards();
+-        int intrudersSize = this.variables.getNumberOfIntruders();
++        //int intrudersSize = this.variables.getNumberOfIntruders(); //parser doesnt work for this
++        int intrudersSize = 4;
++        this.wallpoints = wallPoints();
+         xSize = variables.getHeight();
+         ySize = variables.getWidth();
+         listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());
+-        listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords());
++        //listOfGuards.placeOnSpawn();
++        //listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords()); //parser doesnt work
++        listOfIntruders = new AgentTeam(intrudersSize,1,this.intruderSpawnWorkaround());
++        //listOfGuards.placeOnSpawn();
++        listOfAllAgents = new ArrayList<>();
+         listOfAllAgents.add(listOfGuards);
+         listOfAllAgents.add(listOfIntruders);
++        initializeMap();
++    }
++
++
++
++    private ArrayList<Integer> intruderSpawnWorkaround(){
++        int x = 0;
++        int y =0;
++        ArrayList<Integer> spawn = new ArrayList<>();
++        spawn.add(x);
++        spawn.add(y);
++        y = 5;
++        spawn.add(x);
++        spawn.add(y);
++        x = 5;
++        spawn.add(x);
++        spawn.add(y);
++        x =0;
++        spawn.add(x);
++        spawn.add(y);
++        return spawn;
+     }
+ 
+ 
+ 
+     public void allAgentsInit(){
+         this.listOfGuards.placeOnSpawn();
++        //System.out.println(this.listOfGuards);
+         this.listOfIntruders.placeOnSpawn();
+     }
+ 
++    /*
++    * updateAllAgents: calls a method that updates a team of agents (moves them, updates their vision etc)
++    * */
++    public void updateAllAgents(){
++        for(AgentTeam team: listOfAllAgents){
++            team.updateAgents(this);
++        }
++    }
++
++
++    private void initializeMap(){
++        for(int i = 0; i<this.xSize; i++)
++            for(int j = 0; j<this.ySize; j++){
++                this.map[i][j] = determineTile(i,j);
++            }
++    }
++
++    private Tile determineTile(int i, int j){
++       Tile tile = new Tile(i,j);
++        if(isAWall(i,j)){
++            tile.placeWall();
++        }
++        if(hasAgent(i,j)){
++            tile.placeAgent();
++        }
++        return new Tile(i,j);
++    }
+ 
++    private boolean hasAgent(int x, int y){
++        int[] coord = new int[2];
++        coord[0] = x;
++        coord[1] = y;
++        return listOfGuards.getAgentPositions().contains(coord) || listOfIntruders.getAgentPositions().contains(coord);
++    }
+ 
++    private boolean isAWall(int x, int y){
++        int[] coord = new int[2];
++        coord[0] = x;
++        coord[1] = y;
++        return this.wallpoints.contains(coord);
++    }
+ 
++    private ArrayList<int[]> wallPoints() {
++        ArrayList<Wall> walls = this.variables.getWalls();
++        ArrayList<int[]> wallPoints = new ArrayList<>();
++        for(Wall w: walls){
++            wallPoints.addAll(w.getPoints());
++        }
++        return new ArrayList<int[]>();
++    }
++
++    private ArrayList<int[]> teleportPoints(){
++        return new ArrayList<int[]>();
++    }
+ 
+     public void moveAgentToPosition(Agent agent, int[] position){
+         /** moves agent to coordinates if possible */
+@@ -53,11 +134,10 @@
+         return inMap(pos) && !map[pos[0]][pos[1]].hasWall() && !map[pos[0]][pos[1]].hasAgent();
+     }
+ 
+-    private boolean inMap(int[] position){
++    public boolean inMap(int[] position){
+         return position[0] < xSize && position[1] < ySize && position[0] > 0 && position[1] > 0;
+     }
+ 
+-
+     // Getters n Setters
+     public void setVariables(Variables variables) {
+         this.variables = variables;
+@@ -70,4 +150,19 @@
+     public Tile getTile(int x, int y){
+         return this.map[x][y];
+     }
++
++    public Tile[][] getTiles(){
++        return this.map;
++    }
++
++    public int getMapHeight(){
++        return this.ySize;
++    }
++
++    public int getMapWidth(){
++        return this.xSize;
++    }
++
++
++
+ }
+Index: src/main/java/phase2/AgentTeam.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class AgentTeam {\r\n    private ArrayList<Agent> team;\r\n    private int size;\r\n    private int type;\r\n    private ArrayList<int[]> spawnCoords; //list of x,y coordinates\r\n    private ArrayList<int[]> spawnTiles; //x,y coordinates of tiles in the spawn area\r\n\r\n    /**\r\n     * COULD HAVE:\r\n     *  - the markers\r\n     *  - other shared data\r\n     * */\r\n\r\n    public AgentTeam(int size, int type, ArrayList<Integer> spawnCoords){\r\n        this.size = size;\r\n        this.type = type;\r\n        this.spawnCoords = initSpawnCoords(spawnCoords);\r\n        this.spawnTiles = initSpawnTiles();\r\n    }\r\n\r\n    /*\r\n    * placeOnSpawn : creates agents and places them all on spawn, before the agent list is empty\r\n    * */\r\n\r\n    public void placeOnSpawn(){\r\n        if(this.size>this.spawnTiles.size()){\r\n            System.out.println(\"SPAWN: TOO MANY AGENTS, CAN'T PLACE ALL ON SPAWN\");\r\n        }\r\n        else {\r\n            for (int i = 0; i < this.size; i++) {\r\n                int[] initAgentCoords = this.spawnCoords.get(i);\r\n                Agent agent;\r\n                if (type == 0) {\r\n                    agent = new Guard(0, initAgentCoords[0], initAgentCoords[1]);\r\n                } else if (type == 1) {\r\n                    agent = new Intruder(0, initAgentCoords[0], initAgentCoords[1]);\r\n                } else {\r\n                    agent = new Agent(0, 0, 0);\r\n                    System.out.println(\"WARNING: you are using wrong types in the agent team class\");\r\n                }\r\n                this.team.add(agent);\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n    /**\r\n     * INITIALIZERS\r\n     * */\r\n\r\n    /*\r\n    * initSpawnCoords: returns the coordinates of the spawn in an ArrayList<int[]> instead of ArrayList<Integer>\r\n    * */\r\n\r\n    private ArrayList<int[]> initSpawnCoords(ArrayList<Integer> values) {\r\n        int x1y1[] = new int[2];\r\n        int x2y2[] = new int[2];\r\n        x1y1[0] = values.get(0);\r\n        x1y1[1] = values.get(1);\r\n        x2y2[0] = values.get(2);\r\n        x2y2[2] = values.get(3);\r\n\r\n        ArrayList<int[]> coordinates = new ArrayList<>();\r\n        coordinates.add(x1y1);\r\n        coordinates.add(x2y2);\r\n        return coordinates;\r\n    }\r\n\r\n    /*\r\n    * initSpawnTilesEasy: returns a list of the coords of all tiles in the spawn\r\n    * in the order from bottom row to top\r\n    * */\r\n\r\n    private ArrayList<int[]> initSpawnTiles(){\r\n        int[] start = spawnCoords.get(0);\r\n        int[] end = spawnCoords.get(1);\r\n        ArrayList<int[]> tiles = new ArrayList<>();\r\n\r\n        int xLength = Math.abs(start[0]-end[0]);\r\n        int yLength = Math.abs(start[1]-end[1]);\r\n        for(int i = 0; i<yLength; i++){\r\n            for(int j = 0; j<xLength; j++){\r\n                int[] coords = new int[2];\r\n                coords[0] = j;\r\n                coords[1] = i;\r\n                tiles.add(coords);\r\n            }\r\n        }\r\n        return tiles;\r\n    }\r\n\r\n    /** GETTERS AND SETTERS*/\r\n\r\n\r\n    public void setSpawnCoords(ArrayList<int[]> coordinates){\r\n        this.spawnCoords = coordinates;\r\n    }\r\n\r\n\r\n    public ArrayList<int[]> getSpawnCoords(){\r\n        return spawnCoords;\r\n    }\r\n\r\n\r\n    public ArrayList<Agent> getTeam(){\r\n        return this.team;\r\n    }\r\n\r\n    public Agent getAgent(int i){\r\n        try{\r\n            return this.team.get(i);\r\n        }\r\n        catch(Exception e){\r\n            System.out.println(\"access agent in team; exception thrown: \"+e);\r\n        }\r\n        return new Agent(0,0,0);\r\n    }\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/AgentTeam.java b/src/main/java/phase2/AgentTeam.java
+--- a/src/main/java/phase2/AgentTeam.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/AgentTeam.java	(date 1651747431578)
+@@ -7,7 +7,8 @@
+     private int size;
+     private int type;
+     private ArrayList<int[]> spawnCoords; //list of x,y coordinates
+-    private ArrayList<int[]> spawnTiles; //x,y coordinates of tiles in the spawn area
++    private ArrayList<int[]> spawnPoints; //x,y coordinates of tiles in the spawn area
++    private ArrayList<int[]> agentPositions = new ArrayList<>();
+ 
+     /**
+      * COULD HAVE:
+@@ -19,7 +20,9 @@
+         this.size = size;
+         this.type = type;
+         this.spawnCoords = initSpawnCoords(spawnCoords);
+-        this.spawnTiles = initSpawnTiles();
++        this.spawnPoints = initSpawnPoints();
++        this.team = new ArrayList<>();
++
+     }
+ 
+     /*
+@@ -27,12 +30,15 @@
+     * */
+ 
+     public void placeOnSpawn(){
+-        if(this.size>this.spawnTiles.size()){
++        ArrayList<int[]> editedSpawn = this.spawnPoints;
++        if(this.size>this.spawnPoints.size()){
+             System.out.println("SPAWN: TOO MANY AGENTS, CAN'T PLACE ALL ON SPAWN");
+         }
+         else {
+             for (int i = 0; i < this.size; i++) {
+-                int[] initAgentCoords = this.spawnCoords.get(i);
++                //int[] initAgentCoords = this.spawnPoints.get(i);
++                int[] initAgentCoords = getRandomSpawnPoint(editedSpawn);
++                editedSpawn.remove(initAgentCoords);
+                 Agent agent;
+                 if (type == 0) {
+                     agent = new Guard(0, initAgentCoords[0], initAgentCoords[1]);
+@@ -45,8 +51,28 @@
+                 this.team.add(agent);
+             }
+         }
++        updateAgentPos();
++        System.out.println("agents type: "+type+" spawn coords: \n"+this.toString());
++    }
++
++    /*
++    * updateAgents: update data about each agent using the Agent class method
++    * */
++
++    public void updateAgents(Map map){
++        for(Agent agent: team){
++            agent.update(map);
++        }
++        updateAgentPos();
+     }
+ 
++    private void updateAgentPos(){
++        ArrayList<int[]> positions = new ArrayList<>();
++        for(Agent a: team){
++            positions.add(a.getPosition());
++        }
++        this.agentPositions = positions;
++    }
+ 
+     /**
+      * INITIALIZERS
+@@ -61,8 +87,8 @@
+         int x2y2[] = new int[2];
+         x1y1[0] = values.get(0);
+         x1y1[1] = values.get(1);
+-        x2y2[0] = values.get(2);
+-        x2y2[2] = values.get(3);
++        x2y2[0] = values.get(4);
++        x2y2[1] = values.get(5);
+ 
+         ArrayList<int[]> coordinates = new ArrayList<>();
+         coordinates.add(x1y1);
+@@ -75,7 +101,7 @@
+     * in the order from bottom row to top
+     * */
+ 
+-    private ArrayList<int[]> initSpawnTiles(){
++    private ArrayList<int[]> initSpawnPoints(){
+         int[] start = spawnCoords.get(0);
+         int[] end = spawnCoords.get(1);
+         ArrayList<int[]> tiles = new ArrayList<>();
+@@ -93,6 +119,16 @@
+         return tiles;
+     }
+ 
++    /*
++    * getRandomSpawnPoint - returns a random element from the list
++    * containing spawn points
++    * */
++    private int[] getRandomSpawnPoint(ArrayList<int[]> coords){
++        int size = coords.size();
++        int i = (int) (size*Math.random());
++        return coords.get(i);
++    }
++
+     /** GETTERS AND SETTERS*/
+ 
+ 
+@@ -105,6 +141,10 @@
+         return spawnCoords;
+     }
+ 
++    public ArrayList<int[]> getAgentPositions(){
++        return this.agentPositions;
++    }
++
+ 
+     public ArrayList<Agent> getTeam(){
+         return this.team;
+@@ -120,6 +160,14 @@
+         return new Agent(0,0,0);
+     }
+ 
++    public String toString(){
++        StringBuilder s = new StringBuilder();
++
++        for(Agent agent: team){
++            s.append(agent.toString());
++        }
++        return s.toString();
++    }
+ 
+ 
+ }
+Index: src/main/java/Agents/ExplorationState.java
+===================================================================
+diff --git a/src/main/java/Agents/ExplorationState.java b/src/main/java/Agents/ExplorationState.java
+deleted file mode 100644
+--- a/src/main/java/Agents/ExplorationState.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,52 +0,0 @@
+-package Agents;
+-
+-public class  ExplorationState {
+-
+-    private boolean isInRegion;
+-    private boolean goRight;
+-    private boolean needsToGoUp;
+-    private boolean needsToChangeRow;
+-
+-    public ExplorationState() {
+-        this.isInRegion = false;
+-        this.needsToChangeRow = false;
+-        this.needsToGoUp = false;
+-    }
+-
+-    public boolean isInRegion() {
+-        return isInRegion;
+-    }
+-
+-    public boolean goesRight() {
+-        return goRight;
+-    }
+-
+-    public void setInRegion(boolean inRegion) {
+-        isInRegion = inRegion;
+-    }
+-
+-    public void setGoRight(boolean goRight) {
+-        this.goRight = goRight;
+-    }
+-
+-    public void setNeedsToChangeRow(boolean needsToChangeRow) {
+-        this.needsToChangeRow = needsToChangeRow;
+-    }
+-
+-    public boolean needsToChangeRow() {
+-        return needsToChangeRow;
+-    }
+-
+-    public boolean needsToGoUp() {
+-        return needsToGoUp;
+-    }
+-
+-    public void setNeedsToGoUp(boolean needsToGoUp) {
+-        this.needsToGoUp = needsToGoUp;
+-    }
+-
+-    public void determineIfNeedsToMoveUpOrDown(double ang){
+-        int angle = (int)Math.toDegrees(ang);
+-        setNeedsToGoUp(0 <= angle && angle < 180);
+-    }
+-}
+Index: src/main/java/phase2/QLearning/QStates.java
+===================================================================
+diff --git a/src/main/java/phase2/QLearning/QStates.java b/src/main/java/phase2/QLearning/QStates.java
+deleted file mode 100644
+--- a/src/main/java/phase2/QLearning/QStates.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,206 +0,0 @@
+-package phase2.QLearning;
+-import java.util.ArrayList;
+-import java.util.Random;
+-
+-public class QStates {
+-
+-    /* S STATE CLASS DESCRIPTION
+-    * OUT-CONNECTION: requires instances from Agent to compute their Q table
+-    * GOAL: A reinforcement learning method that uses heuristics to associate a grade to a (state; action) pair
+-    *       We iterate through t step to make the value converge.
+-    *
+-    * */
+-    private final double alpha=0.1;//learning rate, alpha
+-    private int[][] R;//rewards
+-    private double[][] Q;
+-    private int[][] EM;
+-    private int[][] IN; // instruction table TO BE DONE
+-    private final double gamma = 0.5;
+-    int currentState = 0;
+-
+-    private boolean reachedGoal = false;
+-
+-    //Table Updators
+-    public void EMupdate(Agent n){
+-        for(int i = 0; i < EM.length(); i++){
+-            //n.get;
+-        }
+-    }
+-    public void QUpdate(int[][] newQTable){
+-
+-    }
+-
+-
+-    public int[] rewardTable = {-1,-10,10,-100,100,20,Integer.MIN_VALUE, -100, 1000};
+-/* STATIC REWARD TABLE
+-
+-    We associate an arbitrary grade to a given situation
+-
+-    0 = private int move = -1;
+-    1 = private int wrongPath = -10; // random move with a low probability.
+-    2 = private int correctPath = 10;
+-    3 = private int death = -100;
+-    4 = private int visionOnIntruder = 100;
+-    5 = private int hearingOnIntruder = 20;
+-    6 = private int wall = Integer.MIN_VALUE;
+-    7 = private int startPoint = -100
+-    8 = private int goal = 1000;
+-
+- */
+-    private int[][] maze;//init with width and height? is it computationally effective?
+-    int mazeWidth = 100;
+-    int mazeHeight = 200;
+-    private final int numberOfStates = mazeWidth * mazeHeight;
+-    private final int numberOfActions = 5;
+-    private int finalState=100;//change this, don't know if correct
+-
+-    /**
+-     * necessary general methods
+-     * init- kind of for reading file
+-     * calculateQ
+-     * printQ
+-     *printPolicy
+-     * look up Q table
+-     * decide move;=> update the Agent position
+-     */
+-
+-    public void init() {
+-
+-        R = new int[numberOfStates][5]; // creation of the reward Table
+-        Q = new double[numberOfStates][5];// creation of the Q Table
+-        maze = new int[mazeHeight][mazeWidth]; // the whole map, copy of agent (.??.)
+-
+-
+-        for (int k = 0; k < numberOfStates; k++) {
+-
+-            /**
+-             * initiate reward matrix with -1
+-             */
+-
+-            for (int l = 0; l < numberOfActions; l++) {
+-
+-                R[k][l] = -1; // everything value of -1; representing that each move costs -1, to ensure it takes the shortest path.
+-
+-                //HOW TO RETRIEVE/SET FINAL STATE?
+-                //if not in the final state, or there is no wall ahead, move in all directions
+-                //can fill in later, but I will just fill this in for now
+-                if (!reachedGoal())
+-                    getpath();
+-            }
+-            initializeQ();
+-        }
+-    }
+-
+-
+-        /**
+-         * below methods for deciding states, possible actions from states
+-         */
+-
+-
+-        //Set Q values to R values
+-        public void initializeQ ()
+-        {
+-            for (int i = 0; i < numberOfStates; i++) {
+-                for (int j = 0; j < numberOfActions; j++) {
+-
+-                    // read from map
+-
+-                }
+-            }
+-        }
+-
+-        public void lookupQTable(Agent a){
+-            /** return the best move for an agent
+-             * by looking for the max value
+-             *  Up down, left, right OR Turn left turn right
+-             */
+-
+-        int agentPositionX = a.getCurrentX();
+-        int agentPositionY = a.getCurrentY();
+-        int currentMax = -100;// set as minimum when tile contains a wall
+-
+-            int[] maxList = new int[4];
+-            //look up left
+-           maxList[0] = R[agentPositionX][agentPositionY - 1];
+-            //look right
+-            maxList[1] = R[agentPositionX][agentPositionY + 1]
+-            //look up Up
+-            maxList[2] = R[agentPositionX + 1][agentPositionY]
+-            //look up Down
+-            maxList[3] = R[agentPositionX - 1][agentPositionY]
+-
+-            //in case no surrounding position is better than the current one: turn
+-            for (int i = 0; i < maxList.length; i++){
+-                if(currentMax < maxList[i]){
+-                    currentMax = maxList[i];//
+-                }
+-                if(currentMax > -1000){
+-                    //update
+-                    a.move()
+-                else
+-                //call turn + or minus : TO DO evaluate the best half average left > average right ?
+-
+-        }
+-    /**
+-     * method for running number of training cycles
+-     * inital 1000
+-     */
+-    public void calculateQValues(){
+-        Random randomValue = new Random();
+-
+-
+-
+-    }
+-
+-    public boolean decideFinalState(int state){
+-        int i = state / mazeWidth;
+-        int j = state - i * mazeWidth;
+-
+-        return maze[i][j]=='F';
+-    }
+-    /**
+-     * define list of next states the agent can turn to, can only exist if value is !=1
+-     * tracks index of states that can be reached
+-     */
+-    public int[] listOfPossibleStates(int state){
+-        ArrayList<Integer> possibleStates=new ArrayList<>();
+-        for (int i = 0; i < numberOfStates; i++) {
+-            if(R[state][i]!=-1){//use tile to refactor this
+-                possibleStates.add(i);
+-            }
+-        }
+-        return possibleStates.stream().mapToInt(i -> i).toArray();
+-    }
+-
+-    double maxQvalues(int nextState){
+-        int[] actionsFromState = listOfPossibleStates(nextState);
+-        double maxValue=-10;//resetting later, set initial as -10 according to our model
+-        for(int action:actionsFromState){
+-            double value=Q[nextState][action];
+-
+-            if(value>maxValue){
+-                maxValue=value;
+-            }
+-        }
+-        return maxValue;
+-
+-    }
+-
+-    /**
+-     * tester
+-     */
+-    void printQValues(){
+-        System.out.println("Q matrix values");
+-        for (int i = 0; i < Q.length; i++) {
+-            System.out.print("From state " + i + ":  ");
+-            for (int j = 0; j < Q[i].length; j++) {
+-                System.out.println((Q[i][j]));
+-            }
+-            System.out.println();
+-        }
+-    }
+-
+-}
+-
+-
+-
+Index: src/main/java/Agents/ExploAgent.java
+===================================================================
+diff --git a/src/main/java/Agents/ExploAgent.java b/src/main/java/Agents/ExploAgent.java
+deleted file mode 100644
+--- a/src/main/java/Agents/ExploAgent.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,75 +0,0 @@
+-package Agents;
+-
+-import java.util.ArrayList;
+-
+-public class ExploAgent {
+-
+-    private int VIEW_RANGE = 10;
+-
+-    private int x, y;
+-    private double betaAngle;
+-    private Tile currentTile;
+-    private Map map;
+-    private ArrayList<int[]> traceList;
+-
+-    public ExploAgent(int x, int y, Map map, double betaAngle, ArrayList<int[]> traceList) {
+-        this.x = x;
+-        this.y = y;
+-        this.betaAngle = betaAngle;
+-        this.map = map;
+-        this.traceList = traceList;
+-        this.currentTile = map.getTile(x, y);
+-    }
+-
+-    public void setCurrentTile(int x, int y){
+-        this.x = x;
+-        this.y = y;
+-        currentTile = map.getTile(x, y);
+-    }
+-
+-    public Tile getCurrentTile(){
+-        return currentTile;
+-    }
+-
+-    public Map getMap() {
+-        return map;
+-    }
+-
+-    public void setVIEW_RANGE(int view_range){
+-        this.VIEW_RANGE = view_range;
+-    }
+-
+-    public ArrayList<int[]> getTraceList() {
+-        return traceList;
+-    }
+-
+-    public double getBetaAngle() {
+-        return betaAngle;
+-    }
+-
+-    public ArrayList<Tile> computeViewRange(boolean goRight){
+-        ArrayList<Tile> viewRange = new ArrayList<>();
+-        if(goRight){
+-            for(int x = this.x+1; x < this.x + VIEW_RANGE+1; x++) {
+-                assert map != null;
+-                if(map.isInMap(x, this.y) && !map.getTile(x, this.y).hasTrace() && !map.getTile(x, this.y).hasWall()){
+-                    viewRange.add(map.getTile(x, this.y));
+-                }
+-                else
+-                    break;
+-            }
+-        }
+-        else{
+-            for(int x = this.x-1; x > this.x - VIEW_RANGE-1; x--) {
+-                assert map != null;
+-                if(map.isInMap(x, this.y) && !map.getTile(x, this.y).hasTrace() && !map.getTile(x, this.y).hasWall()){
+-                    viewRange.add(map.getTile(x, this.y));
+-                }
+-                else
+-                    break;
+-            }
+-        }
+-        return viewRange;
+-    }
+-
+-}
+Index: src/main/java/Path/Position.java
+===================================================================
+diff --git a/src/main/java/Path/Position.java b/src/main/java/Path/Position.java
+deleted file mode 100644
+--- a/src/main/java/Path/Position.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,81 +0,0 @@
+-package Path;
+-
+-import Agents.Map;
+-
+-import java.util.ArrayList;
+-import java.util.Collection;
+-import java.util.List;
+-
+-public class Position {
+-    int x;
+-    int y;
+-
+-    public Position(int x, int y){
+-        this.x = x;
+-        this.y = y;
+-    }
+-
+-    public int getX() {
+-        return x;
+-    }
+-
+-    public int getY() {
+-        return y;
+-    }
+-
+-    public float getDistance(){
+-        return 0;
+-    }
+-
+-    public boolean samePos(Position pos){
+-        return this.x == pos.x && this.y == pos.y;
+-    }
+-
+-    public Collection<Position> getNeighbours(Map map){
+-
+-        List<Position> neighbours = new ArrayList<>();
+-        neighbours.add(new Position(this.x+1, this.y));
+-        neighbours.add(new Position(this.x+1, this.y-1));
+-        neighbours.add(new Position(this.x+1, this.y+1));
+-        neighbours.add(new Position(this.x, this.y-1));
+-
+-        neighbours.add(new Position(this.x, this.y+1));
+-        neighbours.add(new Position(this.x-1, this.y+1));
+-        neighbours.add(new Position(this.x-1, this.y-1));
+-        neighbours.add(new Position(this.x-1, this.y));
+-
+-        List<Position> delete = new ArrayList<>();
+-        for(Position pos : neighbours){
+-
+-            if (pos.x < 0 || pos.y < 0 || pos.x >= map.getMapWidth() || pos.y >= map.getMapHeight()){
+-                delete.add(pos);
+-            }else{
+-                if (map.getFieldCost(pos.x, pos.y) == Integer.MAX_VALUE){
+-                    delete.add(pos);
+-                }
+-
+-            }
+-
+-
+-
+-            // check if position has a wall or is outside the map.
+-            // remove from neighboours if so
+-        }
+-
+-        for (Position pos : delete){
+-            neighbours.remove(pos);
+-        }
+-
+-
+-        return neighbours;
+-    }
+-
+-
+-    @Override
+-    public String toString() {
+-        return "Position{" +
+-                "x=" + x +
+-                ", y=" + y +
+-                '}';
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/Agents/Map.java
+===================================================================
+diff --git a/src/main/java/Agents/Map.java b/src/main/java/Agents/Map.java
+deleted file mode 100644
+--- a/src/main/java/Agents/Map.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,418 +0,0 @@
+-package Agents;
+-import Controller.Variables;
+-import java.lang.Integer;
+-import java.util.ArrayList;
+-import Controller.Wall;
+-
+-/*
+-     The General Map is :
+-         1/ BASIC VERSION : accessible by all Agents: complete knowledge
+-         2/ UPGRADED VERSION : restrained vision, partial knowledge for each agent
+-               Works like a puzzle to be completed
+-
+-   We represent the map as a double Array.
+-*/
+-
+-public class Map{
+-//INSTANCES of class Map
+-   private int mapHeight; //map dimensions
+-   private int mapWidth;
+-   //private int[][] matrix;// SubMap storing the walls and the agents
+-   //private int[][] trace; // SubMap storing the map % exploration
+-   private ArrayList <Wall> walls; //check every 2 integers
+-   private Variables variables = new Variables(); // why ?
+-   private Tile[][] tiles;
+-   private Agents[] teamGuards;
+-   private Agents[] teamIntruders;
+-   private double exploredPercentage;
+-   private ArrayList<int[]> exploredTiles = new ArrayList<>();
+-   private ArrayList<int[]> flags = new ArrayList<>();
+-   private int numberOfTiles;
+-
+-    /* METHOD(1): Map
+-     *   Map object constructor
+-     *   create the matrix and trace instances
+-     * */
+-
+-
+-   public Map(Variables vars){
+-      this.variables = vars;
+-      mapHeight = variables.getHeight();
+-      mapWidth = variables.getWidth();
+-      numberOfTiles = mapHeight*mapWidth;
+-      //matrix = new int[mapWidth][mapHeight]; //dimension of
+-      tiles = new Tile[mapWidth][mapHeight];
+-      this.teamGuards = new Agents[variables.getNumberOfGuards()];
+-      mapInit();
+-      teamCreation();
+-      walls = variables.getWalls(); //placing walls on the map
+-      buildingWalls(); //update the map with the wall
+-
+-   }
+-   /* METHOD(2): mapInit
+-   *   stores zero in every map position
+-   *    initialize both the Matrix (Int containing wall and agent)
+-   * */
+-
+-    private int counter = 0;
+-
+-    public void mapInit(){
+-           for(int i =0; i < mapWidth; i++){
+-               for(int j =0; j < mapHeight; j++){
+-                    //setMatrix(i, j , 0);
+-                    this.tiles[i][j] = new Tile(i,j);
+-                    counter++;
+-               }
+-           }
+-    }//mapInit
+-
+-    public void teamCreation(/*pass an int to identify the group*/){
+-    /* creates a team of agents, places them on spawn and gives them initial info */
+-        System.out.println("im creating a team");
+-        float initialAngle = (float) (Math.toRadians(360) / variables.getNumberOfGuards());
+-        System.out.println("angle is " + Math.toDegrees(initialAngle));
+-        for(int i = 0; i < variables.getNumberOfGuards(); i++){
+-            Agents newAgents = new Agents(0,this.variables,this, initialAngle, i /*number of agent*/); //create the Agent; 0 for Guard
+-            newAgents.setInitialAngle(initialAngle*(i+1));
+-            System.out.println(initialAngle*(i+1));
+-            teamGuards[i] = newAgents;
+-        }
+-        placeAgentsOnSpawn(0);
+-
+-        for (Agents agents : teamGuards) {
+-            System.out.println(agents.getAgentPositionX() + " ||| " + agents.getAgentPositionY());
+-        }
+-    }
+-
+-    public void mapUpdate(){
+-        /*
+-         * This method should be called sequentially somewhere
+-         * 1. move agents
+-         * 2. update agent location
+-         * 3. update exploration %
+-         * 4. update trace, flags etc
+-         * 5. update seen fields
+-         * */
+-
+-        updateAgentLocation();
+-        updateAgentMap();
+-        updateExplorationPercentage();
+-        updateSeenTiles();
+-        updateFlags();
+-
+-        //mapUpdate();
+-    }
+-
+-    private void updateAgentLocation(){
+-        for(Agents agents :teamGuards){
+-            int x = agents.getAgentPositionX();
+-            int y = agents.getAgentPositionY();
+-            tiles[x][y].removeAgent();
+-
+-            agents.move(); //method to implement, should be connected to A*
+-            //agent.updateMap();
+-            x = agents.getAgentPositionX();
+-            y = agents.getAgentPositionY();
+-            tiles[x][y].placeAgent();
+-        }
+-
+-    }
+-
+-    public void updateAgentMap(){
+-        for(Agents agents : teamGuards){
+-            agents.setMap(this);
+-        }
+-    }
+-
+-
+-
+-    private void updateExplorationPercentage(){
+-        int exploredSum = 0;
+-        updateExplored();
+-        for(Tile[] tileRow:tiles){
+-            for(Tile tile:tileRow){
+-                if(tile.isExplored()){
+-                    exploredSum++;
+-                }
+-            }
+-        }
+-        this.exploredPercentage = (double) exploredSum/ (double) tiles.length;
+-    }
+-
+-    /* METHOD(3): buildingWalls
+-     *   places the wall as infinit values on the map
+-     * */
+-   public void buildingWalls(){
+-      for(int i = 0; i < walls.size(); i++){
+-            ArrayList<Integer> coords = walls.get(i).getCoords();
+-            int x1 = coords.get(0);
+-            int y1 = coords.get(1);
+-            int x2 = coords.get(4);
+-            int y2 = coords.get(5);
+-          System.out.println(x1 + "," + y1 + "===="+ x2 + "," + y2 );
+-            //@zofia For each of the walls : two separate loops, first we build the vertical walls, then the horizontal walls
+-          for(int j = y1 /*bottom border*/; j < y2+1 /*top border*/; j++){
+-              tiles[x1][i].placeWall();
+-              tiles[x2][i].placeWall();
+-              }
+-          for(int j = x1/*left border*/; j<x2+1/*right border*/; j++){
+-              tiles[j][y1].placeWall();
+-              tiles[j][y2].placeWall();
+-          }
+-          //this only sets the borders of the walls to infinity
+-      }
+-   }
+-
+-    /* METHOD(4): createTrace
+-     *   create the Trace as a copy of initial Matrix with the walls
+-     *
+-    public void createTrace(){
+-        for(int i =0; i < getMapHeight(); i++ ){
+-            for(int j =0; i < getMapWidth(); j++ ){
+-                this.trace[i][j] = this.matrix[i][j];
+-            }
+-        }
+-    }*/
+-
+-    public Tile[][] getTiles(){
+-        return this.tiles;
+-    }
+-
+-    public Tile getTile(int x, int y){
+-        return tiles[x][y];
+-    }
+-
+-    public int getMapHeight(){return mapHeight;};
+-    public int getMapWidth(){return mapWidth;};
+-    public int getFieldCost(int x, int y){
+-        return tiles[x][y].getValue();
+-    }
+-    public double getExploredPercentage(){return this.exploredPercentage;}
+-    public Agents[] getTeamGuards(){return teamGuards;}
+-    public ArrayList<int[]> getFlags(){
+-        return this.flags;
+-    }
+-
+-    /* METHOD(5): teamCreation
+-     *   create the Agents and stores them in a fixed sized array
+-     *
+-
+-    METHOD(6): convertPosition
+-     *   chooses optimal positions for each Agent along the spawning rectangle area
+-     *  insures good perimeter coverage
+-     * */
+-
+-    public void placeAgentsOnSpawn(int teamNumber){
+-        Agents[] team;
+-
+-        if(teamNumber==0){
+-            team = teamGuards;
+-        }
+-        else{
+-            team = teamIntruders;
+-        }
+-
+-        ArrayList<Integer> spawnCoords = new ArrayList<>();
+-
+-        if(team[0].teamCode == 0){
+-            spawnCoords = this.variables.getSpawnAreaGuards().getCoords();
+-
+-        }
+-        else{
+-            spawnCoords = this.variables.getSpawnAreaIntruders().getCoords();
+-        }
+-        System.out.println(spawnCoords.size());
+-
+-        int x1 = spawnCoords.get(0); int y1 = spawnCoords.get(1);
+-        int x2 = spawnCoords.get(4); int y2 = spawnCoords.get(5);
+-        System.out.println(spawnCoords.toString());
+-
+-        int width = Math.abs(x1-x2); //18
+-        int height = Math.abs(y1-y2); //8
+-        System.out.println(width + " " + height);
+-
+-        int outline = 2*(height+width)-4;
+-        System.out.println(outline);
+-        int spacing = 1;
+-        ArrayList<int[]> spawnLine = new ArrayList<>();
+-        if (team.length<=outline){
+-            spawnLine = outlineOfMatrix(x1,y1,x2,y2);
+-
+-            for(int[] pos : spawnLine){
+-                System.out.print("spawn line (" + pos[0] + ", " + pos[1] + ") ");
+-            }
+-
+-            spacing = (int) (spawnLine.size()/team.length);
+-        }
+-        else {
+-            int a = x1;
+-            int b = y1;
+-            int c = x2;
+-            int d = y2;
+-            int[] coords = new int[2];
+-
+-            do{
+-                coords[0] = a+1;
+-                coords[1] = b+1;
+-                spawnLine.addAll(outlineOfMatrix(a,b,c,d));
+-                a++;
+-                b++;
+-                c--;
+-                d--;
+-            }while(!spawnLine.contains(coords));
+-        }
+-
+-        for(int i=0; i<team.length; i++){
+-            int[] coords = spawnLine.get(spacing*i);
+-            team[i].setInitialCoords(coords);
+-            //System.out.println();
+-            //System.out.println(" (" + coords[0] + ", " + coords[1] + ") ");
+-        }
+-       for (Agents a:team) {
+-            System.out.println();
+-            System.out.println(" (" + a.getAgentPositionX() + ", " + a.getAgentPositionY() + ") ");
+-        }
+-
+-
+-
+-        if(teamNumber==0){
+-            System.out.println("if statement reached");
+-            this.teamGuards = team;
+-            System.out.println("TeamGuards: ");
+-            for (Agents a:teamGuards) {
+-                System.out.println(" (" + a.getAgentPositionX() + ", " + a.getAgentPositionY() + ") ");
+-            }
+-        }
+-        else {
+-            this.teamIntruders = team;
+-        }
+-
+-
+-    }
+-
+-    private ArrayList<int[]> outlineOfMatrix(int x1, int y1, int x2, int y2){
+-        ArrayList<int[]> outline = new ArrayList<>();
+-        for(int i = y1; i < y2+1; i++){
+-            int[] coords = new int[2];
+-            coords[0] = x1;
+-            coords[1] = i;
+-            outline.add(coords);
+-        }
+-        for(int i = x1+1; i<x2+1; i++){
+-            int[] coords = new int[2];
+-            coords[0] = i;
+-            coords[1] = y2;
+-            outline.add(coords);
+-        }
+-        for(int i = y2-1; i>=y1; i--){
+-            int[] coords = new int[2];
+-            coords[0] = x2;
+-            coords[1] = i;
+-            outline.add(coords);
+-        }
+-        for(int i=x2-1; i>x1; i--){
+-            int[] coords = new int[2];
+-            coords[0] = i;
+-            coords[1] = y1;
+-            outline.add(coords);
+-        }
+-        return outline;
+-    }
+-
+-
+-    public void setTrace(int x, int y, int value){
+-       tiles[x][y].placeTrace();
+-    }
+-
+-    private void updateExplored(){
+-        for (Agents agents : teamGuards) {
+-            ArrayList<int[]> exploredTiles = agents.getExplored();
+-
+-//            for(int i=0; i<exploredTiles.size(); i++){
+-            for (int[] coords : exploredTiles) {
+-                System.out.println("X:"+coords[0]+" y: "+coords[1]);
+-                tiles[coords[0]][coords[1]].setAsExplored();
+-            }
+-        }
+-    }
+-
+-    private void updateFlags(){
+-        for (Agents agents : teamGuards) {
+-            ArrayList<int[]> flags = agents.getFlags();
+-            for (int[] coords : flags) {
+-                tiles[coords[0]][coords[1]].placeFlag();
+-                if(!flags.contains(coords)){
+-                    this.flags.add(coords);
+-                }
+-            }
+-        }
+-    }
+-
+-    private void updateSeenTiles(){
+-        // reset all the tiles to be out of vision to the agent
+-        for(Tile[] tileRow : tiles){
+-            for(Tile tile : tileRow){
+-                tile.setAsNotVisible();
+-            }
+-        }
+-        //set the tiles that are currently seen by the agent as visible
+-        for (Agents agents : teamGuards) {
+-            ArrayList<int[]> visibleFields = agents.getVisibleFields();
+-            for (int[] coords : visibleFields) {
+-                tiles[coords[0]][coords[1]].setAsVisible();
+-            }
+-        }
+-    }
+-
+-    public void updateTiles(){
+-        for(Agents agents : teamGuards){
+-            int[] coords = agents.getLastVisited();
+-            tiles[coords[0]][coords[1]].overlay(agents.getTiles()[coords[0]][coords[1]]);
+-        }
+-    }
+-
+-    public boolean explored(){
+-        for(Tile[] tileRow:tiles){
+-            for(Tile tile:tileRow){
+-                if(!tile.isExplored()){
+-                    return false;
+-                }
+-            }
+-        }
+-        return true;
+-    }
+-
+-    public boolean isInMap(int x, int y){
+-        return x>=0 && x<this.mapWidth && y>=0 && y<this.mapHeight;
+-    }
+-
+-    public String toString(){
+-
+-        String output;
+-        output = "explored percentage : "+this.exploredPercentage + "\n\n";
+-
+-        for(Tile[] tileRow : tiles){
+-            output+= "\n";
+-            for(Tile tile :tileRow){
+-                if(tile.hasWall()){
+-                    output += " x ";
+-                }
+-                else if(tile.hasAgent()){
+-                    output +=" 0 ";
+-                }
+-                else if(tile.hasFlag()){
+-                    output +=" A ";
+-                }
+-                else if(tile.hasTrace()){
+-                    output +=" t ";
+-                }
+-                else{
+-                    output +=" [] ";
+-                }
+-            }
+-        }
+-        return output;
+-    }
+-
+-
+-}
+\ No newline at end of file
+Index: src/main/java/Controller/PlayOut.java
+===================================================================
+diff --git a/src/main/java/Controller/PlayOut.java b/src/main/java/Controller/PlayOut.java
+deleted file mode 100644
+--- a/src/main/java/Controller/PlayOut.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,63 +0,0 @@
+-package Controller;
+-
+-import Agents.Agents;
+-import Agents.Map;
+-import Path.Position;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public class PlayOut {
+-
+-    private Map map;
+-    private ArrayList<int[]> flags;
+-    private final int STOP = 2000;
+-    Variables variables = new Variables();
+-
+-    public List<Position> path1;
+-    public List<Position> path2;
+-    public List<Position> path3;
+-    public List<Position> path4;
+-    public List<Position> path5;
+-
+-    public PlayOut(String[] unparsedVars){
+-        this.variables = new Variables();
+-        this.variables.setVariables(unparsedVars);
+-        this.map = new Map(variables);
+-
+-        //System.out.println(Arrays.stream(this.map.getTiles()).toList());
+-        //path1 = Move.getPath(new Position(this.map.getGuardPositionX(0), this.map.getGuardPositionY(1),end,maze)
+-    }
+-
+-    public void compute(){
+-        int i = 0;
+-        do{
+-            i++;
+-            map.mapUpdate();
+-        }while(!this.map.explored() || i>this.STOP);
+-    }
+-
+-    public void computeWithPrint(){
+-        do{
+-            map.mapUpdate();
+-            System.out.print(map);
+-        }while(!this.map.explored());
+-    }
+-
+-    public ArrayList<ArrayList<int[]>> getPaths(){
+-
+-        compute();
+-
+-        ArrayList<ArrayList<int[]>> paths = new ArrayList<>();
+-        Agents[] agents = map.getTeamGuards();
+-        for (Agents a : agents){
+-            paths.add(a.getPath());
+-        }
+-        return paths;
+-    }
+-
+-    public ArrayList<int[]> getFlags(){
+-        flags = map.getFlags();
+-        return this.flags;
+-    }
+-}
+Index: src/main/java/Agents/Agents.java
+===================================================================
+diff --git a/src/main/java/Agents/Agents.java b/src/main/java/Agents/Agents.java
+deleted file mode 100644
+--- a/src/main/java/Agents/Agents.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,1170 +0,0 @@
+-package Agents;
+-
+-import Controller.Variables;
+-import Controller.Vector;
+-import Path.Move;
+-import Path.Position;
+-
+-import java.lang.Math;
+-
+-import java.util.ArrayList;
+-
+-/*
+-goal: last tile in vision in the alpha direction is the goal
+-when you reach goal
+- */
+-
+-
+-public class Agents {
+-    //INSTANCES of class Agent
+-    //Agent Team information
+-    int teamCode; //1 if Intruder, 0 if Guard
+-
+-    Variables variables = new Variables();
+-    private int mapPosX; //relative to map
+-    private int mapPosY;
+-    private int spawnX;
+-    private int spawnY;
+-    private double initialAngle;
+-    private double currentAngle;
+-    private String strategy = "";
+-    private String  GO_TO_END = "end";
+-    private String  GO_TO_SPAWN = "spawn";
+-    private String  GO_ALONG_END = "along_end";
+-    private String AVOID_WALL = "avoid_wall";
+-    private String  EXPLORE = "explore";
+-    private boolean avoidWall;
+-    private int avoidance;
+-    private int agentSize;
+-    private int teamSize;
+-    private int visionRange = 20; //CHNAGE IT LATER
+-    private double visionWidth;
+-    private Agents[] team;
+-    private int number;
+-    private ArrayList<int[]> exploredFields = new ArrayList<>();
+-    private ArrayList<int[]> visibleFields = new ArrayList<>(); //what the agent sees
+-    /**/
+-    private Vector orientation;
+-    private Map map; //whole map
+-    private int mapMaxX;
+-    private int mapMaxY;
+-    private int[] endOfVisionRange;
+-    private int[] lastVisited;
+-    private ArrayList<int[]> path;
+-    private int iterator;
+-
+-    //Agent Geographical Informations
+-
+-    int[] spawning = new int [4]; // starting zone of the team
+-    int agentPositionX; //relative to spawn
+-    int agentPositionY; //as above
+-
+-     /* It is interesting for each agent to contain a copy of the map
+-     * but  when updating the map this also means updating each of the agents memory
+-      */
+-    int[][] agentGoal;//current Goal for its A*
+-    ArrayList<int[]> agentTrace = new ArrayList<>();
+-    ArrayList<int[]> flags = new ArrayList<>();
+-    //Agent Actions
+-    Move agentMove; // update for agent itself and the Map
+-     //int direction; // we try to split the 360 in a smart way
+-
+-    //Agent Range features
+-    double getHearing; // ? for PHASE 2
+-    private int[] visionLeft;
+-    private int[] visionRight;
+-    private int[] aGoal = new int[2];
+-
+-    private NeoExploAlgoPerAgent exploAlgoMachine;
+-
+-    private int WalltoAvoid;
+-    private int sideWall;
+-    private int flagCounter;
+-    private int stepCounter;
+-    private int turnCounter;
+-    private int[] lastPosition = new int [2];
+-    private static int counter;
+-
+-
+-
+-    /* METHOD(1): Agent
+-     *   constructor
+-     *   create an agent belonging to a specific team
+-     * */
+-    public Agents(int team, Variables vars, Map map, float initialAngle, int number){
+-        this.number = number;
+-        this.visionWidth = java.lang.Math.toRadians(15);
+-        this.teamCode = team;
+-        this.variables = vars;// FileParser.readFile("./resources/testmap.txt");
+-        //team = new Agent[variables.getNumberOfGuards()];
+-        ArrayList<Integer> spawnCoords = variables.getSpawnAreaGuards().getCoords();
+-        if(team == 0){
+-            this.teamSize = variables.getNumberOfGuards();
+-        }
+-        else if (team == 1){
+-            this.teamSize = variables.getNumberOfIntruders();
+-        }
+-        this.agentPositionX = 0; //whenever agent moves, we have to update this
+-        this.agentPositionY = 0;
+-        this.strategy = GO_TO_END;
+-
+-        this.visionRange = variables.getDistanceViewing();
+-        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,initialAngle*(counter+1),this.visionRange);
+-        this.mapMaxX = variables.getWidth();
+-        this.mapMaxY = variables.getHeight();
+-
+-        exploAlgoMachine = new NeoExploAlgoPerAgent();
+-        path = new ArrayList<>();
+-        this.iterator = 0;
+-        this.map = map;
+-        this.aGoal = new int[2];
+-        this.aGoal[0] = 0;
+-        this.aGoal[1] = 0;
+-        counter++;
+-    }
+-
+-   // public Agent(int team, Variables variables, Map map, float initialAngle, int i) {
+-    //}
+-
+-    /**
+-     * DOCUMENTATION FOR ZOFIA'S PART
+-     *
+-     * 1 : move
+-     * 2 : pathFinished
+-     * 3 : getPathFromAstar
+-     * 4 : getNextMove
+-     * 5 : setInitialCoords
+-     * 6 : turn
+-     * 7 : dropFlag
+-     * 8 : isInMap
+-     * 9 : currentlyVisibleFields
+-     * 10 : lastSeenField
+-     * 11 : setVision
+-     * 12 : convertToMap
+-     * 13 : convertToAgent
+-     * 14 : goal
+-     * 15 : updateStrategy
+-     * 16 : shouldGoToSpawnAngle
+-     * 17 : reachedWallFlag()
+-     * 18 : isAtSpawn
+-     * 19 : reachedEnd
+-     * 20 : reachedWall
+-     * 21 : nextCoord
+-     * 22 : goToEndOfMapCoords
+-     * 23 : exploreEdgeCoords
+-     * 24 : gotoSpawnCorrds
+-     * 25 : explore
+-     * */
+-
+-    public void move(){
+-        System.out.println("          " );
+-       System.out.println("agent performing move has Number " + getNumber());
+-        int[] coords = new int[2];
+-        coords[0] = this.agentPositionX;
+-        coords[1] = this.agentPositionY;
+-        setLastVisited(coords);
+-        if(pathFinished()){
+-            System.out.println("pathfinished");
+-            aGoal = goal();
+-            System.out.println(aGoal[0]+" " + aGoal[1]);
+-            path = getPathFromAstar();
+-            this.iterator = 0;
+-        }
+-        else{
+-            coords = getNextMove();
+-        }
+-
+-        this.agentPositionX = coords[0];
+-        this.agentPositionY = coords[1];
+-
+-        //ArrayList<Integer> path = getPathFromAstar();
+-        //nextMove = path(0);
+-        //path(0).delete;
+-        /*
+-        * Some methods that change the agent position, to do in the connection
+-        * */
+-        int[] mapCoords = convertToMap(this.agentPositionX,this.agentPositionY);
+-        this.mapPosX = mapCoords[0];
+-        this.mapPosY = mapCoords[1];
+-    }
+-
+-    private boolean pathFinished(){
+-        return iterator == path.size();
+-    }
+-
+-    private ArrayList<int[]> getPathFromAstar(){
+-        Position startPosition = new Position(this.mapPosX,this.mapPosY);
+-        int[] c = new int[2];
+-        c[0]=visionRange+this.mapPosX;
+-        c[1]=visionRange+this.mapPosY;
+-        Position goal = new Position(c[0],c[1]);
+-        System.out.println("start pos given to astar = " + startPosition.getX() + ", " + startPosition.getY()+ " ");
+-        System.out.println("goal given to astar = " + c[0] + ", " + c[1] + " ");
+-
+-        return Move.getPath(startPosition, goal, this.map);
+-    }
+-
+-    public int getNumber(){
+-        return this.number;
+-    }
+-
+-    private int[] getNextMove(){
+-        iterator++;
+-        return path.get(iterator-1);
+-    }
+-
+-    public void setInitialCoords(int[] coords){
+-        this.spawnX = coords[0];
+-        this.spawnY = coords[1];
+-        this.mapPosX = coords[0];
+-        this.mapPosY = coords[1];
+-    }
+-
+-    public void turn(double alpha){
+-        /** angle expressed in radians counter clockwise*/
+-        this.orientation.turn(alpha);
+-        setVision();
+-    }
+-
+-    private void dropFlag(){
+-        this.map.getTile(this.mapPosX,this.mapPosY).placeFlag();
+-        int[] coords = new int[2];
+-        coords[0] = this.mapPosX;
+-        coords[1] = this.mapPosY;
+-        this.flags.add(coords);
+-    }
+-
+-    private boolean isInMap(int x, int y){
+-        return x>=0 && x<this.mapMaxX && y>=0 && y<this.mapMaxY;
+-    }
+-
+-    private boolean isInMap(int[] c){
+-        return c[0]>=0 && c[0]<this.mapMaxX && c[1]>=0 && c[1]<this.mapMaxY;
+-    }
+-
+-    private ArrayList<int[]> currentlyVisibleFields() {
+-        return this.visibleFields;
+-    }
+-
+-    private int[] lastSeenField(){
+-        return this.visibleFields.get(this.visibleFields.size()-1);
+-    }
+-    /*
+-    * vision is set to be a line of tiles, in the direction of the orientation vector and the length of vision range
+-    * this method sets the visibleFields parameter. (used for exploration updating)
+-    * */
+-
+-    private void setVision(){
+-        ArrayList<int[]> fields = new ArrayList<int[]>();
+-
+-        int a1=0,a2=0,b1=0,b2=0;
+-        double conditionAngle = this.orientation.getAngle() - Math.toRadians(25);
+-        System.out.println("333333333333  "+ Math.toDegrees(conditionAngle));
+-        if(conditionAngle>=Math.toRadians(360-45) && conditionAngle<Math.toRadians(45)){
+-            a1 = 0; a2=0;
+-            b1 = 1; b2 = -1;
+-        }
+-        else if(conditionAngle>=Math.toRadians(45) && conditionAngle<Math.toRadians(90)){
+-            a1 = 1; a2 = 0;
+-            b1 = 0; b2 = 1;
+-        }
+-        else if(conditionAngle>=Math.toRadians(90) && conditionAngle<Math.toRadians(90+45)){
+-            a1=1; a2=-1;
+-            b1=0;b2=0;
+-        }
+-        else if(conditionAngle>=Math.toRadians(90+45) && conditionAngle<Math.toRadians(180)){
+-            a1=0;a2=-1;
+-            b1=1;b2=0;
+-        }
+-        else if(conditionAngle>=Math.toRadians(180) && conditionAngle<Math.toRadians(180+45)){
+-            a1=0;a2=0;
+-            b1=1;b2=-1;
+-        }
+-        else if(conditionAngle>=Math.toRadians(180+45) && conditionAngle<Math.toRadians(270)){
+-            a1=-1;a2=0;
+-            b1=0;b2=-1;
+-        }
+-        else if(conditionAngle>=Math.toRadians(270) && conditionAngle<Math.toRadians(270+45)){
+-            a1 = -1; a2=1;
+-            b1=0;b2=0;
+-        }
+-        else if(conditionAngle>=Math.toRadians(270+45) && conditionAngle<Math.toRadians(360)){
+-            a1=0;a2=1;
+-            b1=-1;b2=0;
+-        }
+-        int[] coords = new int[2];
+-        coords[0] = mapPosX+a1;
+-        coords[1] = this.mapPosY+b2;
+-        System.out.println("current pos"+"("+mapPosX+","+mapPosY+")");
+-
+-        this.visionLeft = coords;
+-        if(isInMap(coords[0],coords[1])) {
+-            fields.add(coords);
+-            if (!exploredFields.contains(coords)) {
+-                exploredFields.add(coords);
+-            }
+-        }
+-        coords[0]=this.mapPosX+a2;
+-        coords[1]=this.mapPosY+b2;
+-        this.visionRight = coords;
+-        if(isInMap(coords[0],coords[1])) {
+-            fields.add(coords);
+-            if (!exploredFields.contains(coords)) {
+-                exploredFields.add(coords);
+-            }
+-        }
+-
+-        for(int i =0; i<=this.visionRange; i++){
+-            double ratio = Math.abs(this.orientation.getY2()/this.orientation.getX2());
+-            int x = i;
+-
+-            if(conditionAngle>=Math.toRadians(360-45) && conditionAngle<Math.toRadians(45)){
+-                x = i;
+-            }
+-            else if(conditionAngle>=Math.toRadians(45) && conditionAngle<Math.toRadians(90)){
+-                x = 0;
+-            }
+-            else if(conditionAngle>=Math.toRadians(90) && conditionAngle<Math.toRadians(90+45)){
+-                x = 0;
+-            }
+-            else if(conditionAngle>=Math.toRadians(90+45) && conditionAngle<Math.toRadians(180)){
+-                x = -i;
+-            }
+-            else if(conditionAngle>=Math.toRadians(180) && conditionAngle<Math.toRadians(180+45)){
+-                x = -i;
+-            }
+-            else if(conditionAngle>=Math.toRadians(180+45) && conditionAngle<Math.toRadians(270)){
+-                x  = 0;
+-            }
+-            else if(conditionAngle>=Math.toRadians(270) && conditionAngle<Math.toRadians(270+45)){
+-                x = 0;
+-            }
+-            else if(conditionAngle>=Math.toRadians(270+45) && conditionAngle<Math.toRadians(360)){
+-                x = i;
+-            }
+-
+-            int y = (int) (ratio*x);
+-            System.out.println(Math.toDegrees(this.currentAngle));
+-            System.out.println("vision coords x: "+x+", y: "+y);
+-            coords = convertToMap(x,y);
+-            System.out.println("map vision coords x: "+coords[0]+", y: "+coords[1]);
+-            fields.add(coords);
+-            System.out.println();
+-            System.out.println("before if statement");
+-            if(!exploredFields.contains(coords)){
+-                System.out.println();
+-                System.out.println("explored coord: "+coords[0]+", "+coords[1]);
+-                exploredFields.add(coords);
+-            }
+-            if(map.getTile(x,y).hasWall() || !isInMap(x,y)){
+-                //this.orientation.setLength(i);
+-                break;
+-            }
+-        }
+-        System.out.println(Math.toDegrees(this.currentAngle));
+-        this.endOfVisionRange = fields.get(fields.size()-1);
+-        for(int[] field : fields){
+-            System.out.println("end of Vision range " + "("+ field[0] + " , "+field[1]+")");
+-        }
+-        System.out.println("last seen field" + this.endOfVisionRange[0] +" "+this.endOfVisionRange[1]);
+-        this.visibleFields = fields;
+-    }
+-
+-
+-    private int[] convertToMap(int x, int y) {
+-        /**
+-         * takes relative x,y from agent's POV
+-         * */
+-        System.out.println("spawn x y :" + this.spawnX +", "+this.spawnY);
+-        int[] coords = new int[2];
+-        coords[0] = x + this.spawnX;
+-        coords[1] = y + this.spawnY;
+-        System.out.println("rel x y :" + x +", "+y);
+-        System.out.println("map pos: "+coords[0]+", "+coords[1]);
+-
+-
+-            if(isInMap(coords[0],coords[1]) == false){
+-                System.out.println("Agent looks outside of the map => shortens the coords ");
+-
+-                if(coords[0] < 0 ){
+-                    System.out.println("Looking out X" + coords[0] );
+-                coords[0] = 0;
+-                }
+-                if( getMapMaxX() < coords[0]){
+-                    System.out.println("Looking out X" + coords[0] );
+-                coords[0] = getMapMaxX();
+-                }
+-                 if(coords[1] < 0 ){
+-                     System.out.println("Looking out Y" + coords[1] );
+-                coords[1] = 0;
+-                }
+-                if( getMapMaxY() < coords[1]){
+-                    System.out.println("Looking out Y" + coords[1] );
+-                coords[1] = getMapMaxY();
+-                }
+-                System.out.println("Corrected to X" + coords[0] );
+-                System.out.println("Corrected to Y" + coords[1] );
+-            }
+-        return coords;
+-    }
+-
+-    private int[] convertToAgent(int xMap, int yMap){
+-        /**
+-         * takes map's x,y and converts to relative agent coords
+-         * */
+-        int[] coords = new int[2];
+-        coords[0]=xMap - this.spawnX;
+-        coords[1]=yMap - this.spawnY;
+-        return coords;
+-    }
+-
+-
+-    /** GETTERS **/
+-
+-    public int getMapMaxX(){
+-        return this.mapMaxX;
+-    }
+-    public int getMapMaxY(){
+-        return this.mapMaxY;
+-    }
+-
+-    public Map getAgentMap(){return map;}
+-    public int[] getMapCoords(){
+-        int[] coords = new int[2];
+-        coords[0] = this.agentPositionX;
+-        coords[1] = this.agentPositionY;
+-        return coords;
+-    }
+-    public int[] getAgentSpawning(){return spawning;}
+-    public int getAgentPositionX(){return this.mapPosX;}
+-    public int getAgentPositionY(){return this.mapPosY;}
+-    public int[][] getAgentGoal(){return this.agentGoal;}
+-    public double getInitialAngle(){
+-        return initialAngle;
+-    }
+-    public Tile[][] getTiles(){
+-        return this.map.getTiles();
+-    }
+-
+-    public ArrayList<int[]> getExplored(){
+-        return this.exploredFields;
+-    }
+-    public int[] getLastVisited(){
+-        return this.lastVisited;
+-    }
+-    public ArrayList<int[]> getAgentTrace(){
+-        return agentTrace;
+-    }
+-    public ArrayList<int[]> getFlags(){
+-        return this.flags;
+-    }
+-
+-    public ArrayList<int[]> getVisibleFields(){
+-        return  this.visibleFields;
+-    }
+-
+-    public int[] getCurrentCoordinates() {
+-        int[] coords = new int[2];
+-        coords[0] = this.mapPosX;
+-        coords[1] = this.mapPosY;
+-        return coords;
+-    }
+-
+-    public ArrayList<int[]> getPath(){
+-        return this.path;
+-    }
+-
+-    /** SETTERS **/
+-    public void setCurrentAngle(double alpha){
+-        this.orientation.setAngle(alpha);
+-        setVision();
+-    }
+-    public void setInitialAngle(double angle ){
+-        this.initialAngle = angle;
+-        this.currentAngle = angle;
+-        setVision();
+-        System.out.println();
+-    }
+-    public void setAgentPositionX(int agentPositionX){this.mapPosX = agentPositionX;}
+-    public void setAgentPositionY(int agentPositionY){this.mapPosY = agentPositionY;}
+-    private void setLastVisited(int[] coords){this.lastVisited = coords;}
+-    public void setMap(Map map){ this.map = map;}
+-
+-    public void setLastPosition(int x, int y ){this.lastPosition[0]= x; this.lastPosition[1]= y;}
+-    public int [] getLastPosition(){return this.lastPosition;}
+-    // initial orientation of the Wall to Avoid
+-    public void setWalltoAvoid(int wall){this.WalltoAvoid = wall;}
+-    public int getWalltoAvoid(){return this.WalltoAvoid;}
+-    public void resetWalltoAvoid(){ this.WalltoAvoid = 0;}
+-
+-    //side orientation of the wall to Avoid
+-    public void setSideWall(int wall){this.sideWall = wall;}
+-    public int getSideWall(){return this.sideWall;}
+-    public void resetSideWall(){ this.sideWall = 0;}
+-
+-    // the Agent tracks the number of flags left behind
+-    public void resetFlagCounter(){this.flagCounter =0;}
+-    public void increaseFlagCounter(){ this.flagCounter++;}
+-    public int getFlagCounter(){return this.flagCounter;}
+-
+-    //the Agent tracks the number of steps(move&turns) performed
+-    public void resetStepsCounter(){this.stepCounter =0;}
+-    public void increaseStepsCounter(){this.stepCounter++;}
+-    public void decreaseStepsCounter(){this.stepCounter--;}
+-    public int getStepsCounter(){return this.stepCounter;}
+-
+-    //the Agent tracks the number of turn(move&turns) performed
+-    public void resetTurnCounter(){this.turnCounter =0;}
+-    public void increaseTurnCounter(){this.turnCounter++;}
+-    public void decreaseTurnCounter(){this.turnCounter--;}
+-    public int getTurnCounter(){return this.turnCounter;}
+-
+-
+-
+-
+-    /*
+-    * HELPER METHOD to create a VECTOR END POINT
+-    *  INPUT: an angle and a distance
+-    * OUTPUT: the end coordonate of the Route vector
+-    * */
+-
+-    /*METHOD (4) AGENT STRATEGY
+-    * CONTENT: each agent gets a specific exploration strategy to cover the map heavenly
+-    *  this exploration can be subdivised into 3 main routes:
+-    *       1/ from spawn Zone to map limit
+-    *       2/ from map limit to the nearest trace
+-    *       3/ finally back to spawn Zone
+-    *
+-    *       On the way it is possible to encounter obstacles such as walls, other agents trace or téléportation doors
+-    *          We created subroutines for each of these eventualities
+-    * */
+-
+-
+-
+-
+-        //WALL AVOIDANCE METHOD
+-    // until front position contains wall, avoid by the right
+-    //until side
+-
+-
+-
+-    public int[] goal(){
+-        /**
+-         * returns an array of 2 coordinates that define the goal based ont the current strategy
+-         * */
+-        System.out.println("entering goal method");
+-        updateStrategy();
+-        System.out.println("STRATEGY is set to "+ this.strategy);
+-        switch(this.strategy){
+-            case "end":
+-                return goToEndOfMapCoords();
+-            case "along_end":
+-                return  exploreEdgeCoords();
+-            case "spawn":
+-                return goToSpawnCoords();
+-            case "avoid_wall":
+-                return wallAvoidance();
+-            case "explore":
+-                return explore();
+-        }
+-        return getCurrentCoordinates();
+-    }
+-
+-
+-
+-
+-    private void updateStrategy(){
+-        /**
+-         * updates the strategy of the agent
+-         * */
+-
+-        if(reachedWall()){
+-            this.avoidWall = true;
+-        }
+-
+-        if(strategy.equals(GO_TO_END) && reachedEnd()){
+-            this.strategy = GO_ALONG_END;
+-        }
+-        else if(this.avoidWall && reachedWallFlag()){
+-            this.strategy = GO_TO_SPAWN;
+-        }
+-        if(strategy.equals(GO_ALONG_END) && shouldGoToSpawnAngle()){
+-            this.strategy = GO_TO_SPAWN;
+-        }
+-        if(strategy.equals(GO_TO_SPAWN) && isAtSpawn()){
+-            this.strategy = EXPLORE;
+-        }
+-    }
+-
+-    /*
+-    * shouldGoToSpawnAngle uses trig functions to determine
+-    * whether the agent has covered their designated angle
+-    * */
+-
+-    private boolean shouldGoToSpawnAngle(){
+-        /**
+-         * returns true if agent should go back to spawn (ANGLE STRATEGY)
+-         * */
+-        int k = (int) this.initialAngle/this.teamSize;
+-        double alpha = initialAngle;
+-        double k_alpha = (k-1)*alpha;
+-        double ratioTan = 0.0;
+-        if(k_alpha == 0 || Math.abs(k_alpha) == Math.PI/2 || Math.abs(k_alpha) == 3*Math.PI/2){
+-            return this.agentPositionY == 0;
+-        }
+-        else if (k == 0){
+-            k_alpha = (this.teamSize - 1) * alpha;
+-        }
+-        ratioTan = (double) this.agentPositionY/this.agentPositionX;
+-
+-
+-        return Math.tan(k_alpha) == ratioTan;
+-    }
+-
+-    private boolean shouldGoToSpawnTrace(){
+-        int[] coords = nextCoord();
+-        boolean b = map.getTile(coords[0], coords[1]).hasTrace();
+-        return b;
+-    }
+-
+-    private boolean reachedWallFlag(){
+-        int[] coords = nextCoord();
+-        if(isInMap(coords[0],coords[1])){
+-            return map.getTile(coords[0],coords[1]).hasFlag();
+-        }
+-        return false;
+-    }
+-
+-    private boolean isAtSpawn(){
+-        return agentPositionX == 0 && agentPositionY == 0;
+-    }
+-
+-    private boolean reachedEnd(){
+-        int[] coords = nextCoord();
+-        return !isInMap(coords[0],coords[1]);
+-    }
+-
+-    private boolean reachedWall(){
+-        int[] coords = nextCoord();
+-        return this.map.getTile(coords[0],coords[1]).hasWall();
+-    }
+-
+-    private int[] nextCoord(){
+-        /**
+-         * returns the coordinates of the first tile
+-         * */
+-        Vector unitVec = this.orientation.unitCopy();
+-        int[] coords = unitVec.getEndCoords();
+-        return convertToMap(coords[0],coords[1]);
+-    }
+-
+-
+-    /** STRATEGY IMPLEMENTATION METHODS*/
+-
+-    private int[] goToEndOfMapCoords(){
+-        return this.endOfVisionRange; //unless wall evasion, to correct!
+-    }
+-
+-    /*
+-    * for exploreEdgeCoords(): I divide the map into 4 parts relative to spawn point.
+-    * If agent is in the top right:
+-    * check if he can move (if next field is on map)
+-    * turn him so that he is oriented to 0 degrees (East)
+-    * If can move then -> just go along the wall
+-    * If cant move still -> orient agent to 270 degrees (South)
+-    * */
+-
+-    private int[] exploreEdgeCoords(){
+-        /**returns the next set of coordinates for the go along end of map strategy*/
+-        double alpha = 0.0;
+-        int[] coords = new int[2];
+-        if(reachedEnd()){
+-            if(this.agentPositionX>=0 && this.agentPositionY>=0){
+-                if(this.currentAngle == Math.toRadians(0)){
+-                    setCurrentAngle(Math.toRadians(270));
+-                }
+-                else {
+-                    this.currentAngle = Math.toRadians(0);
+-                }
+-            }
+-            else if(this.agentPositionX<0 && this.agentPositionY>0){
+-                if(this.currentAngle == Math.toRadians(90)){
+-                    setCurrentAngle(Math.toRadians(0));
+-                }
+-                else{
+-                    setCurrentAngle(Math.toRadians(90));
+-                }
+-            }
+-            else if(this.agentPositionX<0 && this.agentPositionY<0){
+-                if(this.currentAngle == Math.toRadians(180)){
+-                    setCurrentAngle(Math.toRadians(90));
+-                }
+-                else{
+-                    setCurrentAngle(Math.toRadians(180));
+-                }
+-            }
+-            else if(this.agentPositionX > 0 && this.agentPositionY < 0){
+-                if(this.currentAngle == Math.toRadians(0)){
+-                    setCurrentAngle(Math.toRadians(90));
+-                }
+-                else{
+-                    setCurrentAngle(Math.toRadians(0));
+-                }
+-            }
+-            coords[0] = this.mapPosX;
+-            coords[1] = this.mapPosY;
+-            return coords;
+-        }
+-        else{
+-            return nextCoord();
+-        }
+-    }
+-
+-    private int[] goToSpawnCoords(){
+-        this.orientation = new Vector(this.agentPositionX,this.agentPositionY,0,0);
+-        this.orientation.setLength(this.visionRange);
+-        setVision();
+-        return this.visibleFields.get(this.visibleFields.size() - 1);
+-    }
+-
+-    private int[] explore(){
+-        return exploAlgoMachine.explore(this);
+-    }
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-    /*******************************************************************************
+-     *                               @TIPHANIE'S methods (documentation)
+-     * METHOD (1): Wall avoidance
+-     * METHOD (2): start Avoidance
+-     * METHOD(3):  End_Avoidance
+-     * METHOD(4): resetAvoidance
+-     * METHOD(5): mesureSteps
+-     * METHOD(6): moveCase
+-     * METHOD (7) : isWall
+-     * METHOD (8) : cases
+-     *
+-     * METHOD (9): wall_North
+-     * METHOD (10): wall_South
+-     * METHOD (11): wall_East
+-     * METHOD (12): wall_West
+-     * METHOD (13) : switchWallLeft
+-     * METHOD (14) : switchWallRight
+-     */
+-
+-
+-
+-    /*******************************************************************************
+-     * METHOD (1): Wall avoidance: a control baord
+-     * TO DO: customize lines 360 and 361 into a boolean conditions to call the current method
+-     ********************************************************************************/
+-    public int[] wallAvoidance(){ // to be called from Goal
+-        System.out.println("(1) wall_Avoidance ");
+-        if(End_Avoidance() == false){
+-            if(getFlagCounter() == 0){
+-                startAvoidance();//initialize the parameters
+-            }
+-            return moveCase();
+-        }
+-        else {
+-            resetAvoidance();
+-            //        dropFlag();//LAST FLAG
+-            int[] finalPos = new int[2];
+-            finalPos[0] = getAgentPositionX();
+-            finalPos[1] = getAgentPositionY();
+-            return finalPos;
+-        }
+-    }
+-
+-    /***************************************************************************
+-     * METHOD (2): start Avoidance
+-     *  set the parameters for the wall avoidance
+-     ****************************************************************************/
+-    public void startAvoidance(){
+-      System.out.println("(2) Start_Avoidance ");
+-        //memorize the type of challenge
+-        int wallType = isWall();
+-        if(wallType != 0){
+-            /*
+-             * TO DO: put a flag at getAgentPositionX();
+-             */
+-            setWalltoAvoid(wallType);
+-            dropFlag(); //oNLY UNIVERSAL FLAG
+-            increaseFlagCounter();
+-            System.out.println("flagcounter at " + getFlagCounter());
+-        }
+-        System.out.println("No need to set start: already or no wall ");
+-    }//end startAvoidance
+-
+-    /* **************************************************************************
+-     * METHOD(3):  End_Avoidance
+-     *  a security because normally goal wont call it anymore !! DOUBLE  CHECK
+-     * Detects when the agent has successfully crossed the wall
+-     * Thats when he transition from having the wall to the North of his position
+-     *    to having the !!same wall!! at his South
+-     *    the current way might fail in narrow corridors...
+-     *  terminate back to original vertical/horizontal coordonates
+-     *  works under condition that the getWalltoAvoid() remains unchanged throughout the entire procedure
+-     ***************************************************************************/
+-    public boolean End_Avoidance(){
+-      System.out.println("(3 )End_Avoidance ");
+-        if(reachedEnd()){
+-            // dble security *
+-            return true;
+-        }
+-        else if(getFlagCounter() > 0 && getStepsCounter() == 0 ){
+-            if(getWalltoAvoid() == 1 && wall_South() == true)
+-                return true;
+-            else if(getWalltoAvoid() == 2 && wall_North() == true)
+-                return true;
+-            else if(getWalltoAvoid() == 3 && wall_East() == true)
+-                return true;
+-            else if(getWalltoAvoid() == 4 && wall_West() == true)
+-                return true;
+-            else if(getStepsCounter() > 200){// in case the Agent got stuck
+-                System.out.println("security exit " + getStepsCounter());
+-                return true;
+-            }
+-        }
+-        return false; //otherwise keep avoidig the wall
+-    }// end of End_Avoidance
+-
+-    /***************************************************************************
+-     * METHOD(4): resetAvoidance
+-     *  Make sure to initialize on null or zero at Agent Creation
+-     * Reset every parameters used by wall avoidance
+-     ***************************************************************************/
+-    public void resetAvoidance(){
+-        resetFlagCounter();
+-        resetStepsCounter();
+-        resetWalltoAvoid();
+-        resetSideWall();
+-    }
+-
+-    /***************************************************************************
+-     * METHOD(5): mesureSteps
+-     * only increase step counter in first branch
+-     ****************************************************************************/
+-    public void mesureSteps(){
+-        if(wasWall() == getWalltoAvoid()){
+-            increaseStepsCounter();
+-        }
+-    }
+-
+-    /*****************************************************************************
+-     * METHOD(6): moveCase
+-     * for a definite case associate the correct move to perform
+-     ******************************************************************************/
+-    public int[] moveCase(){
+-      System.out.println("(6) moveCase ");
+-        int [] miniGoal = new int [2];// contains x, y positions of next move
+-        int casE = cases();
+-
+-        if(casE == 1  || getSideWall() == 1 ){// go left
+-            miniGoal[0] = getAgentPositionX()+1;
+-            miniGoal[1] = getAgentPositionY();
+-            System.out.println("North Go Left ");
+-        }
+-        else if(casE == 2  || getSideWall() == 2){// go right
+-            miniGoal[0] = getAgentPositionX()-1;
+-            miniGoal[1] = getAgentPositionY();
+-              System.out.println("South Go Right");
+-        }
+-        else if(casE == 3 || getSideWall() == 3){//go down
+-            miniGoal[0] = getAgentPositionX();
+-            miniGoal[1] = getAgentPositionY()-1;
+-        }
+-        else if(casE == 4 || getSideWall() == 4){//go up
+-            miniGoal[0] = getAgentPositionX();
+-            miniGoal[1] = getAgentPositionY()+1;
+-              System.out.println("West Go Up ");
+-        }
+-        //the #3 STAHL CASES : turn will be performed in different context
+-        else if(casE == 5 || casE == 6 || casE == 7){
+-
+-            if(casE == 5 ){//when the space ahead is free: turn to the LEFT always
+-                setSideWall(switchWallLeft());//left wall considered
+-                turn(Math.toRadians(90));
+-                  System.out.println("free to turn ");
+-            }
+-            else if(casE == 6 || casE == 7 ){//when the space ahead is not free: turn to the LEFT always
+-                if(getTurnCounter() == 0 && casE == 6 ) {
+-                    turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
+-                    //  setSideWall(switchWallRight()); //will the turn counter enter the above conditions ?
+-                    setSideWall(getWalltoAvoid());//so the next time it will enter the above position
+-                    increaseTurnCounter();
+-                }
+-                else if(getTurnCounter() == 0 && (casE == 6 ||casE == 7 ) ) {
+-                    turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
+-                    increaseTurnCounter();
+-                    resetTurnCounter();
+-                      System.out.println("Front blocked turn right");
+-                }
+-                else if(getTurnCounter() == 1 && casE == 7){
+-                    turn(Math.toRadians(90)); //make it a RIGHT TURN !!!!!!!!!
+-                    setSideWall(switchWallRight()); //make sure the agent position is being updated at that stage !
+-
+-                } //from here the procedure should execute base on classic cases 1 to 4
+-
+-                else if(getTurnCounter() == 2 && casE == 7){
+-                    setSideWall(switchWallRight()); //make sure the agent position is being updated at that stage !
+-                    resetTurnCounter();
+-                }
+-            }
+-            miniGoal[0] = getAgentPositionX();
+-            miniGoal[1] = getAgentPositionY();
+-        }//end of #3 STAHL CASES
+-
+-        /* Phase 1 and 2: the agent hasn't come across the obstacle
+-         * Current wall is parallel to the inital avoidance
+-         */
+-        if((getFlagCounter()<2) && (isWall() == getWalltoAvoid() )){
+-            mesureSteps();
+-        }
+-        else if(getFlagCounter() == 2){
+-            decreaseStepsCounter();
+-            System.out.println("remaining steps " + getStepsCounter());
+-        }
+-        setLastPosition(miniGoal[0],miniGoal[1]);
+-        return miniGoal;
+-
+-    }//end of move Case
+-
+-
+-
+-    /*****************************************************************************
+-     * METHOD (7) : isWall
+-     * if the agent has reached a goal this identifies which type
+-     ******************************************************************************/
+-    public int isWall(){
+-        System.out.println("(7) isWall ");
+-        //somewhere in the surrounding
+-        Tile[][] Copy = getAgentMap().getTiles();
+-        if(Copy[agentPositionX][agentPositionY+1].hasWall() == true){
+-            return 1;  //NORTH CASE
+-        }
+-
+-        else if(Copy[agentPositionX][agentPositionY-1].hasWall() == true){
+-            return 2;   //SOUTH CASE
+-        }
+-
+-        else if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){
+-            return 3;   //EAST CASE
+-        }
+-
+-        else if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
+-            return 4;   //WEST CASE
+-        }
+-        else
+-            return 0;
+-    }
+-
+-    public int wasWall(){
+-        System.out.println("(7 bis) wasWall ");
+-        //somewhere in the surrounding
+-        Tile[][] Copy = getAgentMap().getTiles();
+-        if(Copy[getLastPosition()[0]][getLastPosition()[1]+1].hasWall() == true){
+-            return 1;  //NORTH CASE
+-        }
+-
+-        else if(Copy[getLastPosition()[0]][getLastPosition()[1]-1].hasWall() == true){
+-            return 2;   //SOUTH CASE
+-        }
+-
+-        else if(Copy[getLastPosition()[0]-1][getLastPosition()[1]].hasWall() == true){
+-            return 3;   //EAST CASE
+-        }
+-
+-        else if(Copy[getLastPosition()[0]+1][getLastPosition()[1]].hasWall() == true){//check for outoff bound errors
+-            return 4;   //WEST CASE
+-        }
+-        else
+-            return 0;
+-    }
+-    /*****************************************************************************
+-     * METHOD (8) : cases
+-     * identify the wall orientation
+-     ******************************************************************************/
+-    public int cases(){
+-        System.out.println("(8) cases ");
+-        int casE = 0;
+-        //CASE (1): go right , increase abscisse by one whenever
+-        if(wall_North() == true && getFlagCounter() == 0){
+-            casE = 1;
+-        }
+-        else if (wall_South()== true && getFlagCounter() == 2){
+-            casE = 1;
+-        }
+-        else if(wall_West()== true && getFlagCounter() == 1){
+-            casE = 1;
+-        }
+-        //CASE (2): go left
+-        else if(wall_North() == true && getFlagCounter() == 2){
+-            casE = 2;
+-        }
+-        else if (wall_South() == true && getFlagCounter() == 0){
+-            casE = 2;
+-        }
+-        else if(wall_East() == true && getFlagCounter() == 1){
+-            casE = 2;
+-        }
+-        //CASE (3): go down
+-        else if(wall_East() == true && getFlagCounter() == 0){
+-            casE = 3;
+-        }
+-        else if (wall_West() == true && getFlagCounter() == 2){
+-            casE = 3;
+-        }
+-        else if(wall_South() == true && getFlagCounter() == 1){
+-            casE = 3;
+-        }
+-        //CASE (4): go up
+-        else if(wall_West() == true && getFlagCounter() == 0){
+-            casE = 4;
+-        }
+-        else if (wall_East() == true && getFlagCounter() == 2){
+-            casE = 4;
+-        }
+-        else if(wall_North() == true && getFlagCounter() == 1){
+-            casE = 4;
+-        }
+-        else if( wasWall() == getWalltoAvoid() && isWall() == 0){
+-            /*
+-             * Turn is required whenever we go out of the wall area
+-             * Stick vision concept: the tile on the right of the agent is free
+-             * Tif vision, call the latest stored wall avoidance
+-             */
+-            casE = 5;
+-        }//2 WALLS BLOCKING THE AGENT
+-        else if(wasWall() == getWalltoAvoid() && isWall() == switchWallLeft(/*getWalltoAvoid()*/)){
+-            /*LONGUER WAY: more obstacles on the way, keep circuling around  */
+-            casE = 6;
+-        }
+-        /* DEAD_END: 3 WALLS BLOCKING THE AGENT:
+-         * requires to turn 180° to go back to previous steps: call switch twice
+-         * NB 1: this method will overide the previous one
+-         * NB 2. detection is garantied by the radius of isWall()
+-         */
+-      else if(wasWall() == getWalltoAvoid()
+-                && isWall() == switchWallLeft(/*getWalltoAvoid()*/)
+-                && isWall() == switchWallRight(/*getWalltoAvoid()*/)){
+-            casE = 7;
+-        }
+-          System.out.println("identified case " + casE);
+-        return casE;
+-    }
+-
+-    /*****************************************************************************
+-     * A group of 4 method that identify the wall's position
+-     * METHOD (9): wall_North
+-     * METHOD (10): wall_South
+-     * METHOD (11): wall_East
+-     * METHOD (12): wall_West
+-     * TO DO: !Check if using the stick would be more consistent
+-     *****************************************************************************/
+-    public boolean wall_North(){
+-        Tile[][] Copy = getAgentMap().getTiles();
+-        if(Copy[getAgentPositionX()][getAgentPositionY()+1].hasWall() == true){
+-            System.out.println("Wall is North ");
+-            return true;
+-        }
+-        else
+-            return false;
+-    }
+-    public boolean wall_South(){
+-        Tile[][] Copy = getAgentMap().getTiles();
+-        if(Copy[getAgentPositionX()][getAgentPositionY()-1].hasWall() == true){
+-            System.out.println("Wall is South ");
+-            return true;
+-        }
+-        else
+-            return false;
+-    }
+-    public boolean wall_East(){
+-        Tile[][] Copy = getAgentMap().getTiles();
+-        if(Copy[getAgentPositionX()+1][getAgentPositionY()].hasWall() == true){
+-            System.out.println("Wall is East ");
+-            return true;
+-        }
+-        else
+-            return false;
+-    }
+-    public boolean wall_West(){
+-        Tile[][] Copy = getAgentMap().getTiles();
+-        if(Copy[getAgentPositionX()-1][getAgentPositionY()].hasWall() == true){//check for outoff bound errors
+-          System.out.println("wall is West ");
+-            return true;
+-        }
+-        else
+-            return false;
+-    }
+-
+-    /*****************************************************************************
+-     * METHOD (13) : switchWallLeft
+-     * updates sideWall reference when turning left
+-     ******************************************************************************/
+-    public int switchWallLeft(){
+-        System.out.println("(13) switchWallLeft");
+-        if(wasWall() == 1){//north left turn is west
+-            return 4;
+-        }
+-        else if(wasWall() == 2){//south  left turn is east
+-            return 3;
+-        }
+-        else if(wasWall() == 3){//west  left turn is south
+-            return 2;
+-        }
+-        else if(wasWall() == 4){//east  left turn is north
+-            return 1;
+-        }
+-        return 0;
+-    }
+-    /*****************************************************************************
+-     * METHOD (14) : switchWallRight
+-     * updates sideWall reference when turning right
+-     ******************************************************************************/
+-    public int switchWallRight(){
+-        System.out.println("(13) switchWallRight");
+-        //first turn : 90°
+-        if(getWalltoAvoid() == 1 && getTurnCounter() == 0){//north right turn is east
+-            return 3;
+-        }
+-        else if(getWalltoAvoid()  == 2 && getTurnCounter() == 0){//south  right turn is west
+-            return 4;
+-        }
+-        else if(getWalltoAvoid() == 3 && getTurnCounter() == 0){//west  right turn is north
+-            return 1;
+-        }
+-        else if(getWalltoAvoid() ==  4 && getTurnCounter() == 0){//east  right turn is south
+-            return 2;
+-        }
+-        //second turn : 180°
+-        else if(getWalltoAvoid() == 1 && getTurnCounter() == 1){//north right turn is east
+-            return 2;
+-        }
+-        else if(getWalltoAvoid()  == 2 && getTurnCounter() == 1){//south  right turn is west
+-            return 1;
+-        }
+-        else if(getWalltoAvoid() == 3 && getTurnCounter() == 1){//west  right turn is north
+-            return 4;
+-        }
+-        else if(getWalltoAvoid() ==  4 && getTurnCounter() == 1){//east  right turn is south
+-            return 3;
+-        }
+-        return 0;
+-    }
+-}
+Index: src/main/java/Agents/NeoExploAlgoPerAgent.java
+===================================================================
+diff --git a/src/main/java/Agents/NeoExploAlgoPerAgent.java b/src/main/java/Agents/NeoExploAlgoPerAgent.java
+deleted file mode 100644
+--- a/src/main/java/Agents/NeoExploAlgoPerAgent.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,142 +0,0 @@
+-package Agents;
+-
+-import java.util.ArrayList;
+-
+-public class NeoExploAlgoPerAgent {
+-    ExplorationState explorationState;
+-    Map map;
+-
+-    public NeoExploAlgoPerAgent(){
+-        explorationState = new ExplorationState();
+-    }
+-
+-    static void addToTraceList(Map map, ArrayList<Tile> traceList, int x, int y){
+-        Tile tile = map.getTile(x, y);
+-        traceList.add(tile);
+-        tile.placeTrace();
+-    }
+-
+-    static ArrayList<int[]> listToArr(ArrayList<Tile> list){
+-        ArrayList<int[]> returnList = new ArrayList<>();
+-
+-        for(Tile tile : list){
+-            returnList.add(new int[] {tile.getXCoord(), tile.getYCoord()});
+-        }
+-
+-        return returnList;
+-    }
+-
+-    public int[] explore(Agents givenAgents){
+-
+-        ExploAgent agent = createCorrespondingExploAgent(givenAgents);
+-        map = agent.getMap();
+-
+-        if(!explorationState.isInRegion()){
+-            explorationState = new ExplorationState();  // create explo state
+-            explorationState.determineIfNeedsToMoveUpOrDown(agent.getBetaAngle());  // determine if move up or down
+-            explorationState.setGoRight(getOrientationFromAngle(agent.getBetaAngle()));  // determine if move right or left
+-            explorationState.setInRegion(true);  // say its in region
+-
+-            return putInsideOwnRegion(agent); // return int[] in region
+-        } // if agent is not In region
+-
+-        else{
+-            if(explorationState.needsToChangeRow()){
+-                if(explorationState.needsToGoUp()) {
+-                    int tileUpY = agent.getCurrentTile().getYCoord() - 1; // get y of tile up
+-                    int tileUpX = agent.getCurrentTile().getXCoord(); // get x of tile up
+-                    explorationState.setGoRight(!explorationState.goesRight()); // make it switch
+-
+-                    while (map.getTile(tileUpX, tileUpY).hasTrace()) { // while tile up has trace
+-                        if (map.getTile(tileUpX, tileUpY + 1).hasTrace())
+-                            return null;
+-                        //go back until tile up doesnt have trace
+-                        if (explorationState.goesRight()) // if it was original
+-                            tileUpX = tileUpX + 1; // move baxk towards left
+-                        else
+-                            tileUpX = tileUpX - 1; //
+-                    }
+-                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow());
+-                    return new int[]{tileUpX, tileUpY};
+-                } // if agent needs to move to row up
+-                else{
+-                    int tileUpY = agent.getCurrentTile().getYCoord() + 1; // get y of tile down
+-                    int tileUpX = agent.getCurrentTile().getXCoord(); // get x of tile down
+-                    explorationState.setGoRight(!explorationState.goesRight()); // make it switch
+-
+-                    while (map.getTile(tileUpX, tileUpY).hasTrace()) { // while tile up has trace
+-                        if (map.getTile(tileUpX, tileUpY - 1).hasTrace()) // if there is no space to go there
+-                            return null;
+-                        //go back until tile up doesnt have trace
+-                        if (explorationState.goesRight())
+-                            tileUpX = tileUpX + 1;
+-                        else
+-                            tileUpX = tileUpX - 1; //
+-                    }
+-                    explorationState.setNeedsToChangeRow(!explorationState.needsToChangeRow());
+-                    return new int[]{tileUpX, tileUpY};
+-                } // if agent needs to move to row down
+-            } // if agent needs to change row
+-            else{
+-                boolean goRight = explorationState.goesRight(); // go right
+-
+-                ArrayList<Tile> viewingRange = agent.computeViewRange(goRight); // get viewing range
+-                Tile furthestViewedTile = viewingRange.get(viewingRange.size()-1); // get furthest tile you see
+-
+-                if (isOnEdgeOfWallOrTrace(furthestViewedTile, goRight)) { // if agent sees wall or trace
+-                    explorationState.setGoRight(!goRight); // make it changes direction since it sees a wall
+-                    explorationState.setNeedsToChangeRow(true); // now that it sees a wall, it needs to change row
+-                }
+-                return new int[] {furthestViewedTile.getXCoord(), furthestViewedTile.getYCoord()}; // return furthest viewed title coords
+-            } // if agent does not need to change row and has to continue on its lancee
+-        } // if agent is in region
+-    }
+-
+-    private int[] putInsideOwnRegion(ExploAgent agent){
+-        Tile tileToMoveAgentOn;
+-        for(int i = 1; i < agent.getTraceList().size()-1; i++) {
+-            int[] tileCoords = agent.getTraceList().get(i);
+-            Tile traceTile = map.getTile(tileCoords[0], tileCoords[1]);
+-            if (!getTileWhenMovingInCorrectDirection(traceTile, agent.getBetaAngle()).hasTrace()) {
+-                tileToMoveAgentOn = getTileWhenMovingInCorrectDirection(traceTile, agent.getBetaAngle());
+-                int tileToMoveOnX = tileToMoveAgentOn.getXCoord();
+-                int tileToMoveOnY = tileToMoveAgentOn.getYCoord();
+-                return new int[]{tileToMoveOnX, tileToMoveOnY};
+-            }
+-        }
+-        return null; // will never happen
+-    }
+-
+-    private Tile getTileWhenMovingInCorrectDirection(Tile checkTile, double ang){
+-        boolean moveRight = getOrientationFromAngle(ang);
+-
+-        if(moveRight)
+-            return map.getTile(checkTile.getXCoord()+1, checkTile.getYCoord());
+-        return map.getTile(checkTile.getXCoord()-1, checkTile.getYCoord());
+-    }
+-
+-    private boolean getOrientationFromAngle(double ang){
+-        int angle = (int)Math.toDegrees(ang);
+-        return (0 < angle && angle <= 90) || (270 < angle && angle < 360);
+-    }
+-
+-    private boolean isOnEdgeOfWallOrTrace(Tile tile, boolean agentGoesRight){
+-        Tile nextTile;
+-        if (agentGoesRight)
+-            nextTile = map.getTile(tile.getXCoord() + 1, tile.getYCoord());
+-        else
+-            nextTile = map.getTile(tile.getXCoord() - 1, tile.getYCoord());
+-        return nextTile.hasWall() || nextTile.hasTrace();
+-    }
+-
+-
+-    private ExploAgent createCorrespondingExploAgent(Agents agents){
+-        int x = agents.getAgentPositionX();
+-        int y = agents.getAgentPositionY();
+-        Map map = agents.getAgentMap();
+-        double betaAngle = agents.getInitialAngle(); // in rads
+-        ArrayList<int[]> traceList = agents.getAgentTrace();
+-
+-        return new ExploAgent(x, y, map, betaAngle, traceList);
+-    }
+-}
+Index: src/main/java/Path/Move.java
+===================================================================
+diff --git a/src/main/java/Path/Move.java b/src/main/java/Path/Move.java
+deleted file mode 100644
+--- a/src/main/java/Path/Move.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ /dev/null	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
+@@ -1,195 +0,0 @@
+-package Path;
+-
+-import Agents.Agents;
+-import Agents.Map;
+-
+-import java.lang.Integer;
+-import java.util.*;
+-
+-public class Move {
+-    // 8 possible moves: each is 45° angles
+-    //convertor: angle to director based on a range
+-
+-    //Left: -90 ° = -45 x 2
+-    public void leftMove(Agents agents){
+-        agents.setAgentPositionX(agents.getAgentPositionX()-1);
+-    }
+-    //Right: +90° = +45 x 2
+-    public void rightMove(Agents agents){
+-        agents.setAgentPositionX(agents.getAgentPositionX()+1);
+-    }
+-    //Up: +0°
+-    public void upMove(Agents agents){
+-        agents.setAgentPositionY(agents.getAgentPositionY()+1);
+-    }
+-    //Down: -180° = -45 x 4
+-    public void downMove(Agents agents){
+-        agents.setAgentPositionY(agents.getAgentPositionY()-1);
+-    }
+-    //Diagonal left-Up: +45°
+-    public void diagonalLeftUpMove(Agents agents){
+-        agents.setAgentPositionX(agents.getAgentPositionX()-1);
+-        agents.setAgentPositionY(agents.getAgentPositionY()+1);
+-    }
+-    //Diagonal Right-Up: -45°
+-    public void diagonalRightUpMove(Agents agents){
+-        agents.setAgentPositionX(agents.getAgentPositionX()+1);
+-        agents.setAgentPositionY(agents.getAgentPositionY()+1);
+-    }
+-    //Diagonal left-Down: +225 = -45 x 5
+-    public void diagonalLeftDownMove(Agents agents){
+-        agents.setAgentPositionX(agents.getAgentPositionX()-1);
+-        agents.setAgentPositionY(agents.getAgentPositionY()-1);
+-    }
+-    //Diagonal Right-Down: +135° = +45 x 3
+-    public void diagonalRightDownMove(Agents agents){
+-        agents.setAgentPositionX(agents.getAgentPositionX()+1);
+-        agents.setAgentPositionY(agents.getAgentPositionY()-1);
+-    }
+-
+-    public boolean canMoveThere(Map map, int x, int y){
+-        /**
+-         * returns true if an agent can move to the (x,y) field
+-         * on the map that is passed to this method
+-         */
+-
+-        if(map.getFieldCost(x,y)==Integer.MAX_VALUE){
+-            return false;
+-        }
+-        else{
+-            return true;
+-        }
+-    }
+-
+-    public  ArrayList <int[]> legalMoveGenerator(Agents agents, Map map){
+-
+-        //call all the above methods
+-
+-        //check for validity;
+-        // if output coordinates == MAX_VALUE
+-        //if another agent is currently on this position
+-
+-        //return the list of possible tile coordinates to visit
+-        return new ArrayList<>();
+-
+-    }
+-
+-       /* HELPER METHOD FOR A_STAR:
+-        if we make 1 move in direction of Goal
+-                the cost of the Move
+-                        Empty_Cell is 1 : later we will discriminate on
+-                        Wall is positive_infinity (Integer.MAX_VALUE)
+-                the remaining distance to Local_Goal
+-                        Map_Limit
+-                        TeamMate_Trace
+-                        Opponent_Trace
+-        */
+-
+-
+-
+-
+-    public int[] goalUpdator(Agents agents, Map map) {
+-    /* Sort the option from most to less costly
+-        Need to sort the distance from AgentPosition to all know Map Limits
+-        Need to sort the distance from AgentPosition to all know Traces
+-     Outputs the Minimum of both
+-     */
+-        return new int[]{};
+-
+-    }
+-
+-    // Calculates the Manhattan distance
+-    public int manhattanHeuristic(int x, int y, int goalX, int goalY){
+-        return (x - goalX) + (y - goalY);
+-    }
+-
+-
+-
+-    /* A_Star : Path Finding Algorithm
+-     * OUTPUT: an integer that describes how costy(beneficial) the potential Move is to the Agent
+-     * */
+-
+-    public int aStar(Agents agents, Map map, int initialCost){
+-        int x = agents.getAgentPositionX();
+-        int y = agents.getAgentPositionY();
+-
+-        int[] newGoal = goalUpdator(agents, map);
+-
+-        /*What are the possible Moves to reach the Goal ?
+-            Candidate Paths
+-
+-        int goalDistance =  manhattanHeuristic(x, y, newGoal[0], newGoal[1]);
+-
+-         */
+-        return 0;
+-    }
+-
+-
+-    public static ArrayList<int[]> getPath(Position startPos, Position targetPos, Map map){
+-
+-
+-        HashMap<Position, Boolean> vis = new HashMap<>();
+-        HashMap<Position, Position> prev = new HashMap<>();
+-
+-        List<Position> directions = new LinkedList<>();
+-        Queue<Position> q = new LinkedList<>();
+-        Position current = startPos;
+-        q.add(current);
+-        vis.put(current, true);
+-        while(!q.isEmpty()){
+-            current = q.remove();
+-            if (current.samePos(targetPos)){
+-                break;
+-            }else{
+-                for(Position node : current.getNeighbours(map)){
+-                    boolean contains = false;
+-                    for (Position oNode : vis.keySet()){
+-                        if (oNode.samePos(node)){
+-                            contains = true;
+-                        }
+-                    }
+-
+-                    if(!contains){
+-                        q.add(node);
+-                        vis.put(node, true);
+-                        prev.put(node, current);
+-                    }
+-                }
+-            }
+-        }
+-        if (!current.samePos(targetPos)){
+-            System.out.println("Could not reach");
+-        }
+-
+-
+-        for(Position pos = current; pos != null; pos = prev.get(pos)) {
+-            directions.add(pos);
+-        }
+-
+-        Collections.reverse(directions);
+-
+-        return PosArrToIntArr(directions);
+-    }
+-
+-    private static ArrayList<int[]> PosArrToIntArr(List<Position> positions){
+-        ArrayList<int[]> intArr = new ArrayList<>();
+-
+-        for(Position p : positions)
+-            intArr.add(PositionToArray(p));
+-
+-        return intArr;
+-    }
+-
+-    private static int[] PositionToArray(Position p){
+-        return new int[] {p.getX(), p.getY()};
+-    }
+-
+-
+-//public int
+-//       while(/* Goal not reached, equivalent to Position of Agent != Goal Position */){
+-//        aStar(agent, map, initalCost);
+-//    }
+-
+-
+-    //D*
+-}
+\ No newline at end of file
+Index: src/main/java/App.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Controller.Controller;\r\nimport Controller.FileParser;\r\nimport Controller.PlayOut;\r\nimport Controller.ReadFiles;\r\n\r\npublic class App {\r\n\r\n    public App() {\r\n    }\r\n\r\n    /**\r\n     * Run\r\n     * @param args\r\n     */\r\n    public static void main(String[] args)\r\n    {\r\n        String path = \"\";\r\n        String[] unparsedVars = new String[0];\r\n        try {\r\n            unparsedVars = ReadFiles.readFileAsString(\"recources/testmap.txt\");\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        //PlayOut playOut = new PlayOut(unparsedVars);\r\n\r\n        Controller controller= new Controller(unparsedVars);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/App.java b/src/main/java/App.java
+--- a/src/main/java/App.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/App.java	(date 1651173643021)
+@@ -1,7 +1,6 @@
+ import Controller.Controller;
+-import Controller.FileParser;
+-import Controller.PlayOut;
+ import Controller.ReadFiles;
++import phase2.Tester;
+ 
+ public class App {
+ 
+@@ -24,6 +23,8 @@
+ 
+         //PlayOut playOut = new PlayOut(unparsedVars);
+ 
+-        Controller controller= new Controller(unparsedVars);
++        //Controller controller= new Controller(unparsedVars);
++
++        //Tester tester = new Tester(unparsedVars);
+     }
+ }
+\ No newline at end of file
+Index: src/main/java/Controller/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class Controller {\r\n    private phase2.Map map;\r\n    private ArrayList<phase2.Agent> listOfIntruders;\r\n    private ArrayList<phase2.Agent> listOfGuards;\r\n\r\n\r\n    public Controller(String[] unparsedVars){\r\n        this.map = initializeMap(unparsedVars);\r\n        listOfGuards = this.map.get\r\n    }\r\n\r\n    private phase2.Map initializeMap(String[] unparsedVars){\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Controller/Controller.java b/src/main/java/Controller/Controller.java
+--- a/src/main/java/Controller/Controller.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/Controller/Controller.java	(date 1651173235366)
+@@ -10,11 +10,11 @@
+ 
+     public Controller(String[] unparsedVars){
+         this.map = initializeMap(unparsedVars);
+-        listOfGuards = this.map.get
++        //listOfGuards = this.map.get
+     }
+ 
+     private phase2.Map initializeMap(String[] unparsedVars){
+-
++        return new phase2.Map(unparsedVars);
+     }
+ 
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"99094a21-1a8a-4d5d-8078-78165bded4be\" name=\"Changes\" comment=\"raycasting finished 2.0\">\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_04_2022_13_04__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_04_2022_13_04__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_04_2022_10_17_[Changes]/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_04_2022_10_17__Changes_.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14_[Changes]1/shelved.patch\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_1.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_by_nathaliebent_.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_by_nathaliebent_.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/phase2/Agent.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/phase2/Agent.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/phase2/Map.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/phase2/Map.java\" afterDir=\"false\" />\r\n    </list>\r\n    <list id=\"6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff\" name=\"Changes by alisatodorova\" comment=\"\" />\r\n    <list id=\"c1d8c12b-8388-4e92-b4e4-cbc79450751e\" name=\"Changes by Bruikleen 3\" comment=\"\" />\r\n    <list id=\"70e5dc33-d91b-495a-a940-6f15d4c62e05\" name=\"Changes by cmjus\" comment=\"\" />\r\n    <list id=\"3f4196c9-b984-4db7-880a-412dc16d5bb0\" name=\"Changes by nathaliebent\" comment=\"\" />\r\n    <list id=\"28c4b3f6-7dbb-4f58-84c5-c3e4fa0eeec9\" name=\"Changes by tiphanie\" comment=\"\" />\r\n    <list id=\"02a2e82e-c7a5-407b-9645-c555f1108ddc\" name=\"Changes by vikramvenkat\" comment=\"\" />\r\n    <list id=\"7ab52772-061c-4b8d-aeb6-872a88f8cd11\" name=\"Changes by zmilc\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Merge.Settings\">\r\n    <option name=\"BRANCH\" value=\"algoWithoutControllers\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"phase2-main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitSEFilterConfiguration\">\r\n    <file-type-list>\r\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\r\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\r\n      <filtered-out-file-type name=\"TAG\" />\r\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\r\n    </file-type-list>\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"256KGD7WaqHSuu6w26u96APtVh7\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"Git.Branch.Popup.ShowAllRemotes\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Collin\\IdeaProjects\\Project2-2\\src\\main\\java\\phase2\\RayCasting\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.Tester\">\r\n    <configuration name=\"App (1)\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Visuals.App\" />\r\n      <module name=\"Project2-2\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Visuals.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"App\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"App\" />\r\n      <module name=\"Project2-2\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"StartGame\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Visuals.main.StartGame\" />\r\n      <module name=\"Project2-2\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"Visuals.main.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Tester\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"newShit.Tester\" />\r\n      <module name=\"Project2-2\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"newShit.RayCasting.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Tester\" />\r\n        <item itemvalue=\"Application.App\" />\r\n        <item itemvalue=\"Application.StartGame\" />\r\n        <item itemvalue=\"Application.App (1)\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"99094a21-1a8a-4d5d-8078-78165bded4be\" name=\"Changes\" comment=\"\" />\r\n      <created>1644842061035</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1644842061035</updated>\r\n      <workItem from=\"1645613588695\" duration=\"4441000\" />\r\n      <workItem from=\"1645701760031\" duration=\"1105000\" />\r\n      <workItem from=\"1645703087376\" duration=\"849000\" />\r\n      <workItem from=\"1646843973500\" duration=\"600000\" />\r\n      <workItem from=\"1646860924200\" duration=\"3000\" />\r\n      <workItem from=\"1646942626523\" duration=\"773000\" />\r\n      <workItem from=\"1647013578057\" duration=\"1492000\" />\r\n      <workItem from=\"1647040837289\" duration=\"541000\" />\r\n      <workItem from=\"1647085098955\" duration=\"1033000\" />\r\n      <workItem from=\"1647118917540\" duration=\"2359000\" />\r\n      <workItem from=\"1647164209058\" duration=\"1514000\" />\r\n      <workItem from=\"1647172804683\" duration=\"1483000\" />\r\n      <workItem from=\"1647268426736\" duration=\"1366000\" />\r\n      <workItem from=\"1647344510279\" duration=\"757000\" />\r\n      <workItem from=\"1647358927164\" duration=\"641000\" />\r\n      <workItem from=\"1647378048259\" duration=\"3000\" />\r\n      <workItem from=\"1647428403131\" duration=\"600000\" />\r\n      <workItem from=\"1647433146518\" duration=\"3026000\" />\r\n      <workItem from=\"1647454508975\" duration=\"1249000\" />\r\n      <workItem from=\"1647462847240\" duration=\"118000\" />\r\n      <workItem from=\"1647552591607\" duration=\"2901000\" />\r\n      <workItem from=\"1647687753045\" duration=\"3000\" />\r\n      <workItem from=\"1647776788809\" duration=\"5086000\" />\r\n      <workItem from=\"1647855880434\" duration=\"2200000\" />\r\n      <workItem from=\"1647862599612\" duration=\"6146000\" />\r\n      <workItem from=\"1649164305482\" duration=\"9029000\" />\r\n      <workItem from=\"1650536841238\" duration=\"2710000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"starting code is from Controller-For-Merge branch\">\r\n      <created>1645613707001</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645613707001</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"A* algorithm\">\r\n      <created>1645616987133</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645616987133</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"A* algorithm\">\r\n      <created>1645617009022</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645617009022</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"library for javafx\">\r\n      <created>1645703247369</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1645703247369</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"astar + gui\">\r\n      <created>1646836684617</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1646836684617</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"astar + gui\">\r\n      <created>1646837686031</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1646837686031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"last one\">\r\n      <created>1647778997580</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647778997580</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"last changes\">\r\n      <created>1647945236626</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647945236627</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"last changes\">\r\n      <created>1647946549045</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647946549045</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"the many else if statements corrected\">\r\n      <created>1647949410378</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647949410378</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"raycasting finished\">\r\n      <created>1650467740614</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1650467740614</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"12\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"starting code is from Controller-For-Merge branch\" />\r\n    <MESSAGE value=\"A* algorithm\" />\r\n    <MESSAGE value=\"library for javafx\" />\r\n    <MESSAGE value=\"astar + gui\" />\r\n    <MESSAGE value=\"last one\" />\r\n    <MESSAGE value=\"last changes\" />\r\n    <MESSAGE value=\"the many else if statements corrected\" />\r\n    <MESSAGE value=\"raycasting finished\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"raycasting finished\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/.idea/workspace.xml	(date 1651745794641)
+@@ -5,18 +5,30 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="raycasting finished 2.0">
+-      <change afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_03_22__10_00__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_04_2022_13_04__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_06_04_2022_13_04__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_04_2022_10_17_[Changes]/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_04_2022_10_17__Changes_.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14_[Changes]1/shelved.patch" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_1.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_by_nathaliebent_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_21_04_2022_11_14__Changes_by_nathaliebent_.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Agents.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/ExploAgent.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/ExplorationState.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Map.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/NeoExploAlgoPerAgent.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/App.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/MapObject.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PlayOut.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Rectangle.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Move.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/Path/Position.java" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/QStates.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/QLearning/States.java" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tester.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/Agents/ExplorationState.class" beforeDir="false" />
+     </list>
+     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
+     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
+@@ -88,7 +100,7 @@
+       <recent name="C:\Users\Collin\IdeaProjects\Project2-2\src\main\java\phase2\RayCasting" />
+     </key>
+   </component>
+-  <component name="RunManager" selected="Application.Tester">
++  <component name="RunManager" selected="Application.Tester (1)">
+     <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="Visuals.App" />
+       <module name="Project2-2" />
+@@ -115,6 +127,19 @@
+       <extension name="coverage">
+         <pattern>
+           <option name="PATTERN" value="Visuals.main.*" />
++          <option name="ENABLED" value="true" />
++        </pattern>
++      </extension>
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="Tester (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="phase2.Tester" />
++      <module name="Project2-2" />
++      <extension name="coverage">
++        <pattern>
++          <option name="PATTERN" value="phase2.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+@@ -137,6 +162,7 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="Application.Tester (1)" />
+         <item itemvalue="Application.Tester" />
+         <item itemvalue="Application.App" />
+         <item itemvalue="Application.StartGame" />
+Index: src/main/java/Controller/MapObject.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Controller;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.concurrent.atomic.AtomicInteger;\r\n\r\npublic abstract class MapObject {\r\n    /**\r\n     * Interface for each object on the map.\r\n     * Creates a unique id for each object and establishes a getCoordinates method.\r\n     */\r\n    private static AtomicInteger uniqueId=new AtomicInteger();\r\n    private final int id;\r\n\r\n    ArrayList<Integer> coords = new ArrayList<Integer>();\r\n\r\n    public MapObject(){\r\n        id = uniqueId.getAndIncrement();\r\n    }\r\n\r\n    public ArrayList<Integer> getCoords(){\r\n        return coords;\r\n    }\r\n\r\n    public int getId() {\r\n        return id;\r\n    }\r\n\r\n    /*\r\n    This structure will enable polymorphism later:\r\n    mapObj(AC)\r\n    -> rect (AC)\r\n        +wall C\r\n        +shade C\r\n    -> entrance (AC)\r\n        +door C (like a portal)\r\n        +portal C\r\n    -> texture C\r\n\r\n    I- interface, AC - abstract class, C - class\r\n     */\r\n\r\n    //static int ID;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Controller/MapObject.java b/src/main/java/Controller/MapObject.java
+--- a/src/main/java/Controller/MapObject.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/Controller/MapObject.java	(date 1651745794246)
+@@ -21,6 +21,8 @@
+         return coords;
+     }
+ 
++
++
+     public int getId() {
+         return id;
+     }
+Index: src/main/java/phase2/Guard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\r\n\r\npublic class Guard extends Agent{\r\n\r\n    public Guard(float initialAngle, int startX, int startY){\r\n            super(initialAngle,startX,startY);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Guard.java b/src/main/java/phase2/Guard.java
+--- a/src/main/java/phase2/Guard.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/Guard.java	(date 1651173146231)
+@@ -5,4 +5,8 @@
+     public Guard(float initialAngle, int startX, int startY){
+             super(initialAngle,startX,startY);
+     }
++
++    public String toString(){
++        return "Guard "+super.toString();
++    }
+ }
+Index: src/main/java/phase2/Intruder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package phase2;\r\n\r\npublic class Intruder extends Agent{\r\n\r\n    public Intruder(float initialAngle, int startX, int startY){\r\n        super(initialAngle,startX,startY);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/phase2/Intruder.java b/src/main/java/phase2/Intruder.java
+--- a/src/main/java/phase2/Intruder.java	(revision 1d01b19095351cbff43bc36d7852ad0de2c02700)
++++ b/src/main/java/phase2/Intruder.java	(date 1651173146310)
+@@ -5,4 +5,8 @@
+     public Intruder(float initialAngle, int startX, int startY){
+         super(initialAngle,startX,startY);
+     }
++
++    public String toString(){
++        return "Intruder "+super.toString();
++    }
+ }
+diff --git a/src/main/java/phase2/QLearning/States.java b/src/main/java/phase2/QLearning/States.java
+deleted file mode 100644
