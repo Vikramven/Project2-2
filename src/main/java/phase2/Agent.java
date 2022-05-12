@@ -9,7 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Agent {
 
-    /*AGENT INFORMATIONS
+    /*
+    AGENT INFORMATIONS
     * CURRENT LOCATION INFO
     * PAST EXPERIENCE <-- PATH 
     * */
@@ -26,6 +27,7 @@ public class Agent {
     private int visionRange = 20;
     private ArrayList<int[]> path = new ArrayList<>(); // AGENT PAST EXPERIENCE
     private ArrayList<int[]> visionArea = new ArrayList<>();
+    private int energyPoints;
     private boolean dead;
     //private boolean
 
@@ -57,6 +59,7 @@ public class Agent {
         position[1] = startY;
         this.dead = false;
         this.id = uniqueId.incrementAndGet();
+        this.energyPoints = 10;
     }
 
     /*
@@ -78,20 +81,58 @@ public class Agent {
         /**
          * TODO : create a method that defines a move based on Qlearn
          * */
-        int[] newPos = new int[2];
-        newPos[0] = this.position[0]+4;
-        newPos[1] = this.position[1]+5;
+        int a = (int) (10 * Math.random());
+        int b = (int) (10 * Math.random());
+        moveBy(a,b,map);
         this.turnLeft();
-        Tile currentTile = map.getTile(newPos[0],newPos[1]);
-        if(currentTile.hasTeleportIn()){
-            newPos = currentTile.getPortalOut();
+        if(!path.contains(this.position)){
+            this.path.add(this.position);
         }
-        if(inMap(newPos,map)){
-            setPosition(newPos);
+    }
+
+    private void moveBy(int a, int b,Map map){
+        int[] p = new int[2];
+        p[0] = this.position[0]+a;
+        p[1] = this.position[1]+b;
+        if(map.canMoveTo(p)){
+            Tile tile = map.getTile(p[0],p[1]);
+            if(tile.hasTeleportIn()){
+                p = tile.getPortalOut();
+            }
+            setPosition(p);
         }
         if(!path.contains(this.position)){
             this.path.add(this.position);
         }
+    }
+
+
+
+    public void moveUp(Map map){
+        moveBy(0,1,map);
+    }
+
+    public void moveRight(Map map){
+        moveBy(1,0,map);
+    }
+
+    public void moveDown(Map map){
+        moveBy(0,-1,map);
+    }
+
+    public void moveLeft(Map map){
+        moveBy(-1,0,map);
+    }
+
+    public void performAction(int cost){
+        if(canPerformAction(cost)){
+            // add method to perform action
+            this.energyPoints=-cost;
+        }
+    }
+
+    public boolean canPerformAction(int cost){
+        return cost<=this.energyPoints;
     }
 
     /**
@@ -141,6 +182,7 @@ public class Agent {
 
     public void updateVision(RayCasting rayCaster){
         try {
+//            System.out.println("x = " + this.getCurrentX() + " y = " + this.getCurrentY() + " vr = " + this.getVisionRange() + " ang = " + this.getCurrentAngle());
             this.visionArea = rayCaster.getVisibleTiles(this);
             System.out.println("agent."+id+": "+visionArea.size());
         }

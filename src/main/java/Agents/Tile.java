@@ -229,15 +229,20 @@ public class Tile {
         if(this.hasShade()){
             s = "H";
         }
-
-        if(this.isVisible()){
-            s = "V";
-        }
         if(this.hasGuard()){
             s = "G";
         }
         if(this.hasIntruder()){
             s = "I";
+        }
+
+        if(this.isVisible()){
+            if(s.equals("_")){
+                s = "-";
+            }
+            else{
+                s = s.toLowerCase();
+            }
         }
 
         return s;

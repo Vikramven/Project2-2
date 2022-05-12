@@ -54,5 +54,12 @@ public class Move {
         this.y=y;
     }
 
+    public int[] getCoordinates(){
+        int[] c = new int[2];
+        c[0] = this.x;
+        c[1] = this.y;
+        return c;
+    }
+
 
 }
