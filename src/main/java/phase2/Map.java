@@ -5,6 +5,7 @@ import Controller.*;
 import phase2.RayCasting.RayCasting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Map {
 
@@ -18,7 +19,6 @@ public class Map {
     private ArrayList<int[]> wallpoints = new ArrayList<>();
     private RayCasting rayCasting;
     private ArrayList<int[]> seenPoints = new ArrayList<>();
-    //private
 
 
     /**
@@ -78,7 +78,16 @@ public class Map {
         placeWalls();
         placePortals();
         placeShade();
+        rayCasting = new RayCasting(this);
         allAgentsInit();
+        for(AgentTeam t : listOfAllAgents){
+            for(Agent a : t.getTeam()){
+                System.out.println();
+                System.out.println("position: " + Arrays.toString(a.getPosition()));
+                System.out.println("vr : "+a.getVisionRange() + " angle: " + Math.toDegrees(a.getCurrentAngle()));
+                System.out.println(a.getVisionArea().size());
+            }
+        }
         placeAgentsOnTiles();
     }
 
@@ -151,14 +160,18 @@ public class Map {
 
 
     private void updateAgentVision(){
+
         /**uses raycasting to update the tiles seen by an agent*/
         this.seenPoints = new ArrayList<>();
         for(AgentTeam team: listOfAllAgents){
+
+
+
             team.updateAgentVision(this,rayCasting);
             this.seenPoints.addAll(team.getSeenTiles());
             System.out.println("AAAAAAAAAA"+this.seenPoints.size());
-
         }
+
     }
 
     private void updateAgentMoves(){

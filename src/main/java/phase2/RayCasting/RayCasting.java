@@ -4,6 +4,7 @@ import phase2.Agent;
 import phase2.Map;
 import Agents.Tile;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 
@@ -198,21 +199,59 @@ public class RayCasting {
 
         calculateVision( agentX, agentY, visionRange, limits); // creates endpoints of vision polygon
 
+        double[][] polPoints = getPolygonCoords(agent.getPosition());
+
         ArrayList<int[]> listOfVisibleTiles = new ArrayList<>();
 
         int counter = 0;
-        for(Tile[] tiles : mapTiles){
-            for(Tile tile : tiles){
-                if(isInsideVisionRange(tile.getXCoord(),tile.getYCoord(), (float) agentX, (float) agentY)){
-                    listOfVisibleTiles.add(new int[]{tile.getXCoord(), tile.getYCoord()});
-                    counter++;
-                }
+        System.out.println();
+        for(int x = (int) (agentX-(visionRange+1)); x < agentX+visionRange+1; x++){
+            for(int y = (int) (agentY - (visionRange + 1)); y < agentY + visionRange + 1; y++ ){
+                if(map.inMap(new int[]{x, y})){
+                    Tile tile = map.getTile(x,y);
 
+                    if(pnpoly(polPoints[0], polPoints[1], tile.getXCoord()+0.5, tile.getYCoord()+0.5)){
+                        listOfVisibleTiles.add(new int[]{tile.getXCoord(), tile.getYCoord()});
+                        System.out.print("(" + (tile.getXCoord()+0.5)+ ", " + (tile.getYCoord()+0.5) + "),");
+                        counter++;
+                    }
+                }
             }
         }
+        System.out.println();
+        System.out.println("Counter is this value: "+counter);
         System.out.println("\n size of visible(in ray): "+counter);
 
         return listOfVisibleTiles;
+
+    }
+
+    static boolean pnpoly(double[] vertx, double[] verty, double testx, double testy)
+    {
+        int nvert = vertx.length;
+        int i, j;
+        boolean c = false;
+        for (i = 0, j = nvert-1; i < nvert; j = i++) {
+            if ( ((verty[i]>testy) != (verty[j]>testy)) &&
+                    (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
+                c = !c;
+        }
+        return c;
+    }
+
+    private double[][] getPolygonCoords(int[] agentPosition){
+        double[] polX = new double[visionPolygonPoints.size()+1];
+        double[] polY = new double[visionPolygonPoints.size()+1];
+
+        polX[0] = agentPosition[0];
+        polY[0] = agentPosition[1];
+
+        for (int i = 0; i < visionPolygonPoints.size(); i++) {
+            polX[i+1] = visionPolygonPoints.get(i).getEndX();
+            polY[i+1] = visionPolygonPoints.get(i).getEndY();
+        }
+
+        return new double[][]{polX, polY};
 
     }
 
@@ -225,7 +264,6 @@ public class RayCasting {
                 tileY = (2*y + 1)/2; // y + 0.5
 
         float[] rayStart = {tileX,tileY}, rayEnd = {agentX,agentY};
-
 
         for(int i = 0; i < visionPolygonPoints.size()-1; i++){
             Ray point1 = visionPolygonPoints.get(i);
@@ -240,7 +278,6 @@ public class RayCasting {
         }
 
 
-
         Ray point1 = visionPolygonPoints.get(0);
         Ray point2 = visionPolygonPoints.get(visionPolygonPoints.size()-1);
         float[] edgeStart = {point1.getEndX(), point1.getEndY()},
@@ -248,7 +285,7 @@ public class RayCasting {
         float[] intersectionData = getDistanceOfIntersectionAlongRay(rayStart,rayEnd,edgeStart,edgeEnd);
         float distanceAlongRay = intersectionData[0],
                 distanceAlongEdge = intersectionData[1];
-        if(0 <= distanceAlongRay && distanceAlongRay <= 1 && 0 <= distanceAlongEdge && distanceAlongEdge <= 1)
+        if(0 < distanceAlongRay && distanceAlongRay <= 1 && 0 < distanceAlongEdge && distanceAlongEdge <= 1)
             return false;
         return true;
     }
@@ -341,7 +378,7 @@ public class RayCasting {
             System.out.print("(" + r.getEndX() + "," + r.getEndY() + "),");
         }
 
-        System.out.print(")");
+        System.out.print("A)");
     }
 
     private ArrayList<Ray> removeDuplicates(ArrayList<Ray> list){
