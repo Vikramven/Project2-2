@@ -200,12 +200,17 @@ public class RayCasting {
 
         ArrayList<int[]> listOfVisibleTiles = new ArrayList<>();
 
+        int counter = 0;
         for(Tile[] tiles : mapTiles){
             for(Tile tile : tiles){
-                if(isInsideVisionRange(tile.getXCoord(),tile.getYCoord(), (float) agentX, (float) agentY))
+                if(isInsideVisionRange(tile.getXCoord(),tile.getYCoord(), (float) agentX, (float) agentY)){
                     listOfVisibleTiles.add(new int[]{tile.getXCoord(), tile.getYCoord()});
+                    counter++;
+                }
+
             }
         }
+        System.out.println("\n size of visible(in ray): "+counter);
 
         return listOfVisibleTiles;
 
@@ -329,6 +334,14 @@ public class RayCasting {
 
         visionPolygonPoints.sort(Comparator.comparing(Ray::getAngle));
         visionPolygonPoints = removeDuplicates(visionPolygonPoints);
+
+        System.out.print("polygon(A, ");
+
+        for(Ray r : visionPolygonPoints){
+            System.out.print("(" + r.getEndX() + "," + r.getEndY() + "),");
+        }
+
+        System.out.print(")");
     }
 
     private ArrayList<Ray> removeDuplicates(ArrayList<Ray> list){

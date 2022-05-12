@@ -71,7 +71,10 @@ public class AgentTeam {
         }
         System.out.println("sseen: " + this.seenTiles.size());
         //System.out.println("seen tiles agent 1: ");
-        ArrayList<int[]> seen = team.get(0).getVisionArea();
+        ArrayList<int[]> seen = new ArrayList<>();
+        if(team.size()>0){
+            seen = team.get(0).getVisionArea();
+        }
         for(int[] c : seen){
             //System.out.println("x: "+c[0]+"y: "+c[1]);
         }

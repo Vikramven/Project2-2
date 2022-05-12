@@ -33,7 +33,7 @@ public class Map {
         tileInit();
         int guardsSize = this.variables.getNumberOfGuards();
         //int intrudersSize = this.variables.getNumberOfIntruders(); //parser doesnt work for this
-        int intrudersSize = 4;
+        int intrudersSize = 0;
         //initializeMap();
         this.wallpoints = wallPoints();
         //printWalls();
@@ -69,9 +69,6 @@ public class Map {
     public void allAgentsInit(){
         this.listOfGuards.placeOnSpawn(this);
         this.listOfIntruders.placeOnSpawn(this);
-        this.rayCasting = new RayCasting(this);
-        //this.listOfGuards.updateAgentVision(this,rayCasting);
-        //this.listOfIntruders.updateAgentVision(this,rayCasting);
         updateAgentVision();
         System.out.println("seen1: " + this.seenPoints.size());
         this.placeVisible();
@@ -139,9 +136,12 @@ public class Map {
 
     private void placeVisible(){
         System.out.println("size of seen tiles: "+this.seenPoints.size());
+        int counter = 0;
         for(int[] c: this.seenPoints){
+            counter++;
             map[c[0]][c[1]].setAsVisible();
         }
+        System.out.println("counter: "+counter);
     }
 
     /**
@@ -153,7 +153,6 @@ public class Map {
     private void updateAgentVision(){
         /**uses raycasting to update the tiles seen by an agent*/
         this.seenPoints = new ArrayList<>();
-        RayCasting rayCasting = new RayCasting(this);
         for(AgentTeam team: listOfAllAgents){
             team.updateAgentVision(this,rayCasting);
             this.seenPoints.addAll(team.getSeenTiles());
