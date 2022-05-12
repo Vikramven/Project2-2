@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="agent teleports" />
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="agent teleports">
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" afterDir="false" />
+    </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
     <list id="70e5dc33-d91b-495a-a940-6f15d4c62e05" name="Changes by cmjus" comment="" />
