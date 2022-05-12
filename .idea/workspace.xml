@@ -6,13 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="agent teleports">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/recources/testmap.txt" beforeDir="false" afterPath="$PROJECT_DIR$/recources/testmap.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/phase2/AgentTeam.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/phase2/AgentTeam.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/phase2/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/phase2/Map.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/Wall.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/phase2/RayCasting/RayCasting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/phase2/RayCasting/RayCasting.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/testmap.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/testmap.txt" afterDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
@@ -316,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652349492520</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="agent teleports">
+      <created>1652358105532</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1652358105532</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

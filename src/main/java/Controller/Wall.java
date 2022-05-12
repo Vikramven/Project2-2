@@ -1,6 +1,8 @@
 package Controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Wall extends Rectangle {
 
