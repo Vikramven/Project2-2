@@ -292,10 +292,18 @@ public class Variables {
         }
     }
 
+
     public void createTexture(int x1, int x2, int x3, int x4, int x5, int x6) {
         if(unlock){
             this.textures.add(new Texture(x1,x2,x3,x4,x5,x6));
         }
+    }
+
+
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        s.append("walls: "+walls.size());
+        return s.toString();
     }
 
 
