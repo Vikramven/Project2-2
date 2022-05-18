@@ -13,6 +13,8 @@ public abstract class MapObject {
 
     ArrayList<Integer> coords = new ArrayList<Integer>();
 
+    ArrayList<int[]> points = new ArrayList<>();
+
     public MapObject(){
         id = uniqueId.getAndIncrement();
     }
@@ -22,7 +24,7 @@ public abstract class MapObject {
     }
 
     public ArrayList<int[]> getPoints(){
-        return new ArrayList<>();
+        return this.points;
     }
 
     public int getId() {

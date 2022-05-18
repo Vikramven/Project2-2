@@ -233,9 +233,6 @@ public class Tile {
         if(this.hasTeleportOut()){
             s = "O";
         }
-        if(this.hasShade()){
-            s = "S";
-        }
         if(this.hasWall()) {
             s = "W";
         }

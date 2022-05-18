@@ -54,6 +54,7 @@ public class Variables {
     private Target target;
     private Spawn spawnAreaGuards;
     private Spawn spawnAreaIntruders;
+    private Goal goal;
 
 
 
@@ -274,11 +275,58 @@ public class Variables {
 
     public int getDistanceViewing(){return this.distanceViewing;}
 
+
+    /** POINT GETTERS*/
+
+    public ArrayList<int[]> getWallPoints(){
+        ArrayList<int[]> points = new ArrayList<>();
+        for(Wall w: walls){
+            points.addAll(w.getPoints());
+        }
+        return points;
+    }
+
+    public ArrayList<int[]> getShadePoints(){
+        ArrayList<int[]> points = new ArrayList<>();
+        for(Shade s: shades){
+            points.addAll(s.getPoints());
+        }
+        return points;
+    }
+
+    public ArrayList<int[]> getGuardSpawnPoints(){
+        return spawnAreaGuards.getPoints();
+    }
+
+    public ArrayList<int[]> getIntruderSpawnPoints(){
+        return spawnAreaIntruders.getPoints();
+    }
+
+    public ArrayList<int[]> getGoalPoints(){
+        return goal.getPoints();
+    }
+
+
+
+
     public void createWall(int x1, int y1, int x2, int y2){
         if(unlock){
             this.walls.add(new Wall(x1,y1,x2,y2));
         }
     }
+
+    public void createSpawnAreaGuards(int x1, int y1, int x2, int y2){
+        if(unlock){
+            this.spawnAreaGuards = new Spawn(x1,y1,x2,y2);
+        }
+    }
+
+    public void createSpawnAreaIntruders(int x1, int y1, int x2, int y2){
+        if(unlock){
+            this.spawnAreaIntruders = new Spawn(x1,y1,x2,y2);
+        }
+    }
+
 
     public void createTeleport(int x1, int y1, int x2, int y2, int x3, int y3, double degree){
         if(unlock){
@@ -290,6 +338,7 @@ public class Variables {
         if(unlock){
             this.shades.add(new Shade(x1,y1,x2,y2));
         }
+        System.out.println("size shades: "+shades.size());
     }
 
 
@@ -307,5 +356,9 @@ public class Variables {
     }
 
 
-
+    public void createGoal(int x1, int y1, int x2, int y2) {
+        if(unlock){
+            this.goal = new Goal(x1,y1,x2,y2);
+        }
+    }
 }

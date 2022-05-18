@@ -8,13 +8,13 @@ public class Controller {
     private ArrayList<phase2.Agent> listOfGuards;
 
 
-    public Controller(String[] unparsedVars){
-        this.map = initializeMap(unparsedVars);
+    public Controller(Variables v){
+        this.map = initializeMap(v);
         //listOfGuards = this.map.get
     }
 
-    private phase2.Map initializeMap(String[] unparsedVars){
-        return new phase2.Map(unparsedVars);
+    private phase2.Map initializeMap(Variables v){
+        return new phase2.Map(v);
     }
 
 }

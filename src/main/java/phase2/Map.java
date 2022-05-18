@@ -5,6 +5,7 @@ import Controller.*;
 import phase2.RayCasting.RayCasting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Map {
 
@@ -24,23 +25,23 @@ public class Map {
     /**
      * Map class contains all methods that operate on map objects
      * */
-    public Map(String[] unparsedVars) {
-        this.variables = new Variables();
-        this.variables.setVariables(unparsedVars);
+    public Map(Variables variables) {
+        this.variables = variables;
+        //this.variables.setVariables(unparsedVars);
         this.map = new Tile[variables.getWidth()][variables.getHeight()];
         xSize = variables.getWidth();
         ySize = variables.getHeight();
         tileInit();
         int guardsSize = this.variables.getNumberOfGuards();
-        //int intrudersSize = this.variables.getNumberOfIntruders(); //parser doesnt work for this
-        int intrudersSize = 0;
+        int intrudersSize = this.variables.getNumberOfIntruders(); //parser doesnt work for this
+        //int intrudersSize = 0;
         //initializeMap();
         this.wallpoints = wallPoints();
         //printWalls();
 
         listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());
-        //listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords()); //parser doesnt work
-        listOfIntruders = new AgentTeam(intrudersSize,1,this.intruderSpawnWorkaround());
+        listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords()); //parser doesnt work
+        //listOfIntruders = new AgentTeam(intrudersSize,1,this.intruderSpawnWorkaround());
 
         listOfAllAgents = new ArrayList<>();
         listOfAllAgents.add(listOfGuards);
@@ -113,7 +114,9 @@ public class Map {
 
     private void placeShade(){
         ArrayList<int[]> shadePoints = shadesPoints();
+        System.out.println("shad epoints lenth" + shadePoints.size());
         for(int[] c: shadePoints){
+            System.out.println("shade coord: "+ Arrays.toString(c));
             map[c[0]][c[1]].placeShade();
         }
     }

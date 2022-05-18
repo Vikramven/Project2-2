@@ -8,9 +8,10 @@ public class Wall extends Rectangle {
 
     public Wall(int x1, int y1,int x3,int y3){
         super(x1,y1,x3,y3);
+        super.points = computePoints();
     }
 
-    public ArrayList<int[]> getPoints(){
+    public ArrayList<int[]> computePoints(){
         int[] start = new int[2];
         int[] end = new int[2];
 

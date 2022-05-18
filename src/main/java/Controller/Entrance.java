@@ -8,6 +8,9 @@ public abstract class Entrance extends MapObject {
 
     private ArrayList<Integer> coordOut = new ArrayList<Integer>();
 
+    private ArrayList<int[]> pointsIn = new ArrayList<>();
+    int[] pointOut = new int[2];
+
     private double degreeOut;
 
     public Entrance(int x1, int y1, int x2, int y2, int x3, int y3, double degree){
@@ -18,12 +21,13 @@ public abstract class Entrance extends MapObject {
         
         super.coords = new ArrayList<Integer>(coordIn);
         super.coords.addAll(this.coordOut); //this allows to retrieve all coords at once with getCoords from MapObject
+        super.points = computePoints();
     }
 
     /**
      * Returns array list that has IN points (int[]) in the list and the OUT point (int[]) as the last element
      * */
-    public ArrayList<int[]> getPoints(){
+    public ArrayList<int[]> computePoints(){
         int[] start = new int[2];
         int[] end = new int[2];
 
@@ -44,11 +48,25 @@ public abstract class Entrance extends MapObject {
             }
         }
 
+        pointsIn = points;
         int[] out = new int[2];
         out[0] = coords.get(4);
         out[1] = coords.get(5);
+        pointOut = out;
         points.add(out);
         return points;
+    }
+
+    public ArrayList<int[]> getPointsIn(){
+        return pointsIn;
+    }
+
+    public int[] getPointOut(){
+        return pointOut;
+    }
+
+    public double getDegreeOut(){
+        return degreeOut;
     }
 
 }
