@@ -34,25 +34,13 @@ public class Map {
         tileInit();
         int guardsSize = this.variables.getNumberOfGuards();
         int intrudersSize = this.variables.getNumberOfIntruders(); //parser doesnt work for this
-        //int intrudersSize = 0;
-        //initializeMap();
         this.wallpoints = wallPoints();
-        //printWalls();
-
         listOfGuards = new AgentTeam(guardsSize,0,this.variables.getSpawnAreaGuards().getCoords());
         listOfIntruders = new AgentTeam(intrudersSize,1,this.variables.getSpawnAreaIntruders().getCoords()); //parser doesnt work
-        //listOfIntruders = new AgentTeam(intrudersSize,1,this.intruderSpawnWorkaround());
-
         listOfAllAgents = new ArrayList<>();
         listOfAllAgents.add(listOfGuards);
         listOfAllAgents.add(listOfIntruders);
-
         initializeMap();
-    }
-
-    private ArrayList<Integer> intruderSpawnWorkaround(){
-        Spawn spawn = new Spawn(140,50,160,70);
-        return spawn.getCoords();
     }
 
     /**
@@ -70,9 +58,6 @@ public class Map {
     public void allAgentsInit(){
         this.listOfGuards.placeOnSpawn(this);
         this.listOfIntruders.placeOnSpawn(this);
-        updateAgentVision();
-        System.out.println("seen1: " + this.seenPoints.size());
-        this.placeVisible();
     }
 
     private void initializeMap(){
@@ -86,29 +71,6 @@ public class Map {
     private void placeWalls(){
         for(int[] wallCoord : this.wallpoints){
             map[wallCoord[0]][wallCoord[1]].placeWall();
-        }
-    }
-
-    private void placeAgentsOnTiles(){
-        /**places agents on tiles of map*/
-        for(int i=0;i<xSize;i++){
-            for(int j=0;j<ySize;j++){
-                map[i][j].removeAgent();
-            }
-        }
-        placeGuards();
-        placeIntruders();
-    }
-
-    private void placeGuards(){
-        for(int[] pos: listOfGuards.getCurrentAgentPositions()){
-            map[pos[0]][pos[1]].placeGuard();
-        }
-    }
-
-    private void placeIntruders(){
-        for(int[] pos: listOfIntruders.getCurrentAgentPositions()){
-            map[pos[0]][pos[1]].placeIntruder();
         }
     }
 
@@ -137,64 +99,29 @@ public class Map {
         }
     }
 
-    private void placeVisible(){
-        System.out.println("size of seen tiles: "+this.seenPoints.size());
-        int counter = 0;
-        for(int[] c: this.seenPoints){
-            counter++;
-            map[c[0]][c[1]].setAsVisible();
+    private void placeAgentsOnTiles(){
+        /**places agents on tiles of map*/
+        for(int i=0;i<xSize;i++){
+            for(int j=0;j<ySize;j++){
+                map[i][j].removeAgent();
+            }
         }
-        System.out.println("counter: "+counter);
+        placeGuards();
+        placeIntruders();
     }
 
-    /**
-     * UPDATORS: THEY UPDATE THE CURRENT STATE OF THE MAP
-     * */
-
-
-
-    private void updateAgentVision(){
-        /**uses raycasting to update the tiles seen by an agent*/
-        this.seenPoints = new ArrayList<>();
-        for(AgentTeam team: listOfAllAgents){
-            team.updateAgentVision(this,rayCasting);
-            this.seenPoints.addAll(team.getSeenTiles());
-            System.out.println("AAAAAAAAAA"+this.seenPoints.size());
-
+    private void placeGuards(){
+        for(int[] pos: listOfGuards.getCurrentAgentPositions()){
+            map[pos[0]][pos[1]].placeGuard();
         }
     }
 
-    private void updateAgentMoves(){
-        /**updates the move (the position) of each agent within the AgentTeam class */
-        RayCasting raycast = new RayCasting(this);
-        for(AgentTeam team: listOfAllAgents){
-            team.moveAgents(this, raycast);
+    private void placeIntruders(){
+        for(int[] pos: listOfIntruders.getCurrentAgentPositions()){
+            map[pos[0]][pos[1]].placeIntruder();
         }
     }
 
-
-    public void moveAllAgents(){
-        /**updates the position and vision of each agent
-         * updates the tiles with that info
-         * */
-        updateAgentMoves();
-        updateAgentVision();
-        placeVisible();
-        placeAgentsOnTiles();
-    }
-
-
-
-
-    public boolean hasAgent(int x, int y){
-        return map[x][y].hasAgent();
-    }
-
-    public boolean hasAgent(int[] pos){
-        int x = pos[0];
-        int y = pos[1];
-        return map[x][y].hasAgent();
-    }
 
     public boolean hasWall(int x, int y){
         return map[x][y].hasWall();
@@ -221,7 +148,6 @@ public class Map {
 
 
 
-
     private ArrayList<int[]> shadesPoints(){
         ArrayList<Shade> shades = this.variables.getShades();
         ArrayList<int[]> shadePoints = new ArrayList<>();
@@ -231,12 +157,6 @@ public class Map {
         return shadePoints;
     }
 
-    private void printWalls(){
-        System.out.println("wall size = "+wallpoints.size());
-        for(int[] coords : wallpoints){
-            System.out.println("x: "+coords[0]+" y: "+coords[1]);
-        }
-    }
 
     public void printAgentPos(){
         for(AgentTeam team: listOfAllAgents){
@@ -264,10 +184,6 @@ public class Map {
     }
 
     // Getters n Setters
-    public void setVariables(Variables variables) {
-        this.variables = variables;
-    }
-
     public Variables getVariables() {
         return variables;
     }
@@ -287,6 +203,8 @@ public class Map {
     public int getMapWidth(){
         return this.xSize;
     }
+
+    public ArrayList<int[]> getWallpoints(){ return wallpoints;}
 
     public String toString(){
         StringBuilder s = new StringBuilder();
