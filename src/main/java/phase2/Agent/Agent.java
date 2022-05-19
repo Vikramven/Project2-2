@@ -1,8 +1,9 @@
-package phase2;
+package phase2.Agent;
 
 //import phase2.QLearning.QStates;
-import Agents.Tile;
+import phase2.Map;
 import phase2.RayCasting.RayCasting;
+import phase2.Tile;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

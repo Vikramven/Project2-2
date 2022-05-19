@@ -1,11 +1,13 @@
 package Controller;
 
+import phase2.Agent.Agent;
+
 import java.util.ArrayList;
 
 public class Controller {
     private phase2.Map map;
-    private ArrayList<phase2.Agent> listOfIntruders;
-    private ArrayList<phase2.Agent> listOfGuards;
+    private ArrayList<Agent> listOfIntruders;
+    private ArrayList<Agent> listOfGuards;
 
 
     public Controller(Variables v){

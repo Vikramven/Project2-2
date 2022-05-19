@@ -1,8 +1,8 @@
 package phase2.RayCasting;
 
-import phase2.Agent;
+import phase2.Agent.Agent;
 import phase2.Map;
-import Agents.Tile;
+import phase2.Tile;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;

@@ -1,9 +1,0 @@
-<changelist name="Uncommitted_changes_before_Update_at_05_05_2022_12_48_[Changes]" date="1651747774298" recycled="true" deleted="true">
-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2022_12_48_[Changes]/shelved.patch" />
-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 05/05/2022 12:48 [Changes]" />
-  <binary>
-    <option name="BEFORE_PATH" value="target/classes/Agents/ExplorationState.class" />
-    <option name="AFTER_PATH" />
-    <option name="SHELVED_PATH" />
-  </binary>
-</changelist>

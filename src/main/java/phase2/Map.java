@@ -1,7 +1,8 @@
 package phase2;
 
-import Agents.Tile;
 import Controller.*;
+import phase2.Agent.Agent;
+import phase2.Agent.AgentTeam;
 import phase2.RayCasting.RayCasting;
 
 import java.util.ArrayList;
@@ -89,11 +90,12 @@ public class Map {
         for (Teleport p : portals){
             ArrayList<int[]> portalPoints = p.getPoints();
             int id = p.getId();
+            double angle = p.getDegreeOut();
             int[] out = portalPoints.get(portalPoints.size()-1);
-            map[out[0]][out[1]].placeTeleportOUT(id);
+            map[out[0]][out[1]].placeTeleportOUT(id,angle);
             portalPoints.remove(portalPoints.size()-1);
             for(int[] c: portalPoints){
-                map[c[0]][c[1]].placeTeleportIN(id,out);
+                map[c[0]][c[1]].placeTeleportIN(id,out,angle);
             }
             inPoints.addAll(portalPoints);
         }

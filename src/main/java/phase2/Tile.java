@@ -1,4 +1,4 @@
-package Agents;
+package phase2;
 
 import java.util.ArrayList;
 
@@ -23,6 +23,7 @@ public class Tile {
     private int WALL_VALUE = Integer.MAX_VALUE;
     private int portalID = 0;
     private int[] portalOut = new int[2];
+    private double degreeOut;
     private final int size = 10;
 
 
@@ -72,18 +73,20 @@ public class Tile {
         }
     }
 
-    public void placeTeleportIN(int portalID,int[] portalOut){
+    public void placeTeleportIN(int portalID,int[] portalOut, double degreeOut){
         if(!hasWall()){
             this.dataset.set(this.T_IN,1);
             this.portalID = portalID;
             this.portalOut = portalOut;
+            this.degreeOut = degreeOut;
         }
     }
 
-    public void placeTeleportOUT(int portalID){
+    public void placeTeleportOUT(int portalID, double degreeOut){
         if(!hasWall()){
             this.dataset.set(this.T_OUT,1);
             this.portalID = portalID;
+            this.degreeOut = degreeOut;
         }
     }
 
@@ -176,6 +179,8 @@ public class Tile {
         this.stressLevel = stressLevel;
     }
 
+    public double getDegreeOut(){return degreeOut;}
+
     public ArrayList<Integer> getDataset() {
         return dataset;
     }
@@ -211,7 +216,7 @@ public class Tile {
                 this.placeShade();
             }
             if(tile.hasTeleportIn()){
-                this.placeTeleportIN(this.portalID,this.portalOut);
+                this.placeTeleportIN(this.portalID,this.portalOut,this.degreeOut);
             }
         }
     }

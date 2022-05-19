@@ -1,4 +1,7 @@
-package phase2;
+package phase2.Agent;
+
+import phase2.Agent.Agent;
+
 /* TO DO
  *   CONNECT TO ACCESS IN TILE FOR THIS AGENT to source and update information
  *   Finish writing the method below in connection with the reward table criterias

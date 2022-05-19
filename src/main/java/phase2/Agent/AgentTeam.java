@@ -1,5 +1,6 @@
-package phase2;
+package phase2.Agent;
 
+import phase2.Map;
 import phase2.RayCasting.RayCasting;
 
 import java.util.ArrayList;

@@ -4,12 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="parser updates">
+    <list default="true" id="99094a21-1a8a-4d5d-8078-78165bded4be" name="Changes" comment="map cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2022_12_48_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_05_2022_12_48__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/SemiFullUMLDiagram.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Agents/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/AgentTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent/AgentTeam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Guard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent/Guard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Intruder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent/Intruder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/Rectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/RayCasting/RayCasting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Trace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Trace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/phase2/Yell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/phase2/Agent/Yell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Agents/Tile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Controller/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Controller/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/Agent.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/AgentTeam.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/Guard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/Intruder.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/phase2/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/phase2/Map.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/RayCasting/RayCasting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/phase2/RayCasting/RayCasting.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/Trace.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/phase2/Trace.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/phase2/Yell.class" beforeDir="false" />
     </list>
     <list id="6ea49bdf-bb2d-46db-bf83-6ad5f455a4ff" name="Changes by alisatodorova" comment="" />
     <list id="c1d8c12b-8388-4e92-b4e4-cbc79450751e" name="Changes by Bruikleen 3" comment="" />
@@ -80,8 +98,12 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Collin\IdeaProjects\Project2-2\src\main\java\phase2\RayCasting" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="phase2.Agent" />
+      <recent name="phase2" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.Tester (1)">
+  <component name="RunManager" selected="Application.Tester">
     <configuration name="App (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Visuals.App" />
       <module name="Project2-2" />
@@ -115,21 +137,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Tester (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="phase2.Tester" />
-      <module name="Project2-2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="phase2.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="newShit.Tester" />
+      <option name="MAIN_CLASS_NAME" value="phase2.Tester" />
       <module name="Project2-2" />
       <extension name="coverage">
         <pattern>
@@ -141,9 +150,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="phase2.Tester" />
+      <module name="Project2-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="phase2.Agent.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Application.App (1)" />
+      <item itemvalue="Application.StartGame" />
+      <item itemvalue="Application.Tester" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Tester (1)" />
         <item itemvalue="Application.Tester" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.StartGame" />
@@ -327,7 +354,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652880817834</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="map cleanup">
+      <created>1652881803298</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1652881803299</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -361,6 +395,7 @@
     <MESSAGE value="agent teleports" />
     <MESSAGE value="file parser" />
     <MESSAGE value="parser updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="parser updates" />
+    <MESSAGE value="map cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="map cleanup" />
   </component>
 </project>

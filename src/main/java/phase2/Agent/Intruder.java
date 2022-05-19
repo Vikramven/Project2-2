@@ -1,4 +1,4 @@
-package phase2;
+package phase2.Agent;
 
 public class Intruder extends Agent{
 
